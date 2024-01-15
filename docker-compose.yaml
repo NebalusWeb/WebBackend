@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./public:/var/www/html/public:ro
+    depends_on:
+      - php
+      - mysql
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    volumes:
+      - ./src:/var/www/html/src:ro
+      - ./tests:/var/www/html/tests:ro
+      - ./public:/var/www/html/public:ro
+      - ./vendor:/var/www/html/vendor:ro
+      - ./config:/var/www/html/config:ro
+      - ./composer.json:/var/www/html/composer.json:ro
+      - ./composer.lock:/var/www/html/composer.lock:ro
+      - ./phpcs.xml:/var/www/html/phpcs.xml:ro
+      - ./phpunit.xml:/var/www/html/phpunit.xml:ro
+    depends_on:
+      - mysql
+
+  mysql:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+
+volumes:
+  mysql-data:
