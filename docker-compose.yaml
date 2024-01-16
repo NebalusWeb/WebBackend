@@ -18,7 +18,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: docker/nginx/Dockerfile
+      dockerfile: docker/php/Dockerfile
     volumes:
       - ./src:/var/www/html/src:ro
       - ./tests:/var/www/html/tests:ro
