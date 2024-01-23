@@ -1,0 +1,7 @@
+/vendor/
+/.git/
+/.gitignore
+/LICENSE
+/CHANGELOG.md
+/README.md
+/TODO.md
