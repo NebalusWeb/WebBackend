@@ -1,0 +1,20 @@
+FROM php:8.3-fpm-alpine AS base
+WORKDIR /var/www/
+RUN chown -R www-data:www-data . # UID for the user 'www-data'
+RUN docker-php-ext-install pdo pdo_mysql
+
+FROM composer:latest AS composerinstaller
+WORKDIR /composer
+COPY ./composer.json .
+RUN composer install
+
+FROM base AS development
+COPY ./docker/php-fpm/development.ini $PHP_INI_DIR/conf.d/custom.php.ini
+RUN apk add --update linux-headers
+RUN apk add --no-cache $PHPIZE_DEPS && pecl install xdebug-3.3.1 && docker-php-ext-enable xdebug
+
+FROM base AS production
+COPY ./docker/php-fpm/production.ini $PHP_INI_DIR/conf.d/custom.php.ini
+COPY . .
+RUN rm -R ./docker/
+COPY --from=composerinstaller /composer/vendor ./vendor
