@@ -12,13 +12,23 @@
     
     "autoload": {
         "psr-4": {
-            "Nebalus\\Testapi\\": "./src/"
+            "Nebalus\\Testapi\\": "src/"
         }
     },
     
     "require": {
+    	"php": "^8.3",
         "php-di/php-di": "^7.0",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "monolog/monolog": "^3.5",
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.6"
+    },
+    
+    "autoload-dev": {
+        "psr-4": {
+            "UnitTesting\\": "tests/"
+        }
     },
     
     "require-dev": {

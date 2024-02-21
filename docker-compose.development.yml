@@ -1,0 +1,45 @@
+version: "3.9"
+
+name: "testapi-development"
+services:
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+      target: development
+    ports:
+      - "80:80"
+    volumes:
+      - ./public:/var/www/public:ro
+    depends_on:
+      - php-fpm
+      - mysql-db
+
+  # INTERN PORT: 9000
+  php-fpm:
+    build:
+      context: .
+      dockerfile: docker/php-fpm/Dockerfile
+      target: development
+    volumes:
+      - ./:/var/www:rw
+    environment:
+      APP_ENV: "development"
+    depends_on:
+      - mysql-db
+
+  # INTERN PORT: 3306
+  mysql-db:
+    build:
+      context: .
+      dockerfile: docker/mysql/Dockerfile
+      target: base
+    environment:
+      MYSQL_ROOT_PASSWORD: NUTELLA
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 12346
+      MYSQL_DATABASE: todo
+    volumes:
+      - /var/lib/mysql
+
