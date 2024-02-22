@@ -15,6 +15,18 @@ services:
     depends_on:
       - php-fpm
       - mysql-db
+    networks:
+      - default
+
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - '8080:80'
+    environment:
+      - PMA_HOST=mysql-db
+    networks:
+      - db-net
 
   # INTERN PORT: 9000
   php-fpm:
@@ -26,8 +38,12 @@ services:
       - ./:/var/www:rw
     environment:
       APP_ENV: "development"
+      MYSQL_PASSWORD: "12346"
     depends_on:
       - mysql-db
+    networks:
+      - default
+
 
   # INTERN PORT: 3306
   mysql-db:
@@ -36,10 +52,15 @@ services:
       dockerfile: docker/mysql/Dockerfile
       target: base
     environment:
-      MYSQL_ROOT_PASSWORD: NUTELLA
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: 12346
-      MYSQL_DATABASE: todo
+      MYSQL_ROOT_PASSWORD: "NUTELLA"
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "12346"
     volumes:
       - /var/lib/mysql
+    networks:
+      - default
+      - db-net
 
+networks:
+  db-net:
+    name: db-net
