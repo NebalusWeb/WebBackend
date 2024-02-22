@@ -46,9 +46,37 @@ class RouteCollector
                 });
             });
         });
+        $app->group("/static", function (RouteCollectorProxy $group) {
+            $group->get("/js", [TestController::class, "action"]);
+            $group->get("/css", [TestController::class, "action"]);
+            $group->get("/img", [TestController::class, "action"]);
+            $group->group("/projects", function (RouteCollectorProxy $group) {
+                $group->group("/mandelbrot", function (RouteCollectorProxy $group) {
+                    $group->post("/js", [TestController::class, "action"]);
+                    $group->get("/css", [TestController::class, "action"]);
+                    $group->post("/img", [TestController::class, "action"]);
+                });
+                $group->group("/linktree", function (RouteCollectorProxy $group) {
+                    $group->post("/js", [TestController::class, "action"]);
+                    $group->get("/css", [TestController::class, "action"]);
+                    $group->post("/img", [TestController::class, "action"]);
+                });
+                $group->group("/comoventure", function (RouteCollectorProxy $group) {
+                    $group->post("/js", [TestController::class, "action"]);
+                    $group->get("/css", [TestController::class, "action"]);
+                    $group->post("/img", [TestController::class, "action"]);
+                });
+                $group->group("/melody", function (RouteCollectorProxy $group) {
+                    $group->post("/js", [TestController::class, "action"]);
+                    $group->get("/css", [TestController::class, "action"]);
+                    $group->post("/img", [TestController::class, "action"]);
+                });
+            });
+        });
         $app->group("/terms", function (RouteCollectorProxy $group) {
             $group->get("/privacy", [TestController::class, "action"]);
         });
+        $app->get("/docs", [TestController::class, "action"]);
         $app->get("/homepage", [TestController::class, "action"]);
         $app->get("/linktree", [TestController::class, "action"]);
         $app->get("/cosmoventure", [TestController::class, "action"]);
