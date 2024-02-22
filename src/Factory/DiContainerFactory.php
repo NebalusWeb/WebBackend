@@ -1,6 +1,6 @@
 <?php
 
-namespace TestApi\Factory;
+namespace Nebalus\Ownsite\Factory;
 
 use DI\Container;
 use DI\ContainerBuilder;
