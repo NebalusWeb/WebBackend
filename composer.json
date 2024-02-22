@@ -1,8 +1,6 @@
 {
     "name": "nebalus/testapi",
     "description": "A Test API",
-    "minimum-stability": "dev",
-    "type": "project",
     
     "authors": [
         {
@@ -12,7 +10,7 @@
     
     "autoload": {
         "psr-4": {
-            "Testapi\\": "src/"
+            "Nebalus\\Ownsite\\": "src/"
         }
     },
     
