@@ -20,7 +20,8 @@
         "ext-pdo": "*",
         "monolog/monolog": "^3.5",
         "slim/slim": "4.*",
-        "slim/psr7": "^1.6"
+        "slim/psr7": "^1.6",
+        "slim/twig-view": "^3.3"
     },
     
     "autoload-dev": {

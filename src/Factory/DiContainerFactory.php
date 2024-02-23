@@ -5,6 +5,7 @@ namespace Nebalus\Ownsite\Factory;
 use DI\Container;
 use DI\ContainerBuilder;
 use Exception;
+use function DI\factory;
 
 class DiContainerFactory
 {
@@ -14,7 +15,9 @@ class DiContainerFactory
      */
     public function build(): Container
     {
-        $appDefinitions = [];
+        $appDefinitions = [
+            PDO::class => factory([PdoFactory::class, 'build'])
+        ];
 
         $builder = new ContainerBuilder();
         $builder->useAutowiring(true);
