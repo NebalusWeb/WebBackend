@@ -17,7 +17,7 @@ services:
       - mysql-db
     networks:
       - default
-
+      - public-net
 
   phpmyadmin:
     image: phpmyadmin
@@ -27,6 +27,7 @@ services:
       - PMA_HOST=mysql-db
     networks:
       - db-net
+      - public-net
 
   # INTERN PORT: 9000
   php-fpm:
@@ -38,7 +39,11 @@ services:
       - ./:/var/www:rw
     environment:
       APP_ENV: "development"
+      MYSQL_USER: "admin"
       MYSQL_PASSWORD: "12346"
+      TWIG_CACHE: "false"
+      TWIG_CHARSET: "utf-8"
+      TWIG_DEBUG: "true"
     depends_on:
       - mysql-db
     networks:
@@ -47,12 +52,14 @@ services:
 
   # INTERN PORT: 3306
   mysql-db:
+    hostname: "mysql-db"
     build:
       context: .
       dockerfile: docker/mysql/Dockerfile
       target: base
     environment:
-      MYSQL_ROOT_PASSWORD: "NUTELLA"
+      MYSQL_ROOT_PASSWORD: "bAcspSi$$93@C!"
+      MYSQL_DATABASE: "main"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "12346"
     volumes:
@@ -62,5 +69,7 @@ services:
       - db-net
 
 networks:
+  public-net:
+    name: public-net
   db-net:
     name: db-net
