@@ -2,6 +2,8 @@
 
 namespace Nebalus\Ownsite\Repository;
 
+use Nebalus\Ownsite\ValueObject\MysqlRepositoryResponse;
+
 class MysqlRepository
 {
     private PDO $pdo;
@@ -11,22 +13,22 @@ class MysqlRepository
         $this->pdo = $pdo;
     }
 
-    public function createRedirect()
+    public function createReferral(): MysqlRepositoryResponse
     {
 
     }
 
-    public function deleteRedirect()
+    public function deleteReferral(): MysqlRepositoryResponse
     {
 
     }
 
-    public function updateRedirect()
+    public function updateReferral(): MysqlRepositoryResponse
     {
 
     }
 
-    public function getRedirect()
+    public function getReferral(): MysqlRepositoryResponse
     {
 
     }

@@ -39,7 +39,16 @@ class RouteCollector
             return $response->withStatus(307);
         });
 
-        // Definiert die Routen
+        // Loads TWIG
+        $twigConfig = [];
+        if(getenv("TWIG_CACHE")) $twigConfig["cache"] = "/var/www" . getenv("TWIG_CACHE");
+        if(getenv("TWIG_DEBUG")) $twigConfig["debug"] = getenv("TWIG_DEBUG");
+        if(getenv("TWIG_CHARSET")) $twigConfig["charset"] = getenv("TWIG_CHARSET");
+
+        $twig = Twig::create(__DIR__ . '/../../templates', $twigConfig);
+        $app->add(TwigMiddleware::create($app, $twig));
+
+    // Definiert die Route
         $app->redirect("/", "/homepage", 301);
         $app->group("/api", function (RouteCollectorProxy $group) {
             $group->get("/account", [TempController::class, "action"]);
@@ -66,19 +75,12 @@ class RouteCollector
         $app->group("/terms", function (RouteCollectorProxy $group) {
             $group->get("/privacy", [TempController::class, "action"]);
         });
-        $app->get("/docs", [DocsController::class, "docs"]);
         $app->get("/homepage", [HomeController::class, "home"]);
+        $app->get("/docs", [DocsController::class, "docs"]);
         $app->get("/linktree", [LinktreeController::class, "linktree"]);
+        $app->get("/ref", [ReferralController::class, "referral"]);
+        $app->get("/oriri", [TempController::class, "action"]);
         $app->get("/cosmoventure", [TempController::class, "action"]);
         $app->get("/melody", [TempController::class, "action"]);
-        $app->get("/ref", [ReferralController::class, "referral"]);
-
-        //
-        $twig = Twig::create(__DIR__ . '/../../templates', [
-            'cache' => __DIR__ . '/../..' . getenv("TWIG_CACHE"),
-            'charset' => getenv("TWIG_CHARSET"),
-            'debug' => getenv("TWIG_DEBUG")
-        ]);
-        $app->add(TwigMiddleware::create($app, $twig));
     }
 }
