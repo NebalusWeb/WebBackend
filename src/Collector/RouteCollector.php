@@ -82,7 +82,7 @@ class RouteCollector
                     });
                 });
             });
-        })->add(new JsonValidatorMiddleware());
+        })->add(JsonValidatorMiddleware::class);
 
         $app->group("/account", function (RouteCollectorProxy $group) {
             $group->get("/register", [TempController::class, "action"]);
