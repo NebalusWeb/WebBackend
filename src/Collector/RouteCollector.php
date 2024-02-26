@@ -5,6 +5,10 @@ namespace Nebalus\Ownsite\Collector;
 use Nebalus\Ownsite\Controller\DocsController;
 use Nebalus\Ownsite\Controller\HomeController;
 use Nebalus\Ownsite\Controller\LinktreeController;
+use Nebalus\Ownsite\Controller\Referral\ReferralApiCreateController;
+use Nebalus\Ownsite\Controller\Referral\ReferralApiDeleteController;
+use Nebalus\Ownsite\Controller\Referral\ReferralApiReadController;
+use Nebalus\Ownsite\Controller\Referral\ReferralApiUpdateController;
 use Nebalus\Ownsite\Controller\Referral\ReferralController;
 use Nebalus\Ownsite\Controller\TempController;
 use Slim\App;
@@ -62,10 +66,10 @@ class RouteCollector
                     $group->delete("/delete", [TempController::class, "action"]);
                 });
                 $group->group("/referal", function (RouteCollectorProxy $group) {
-                    $group->post("/create", [TempController::class, "action"]);
-                    $group->get("/read", [TempController::class, "action"]);
-                    $group->post("/update", [TempController::class, "action"]);
-                    $group->delete("/delete", [TempController::class, "action"]);
+                    $group->post("/create", [ReferralApiCreateController::class, "action"]);
+                    $group->get("/read", [ReferralApiReadController::class, "action"]);
+                    $group->post("/update", [ReferralApiUpdateController::class, "action"]);
+                    $group->delete("/delete", [ReferralApiDeleteController::class, "action"]);
                 });
                 $group->group("/game", function (RouteCollectorProxy $group) {
                     $group->group("/cosmoventure", function (RouteCollectorProxy $group) {
