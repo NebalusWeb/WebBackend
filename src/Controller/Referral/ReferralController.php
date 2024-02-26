@@ -2,7 +2,7 @@
 
 namespace Nebalus\Ownsite\Controller\Referral;
 
-use Nebalus\Ownsite\Service\ReferralService;
+use Nebalus\Ownsite\Service\Referral\ReferralService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -16,7 +16,7 @@ class ReferralController
         $this->referralService = $referralService;
     }
 
-    public function referral(Request $request, Response $response): Response
+    public function action(Request $request, Response $response): Response
     {
         $queryParams = $request->getQueryParams();
         $response = $response->withStatus(307);
@@ -25,14 +25,6 @@ class ReferralController
         }
 
         $this->referralService->execute();
-
-        switch ($queryParams["q"]) {
-            case "test":
-                return $response->withAddedHeader("Location", "/linktree");
-                break;
-        }
-
-
         return $response->withStatus(307);
     }
 }

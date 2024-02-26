@@ -16,6 +16,6 @@ class MysqlRepositoryResponse
 
     public static function from(bool $hasError): self
     {
-        return new MysqlRepositoryResponse();
+        return new MysqlRepositoryResponse($hasError);
     }
 }

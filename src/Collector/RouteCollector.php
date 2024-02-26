@@ -4,13 +4,18 @@ namespace Nebalus\Ownsite\Collector;
 
 use Nebalus\Ownsite\Controller\DocsController;
 use Nebalus\Ownsite\Controller\HomeController;
-use Nebalus\Ownsite\Controller\LinktreeController;
-use Nebalus\Ownsite\Controller\Referral\ReferralApiCreateController;
-use Nebalus\Ownsite\Controller\Referral\ReferralApiDeleteController;
-use Nebalus\Ownsite\Controller\Referral\ReferralApiReadController;
-use Nebalus\Ownsite\Controller\Referral\ReferralApiUpdateController;
+use Nebalus\Ownsite\Controller\Referral\Api\ReferralApiCreateController;
+use Nebalus\Ownsite\Controller\Referral\Api\ReferralApiDeleteController;
+use Nebalus\Ownsite\Controller\Referral\Api\ReferralApiReadController;
+use Nebalus\Ownsite\Controller\Referral\Api\ReferralApiUpdateController;
 use Nebalus\Ownsite\Controller\Referral\ReferralController;
+use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiCreateController;
+use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiDeleteController;
+use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiReadController;
+use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiUpdateController;
+use Nebalus\Ownsite\Controller\Linktree\LinktreeController;
 use Nebalus\Ownsite\Controller\TempController;
+use Nebalus\Ownsite\Middleware\JsonValidatorMiddleware;
 use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
@@ -54,39 +59,51 @@ class RouteCollector
         $twig = Twig::create(__DIR__ . '/../../templates', $twigConfig);
         $app->add(TwigMiddleware::create($app, $twig));
 
-    // Definiert die Route
+        // Definiert die Route
         $app->redirect("/", "/homepage", 301);
         $app->group("/api", function (RouteCollectorProxy $group) {
             $group->get("/account", [TempController::class, "action"]);
             $group->group("/projects", function (RouteCollectorProxy $group) {
                 $group->group("/linktree", function (RouteCollectorProxy $group) {
-                    $group->post("/create", [TempController::class, "action"]);
-                    $group->get("/read", [TempController::class, "action"]);
-                    $group->post("/update", [TempController::class, "action"]);
-                    $group->delete("/delete", [TempController::class, "action"]);
+                    $group->post("/create", [LinktreeApiCreateController::class, "action"]);
+                    $group->get("/read", [LinktreeApiReadController::class, "action"]);
+                    $group->post("/update", [LinktreeApiUpdateController::class, "action"]);
+                    $group->delete("/delete", [LinktreeApiDeleteController::class, "action"]);
                 });
-                $group->group("/referal", function (RouteCollectorProxy $group) {
+                $group->group("/referral", function (RouteCollectorProxy $group) {
                     $group->post("/create", [ReferralApiCreateController::class, "action"]);
                     $group->get("/read", [ReferralApiReadController::class, "action"]);
                     $group->post("/update", [ReferralApiUpdateController::class, "action"]);
                     $group->delete("/delete", [ReferralApiDeleteController::class, "action"]);
                 });
-                $group->group("/game", function (RouteCollectorProxy $group) {
+                $group->group("/games", function (RouteCollectorProxy $group) {
                     $group->group("/cosmoventure", function (RouteCollectorProxy $group) {
                         $group->get("/version", [TempController::class, "action"]);
                     });
                 });
             });
+        })->add(new JsonValidatorMiddleware());
+
+        $app->group("/account", function (RouteCollectorProxy $group) {
+            $group->get("/register", [TempController::class, "action"]);
+            $group->get("/login", [TempController::class, "action"]);
+            $group->get("/dashboard", [TempController::class, "action"]);
         });
+
         $app->group("/terms", function (RouteCollectorProxy $group) {
             $group->get("/privacy", [TempController::class, "action"]);
         });
-        $app->get("/homepage", [HomeController::class, "home"]);
-        $app->get("/docs", [DocsController::class, "docs"]);
-        $app->get("/linktree", [LinktreeController::class, "linktree"]);
-        $app->get("/ref", [ReferralController::class, "referral"]);
-        $app->get("/oriri", [TempController::class, "action"]);
-        $app->get("/cosmoventure", [TempController::class, "action"]);
-        $app->get("/melody", [TempController::class, "action"]);
+
+        $app->group("/projects", function (RouteCollectorProxy $group) {
+            $group->get("/mandelbrot", [TempController::class, "action"]);
+            $group->get("/oriri", [TempController::class, "action"]);
+            $group->get("/cosmoventure", [TempController::class, "action"]);
+            $group->get("/melody", [TempController::class, "action"]);
+        });
+        
+        $app->get("/homepage", [HomeController::class, "action"]);
+        $app->get("/docs", [DocsController::class, "action"]);
+        $app->get("/linktree", [LinktreeController::class, "action"]);
+        $app->get("/ref", [ReferralController::class, "action"]);
     }
 }
