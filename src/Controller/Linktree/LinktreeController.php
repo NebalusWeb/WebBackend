@@ -1,13 +1,13 @@
 <?php
 
-namespace Nebalus\Ownsite\Controller;
+namespace Nebalus\Ownsite\Controller\Linktree;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class LinktreeController
 {
-    public function linktree(Request $request, Response $response): Response
+    public function action(Request $request, Response $response): Response
     {
         $response->getBody()->write("Linktree");
 

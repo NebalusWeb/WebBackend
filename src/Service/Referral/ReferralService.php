@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Ownsite\Service;
+namespace Nebalus\Ownsite\Service\Referral;
 
 use Nebalus\Ownsite\Repository\MysqlRepository;
 use Nebalus\Ownsite\ValueObject\MysqlRepositoryResponse;

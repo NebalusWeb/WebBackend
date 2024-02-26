@@ -9,7 +9,7 @@ use Slim\Views\Twig;
 class HomeController
 {
 
-    public function home(Request $request, Response $response): Response
+    public function action(Request $request, Response $response): Response
     {
         $view = Twig::fromRequest($request);
         return $view->render($response, 'homepage.html', [

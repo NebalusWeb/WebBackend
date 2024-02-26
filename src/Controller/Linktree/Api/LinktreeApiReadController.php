@@ -1,15 +1,16 @@
 <?php
 
-namespace Nebalus\Ownsite\Controller;
+namespace Nebalus\Ownsite\Controller\Linktree\Api;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class DocsController
+class LinktreeApiReadController
 {
+
     public function action(Request $request, Response $response): Response
     {
-        $response->getBody()->write("Docs");
+        $response->getBody()->write("Linktree Api Read");
 
         return $response->withStatus(200);
     }
