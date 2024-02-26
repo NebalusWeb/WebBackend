@@ -5,17 +5,13 @@ namespace Nebalus\Ownsite\Collector;
 use Nebalus\Ownsite\Controller\DocsController;
 use Nebalus\Ownsite\Controller\HomeController;
 use Nebalus\Ownsite\Controller\LinktreeController;
-use Nebalus\Ownsite\Controller\ReferralController;
+use Nebalus\Ownsite\Controller\Referral\ReferralController;
 use Nebalus\Ownsite\Controller\TempController;
 use Slim\App;
 use Slim\Exception\HttpNotFoundException;
-use Slim\Psr7\Request;
-use Slim\Psr7\Response;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
-use Throwable;
-use Twig\Error\LoaderError;
 
 class RouteCollector
 {
@@ -41,9 +37,15 @@ class RouteCollector
 
         // Loads TWIG
         $twigConfig = [];
-        if(getenv("TWIG_CACHE")) $twigConfig["cache"] = "/var/www" . getenv("TWIG_CACHE");
-        if(getenv("TWIG_DEBUG")) $twigConfig["debug"] = getenv("TWIG_DEBUG");
-        if(getenv("TWIG_CHARSET")) $twigConfig["charset"] = getenv("TWIG_CHARSET");
+        if (getenv("TWIG_CACHE")) {
+            $twigConfig["cache"] = "/var/www" . getenv("TWIG_CACHE");
+        }
+        if (getenv("TWIG_DEBUG")) {
+            $twigConfig["debug"] = getenv("TWIG_DEBUG");
+        }
+        if (getenv("TWIG_CHARSET")) {
+            $twigConfig["charset"] = getenv("TWIG_CHARSET");
+        }
 
         $twig = Twig::create(__DIR__ . '/../../templates', $twigConfig);
         $app->add(TwigMiddleware::create($app, $twig));
