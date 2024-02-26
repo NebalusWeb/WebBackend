@@ -1,10 +1,10 @@
 <?php
 
-namespace Nebalus\Ownsite\Controller;
+namespace Nebalus\Ownsite\Controller\Referral;
 
 use Nebalus\Ownsite\Service\ReferralService;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ReferralController
 {
