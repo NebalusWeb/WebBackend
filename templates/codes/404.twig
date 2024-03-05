@@ -1,0 +1,12 @@
+{% extends "/layouts/error_layout.twig" %}
+
+{% block page_header %}
+    {% set title = "404 - Not found" %}
+{% endblock %}
+
+{% block bodymain %}
+    <h1>404</h1>
+    <p>Page not found</p>
+    <a href="/">To Mainpage</a>
+    <a href="#" onclick="window.history.go(-1)">Go Back</a>
+{% endblock %}

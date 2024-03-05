@@ -1,21 +1,21 @@
 www.nebalus.dev
   |- /api
   |    |- /account
-  |    |- /projects
-  |    |    |- /game
-  |    |    |    |- /cosmoventure
-  |    |    |    |    |- /version
-  |    |    |- /linktree
-  |    |    |    |- /create
-  |    |    |    |- /read
-  |    |    |    |- /update
-  |    |    |    |- /delete
-  |    |    |- /referal
-  |    |    |    |- /create
-  |    |    |    |- /read
-  |    |    |    |- /update
-  |    |    |    |- /delete
-  |- /static
+  |    |    |- /register
+  |    |- /game
+  |    |    |- /cosmoventure
+  |    |    |    |- /version
+  |    |- /linktree
+  |    |    |- /create
+  |    |    |- /read
+  |    |    |- /update
+  |    |    |- /delete
+  |    |- /referal
+  |    |    |- /create
+  |    |    |- /read
+  |    |    |- /update
+  |    |    |- /delete
+  |- /static      # Is not maintained by the Slim Router but by NGINX
   |    |- /js			# Default JavaScript Ordner
   |    |- /css			# Default CSS Ordner
   |    |- /img			# Default Images Ordner
@@ -37,10 +37,20 @@ www.nebalus.dev
   |    |    |    |- /css
   |    |    |    |- /img
   |- /docs			# Beinhaltet die Documentation für sämtliche projecte
+  |    |- /
   |- /terms
   |    |- /privacy		# Beinhaltet die Datenschutz Erklärung
-  |- /homepage 			# Ist die Standard seite
+  |- /account
+  |    |- /register
+  |    |- /login
+  |    |- /dashboard
+  |- /u
+  |    |- /{username}   # Replace the {username} by the requested user... and if requested, it will show the linktree for the user
+  |- /projects
+  |    |- /mandelbrot
+  |    |- /oriri
+  |    |- /cosmoventure
+  |    |- /melody
+  |- / 			# Ist die Standard seite
   |- /linktree			# Soll ein kleiner APP sein die meine links anzeigt
-  |- /cosmoventure
-  |- /melody
   |- /ref			# Ist ein eigender Ref System

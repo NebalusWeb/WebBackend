@@ -16,7 +16,7 @@ class ReferralController
         $this->referralService = $referralService;
     }
 
-    public function action(Request $request, Response $response): Response
+    public function action(Request $request, Response $response, array $args): Response
     {
         $queryParams = $request->getQueryParams();
         $response = $response->withStatus(307);
@@ -25,6 +25,6 @@ class ReferralController
         }
 
         $this->referralService->execute();
-        return $response->withStatus(307);
+        return $response;
     }
 }

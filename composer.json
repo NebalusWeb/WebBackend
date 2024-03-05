@@ -15,13 +15,14 @@
     },
     
     "require": {
-    	"php": "^8.3",
+    	"php": "^8.2",
         "php-di/php-di": "^7.0",
         "ext-pdo": "*",
         "monolog/monolog": "^3.5",
         "slim/slim": "4.*",
         "slim/psr7": "^1.6",
-        "slim/twig-view": "^3.3"
+        "slim/twig-view": "^3.3",
+        "guzzlehttp/guzzle": "^7.8"
     },
     
     "autoload-dev": {

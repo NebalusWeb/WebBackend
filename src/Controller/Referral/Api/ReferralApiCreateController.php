@@ -12,7 +12,7 @@ class ReferralApiCreateController
     {
     }
 
-    public function action(Request $request, Response $response): Response
+    public function action(Request $request, Response $response, array $args): Response
     {
         $response->getBody()->write("Referral Api Create");
 
