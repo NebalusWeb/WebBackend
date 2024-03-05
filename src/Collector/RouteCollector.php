@@ -16,6 +16,7 @@ use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiUpdateController;
 use Nebalus\Ownsite\Controller\Linktree\LinktreeController;
 use Nebalus\Ownsite\Controller\TempController;
 use Nebalus\Ownsite\Middleware\JsonValidatorMiddleware;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
@@ -33,77 +34,65 @@ class RouteCollector
 
     public function initRoutes(): void
     {
-        global $app;
+        $this->app->addRoutingMiddleware();
 
         // Definiert die ErrorMiddleware
         $displayErrorDetails = (strtolower(getenv("APP_ENV")) === "development");
         $errorMiddleware = $this->app->addErrorMiddleware($displayErrorDetails, true, true);
-        $errorMiddleware->setErrorHandler(HttpNotFoundException::class, function () use ($app) {
+        /*
+        $errorMiddleware->setErrorHandler(HttpNotFoundException::class, function (Request $request) use ($this->app) {
+            $view = Twig::fromRequest($request);
             $response = $app->getResponseFactory()->createResponse();
-            $response = $response->withAddedHeader("Location", "/");
-            return $response->withStatus(307);
+            return $view->render($response, 'codes/404.twig')->withStatus(404);
         });
-
-        // Loads TWIG
-        $twigConfig = [];
-        if (getenv("TWIG_CACHE")) {
-            $twigConfig["cache"] = "/var/www" . getenv("TWIG_CACHE");
-        }
-        if (getenv("TWIG_DEBUG")) {
-            $twigConfig["debug"] = getenv("TWIG_DEBUG");
-        }
-        if (getenv("TWIG_CHARSET")) {
-            $twigConfig["charset"] = getenv("TWIG_CHARSET");
-        }
-
-        $twig = Twig::create(__DIR__ . '/../../templates', $twigConfig);
-        $app->add(TwigMiddleware::create($app, $twig));
+        */
 
         // Definiert die Route
-        $app->redirect("/", "/homepage", 301);
-        $app->group("/api", function (RouteCollectorProxy $group) {
+        $this->app->group("/api", function (RouteCollectorProxy $group) {
             $group->get("/account", [TempController::class, "action"]);
-            $group->group("/projects", function (RouteCollectorProxy $group) {
-                $group->group("/linktree", function (RouteCollectorProxy $group) {
-                    $group->post("/create", [LinktreeApiCreateController::class, "action"]);
-                    $group->get("/read", [LinktreeApiReadController::class, "action"]);
-                    $group->post("/update", [LinktreeApiUpdateController::class, "action"]);
-                    $group->delete("/delete", [LinktreeApiDeleteController::class, "action"]);
-                });
-                $group->group("/referral", function (RouteCollectorProxy $group) {
-                    $group->post("/create", [ReferralApiCreateController::class, "action"]);
-                    $group->get("/read", [ReferralApiReadController::class, "action"]);
-                    $group->post("/update", [ReferralApiUpdateController::class, "action"]);
-                    $group->delete("/delete", [ReferralApiDeleteController::class, "action"]);
-                });
-                $group->group("/games", function (RouteCollectorProxy $group) {
-                    $group->group("/cosmoventure", function (RouteCollectorProxy $group) {
-                        $group->get("/version", [TempController::class, "action"]);
-                    });
+            $group->group("/linktree", function (RouteCollectorProxy $group) {
+                $group->post("/create", [LinktreeApiCreateController::class, "action"]);
+                $group->get("/read", [LinktreeApiReadController::class, "action"]);
+                $group->post("/update", [LinktreeApiUpdateController::class, "action"]);
+                $group->delete("/delete", [LinktreeApiDeleteController::class, "action"]);
+            });
+            $group->group("/referral", function (RouteCollectorProxy $group) {
+                $group->post("/create", [ReferralApiCreateController::class, "action"]);
+                $group->get("/read", [ReferralApiReadController::class, "action"]);
+                $group->post("/update", [ReferralApiUpdateController::class, "action"]);
+                $group->delete("/delete", [ReferralApiDeleteController::class, "action"]);
+            });
+            $group->group("/game", function (RouteCollectorProxy $group) {
+                $group->group("/cosmoventure", function (RouteCollectorProxy $group) {
+                    $group->get("/version", [TempController::class, "action"]);
                 });
             });
         })->add(JsonValidatorMiddleware::class);
 
-        $app->group("/account", function (RouteCollectorProxy $group) {
+        $this->app->group("/u", function (RouteCollectorProxy $group) {
+            $group->get("/{username}", [TempController::class, "action"]);
+        });
+
+        $this->app->group("/account", function (RouteCollectorProxy $group) {
             $group->get("/register", [TempController::class, "action"]);
             $group->get("/login", [TempController::class, "action"]);
             $group->get("/dashboard", [TempController::class, "action"]);
         });
 
-        $app->group("/terms", function (RouteCollectorProxy $group) {
+        $this->app->group("/terms", function (RouteCollectorProxy $group) {
             $group->get("/privacy", [TempController::class, "action"]);
         });
 
-        $app->group("/projects", function (RouteCollectorProxy $group) {
+        $this->app->group("/projects", function (RouteCollectorProxy $group) {
             $group->get("/mandelbrot", [TempController::class, "action"]);
             $group->get("/oriri", [TempController::class, "action"]);
             $group->get("/cosmoventure", [TempController::class, "action"]);
             $group->get("/melody", [TempController::class, "action"]);
         });
         
-        $app->get("/homepage", [HomeController::class, "action"]);
-        $app->get("/docs", [DocsController::class, "action"]);
-        $app->get("/linktree", [LinktreeController::class, "action"]);
-        $app->get("/ref", [ReferralController::class, "action"]);
+        $this->app->get("/", [HomeController::class, "action"]);
+        $this->app->get("/docs", [DocsController::class, "action"]);
+        $this->app->get("/linktree", [LinktreeController::class, "action"]);
+        $this->app->get("/ref", [ReferralController::class, "action"]);
     }
 }

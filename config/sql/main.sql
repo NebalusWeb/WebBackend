@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql-db
--- Generation Time: Feb 25, 2024 at 08:50 PM
--- Server version: 8.2.0
--- PHP Version: 8.2.16
+-- Erstellungszeit: 29. Feb 2024 um 10:53
+-- Server-Version: 8.3.0
+-- PHP-Version: 8.2.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,53 +18,166 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `main`
+-- Datenbank: `main`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `referrals`
+-- Tabellenstruktur für Tabelle `accounts`
 --
 
-CREATE TABLE `referrals` (
-  `id` int NOT NULL COMMENT 'Die ID vom Ref Element...',
-  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `pointer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '/' COMMENT 'Points to the Final URL (''/'' is the root path from the aktual webserver)',
-  `count` int NOT NULL DEFAULT '0',
-  `creationdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `enabled` tinyint(1) NOT NULL DEFAULT '1'
+CREATE TABLE `accounts` (
+  `id` int NOT NULL COMMENT 'The ID of this entry (Primary Key)',
+  `creationdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
+  `username` varchar(25) NOT NULL,
+  `passwd_hash` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `passwd_salt` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `referrals`
+-- Daten für Tabelle `accounts`
 --
 
-INSERT INTO `referrals` (`id`, `code`, `pointer`, `count`, `creationdate`, `enabled`) VALUES
-(1, 'TEST', '/', 0, '2024-02-25 00:00:00', 1),
-(3, 'TEST1', '/', 0, '2024-02-25 00:00:00', 1),
-(4, 'TEST2', '/', 0, '2024-02-25 20:48:24', 1);
+INSERT INTO `accounts` (`id`, `creationdate`, `username`, `passwd_hash`, `passwd_salt`) VALUES
+(1, '2024-02-28 21:28:40', 'Nebalus', '<paouisfhöoi<sydzhgföoi<shzföiouh', '67847');
+
+-- --------------------------------------------------------
 
 --
--- Indexes for dumped tables
+-- Tabellenstruktur für Tabelle `linktrees`
+--
+
+CREATE TABLE `linktrees` (
+  `id` int NOT NULL COMMENT 'The ID of this entry (Primary Key)',
+  `accountid` int NOT NULL COMMENT 'The ID of the account that owns this entry',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'This text is shown as the description',
+  `creationdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
+  `count` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this entry was accessed'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `linktree_entrys`
+--
+
+CREATE TABLE `linktree_entrys` (
+  `id` int NOT NULL COMMENT 'The ID of this entry (Primary Key)',
+  `linktreeid` int NOT NULL,
+  `label` varchar(84) NOT NULL,
+  `link` text NOT NULL,
+  `position` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `referrals`
+--
+
+CREATE TABLE `referrals` (
+  `id` int NOT NULL COMMENT 'The ID of this entry (Primary Key)',
+  `accountid` int NOT NULL COMMENT 'The ID of the account that owns this entry',
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'A unique code that is used for /ref?q=code',
+  `pointer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '/' COMMENT 'Points to the Final URL (''/'' is the root path from the aktual webserver)',
+  `count` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this referral entry has been accessed',
+  `creationdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Defines if this referral is enabled'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Daten für Tabelle `referrals`
+--
+
+INSERT INTO `referrals` (`id`, `accountid`, `code`, `pointer`, `count`, `creationdate`, `enabled`) VALUES
+(1, 1, 'TEST', '/', 0, '2024-02-25 00:00:00', 1),
+(3, 1, 'TEST1', '/', 0, '2024-02-25 00:00:00', 1),
+(5, 1, 'TEST42', '/', 0, '2024-02-27 11:04:20', 1),
+(6, 1, '42', '/', 0, '2024-02-28 21:30:24', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `tokens`
+--
+
+CREATE TABLE `tokens` (
+  `id` int NOT NULL COMMENT 'The ID of this entry (Primary Key)',
+  `creationdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
+  `expiredate` datetime NOT NULL COMMENT 'The expire date of this entry',
+  `token` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Indizes der exportierten Tabellen
 --
 
 --
--- Indexes for table `referrals`
+-- Indizes für die Tabelle `accounts`
+--
+ALTER TABLE `accounts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `linktrees`
+--
+ALTER TABLE `linktrees`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `account` (`accountid`);
+
+--
+-- Indizes für die Tabelle `linktree_entrys`
+--
+ALTER TABLE `linktree_entrys`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `referrals`
 --
 ALTER TABLE `referrals`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `refcode` (`code`);
+  ADD UNIQUE KEY `refcode` (`code`,`accountid`) USING BTREE;
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indizes für die Tabelle `tokens`
+--
+ALTER TABLE `tokens`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT for table `referrals`
+-- AUTO_INCREMENT für Tabelle `accounts`
+--
+ALTER TABLE `accounts`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT für Tabelle `linktrees`
+--
+ALTER TABLE `linktrees`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)';
+
+--
+-- AUTO_INCREMENT für Tabelle `linktree_entrys`
+--
+ALTER TABLE `linktree_entrys`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)';
+
+--
+-- AUTO_INCREMENT für Tabelle `referrals`
 --
 ALTER TABLE `referrals`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Die ID vom Ref Element...', AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT für Tabelle `tokens`
+--
+ALTER TABLE `tokens`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)';
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
