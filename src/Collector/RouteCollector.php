@@ -21,7 +21,6 @@ use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\Twig;
-use Slim\Views\TwigMiddleware;
 
 class RouteCollector
 {
@@ -32,21 +31,27 @@ class RouteCollector
         $this->app = $app;
     }
 
-    public function initRoutes(): void
+    public function init(): void 
     {
         $this->app->addRoutingMiddleware();
+        
+        $this->initErrorMiddleware();
+        $this->initRoutes();
+    }
 
+    private function initErrorMiddleware(): void {
         // Definiert die ErrorMiddleware
         $displayErrorDetails = (strtolower(getenv("APP_ENV")) === "development");
         $errorMiddleware = $this->app->addErrorMiddleware($displayErrorDetails, true, true);
-        /*
-        $errorMiddleware->setErrorHandler(HttpNotFoundException::class, function (Request $request) use ($this->app) {
+        $errorMiddleware->setErrorHandler(HttpNotFoundException::class, function (Request $request) {
             $view = Twig::fromRequest($request);
-            $response = $app->getResponseFactory()->createResponse();
+            $response = ResponseFactory->createResponse();
             return $view->render($response, 'codes/404.twig')->withStatus(404);
         });
-        */
+    }
 
+    private function initRoutes(): void
+    {
         // Definiert die Route
         $this->app->group("/api", function (RouteCollectorProxy $group) {
             $group->get("/account", [TempController::class, "action"]);
