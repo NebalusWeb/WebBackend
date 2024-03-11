@@ -29,8 +29,6 @@
 {% endblock %}
 </head>
 <body>
-    <header>{% block bodyheader %}{% endblock %}</header>
-    <main>{% block bodymain %}{% endblock %}</main>
-    <footer>{% block bodyfooter %}{% endblock %}</footer>
+    {% block page_body %}{% endblock %}
 </body>
 </html>  

@@ -2,7 +2,7 @@
 
 namespace Nebalus\Ownsite\Middleware;
 
-class TokenValidatorMiddleware
+class AuthenticatorMiddleware
 {
 
 }
