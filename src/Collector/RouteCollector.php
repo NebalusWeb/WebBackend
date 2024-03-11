@@ -15,12 +15,11 @@ use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiReadController;
 use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiUpdateController;
 use Nebalus\Ownsite\Controller\Linktree\LinktreeController;
 use Nebalus\Ownsite\Controller\TempController;
+use Nebalus\Ownsite\Handler\HttpNotFoundHandler;
 use Nebalus\Ownsite\Middleware\JsonValidatorMiddleware;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
-use Slim\Views\Twig;
 
 class RouteCollector
 {
@@ -31,23 +30,23 @@ class RouteCollector
         $this->app = $app;
     }
 
-    public function init(): void 
+    public function init(): void
     {
         $this->app->addRoutingMiddleware();
-        
+
         $this->initErrorMiddleware();
         $this->initRoutes();
     }
 
-    private function initErrorMiddleware(): void {
+    private function initErrorMiddleware(): void
+    {
         // Definiert die ErrorMiddleware
-        $displayErrorDetails = (strtolower(getenv("APP_ENV")) === "development");
-        $errorMiddleware = $this->app->addErrorMiddleware($displayErrorDetails, true, true);
-        $errorMiddleware->setErrorHandler(HttpNotFoundException::class, function (Request $request) {
-            $view = Twig::fromRequest($request);
-            $response = ResponseFactory->createResponse();
-            return $view->render($response, 'codes/404.twig')->withStatus(404);
-        });
+        $isDevelopmentMode = (strtolower(getenv("APP_ENV")) === "development");
+        $errorMiddleware = $this->app->addErrorMiddleware($isDevelopmentMode, true, true);
+
+        if (true) {
+            $errorMiddleware->setErrorHandler(HttpNotFoundException::class, HttpNotFoundHandler::class);
+        }
     }
 
     private function initRoutes(): void
@@ -94,7 +93,7 @@ class RouteCollector
             $group->get("/cosmoventure", [TempController::class, "action"]);
             $group->get("/melody", [TempController::class, "action"]);
         });
-        
+
         $this->app->get("/", [HomeController::class, "action"]);
         $this->app->get("/docs", [DocsController::class, "action"]);
         $this->app->get("/linktree", [LinktreeController::class, "action"]);
