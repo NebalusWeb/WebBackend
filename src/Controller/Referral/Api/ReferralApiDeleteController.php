@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Ownsite\Controller\Referral\Api;
+namespace Nebalus\Webapi\Controller\Referral\Api;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
