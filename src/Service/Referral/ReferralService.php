@@ -1,9 +1,8 @@
 <?php
 
-namespace Nebalus\Ownsite\Service\Referral;
+namespace Nebalus\Webapi\Service\Referral;
 
-use Nebalus\Ownsite\Repository\MysqlRepository;
-use Nebalus\Ownsite\ValueObject\MysqlRepositoryResponse;
+use Nebalus\Webapi\Repository\MysqlRepository;
 
 class ReferralService
 {
@@ -14,7 +13,7 @@ class ReferralService
         $this->mysqlRepository = $mysqlRepository;
     }
 
-    public function execute()
+    public function execute(): void
     {
         $this->mysqlRepository->getReferralByCode("TEST");
     }

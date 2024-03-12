@@ -1,7 +1,7 @@
 <?php
 
-use Nebalus\Ownsite\Collector\RouteCollector;
-use Nebalus\Ownsite\Factory\DiContainerFactory;
+use Nebalus\Webapi\Collector\RouteCollector;
+use Nebalus\Webapi\Factory\DiContainerFactory;
 use Slim\Factory\AppFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';

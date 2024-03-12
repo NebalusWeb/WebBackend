@@ -1,9 +1,7 @@
 <?php
 
-namespace Nebalus\Ownsite\ValueObject;
+namespace Nebalus\Webapi\ValueObject;
 
 class Referral
 {
-
-
 }

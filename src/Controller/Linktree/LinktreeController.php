@@ -1,9 +1,9 @@
 <?php
 
-namespace Nebalus\Ownsite\Controller\Linktree;
+namespace Nebalus\Webapi\Controller\Linktree;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class LinktreeController
 {
@@ -13,5 +13,4 @@ class LinktreeController
 
         return $response->withStatus(200);
     }
-
 }

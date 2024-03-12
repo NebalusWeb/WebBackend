@@ -1,14 +1,13 @@
 <?php
 
-namespace Nebalus\Ownsite\Controller\Referral;
+namespace Nebalus\Webapi\Controller\Referral;
 
-use Nebalus\Ownsite\Service\Referral\ReferralService;
+use Nebalus\Webapi\Service\Referral\ReferralService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ReferralController
 {
-
     private ReferralService $referralService;
 
     public function __construct(ReferralService $referralService)
@@ -20,7 +19,7 @@ class ReferralController
     {
         $queryParams = $request->getQueryParams();
         $response = $response->withStatus(307);
-        if(!key_exists("q", $queryParams)) {
+        if (!key_exists("q", $queryParams)) {
             return $response->withAddedHeader("Location", "/");
         }
 

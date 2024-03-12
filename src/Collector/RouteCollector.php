@@ -1,22 +1,22 @@
 <?php
 
-namespace Nebalus\Ownsite\Collector;
+namespace Nebalus\Webapi\Collector;
 
-use Nebalus\Ownsite\Controller\DocsController;
-use Nebalus\Ownsite\Controller\HomeController;
-use Nebalus\Ownsite\Controller\Referral\Api\ReferralApiCreateController;
-use Nebalus\Ownsite\Controller\Referral\Api\ReferralApiDeleteController;
-use Nebalus\Ownsite\Controller\Referral\Api\ReferralApiReadController;
-use Nebalus\Ownsite\Controller\Referral\Api\ReferralApiUpdateController;
-use Nebalus\Ownsite\Controller\Referral\ReferralController;
-use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiCreateController;
-use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiDeleteController;
-use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiReadController;
-use Nebalus\Ownsite\Controller\Linktree\Api\LinktreeApiUpdateController;
-use Nebalus\Ownsite\Controller\Linktree\LinktreeController;
-use Nebalus\Ownsite\Controller\TempController;
-use Nebalus\Ownsite\Handler\HttpNotFoundHandler;
-use Nebalus\Ownsite\Middleware\JsonValidatorMiddleware;
+use Nebalus\Webapi\Controller\DocsController;
+use Nebalus\Webapi\Controller\HomeController;
+use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiCreateController;
+use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiDeleteController;
+use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiReadController;
+use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiUpdateController;
+use Nebalus\Webapi\Controller\Linktree\LinktreeController;
+use Nebalus\Webapi\Controller\Referral\Api\ReferralApiCreateController;
+use Nebalus\Webapi\Controller\Referral\Api\ReferralApiDeleteController;
+use Nebalus\Webapi\Controller\Referral\Api\ReferralApiReadController;
+use Nebalus\Webapi\Controller\Referral\Api\ReferralApiUpdateController;
+use Nebalus\Webapi\Controller\Referral\ReferralController;
+use Nebalus\Webapi\Controller\TempController;
+use Nebalus\Webapi\Handler\HttpNotFoundHandler;
+use Nebalus\Webapi\Middleware\JsonValidatorMiddleware;
 use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
