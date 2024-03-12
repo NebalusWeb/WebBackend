@@ -12,6 +12,6 @@ $container = $containerFactory->build();
 $app = AppFactory::createFromContainer($container);
 
 $routes = new RouteCollector($app);
-$routes->initRoutes();
+$routes->init();
 
 $app->run();

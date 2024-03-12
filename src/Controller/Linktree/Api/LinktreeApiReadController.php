@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 class LinktreeApiReadController
 {
 
-    public function action(Request $request, Response $response): Response
+    public function action(Request $request, Response $response, array $args): Response
     {
         $response->getBody()->write("Linktree Api Read");
 

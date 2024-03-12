@@ -16,6 +16,6 @@ class ReferralService
 
     public function execute()
     {
-
+        $this->mysqlRepository->getReferralByCode("TEST");
     }
 }
