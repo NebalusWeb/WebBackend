@@ -14,7 +14,19 @@ services:
       - ./public:/var/www/public:ro
     depends_on:
       - php-fpm
-      - mysql-db
+    networks:
+      - default
+      - public-net
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - '8080:80'
+    environment:
+      - PMA_HOST=mysql-db
+    networks:
+      - db-net
+      - public-net
 
   # INTERN PORT: 9000
   php-fpm:
@@ -26,20 +38,35 @@ services:
       - ./:/var/www:rw
     environment:
       APP_ENV: "development"
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "12346"
+      TWIG_CHARSET: "utf-8"
+      TWIG_DEBUG: "true"
     depends_on:
-      - mysql-db
+      - mysql
+    networks:
+      - default
+      - db-net
 
   # INTERN PORT: 3306
-  mysql-db:
+  mysql:
+    hostname: "mysql"
     build:
       context: .
       dockerfile: docker/mysql/Dockerfile
       target: base
     environment:
-      MYSQL_ROOT_PASSWORD: NUTELLA
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: 12346
-      MYSQL_DATABASE: todo
+      MYSQL_ROOT_PASSWORD: "bAcspSi$$93@C!"
+      MYSQL_DATABASE: "main"
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "12346"
     volumes:
       - /var/lib/mysql
+    networks:
+      - db-net
 
+networks:
+  public-net:
+    name: public-net
+  db-net:
+    name: db-net

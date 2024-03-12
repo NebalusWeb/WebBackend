@@ -1,8 +1,6 @@
 {
     "name": "nebalus/testapi",
     "description": "A Test API",
-    "minimum-stability": "dev",
-    "type": "project",
     
     "authors": [
         {
@@ -12,17 +10,20 @@
     
     "autoload": {
         "psr-4": {
-            "Testapi\\": "src/"
+            "Nebalus\\Ownsite\\": "src/"
         }
     },
     
     "require": {
-    	"php": "^8.3",
+    	  "php": "^8.3",
         "php-di/php-di": "^7.0",
         "ext-pdo": "*",
+        "php-di/php-di": "^7.0",
         "monolog/monolog": "^3.5",
         "slim/slim": "4.*",
-        "slim/psr7": "^1.6"
+        "slim/psr7": "^1.6",
+        "slim/twig-view": "^3.3",
+        "guzzlehttp/guzzle": "^7.8"
     },
     
     "autoload-dev": {
@@ -33,7 +34,7 @@
     
     "require-dev": {
         "phpmd/phpmd": "^2.15",
-        "squizlabs/php_codesniffer": "^3.8",
+        "squizlabs/php_codesniffer": "^3.9",
         "phpunit/phpunit": "^11.0"
     }
 }
