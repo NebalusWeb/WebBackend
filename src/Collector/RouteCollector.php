@@ -2,21 +2,16 @@
 
 namespace Nebalus\Webapi\Collector;
 
-use Nebalus\Webapi\Controller\DocsController;
-use Nebalus\Webapi\Controller\HomeController;
 use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiCreateController;
 use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiDeleteController;
 use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiReadController;
 use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiUpdateController;
-use Nebalus\Webapi\Controller\Linktree\LinktreeController;
 use Nebalus\Webapi\Controller\Referral\Api\ReferralApiCreateController;
 use Nebalus\Webapi\Controller\Referral\Api\ReferralApiDeleteController;
 use Nebalus\Webapi\Controller\Referral\Api\ReferralApiReadController;
 use Nebalus\Webapi\Controller\Referral\Api\ReferralApiUpdateController;
-use Nebalus\Webapi\Controller\Referral\ReferralController;
 use Nebalus\Webapi\Controller\TempController;
 use Nebalus\Webapi\Handler\HttpNotFoundHandler;
-use Nebalus\Webapi\Middleware\JsonValidatorMiddleware;
 use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteCollectorProxy;
