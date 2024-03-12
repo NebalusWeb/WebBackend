@@ -9,12 +9,15 @@ use Slim\Views\Twig;
 class HomeController
 {
 
-    public function action(Request $request, Response $response): Response
-    {
-        $view = Twig::fromRequest($request);
-        return $view->render($response, 'homepage.html', [
+    private Twig $twig;
 
-        ])->withStatus(200);
+    public function __construct(Twig $twig) {
+        $this->twig = $twig;
+    }
+
+    public function action(Request $request, Response $response, array $args): Response
+    {
+        return $this->twig->render($response, "homepage.twig")->withStatus(200);
     }
 
 }

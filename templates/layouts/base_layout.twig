@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+{% block page_header %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% if title is defined %} <title>{{ title }}</title> {% endif %}
+
+    {# Page Meta #}
+    {% if meta_site_name is defined %} <meta property="og:site_name" content="{{ meta_site_name }}"> {% endif %}
+    {% if meta_author is defined %} <meta name="author" content="{{ meta_author }}"> {% endif %}
+    {% if meta_application is defined %} <meta name="application-name" content="{{ meta_application }}"> {% endif %}
+    {% if meta_theme_color is defined %} <meta name="theme-color" content="{{ meta_theme_color }}"> {% endif %}
+    {% if meta_title is defined %} <meta property="og:title" content="{{ meta_page_title }}"> {% endif %}
+    {% if meta_description is defined %} <meta property="og:description" content="{{ meta_description }}"> {% endif %}
+    {% if meta_image is defined %} 
+        <meta property="og:image" content="{{ meta_image }}"> 
+        {% if meta_image_height is defined %} <meta name="og:image:height" property="og:image:height" content="{{ meta_image_height }}"> {% endif %}
+        {% if meta_image_width is defined %} <meta name="og:image:width" property="og:image:width" content="{{ meta_image_width }}"> {% endif %}
+        {% if meta_image_type is defined %} <meta name="og:image:type" property="og:image:type" content="{{ meta_image_type }}"> {% endif %} 
+    {% endif %}
+
+    <style>{% block page_style %}{% endblock %}</style>
+
+    <!-- Initializes the Tailwind framework -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+{% endblock %}
+</head>
+<body>
+    {% block page_body %}{% endblock %}
+</body>
+</html>  

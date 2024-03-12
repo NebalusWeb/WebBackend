@@ -41,7 +41,15 @@ class MysqlRepository
 
     public function getReferralByCode(string $code): MysqlRepositoryResponse
     {
-        $sql = "SELECT `id`, `code`, `pointer`, `count`, `creationdate`, `enabled` FROM `referrals` WHERE `code` = ?";
+        $sql = "SELECT `id`, `code`, `pointer`, `count`, `creationdate`, `enabled` FROM `referrals` WHERE `code` = :code";
         $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            "code" => $code
+        ]);
+
+        var_dump($stmt->fetch(PDO::FETCH_ASSOC));
+
+        return MysqlRepositoryResponse::from(false);
     }
 }
