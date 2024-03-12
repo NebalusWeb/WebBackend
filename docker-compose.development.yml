@@ -14,7 +14,6 @@ services:
       - ./public:/var/www/public:ro
     depends_on:
       - php-fpm
-      - mysql-db
     networks:
       - default
       - public-net
@@ -44,14 +43,14 @@ services:
       TWIG_CHARSET: "utf-8"
       TWIG_DEBUG: "true"
     depends_on:
-      - mysql-db
+      - mysql
     networks:
       - default
-
+      - db-net
 
   # INTERN PORT: 3306
-  mysql-db:
-    hostname: "mysql-db"
+  mysql:
+    hostname: "mysql"
     build:
       context: .
       dockerfile: docker/mysql/Dockerfile
@@ -64,7 +63,6 @@ services:
     volumes:
       - /var/lib/mysql
     networks:
-      - default
       - db-net
 
 networks:
