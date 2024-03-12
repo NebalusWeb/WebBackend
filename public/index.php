@@ -1,10 +1,10 @@
 <?php
 
-use TestApi\Collector\RouteCollector;
-use TestApi\Factory\DiContainerFactory;
+use Nebalus\Ownsite\Collector\RouteCollector;
+use Nebalus\Ownsite\Factory\DiContainerFactory;
 use Slim\Factory\AppFactory;
 
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $containerFactory = new DiContainerFactory();
 $container = $containerFactory->build();
@@ -12,6 +12,6 @@ $container = $containerFactory->build();
 $app = AppFactory::createFromContainer($container);
 
 $routes = new RouteCollector($app);
-$routes->initRoutes();
+$routes->init();
 
 $app->run();
