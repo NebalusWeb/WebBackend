@@ -1,20 +1,20 @@
+api.nebalus.dev
+  |- /user
+  |    |- /register
+  |- /games
+  |    |- /cosmoventure
+  |    |    |- /version
+  |- /linktree
+  |    |- /create
+  |    |- /read
+  |    |- /update
+  |    |- /delete
+  |- /referal
+  |    |- /create
+  |    |- /read
+  |    |- /update
+  |    |- /delete
 www.nebalus.dev
-  |- /api
-  |    |- /account
-  |    |    |- /register
-  |    |- /game
-  |    |    |- /cosmoventure
-  |    |    |    |- /version
-  |    |- /linktree
-  |    |    |- /create
-  |    |    |- /read
-  |    |    |- /update
-  |    |    |- /delete
-  |    |- /referal
-  |    |    |- /create
-  |    |    |- /read
-  |    |    |- /update
-  |    |    |- /delete
   |- /static      # Is not maintained by the Slim Router but by NGINX
   |    |- /js			# Default JavaScript Ordner
   |    |- /css			# Default CSS Ordner
