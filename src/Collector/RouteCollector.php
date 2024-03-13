@@ -2,14 +2,14 @@
 
 namespace Nebalus\Webapi\Collector;
 
-use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiCreateController;
-use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiDeleteController;
-use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiReadController;
-use Nebalus\Webapi\Controller\Linktree\Api\LinktreeApiUpdateController;
-use Nebalus\Webapi\Controller\Referral\Api\ReferralApiCreateController;
-use Nebalus\Webapi\Controller\Referral\Api\ReferralApiDeleteController;
-use Nebalus\Webapi\Controller\Referral\Api\ReferralApiReadController;
-use Nebalus\Webapi\Controller\Referral\Api\ReferralApiUpdateController;
+use Nebalus\Webapi\Controller\Linktree\LinktreeApiCreateController;
+use Nebalus\Webapi\Controller\Linktree\LinktreeApiDeleteController;
+use Nebalus\Webapi\Controller\Linktree\LinktreeApiReadController;
+use Nebalus\Webapi\Controller\Linktree\LinktreeApiUpdateController;
+use Nebalus\Webapi\Controller\Referral\ReferralApiCreateController;
+use Nebalus\Webapi\Controller\Referral\ReferralApiDeleteController;
+use Nebalus\Webapi\Controller\Referral\ReferralApiReadController;
+use Nebalus\Webapi\Controller\Referral\ReferralApiUpdateController;
 use Nebalus\Webapi\Controller\TempController;
 use Nebalus\Webapi\Handler\HttpNotFoundHandler;
 use Slim\App;
@@ -47,7 +47,7 @@ class RouteCollector
     private function initRoutes(): void
     {
         // Definiert die Route
-        $this->app->get("/account", [TempController::class, "action"]);
+        $this->app->get("/users", [TempController::class, "action"]);
         $this->app->group("/linktree", function (RouteCollectorProxy $group) {
             $group->post("/create", [LinktreeApiCreateController::class, "action"]);
             $group->get("/read", [LinktreeApiReadController::class, "action"]);
@@ -60,7 +60,7 @@ class RouteCollector
             $group->post("/update", [ReferralApiUpdateController::class, "action"]);
             $group->delete("/delete", [ReferralApiDeleteController::class, "action"]);
         });
-        $this->app->group("/game", function (RouteCollectorProxy $group) {
+        $this->app->group("/games", function (RouteCollectorProxy $group) {
             $group->group("/cosmoventure", function (RouteCollectorProxy $group) {
                 $group->get("/version", [TempController::class, "action"]);
             });

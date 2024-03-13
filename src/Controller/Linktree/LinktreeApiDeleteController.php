@@ -1,15 +1,19 @@
 <?php
 
-namespace Nebalus\Webapi\Controller\Linktree\Api;
+namespace Nebalus\Webapi\Controller\Linktree;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class LinktreeApiCreateController
+class LinktreeApiDeleteController
 {
+    public function __construct()
+    {
+    }
+
     public function action(Request $request, Response $response, array $args): Response
     {
-        $response->getBody()->write("Linktree Api Create");
+        $response->getBody()->write("Linktree Api Delete");
 
         return $response->withStatus(200);
     }
