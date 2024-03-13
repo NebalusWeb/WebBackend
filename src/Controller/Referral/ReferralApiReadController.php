@@ -1,11 +1,11 @@
 <?php
 
-namespace Nebalus\Webapi\Controller\Referral\Api;
+namespace Nebalus\Webapi\Controller\Referral;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ReferralApiDeleteController
+class ReferralApiReadController
 {
     public function __construct()
     {
@@ -13,7 +13,7 @@ class ReferralApiDeleteController
 
     public function action(Request $request, Response $response, array $args): Response
     {
-        $response->getBody()->write("Referral Api Delete");
+        $response->getBody()->write("Referral Api Read");
 
         return $response->withStatus(200);
     }
