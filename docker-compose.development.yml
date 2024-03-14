@@ -40,8 +40,6 @@ services:
       APP_ENV: "development"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "12346"
-      TWIG_CHARSET: "utf-8"
-      TWIG_DEBUG: "true"
     depends_on:
       - mysql
     networks:

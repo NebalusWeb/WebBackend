@@ -28,9 +28,6 @@ services:
       APP_ENV: "production"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "&!7gmRdr&z4#E6"
-      TWIG_CACHE: "/cache/twig"
-      TWIG_CHARSET: "utf-8"
-      TWIG_DEBUG: "true"
     depends_on:
       - mysql
     networks:
