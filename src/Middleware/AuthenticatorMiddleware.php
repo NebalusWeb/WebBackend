@@ -1,8 +1,7 @@
 <?php
 
-namespace Nebalus\Ownsite\Middleware;
+namespace Nebalus\Webapi\Middleware;
 
 class AuthenticatorMiddleware
 {
-
 }
