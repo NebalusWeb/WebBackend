@@ -13,7 +13,6 @@ services:
     depends_on:
       - php-fpm
     networks:
-      - default
       - public-net
 
   # INTERN PORT: 9000
@@ -31,7 +30,7 @@ services:
     depends_on:
       - mysql
     networks:
-      - default
+      - public-net
       - db-net
 
   # INTERN PORT: 3306
