@@ -1,19 +1,24 @@
 api.nebalus.dev
   |- /user
   |    |- /register
+  |- /users
+  |    |- /{username}
+  |    |    |- /
   |- /games
   |    |- /cosmoventure
   |    |    |- /version
-  |- /linktree
+  |- /linktrees
   |    |- /create
   |    |- /read
   |    |- /update
   |    |- /delete
-  |- /referal
+  |- /referrals
   |    |- /create
   |    |- /read
   |    |- /update
   |    |- /delete
+
+
 www.nebalus.dev
   |- /static      # Is not maintained by the Slim Router but by NGINX
   |    |- /js			# Default JavaScript Ordner
