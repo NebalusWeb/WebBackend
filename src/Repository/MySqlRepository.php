@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Repository;
 
 use PDO;
 
-class MysqlRepository
+class MySqlRepository
 {
     private PDO $pdo;
 
