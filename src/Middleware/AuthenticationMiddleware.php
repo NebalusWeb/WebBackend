@@ -2,6 +2,6 @@
 
 namespace Nebalus\Webapi\Middleware;
 
-class AuthenticatorMiddleware
+class AuthenticationMiddleware
 {
 }

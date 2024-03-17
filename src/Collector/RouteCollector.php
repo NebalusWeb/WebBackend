@@ -48,13 +48,13 @@ class RouteCollector
     {
         // Definiert die Route
         $this->app->get("/users", [TempController::class, "action"]);
-        $this->app->group("/linktree", function (RouteCollectorProxy $group) {
+        $this->app->group("/linktrees", function (RouteCollectorProxy $group) {
             $group->post("/create", [LinktreeApiCreateController::class, "action"]);
             $group->get("/read", [LinktreeApiReadController::class, "action"]);
             $group->post("/update", [LinktreeApiUpdateController::class, "action"]);
             $group->delete("/delete", [LinktreeApiDeleteController::class, "action"]);
         });
-        $this->app->group("/referral", function (RouteCollectorProxy $group) {
+        $this->app->group("/referrals", function (RouteCollectorProxy $group) {
             $group->post("/create", [ReferralApiCreateController::class, "action"]);
             $group->get("/read", [ReferralApiReadController::class, "action"]);
             $group->post("/update", [ReferralApiUpdateController::class, "action"]);
