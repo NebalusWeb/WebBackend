@@ -15,7 +15,6 @@ services:
     depends_on:
       - php-fpm
     networks:
-      - default
       - public-net
 
   phpmyadmin:
@@ -23,7 +22,7 @@ services:
     ports:
       - '8080:80'
     environment:
-      - PMA_HOST=mysql-db
+      - PMA_HOST=mysql
     networks:
       - db-net
       - public-net
@@ -43,7 +42,6 @@ services:
     depends_on:
       - mysql
     networks:
-      - default
       - db-net
 
   # INTERN PORT: 3306
@@ -54,7 +52,7 @@ services:
       dockerfile: docker/mysql/Dockerfile
       target: base
     environment:
-      MYSQL_ROOT_PASSWORD: "bAcspSi$$93@C!"
+      MYSQL_ROOT_PASSWORD: "123456"
       MYSQL_DATABASE: "main"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "12346"
