@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Mar 17, 2024 at 02:50 AM
+-- Generation Time: Mar 17, 2024 at 10:53 PM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.16
 
@@ -53,7 +53,7 @@ CREATE TABLE `linktrees` (
                              `accountid` int NOT NULL COMMENT 'The ID of the account that owns this entry',
                              `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'This text is shown as the description',
                              `creationdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
-                             `count` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this entry was accessed'
+                             `viewcount` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this entry was accessed'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -81,7 +81,7 @@ CREATE TABLE `referrals` (
                              `accountid` int NOT NULL COMMENT 'The ID of the account that owns this entry',
                              `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'A unique code that is used for /ref?q=code',
                              `pointer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '/' COMMENT 'Points to the Final URL (''/'' is the root path from the aktual webserver)',
-                             `count` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this referral entry has been accessed',
+                             `viewcount` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this referral entry has been accessed',
                              `creationdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
                              `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Defines if this referral is enabled'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -90,11 +90,11 @@ CREATE TABLE `referrals` (
 -- Dumping data for table `referrals`
 --
 
-INSERT INTO `referrals` (`id`, `accountid`, `code`, `pointer`, `count`, `creationdate`, `enabled`) VALUES
-                                                                                                       (1, 1, 'TEST', '/', 0, '2024-02-25 00:00:00', 1),
-                                                                                                       (3, 1, 'TEST1', '/', 0, '2024-02-25 00:00:00', 1),
-                                                                                                       (5, 1, 'TEST42', '/', 0, '2024-02-27 11:04:20', 1),
-                                                                                                       (6, 1, '42', '/', 0, '2024-02-28 21:30:24', 1);
+INSERT INTO `referrals` (`id`, `accountid`, `code`, `pointer`, `viewcount`, `creationdate`, `enabled`) VALUES
+                                                                                                           (1, 1, 'TEST', '/', 0, '2024-02-25 00:00:00', 1),
+                                                                                                           (3, 1, 'TEST1', '/', 0, '2024-02-25 00:00:00', 1),
+                                                                                                           (5, 1, 'TEST42', '/', 0, '2024-02-27 11:04:20', 1),
+                                                                                                           (6, 1, '42', '/', 0, '2024-02-28 21:30:24', 1);
 
 -- --------------------------------------------------------
 
@@ -104,9 +104,8 @@ INSERT INTO `referrals` (`id`, `accountid`, `code`, `pointer`, `count`, `creatio
 
 CREATE TABLE `tokens` (
                           `id` int NOT NULL COMMENT 'The ID of this entry (Primary Key)',
-                          `accountid` int NOT NULL COMMENT 'The ID of the account that owns this entry',
                           `creationdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
-                          `expiredate` datetime DEFAULT NULL COMMENT 'The expire date of this entry',
+                          `expiredate` datetime NOT NULL COMMENT 'The expire date of this entry',
                           `token` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

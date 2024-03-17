@@ -14,7 +14,7 @@ api.nebalus.dev
   |    |- /delete
   |- /referrals
   |    |- /create
-  |    |- /read
+  |    |- /get
   |    |- /update
   |    |- /delete
 

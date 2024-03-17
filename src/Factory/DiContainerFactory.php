@@ -6,6 +6,7 @@ use DI\Container;
 use DI\ContainerBuilder;
 use Exception;
 use PDO;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 use function DI\factory;
 
@@ -17,7 +18,8 @@ class DiContainerFactory
     public function build(): Container
     {
         $appDefinitions = [
-            PDO::class => factory([PdoFactory::class, 'build'])
+            PDO::class => factory([PdoFactory::class, 'build']),
+            ResponseFactoryInterface::class => new ResponseFactory()
         ];
 
         $builder = new ContainerBuilder();

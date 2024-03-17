@@ -42,6 +42,7 @@ services:
     depends_on:
       - mysql
     networks:
+      - public-net
       - db-net
 
   # INTERN PORT: 3306

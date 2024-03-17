@@ -8,12 +8,13 @@ use Nebalus\Webapi\Controller\Linktree\LinktreeApiReadController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeApiUpdateController;
 use Nebalus\Webapi\Controller\Referral\ReferralApiCreateController;
 use Nebalus\Webapi\Controller\Referral\ReferralApiDeleteController;
-use Nebalus\Webapi\Controller\Referral\ReferralApiReadController;
+use Nebalus\Webapi\Controller\Referral\ReferralApiGetController;
 use Nebalus\Webapi\Controller\Referral\ReferralApiUpdateController;
 use Nebalus\Webapi\Controller\TempController;
-use Nebalus\Webapi\Handler\HttpNotFoundHandler;
+use Nebalus\Webapi\Handler\HttpErrorHandler;
+use Nebalus\Webapi\Middleware\AuthenticationMiddleware;
 use Slim\App;
-use Slim\Exception\HttpNotFoundException;
+use Slim\Exception\HttpException;
 use Slim\Routing\RouteCollectorProxy;
 
 class RouteCollector
@@ -29,8 +30,8 @@ class RouteCollector
     {
         $this->app->addRoutingMiddleware();
 
-        $this->initErrorMiddleware();
         $this->initRoutes();
+        $this->initErrorMiddleware();
     }
 
     private function initErrorMiddleware(): void
@@ -40,7 +41,7 @@ class RouteCollector
         $errorMiddleware = $this->app->addErrorMiddleware($isDevelopmentMode, true, true);
 
         if (true) {
-            $errorMiddleware->setErrorHandler(HttpNotFoundException::class, HttpNotFoundHandler::class);
+            $errorMiddleware->setErrorHandler(HttpException::class, HttpErrorHandler::class);
         }
     }
 
@@ -55,15 +56,17 @@ class RouteCollector
             $group->delete("/delete", [LinktreeApiDeleteController::class, "action"]);
         });
         $this->app->group("/referrals", function (RouteCollectorProxy $group) {
-            $group->post("/create", [ReferralApiCreateController::class, "action"]);
-            $group->get("/read", [ReferralApiReadController::class, "action"]);
-            $group->post("/update", [ReferralApiUpdateController::class, "action"]);
-            $group->delete("/delete", [ReferralApiDeleteController::class, "action"]);
+            $group->map(["PUT"], "/create", [ReferralApiCreateController::class, "action"]);
+            $group->map(["GET"], "/get", [ReferralApiGetController::class, "action"]);
+            $group->map(["POST"], "/update", [ReferralApiUpdateController::class, "action"]);
+            $group->map(["DELETE"], "/delete", [ReferralApiDeleteController::class, "action"]);
         });
         $this->app->group("/games", function (RouteCollectorProxy $group) {
             $group->group("/cosmoventure", function (RouteCollectorProxy $group) {
                 $group->get("/version", [TempController::class, "action"]);
             });
         });
+
+        $this->app->add(AuthenticationMiddleware::class);
     }
 }
