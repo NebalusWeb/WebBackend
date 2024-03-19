@@ -9,14 +9,12 @@ use Slim\Interfaces\ErrorHandlerInterface;
 use Slim\Psr7\Response;
 use Throwable;
 
-class HttpErrorHandler implements ErrorHandlerInterface
+class DefaultErrorHandler implements ErrorHandlerInterface
 {
-    private Response $response;
     private HttpBodyJsonResponse $httpBodyJsonResponse;
 
-    public function __construct(Response $response, HttpBodyJsonResponse $httpBodyJsonResponse)
+    public function __construct(HttpBodyJsonResponse $httpBodyJsonResponse)
     {
-        $this->response = $response;
         $this->httpBodyJsonResponse = $httpBodyJsonResponse;
     }
 
@@ -28,14 +26,15 @@ class HttpErrorHandler implements ErrorHandlerInterface
         bool $logErrorDetails
     ): ResponseInterface {
 
-        $response = $this->response->withStatus($exception->getCode());
+        $response = new Response($exception->getCode());
+        $response = $response->withAddedHeader("Content-Type", "application/json");
 
         // Default
         $this->httpBodyJsonResponse->setSuccess(false);
         $this->httpBodyJsonResponse->setStatusCode($response->getStatusCode());
 
         // Error Message
-        $this->httpBodyJsonResponse->setErrorMessage();
+        $this->httpBodyJsonResponse->setErrorMessage($exception->getMessage());
 
         $response->getBody()->write($this->httpBodyJsonResponse->format());
 
