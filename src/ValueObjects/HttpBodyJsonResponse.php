@@ -4,25 +4,18 @@ namespace Nebalus\Webapi\ValueObjects;
 
 class HttpBodyJsonResponse
 {
-    private bool $success;
     private int $statusCode;
     private array $payload;
     private array $error;
 
     public function __construct()
     {
-        $this->success = false;
         $this->statusCode = 400;
         $this->payload = [];
         $this->error = [
             "code" => 0,
             "message" => "Unknown Error!"
         ];
-    }
-
-    public function setSuccess(bool $value)
-    {
-        $this->success = $value;
     }
 
     public function setStatusCode(int $value)
