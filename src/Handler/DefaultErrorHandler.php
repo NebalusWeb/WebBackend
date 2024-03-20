@@ -25,15 +25,12 @@ class DefaultErrorHandler implements ErrorHandlerInterface
         bool $logErrors,
         bool $logErrorDetails
     ): ResponseInterface {
+        $code = $exception->getCode() <= 599 && $exception->getCode() >= 100 ? $exception->getCode() : 500;
 
-        $response = new Response($exception->getCode());
+        $response = new Response($code);
         $response = $response->withAddedHeader("Content-Type", "application/json");
 
-        // Default
-        $this->httpBodyJsonResponse->setSuccess(false);
-        $this->httpBodyJsonResponse->setStatusCode($response->getStatusCode());
-
-        // Error Message
+        $this->httpBodyJsonResponse->setStatus(-1);
         $this->httpBodyJsonResponse->setErrorMessage($exception->getMessage());
 
         $response->getBody()->write($this->httpBodyJsonResponse->format());

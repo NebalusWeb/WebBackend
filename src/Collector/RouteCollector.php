@@ -2,17 +2,17 @@
 
 namespace Nebalus\Webapi\Collector;
 
-use Nebalus\Webapi\Controller\Linktree\LinktreeApiCreateController;
-use Nebalus\Webapi\Controller\Linktree\LinktreeApiDeleteController;
-use Nebalus\Webapi\Controller\Linktree\LinktreeApiReadController;
-use Nebalus\Webapi\Controller\Linktree\LinktreeApiUpdateController;
-use Nebalus\Webapi\Controller\Referral\ReferralApiCreateController;
-use Nebalus\Webapi\Controller\Referral\ReferralApiDeleteController;
-use Nebalus\Webapi\Controller\Referral\ReferralApiGetController;
-use Nebalus\Webapi\Controller\Referral\ReferralApiUpdateController;
+use Nebalus\Webapi\Controller\Linktree\LinktreeCreateController;
+use Nebalus\Webapi\Controller\Linktree\LinktreeDeleteController;
+use Nebalus\Webapi\Controller\Linktree\LinktreeReadController;
+use Nebalus\Webapi\Controller\Linktree\LinktreeUpdateController;
+use Nebalus\Webapi\Controller\Referral\ReferralCreateController;
+use Nebalus\Webapi\Controller\Referral\ReferralDeleteController;
+use Nebalus\Webapi\Controller\Referral\ReferralGetController;
+use Nebalus\Webapi\Controller\Referral\ReferralUpdateController;
 use Nebalus\Webapi\Controller\TempController;
 use Nebalus\Webapi\Handler\DefaultErrorHandler;
-use Nebalus\Webapi\Middleware\AuthenticationMiddleware;
+use Nebalus\Webapi\Middleware\JwtAuthenticationMiddleware;
 use Slim\App;
 use Slim\Exception\HttpException;
 use Slim\Routing\RouteCollectorProxy;
@@ -50,25 +50,26 @@ class RouteCollector
     private function initRoutes(): void
     {
         // Definiert die Route
-        $this->app->get("/users", [TempController::class, "action"]);
+        $this->app->group("/user", function (RouteCollectorProxy $group) {
+            $group->post("/login", [TempController::class, "action"]);
+            $group->post("/register", [TempController::class, "action"]);
+        });
         $this->app->group("/linktree", function (RouteCollectorProxy $group) {
-            $group->post("/create", [LinktreeApiCreateController::class, "action"]);
-            $group->get("/read", [LinktreeApiReadController::class, "action"]);
-            $group->post("/update", [LinktreeApiUpdateController::class, "action"]);
-            $group->delete("/delete", [LinktreeApiDeleteController::class, "action"]);
-        });
+            $group->post("/create", [LinktreeCreateController::class, "action"]);
+            $group->get("/read", [LinktreeReadController::class, "action"]);
+            $group->post("/update", [LinktreeUpdateController::class, "action"]);
+            $group->delete("/delete", [LinktreeDeleteController::class, "action"]);
+        })->add(JwtAuthenticationMiddleware::class);
         $this->app->group("/referral", function (RouteCollectorProxy $group) {
-            $group->map(["PUT"], "/create", [ReferralApiCreateController::class, "action"]);
-            $group->map(["GET"], "/get", [ReferralApiGetController::class, "action"]);
-            $group->map(["POST"], "/update", [ReferralApiUpdateController::class, "action"]);
-            $group->map(["DELETE"], "/delete", [ReferralApiDeleteController::class, "action"]);
-        });
+            $group->map(["PUT"], "/create", [ReferralCreateController::class, "action"]);
+            $group->map(["GET"], "/get", [ReferralGetController::class, "action"]);
+            $group->map(["POST"], "/update", [ReferralUpdateController::class, "action"]);
+            $group->map(["DELETE"], "/delete", [ReferralDeleteController::class, "action"]);
+        })->add(JwtAuthenticationMiddleware::class);
         $this->app->group("/games", function (RouteCollectorProxy $group) {
             $group->group("/cosmoventure", function (RouteCollectorProxy $group) {
                 $group->get("/version", [TempController::class, "action"]);
             });
-        });
-
-        $this->app->add(AuthenticationMiddleware::class);
+        })->add(JwtAuthenticationMiddleware::class);
     }
 }

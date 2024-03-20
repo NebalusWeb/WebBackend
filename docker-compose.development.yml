@@ -39,6 +39,7 @@ services:
       APP_ENV: "development"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "12346"
+      JWT_SECRET: "H.lYocRKGgrqV2CZGKc)0.b#R-xU'.GaHmI1;K;,Fs!jSkEgyU]*dLbuDvQJl*q@"
     depends_on:
       - mysql
     networks:

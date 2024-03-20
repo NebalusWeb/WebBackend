@@ -45,6 +45,7 @@ services:
       MYSQL_DATABASE: "main"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "&!7gmRdr&z4#E6"
+      JWT_SECRET: "x5cgob|2o'Gg;5B)h45.YaaDcX!!JT=K?2SF42X'#f.A6pa|wQOtzC0W\|3}Gl0T"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:

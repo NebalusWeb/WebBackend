@@ -4,46 +4,48 @@ namespace Nebalus\Webapi\ValueObjects;
 
 class HttpBodyJsonResponse
 {
-    private int $statusCode;
-    private array $payload;
-    private array $error;
+    // -1 = error
+    // 0 = success
+    // 1 = fail
+    private int $status;
+    private array $data;
+    private string $errorMessage;
 
     public function __construct()
     {
-        $this->statusCode = 400;
-        $this->payload = [];
-        $this->error = [
-            "code" => 0,
-            "message" => "Unknown Error!"
-        ];
+        $this->status = 0;
+        $this->data = [];
+        $this->errorMessage = "Unknown Error!";
     }
 
-    public function setStatusCode(int $value)
+    public function setStatus(int $value): void
     {
-        $this->statusCode = $value;
+        $this->status = $value;
     }
 
-    public function setErrorCode(int $value)
+    public function setData(array $values): void
     {
-        $this->error["code"] = $value;
+        $this->data = $values;
     }
 
-    public function setErrorMessage(string $value)
+    public function setErrorMessage(string $value): void
     {
-        $this->error["message"] = $value;
+        $this->errorMessage = $value;
     }
 
     public function format(): string
     {
-        $responseArray = [
-            "success" => $this->success,
-            "status_code" => $this->statusCode
-        ];
+        $responseArray = [];
 
-        if ($this->success) {
-            $responseArray["payload"] = $this->payload;
-        } else {
-            $responseArray["error"] = $this->error;
+        if ($this->status <= -1) {
+            $responseArray["status"] = "error";
+            $responseArray["message"] = $this->errorMessage;
+        } elseif ($this->status === 0) {
+            $responseArray["status"] = "success";
+            $responseArray["data"] = $this->data;
+        } elseif ($this->status >= 1) {
+            $responseArray["status"] = "fail";
+            $responseArray["data"] = $this->data;
         }
 
         return json_encode($responseArray);
