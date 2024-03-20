@@ -5,12 +5,15 @@ namespace Nebalus\Webapi\Middleware;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use ReallySimpleJWT\Token;
+use Slim\Middleware\RoutingMiddleware;
+use Slim\MiddlewareDispatcher;
 
-class JwtAuthenticationMiddleware
+class JwtAuthMiddleware implements MiddlewareInterface
 {
-    public function __invoke(Request $request, RequestHandler $handler): Response
+    #[\Override] public function process(Request $request, RequestHandler $handler): Response
     {
         if (!$request->hasHeader("token")) {
             throw new InvalidArgumentException("No authentication header 'token' provided.", 401);

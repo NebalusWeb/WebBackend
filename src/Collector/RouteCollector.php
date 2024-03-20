@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Collector;
 
+use Nebalus\Webapi\Controller\Account\AccountLoginController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeCreateController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeDeleteController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeReadController;
@@ -12,7 +13,7 @@ use Nebalus\Webapi\Controller\Referral\ReferralGetController;
 use Nebalus\Webapi\Controller\Referral\ReferralUpdateController;
 use Nebalus\Webapi\Controller\TempController;
 use Nebalus\Webapi\Handler\DefaultErrorHandler;
-use Nebalus\Webapi\Middleware\JwtAuthenticationMiddleware;
+use Nebalus\Webapi\Middleware\JwtAuthMiddleware;
 use Slim\App;
 use Slim\Exception\HttpException;
 use Slim\Routing\RouteCollectorProxy;
@@ -51,7 +52,7 @@ class RouteCollector
     {
         // Definiert die Route
         $this->app->group("/user", function (RouteCollectorProxy $group) {
-            $group->post("/login", [TempController::class, "action"]);
+            $group->post("/login", [AccountLoginController::class, "action"]);
             $group->post("/register", [TempController::class, "action"]);
         });
         $this->app->group("/linktree", function (RouteCollectorProxy $group) {
@@ -59,17 +60,17 @@ class RouteCollector
             $group->get("/read", [LinktreeReadController::class, "action"]);
             $group->post("/update", [LinktreeUpdateController::class, "action"]);
             $group->delete("/delete", [LinktreeDeleteController::class, "action"]);
-        })->add(JwtAuthenticationMiddleware::class);
+        })->add(JwtAuthMiddleware::class);
         $this->app->group("/referral", function (RouteCollectorProxy $group) {
             $group->map(["PUT"], "/create", [ReferralCreateController::class, "action"]);
             $group->map(["GET"], "/get", [ReferralGetController::class, "action"]);
             $group->map(["POST"], "/update", [ReferralUpdateController::class, "action"]);
             $group->map(["DELETE"], "/delete", [ReferralDeleteController::class, "action"]);
-        })->add(JwtAuthenticationMiddleware::class);
+        })->add(JwtAuthMiddleware::class);
         $this->app->group("/games", function (RouteCollectorProxy $group) {
             $group->group("/cosmoventure", function (RouteCollectorProxy $group) {
                 $group->get("/version", [TempController::class, "action"]);
             });
-        })->add(JwtAuthenticationMiddleware::class);
+        })->add(JwtAuthMiddleware::class);
     }
 }
