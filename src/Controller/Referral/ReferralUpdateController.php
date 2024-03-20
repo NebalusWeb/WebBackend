@@ -6,7 +6,7 @@ use Nebalus\Webapi\ValueObjects\HttpBodyJsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ReferralApiCreateController
+class ReferralUpdateController
 {
     private HttpBodyJsonResponse $httpBodyJsonResponse;
 
@@ -17,7 +17,7 @@ class ReferralApiCreateController
 
     public function action(Request $request, Response $response, array $args): Response
     {
-        $response->getBody()->write("ReferralObject Api Create");
+        $response->getBody()->write("ReferralObject Api Update");
 
         return $response->withStatus(200);
     }

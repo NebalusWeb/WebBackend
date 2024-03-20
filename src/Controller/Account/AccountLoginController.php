@@ -1,12 +1,12 @@
 <?php
 
-namespace Nebalus\Webapi\Controller\Referral;
+namespace Nebalus\Webapi\Controller\Account;
 
 use Nebalus\Webapi\ValueObjects\HttpBodyJsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ReferralApiUpdateController
+class AccountLoginController
 {
     private HttpBodyJsonResponse $httpBodyJsonResponse;
 
@@ -17,8 +17,6 @@ class ReferralApiUpdateController
 
     public function action(Request $request, Response $response, array $args): Response
     {
-        $response->getBody()->write("ReferralObject Api Update");
 
-        return $response->withStatus(200);
     }
 }

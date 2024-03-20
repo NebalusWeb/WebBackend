@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Controller\Linktree;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class LinktreeApiCreateController
+class LinktreeCreateController
 {
     public function __construct()
     {

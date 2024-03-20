@@ -21,7 +21,8 @@
         "monolog/monolog": "^3.5",
         "slim/slim": "4.*",
         "slim/psr7": "^1.6",
-        "guzzlehttp/guzzle": "^7.8"
+        "guzzlehttp/guzzle": "^7.8",
+        "rbdwllr/reallysimplejwt": "^5.0"
     },
     
     "autoload-dev": {
