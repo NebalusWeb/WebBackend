@@ -2,15 +2,15 @@
 
 namespace Nebalus\Webapi\Controller\Referral;
 
-use Nebalus\Webapi\ValueObjects\HttpBodyJsonResponse;
+use Nebalus\Webapi\ValueObject\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ReferralUpdateController
 {
-    private HttpBodyJsonResponse $httpBodyJsonResponse;
+    private JsonResponse $httpBodyJsonResponse;
 
-    public function __construct(HttpBodyJsonResponse $httpBodyJsonResponse)
+    public function __construct(JsonResponse $httpBodyJsonResponse)
     {
         $this->httpBodyJsonResponse = $httpBodyJsonResponse;
     }

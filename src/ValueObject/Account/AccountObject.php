@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\ValueObjects\Account;
+namespace Nebalus\Webapi\ValueObject\Account;
 
 use DateTime;
 

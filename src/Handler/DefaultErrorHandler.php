@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Handler;
 
-use Nebalus\Webapi\ValueObjects\HttpBodyJsonResponse;
+use Nebalus\Webapi\ValueObject\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Interfaces\ErrorHandlerInterface;
@@ -11,9 +11,9 @@ use Throwable;
 
 class DefaultErrorHandler implements ErrorHandlerInterface
 {
-    private HttpBodyJsonResponse $httpBodyJsonResponse;
+    private JsonResponse $httpBodyJsonResponse;
 
-    public function __construct(HttpBodyJsonResponse $httpBodyJsonResponse)
+    public function __construct(JsonResponse $httpBodyJsonResponse)
     {
         $this->httpBodyJsonResponse = $httpBodyJsonResponse;
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\ValueObjects;
+namespace Nebalus\Webapi\ValueObject;
 
-class HttpBodyJsonResponse
+class JsonResponse
 {
     // -1 = error
     // 0 = success

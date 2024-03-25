@@ -2,19 +2,29 @@
 
 namespace Nebalus\Webapi\Service\Referral;
 
-use Nebalus\Webapi\Repository\MySqlRepository;
+use Exception;
+use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Repository\MySqlReferralRepository;
+use Nebalus\Webapi\ValueObject\Referral\ReferralObject;
 
 class ReferralGetService
 {
-    private MySqlRepository $mySqlRepository;
+    private MySqlReferralRepository $mySqlReferralRepository;
     public function __construct(
-        MySqlRepository $mySqlRepository,
+        MySqlReferralRepository $mySqlReferralRepository,
     ) {
-        $this->mySqlRepository = $mySqlRepository;
+        $this->mySqlReferralRepository = $mySqlReferralRepository;
     }
 
-    public function action()
+    public function action(string $code): ReferralObject
     {
-        $this->mySqlRepository->getAccountFromId(1);
+        if (($referral = $this->mySqlReferralRepository->getReferralByCode($code)) === false) {
+            throw new ApiException("There is no referral with the code '$code' in the database", 400);
+        }
+        if ($referral->isEnabled()) {
+            $this->mySqlReferralRepository->setViewCountByCode($referral->getCode(), $referral->getViewCount() + 1);
+        }
+
+        return $referral;
     }
 }

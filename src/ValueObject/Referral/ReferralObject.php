@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\ValueObjects\Referral;
+namespace Nebalus\Webapi\ValueObject\Referral;
 
 use DateTime;
 
@@ -28,5 +28,33 @@ class ReferralObject
     public static function from(int $dbId, int $dbAccountId, string $code, string $pointer, int $viewCount, DateTime $creationDate, bool $enabled): ReferralObject
     {
         return new ReferralObject($dbId, $dbAccountId, $code, $pointer, $viewCount, $creationDate, $enabled);
+    }
+    public function getDbId(): int
+    {
+        return $this->dbId;
+    }
+    public function getDbAccountId(): int
+    {
+        return $this->dbAccountId;
+    }
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+    public function getPointer(): string
+    {
+        return $this->pointer;
+    }
+    public function getViewCount(): int
+    {
+        return $this->viewCount;
+    }
+    public function getCreationTimestamp(): int
+    {
+        return $this->creationDate->getTimestamp();
+    }
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
     }
 }
