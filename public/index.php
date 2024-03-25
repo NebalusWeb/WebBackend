@@ -2,16 +2,18 @@
 
 use Nebalus\Webapi\Collector\RouteCollector;
 use Nebalus\Webapi\Factory\DiContainerFactory;
+use Slim\App;
 use Slim\Factory\AppFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$containerFactory = new DiContainerFactory();
-$container = $containerFactory->build();
+$diContainerFactory = new DiContainerFactory();
+$diContainer = $diContainerFactory->build();
 
-$app = AppFactory::createFromContainer($container);
+$slimApp = AppFactory::createFromContainer($diContainer);
+$diContainer->set(App::class, $slimApp);
 
-$routes = new RouteCollector($app);
+$routes = $diContainer->get(RouteCollector::class);
 $routes->init();
 
-$app->run();
+$slimApp->run();

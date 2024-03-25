@@ -2,13 +2,13 @@
 
 namespace Nebalus\Webapi\Service\Account;
 
-use Nebalus\Webapi\Repository\MySqlRepository;
+use Nebalus\Webapi\Repository\MySqlReferralRepository;
 
 class AccountLoginService
 {
-    private MySqlRepository $mySqlRepository;
+    private MySqlReferralRepository $mySqlRepository;
     public function __construct(
-        MySqlRepository $mySqlRepository,
+        MySqlReferralRepository $mySqlRepository,
     ) {
         $this->mySqlRepository = $mySqlRepository;
     }

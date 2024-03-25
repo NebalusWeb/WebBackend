@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Middleware;
 
 use InvalidArgumentException;
+use Nebalus\Webapi\Option\EnvData;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
@@ -13,19 +14,26 @@ use Slim\MiddlewareDispatcher;
 
 class JwtAuthMiddleware implements MiddlewareInterface
 {
+    private EnvData $env;
+
+    public function __construct(EnvData $env)
+    {
+        $this->env = $env;
+    }
+
     #[\Override] public function process(Request $request, RequestHandler $handler): Response
     {
-        if (!$request->hasHeader("token")) {
-            throw new InvalidArgumentException("No authentication header 'token' provided.", 401);
+        if (!$request->hasHeader("jwt")) {
+            throw new InvalidArgumentException("No authentication header 'jwt' provided.", 401);
         }
-        $token = $request->getHeader("token")[0];
+        $token = $request->getHeader("jwt")[0];
         if (empty($token)) {
-            throw new InvalidArgumentException("The 'token' header is empty.", 401);
+            throw new InvalidArgumentException("The 'jwt' header is empty.", 401);
         }
 
-        if (!Token::validate($token, getenv("JWT_SECRET"))) {
+        if (!Token::validate($token, $this->env->getJwtSecret())) {
             var_dump(Token::validateExpiration($token));
-            $newtoken = Token::create(1, getenv("JWT_SECRET"), time() + 15, 'localhost');
+            $newtoken = Token::create(1, $this->env->getJwtSecret(), time() + 15, 'localhost');
             throw new InvalidArgumentException($newtoken, 401);
         }
 
