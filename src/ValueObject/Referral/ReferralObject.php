@@ -49,9 +49,9 @@ class ReferralObject
     {
         return $this->viewCount;
     }
-    public function getCreationTimestamp(): int
+    public function getCreationDate(): DateTime
     {
-        return $this->creationDate->getTimestamp();
+        return $this->creationDate;
     }
     public function isEnabled(): bool
     {
