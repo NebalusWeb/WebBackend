@@ -12,7 +12,7 @@ class ReferralView
             "code" => $referral->getCode(),
             "pointer" => $referral->getPointer(),
             "viewcount" => $referral->getViewCount(),
-            "creation_timestamp" => $referral->getCreationTimestamp(),
+            "creation_timestamp" => $referral->getCreationDate()->getTimestamp(),
             "enabled" => $referral->isEnabled()
         ];
 

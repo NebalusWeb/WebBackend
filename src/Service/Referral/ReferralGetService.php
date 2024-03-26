@@ -21,9 +21,11 @@ class ReferralGetService
         if (($referral = $this->mySqlReferralRepository->getReferralByCode($code)) === false) {
             throw new ApiException("There is no referral with the code '$code' in the database", 400);
         }
+        /*
         if ($referral->isEnabled()) {
             $this->mySqlReferralRepository->setViewCountByCode($referral->getCode(), $referral->getViewCount() + 1);
         }
+        */
 
         return $referral;
     }
