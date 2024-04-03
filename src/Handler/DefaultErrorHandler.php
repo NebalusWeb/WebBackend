@@ -2,7 +2,8 @@
 
 namespace Nebalus\Webapi\Handler;
 
-use Nebalus\Webapi\ValueObject\JsonResponse;
+use Nebalus\Webapi\Factory\ResponseFactory;
+use Nebalus\Webapi\ValueObject\ApiResponse\ApiErrorResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Interfaces\ErrorHandlerInterface;
@@ -11,11 +12,11 @@ use Throwable;
 
 class DefaultErrorHandler implements ErrorHandlerInterface
 {
-    private JsonResponse $httpBodyJsonResponse;
+    private ResponseFactory $responseFactory;
 
-    public function __construct(JsonResponse $httpBodyJsonResponse)
+    public function __construct(ResponseFactory $responseFactory)
     {
-        $this->httpBodyJsonResponse = $httpBodyJsonResponse;
+        $this->responseFactory = $responseFactory;
     }
 
     public function __invoke(
@@ -27,14 +28,12 @@ class DefaultErrorHandler implements ErrorHandlerInterface
     ): ResponseInterface {
         $code = $exception->getCode() <= 599 && $exception->getCode() >= 100 ? $exception->getCode() : 500;
 
-        $response = new Response($code);
-        $response = $response->withAddedHeader("Content-Type", "application/json");
+        $httpResponse = $this->responseFactory->createResponse($code);
 
-        $this->httpBodyJsonResponse->setStatus(-1);
-        $this->httpBodyJsonResponse->setErrorMessage($exception->getMessage());
+        $apiResponse = ApiErrorResponse::from($exception->getMessage(), $code);
 
-        $response->getBody()->write($this->httpBodyJsonResponse->format());
+        $httpResponse->getBody()->write($apiResponse->getMessageAsJson());
 
-        return $response;
+        return $httpResponse;
     }
 }

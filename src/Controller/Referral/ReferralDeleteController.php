@@ -2,17 +2,14 @@
 
 namespace Nebalus\Webapi\Controller\Referral;
 
-use Nebalus\Webapi\ValueObject\JsonResponse;
+use Nebalus\Webapi\ValueObject\ApiResponse\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ReferralDeleteController
 {
-    private JsonResponse $httpBodyJsonResponse;
-
-    public function __construct(JsonResponse $httpBodyJsonResponse)
+    public function __construct()
     {
-        $this->httpBodyJsonResponse = $httpBodyJsonResponse;
     }
 
     public function action(Request $request, Response $response, array $args): Response
