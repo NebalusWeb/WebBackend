@@ -42,7 +42,7 @@ class RouteCollector
     {
         $errorMiddleware = $this->app->addErrorMiddleware($this->env->isDevelopment(), true, true);
 
-        if ($this->env->isProduction()) {
+        if ($this->env->isProduction() || true) {
             $errorMiddleware->setDefaultErrorHandler(DefaultErrorHandler::class);
         }
     }
@@ -54,6 +54,7 @@ class RouteCollector
             $group->post("/login", [AccountLoginController::class, "action"]);
             $group->post("/register", [TempController::class, "action"]);
         });
+
         $this->app->group("/linktree", function (RouteCollectorProxy $group) {
             $group->post("/create", [LinktreeCreateController::class, "action"])->add(JwtAuthMiddleware::class);
             $group->get("/read", [LinktreeReadController::class, "action"]);
