@@ -32,15 +32,16 @@ CREATE TABLE `accounts` (
                             `creationdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
                             `username` varchar(25) NOT NULL,
                             `passwd_hash` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                            `passwd_salt` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+                            `passwd_salt` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                            `passwd_algo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `creationdate`, `username`, `passwd_hash`, `passwd_salt`) VALUES
-    (1, '2024-02-28 21:28:40', 'Nebalus', '<paouisfhöoi<sydzhgföoi<shzföiouh', '67847');
+INSERT INTO `accounts` (`id`, `creationdate`, `username`, `passwd_hash`, `passwd_salt`, `passwd_algo`) VALUES
+    (1, '2024-02-28 21:28:40', 'Nebalus', '<paouisfhöoi<sydzhgföoi<shzföiouh', '67847', 'sha256');
 
 -- --------------------------------------------------------
 
