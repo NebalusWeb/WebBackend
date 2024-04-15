@@ -1,21 +1,17 @@
 <?php
 
-namespace Nebalus\Webapi\Controller\Linktree;
+namespace Nebalus\Webapi\Controller\User;
 
 use Nebalus\Webapi\Controller\GenericController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class LinktreeCreateController implements GenericController
+class UserCreateController implements GenericController
 {
-    public function __construct()
-    {
-    }
-
     public function action(Request $request, Response $response, array $args): Response
     {
-        $response->getBody()->write("Linktree Api Create");
+        var_dump($request->getAttribute("isAdmin"));
 
-        return $response->withStatus(200);
+        return new \Slim\Psr7\Response(200);
     }
 }

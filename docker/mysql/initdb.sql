@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Mar 25, 2024 at 02:10 PM
+-- Generation Time: Apr 15, 2024 at 11:56 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.15
 
@@ -31,17 +31,15 @@ CREATE TABLE `accounts` (
                             `id` int NOT NULL COMMENT 'The ID of this entry (Primary Key)',
                             `creationdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
                             `username` varchar(25) NOT NULL,
-                            `passwd_hash` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                            `passwd_salt` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                            `passwd_algo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+                            `passwd_hash` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `creationdate`, `username`, `passwd_hash`, `passwd_salt`, `passwd_algo`) VALUES
-    (1, '2024-02-28 21:28:40', 'Nebalus', '<paouisfhöoi<sydzhgföoi<shzföiouh', '67847', 'sha256');
+INSERT INTO `accounts` (`id`, `creationdate`, `username`, `passwd_hash`) VALUES
+    (1, '2024-02-28 21:28:40', 'Nebalus', '<paouisfhöoi<sydzhgföoi<shzföiouh');
 
 -- --------------------------------------------------------
 
