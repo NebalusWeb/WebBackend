@@ -1,12 +1,12 @@
 <?php
 
-namespace Nebalus\Webapi\Controller\Referral;
+namespace Nebalus\Webapi\Controller\Linktree;
 
-use Nebalus\Webapi\ValueObject\ApiResponse\JsonResponse;
+use Nebalus\Webapi\Controller\GenericController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ReferralUpdateController
+class LinktreeEditController implements GenericController
 {
     public function __construct()
     {
@@ -14,7 +14,7 @@ class ReferralUpdateController
 
     public function action(Request $request, Response $response, array $args): Response
     {
-        $response->getBody()->write("ReferralObject Api Update");
+        $response->getBody()->write("Linktree Api Update");
 
         return $response->withStatus(200);
     }

@@ -37,7 +37,7 @@ services:
       - ./:/var/www:rw
     environment:
       APP_ENV: "development"
-      JWT_SECRET: "vtV!hGCp|uXB+-R-oO5j@H|4xA[0,T-x!Q*6S,P53\;sikb|#Kk|QM=c70[edDP7m#}Fg4veq6ActKb.mhE.-S{k\0dCb0'.:E=!"
+      JWT_SECRET: "vtV!hGCp|uXB+-R-oO5j@H|4xA[0,T-x!Q*6S,P53;sikb|#Kk|QM=c70[edDP7m#}Fg4veq6ActKb.mhE.-S{k0dCb0'.:E=!"
       MYSQL_HOST: "mysql:3306"
       MYSQL_DBNAME: "main"
       MYSQL_USER: "admin"
