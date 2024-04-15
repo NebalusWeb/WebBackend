@@ -2,14 +2,25 @@
 
 namespace Nebalus\Webapi\Factory;
 
+use Nebalus\Webapi\Option\EnvData;
 use PDO;
+use PDOException;
 
 class PdoFactory
 {
-    public function build(): PDO
+    private EnvData $env;
+    public function __construct(EnvData $env)
     {
-        $dsn = 'mysql:host=mysql:3306;dbname=main';
+        $this->env = $env;
+    }
 
-        return new PDO($dsn, getenv("MYSQL_USER"), getenv("MYSQL_PASSWORD"));
+    /**
+     * @throws PDOException
+     */
+    public function build(): Pdo
+    {
+        $dsn = 'mysql:host=' . $this->env->getMySqlHost() . ';dbname=' . $this->env->getMySqlDbName();
+
+        return new Pdo($dsn, $this->env->getMySqlUser(), $this->env->getMySqlPasswd());
     }
 }

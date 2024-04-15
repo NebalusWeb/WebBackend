@@ -16,7 +16,7 @@ class ApiErrorResponse implements ApiResponseInterface
 
     public static function from(string $errorMessage = "Undefined Error... please contact an admin!", int $statusCode = 500): self
     {
-        $json = '{"success":false,"http_code":' . $statusCode . ',"error_message":"' . $errorMessage . '"}';
+        $json = '{"success":false,"error":{"code":' . $statusCode . ',"info":"' . $errorMessage . '"}}';
 
         return new self($json, $statusCode);
     }

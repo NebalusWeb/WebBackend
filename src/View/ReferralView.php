@@ -13,7 +13,7 @@ class ReferralView
         $payload = [
             "code" => $referral->getCode(),
             "pointer" => $referral->getPointer(),
-            "viewcount" => $referral->getViewCount(),
+            "view_count" => $referral->getViewCount(),
             "creation_timestamp" => $referral->getCreationDate()->getTimestamp(),
             "enabled" => $referral->isEnabled()
         ];

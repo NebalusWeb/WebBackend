@@ -28,7 +28,6 @@ class ApiSuccessResponse implements ApiResponseInterface
 
         $responseArray = [
             "success" => true,
-            "http_code" => $statusCode,
             "payload" => $payload
         ];
 
