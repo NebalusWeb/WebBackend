@@ -24,7 +24,7 @@ services:
     environment:
       - PMA_HOST=mysql
     networks:
-      - db-net
+      - database-net
       - public-net
 
   # INTERN PORT: 9000
@@ -33,10 +33,12 @@ services:
       context: .
       dockerfile: docker/php-fpm/Dockerfile
       target: development
+    user: '1000:1000' # Default User ID
     volumes:
       - ./:/var/www:rw
     environment:
       APP_ENV: "development"
+      ERROR_LOGLEVEL: "Warning"
       JWT_SECRET: "vtV!hGCp|uXB+-R-oO5j@H|4xA[0,T-x!Q*6S,P53;sikb|#Kk|QM=c70[edDP7m#}Fg4veq6ActKb.mhE.-S{k0dCb0'.:E=!"
       MYSQL_HOST: "mysql:3306"
       MYSQL_DBNAME: "main"
@@ -46,7 +48,7 @@ services:
       - mysql
     networks:
       - public-net
-      - db-net
+      - database-net
 
   # INTERN PORT: 3306
   mysql:
@@ -63,10 +65,10 @@ services:
     volumes:
       - /var/lib/mysql
     networks:
-      - db-net
+      - database-net
 
 networks:
   public-net:
     name: public-net
-  db-net:
-    name: db-net
+  database-net:
+    name: database-net

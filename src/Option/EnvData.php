@@ -2,10 +2,14 @@
 
 namespace Nebalus\Webapi\Option;
 
+use Monolog\Level;
+use function DI\get;
+
 class EnvData
 {
     private bool $isProduction;
     private bool $isDevelopment;
+    private Level $logLevel;
     private string $jwtSecret;
     private string $mysqlPasswd;
     private string $mysqlHost;
@@ -16,6 +20,7 @@ class EnvData
     {
         $this->isProduction = strtolower(getenv("APP_ENV")) === "production";
         $this->isDevelopment = strtolower(getenv("APP_ENV")) === "development";
+        $this->logLevel = Level::fromName(getenv("ERROR_LOGLEVEL"));
         $this->jwtSecret = getenv("JWT_SECRET");
         $this->mysqlPasswd = getenv("MYSQL_PASSWORD");
         $this->mysqlHost = getenv("MYSQL_HOST");
@@ -31,6 +36,11 @@ class EnvData
     public function isDevelopment(): bool
     {
         return $this->isDevelopment;
+    }
+
+    public function getLogLevel(): Level
+    {
+        return $this->logLevel;
     }
 
     public function getJwtSecret(): string

@@ -10,18 +10,16 @@ use Nebalus\Webapi\Controller\User\UserListAllController;
 use Nebalus\Webapi\Controller\User\UserAuthController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeCreateController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeDeleteController;
-use Nebalus\Webapi\Controller\Linktree\LinktreeReadController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeEditController;
 use Nebalus\Webapi\Controller\Referral\ReferralCreateController;
 use Nebalus\Webapi\Controller\Referral\ReferralDeleteController;
 use Nebalus\Webapi\Controller\Referral\ReferralGetController;
 use Nebalus\Webapi\Controller\Referral\ReferralEditController;
 use Nebalus\Webapi\Controller\TempController;
-use Nebalus\Webapi\Handler\DefaultErrorHandler;
+use Nebalus\Webapi\Handler\ErrorHandler;
 use Nebalus\Webapi\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Option\EnvData;
 use Slim\App;
-use Slim\Exception\HttpException;
 use Slim\Routing\RouteCollectorProxy;
 
 class RouteCollector
@@ -48,19 +46,24 @@ class RouteCollector
         $errorMiddleware = $this->app->addErrorMiddleware($this->env->isDevelopment(), true, true);
 
         if ($this->env->isProduction() || true) {
-            $errorMiddleware->setDefaultErrorHandler(DefaultErrorHandler::class);
+            $errorMiddleware->setDefaultErrorHandler(ErrorHandler::class);
         }
     }
 
     private function initRoutes(): void
     {
         // Definiert die Route
+        $this->app->group("/admin", function (RouteCollectorProxy $group) {
+            $group->group("/user", function (RouteCollectorProxy $group) {
+                $group->map(["PUT"], "/create", [UserCreateController::class, "action"]);
+                $group->map(["GET"], "/listall", [UserListAllController::class, "action"]);
+                $group->map(["PATCH"], "/update", [UserEditController::class, "action"]);
+                $group->map(["DELETE"], "/delete", [UserDeleteController::class, "action"]);
+            });
+        })->add(AuthMiddleware::class);
+
         $this->app->group("/user", function (RouteCollectorProxy $group) {
             $group->map(["POST"], "/auth", [UserAuthController::class, "action"]);
-            $group->map(["PUT"], "/create", [UserCreateController::class, "action"])->add(AuthMiddleware::class);
-            $group->map(["GET"], "/listall", [UserListAllController::class, "action"])->add(AuthMiddleware::class);
-            $group->map(["PATCH"], "/update", [UserEditController::class, "action"])->add(AuthMiddleware::class);
-            $group->map(["DELETE"], "/delete", [UserDeleteController::class, "action"])->add(AuthMiddleware::class);
         });
 
         $this->app->group("/linktree", function (RouteCollectorProxy $group) {

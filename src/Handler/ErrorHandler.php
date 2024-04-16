@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Handler;
 
+use Monolog\Logger;
 use Nebalus\Webapi\Factory\ResponseFactory;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiErrorResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -10,13 +11,15 @@ use Slim\Interfaces\ErrorHandlerInterface;
 use Slim\Psr7\Response;
 use Throwable;
 
-class DefaultErrorHandler implements ErrorHandlerInterface
+class ErrorHandler implements ErrorHandlerInterface
 {
     private ResponseFactory $responseFactory;
+    private Logger $errorLogger;
 
-    public function __construct(ResponseFactory $responseFactory)
+    public function __construct(ResponseFactory $responseFactory, Logger $errorLogger)
     {
         $this->responseFactory = $responseFactory;
+        $this->errorLogger = $errorLogger;
     }
 
     public function __invoke(
@@ -26,6 +29,8 @@ class DefaultErrorHandler implements ErrorHandlerInterface
         bool $logErrors,
         bool $logErrorDetails
     ): ResponseInterface {
+        $this->errorLogger->error($exception);
+
         $code = $exception->getCode() <= 599 && $exception->getCode() >= 100 ? $exception->getCode() : 500;
 
         $httpResponse = $this->responseFactory->createResponse($code);
