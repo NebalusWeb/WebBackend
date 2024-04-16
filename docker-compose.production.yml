@@ -25,6 +25,7 @@ services:
       - /var/www/cache
     environment:
       APP_ENV: "production"
+      ERROR_LOGLEVEL: "Warning"
       JWT_SECRET: "t]VP1RJcL){v+BDC?{uyjUoD}]EX3B(pmGCfz147VMbj@3:Dck-jS2P'pj,rYzh6q@m4q()Ds}:|ljzqZRXdKxSv{PDO5X{h]hiH"
       MYSQL_HOST: "mysql:3306"
       MYSQL_DBNAME: "main"
@@ -34,7 +35,7 @@ services:
       - mysql
     networks:
       - public-net
-      - db-net
+      - database-net
 
   # INTERN PORT: 3306
   mysql:
@@ -51,7 +52,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
-      - db-net
+      - database-net
 
 volumes:
   mysql-data:
@@ -59,5 +60,5 @@ volumes:
 networks:
   public-net:
     name: public-net
-  db-net:
-    name: db-net
+  database-net:
+    name: database-net

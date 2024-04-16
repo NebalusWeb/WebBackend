@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Factory;
 use DI\Container;
 use DI\ContainerBuilder;
 use Exception;
+use Monolog\Logger;
 use PDO;
 use Psr\Http\Message\ResponseFactoryInterface;
 
@@ -19,6 +20,7 @@ class DiContainerFactory
     {
         $appDefinitions = [
             PDO::class => factory([PdoFactory::class, 'build']),
+            Logger::class => factory([LoggerFactory::class, "build"]),
             ResponseFactoryInterface::class => new ResponseFactory()
         ];
 
