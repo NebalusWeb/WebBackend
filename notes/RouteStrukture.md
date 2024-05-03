@@ -1,17 +1,17 @@
 api.nebalus.dev
   |- /user
   |    |- /register
-  |- /users
-  |    |- /{username}
-  |    |    |- /
+  |    |- /delete
+  |    |- /get
+  |    |    |- /{username}
+  |    |    |    |- /linktree
+  |    |    |    |    |- /create
+  |    |    |    |    |- /read
+  |    |    |    |    |- /update
+  |    |    |    |    |- /delete
   |- /games
   |    |- /cosmoventure
   |    |    |- /version
-  |- /linktrees
-  |    |- /create
-  |    |- /read
-  |    |- /update
-  |    |- /delete
   |- /referrals
   |    |- /create
   |    |- /get
@@ -41,21 +41,24 @@ www.nebalus.dev
   |    |    |    |- /js
   |    |    |    |- /css
   |    |    |    |- /img
+  |- /privacy-policy		# Beinhaltet die Datenschutz Erklärung
+  |- /terms-of-service
   |- /docs			# Beinhaltet die Documentation für sämtliche projecte
   |    |- /
-  |- /terms
-  |    |- /privacy		# Beinhaltet die Datenschutz Erklärung
   |- /account
   |    |- /register
   |    |- /login
   |    |- /dashboard
+  |- /linktree  # Shows the linktree from the owner
   |- /u
   |    |- /{username}   # Replace the {username} by the requested user... and if requested, it will show the linktree for the user
-  |- /projects
+  |- /p  # Stands for 'projects'
   |    |- /mandelbrot
   |    |- /oriri
   |    |- /cosmoventure
   |    |- /melody
+  |    |   |- /commands
+  |    |- /gfw
+  |    |- /cybershot
   |- / 			# Ist die Standard seite
-  |- /linktree			# Soll ein kleiner APP sein die meine links anzeigt
-  |- /ref			# Ist ein eigender Ref System
+  |- /ref?i=?????	 # Ist ein eigender Ref System
