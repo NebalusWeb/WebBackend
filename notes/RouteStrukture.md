@@ -9,7 +9,7 @@ api.nebalus.dev
   |    |    |    |    |- /read
   |    |    |    |    |- /update
   |    |    |    |    |- /delete
-  |- /games
+  |- /projects
   |    |- /cosmoventure
   |    |    |- /version
   |- /referrals
@@ -49,7 +49,7 @@ www.nebalus.dev
   |    |- /register
   |    |- /login
   |    |- /dashboard
-  |- /linktree  # Shows the linktree from the owner
+  |- /linktree  # Shows the linktree from the owner "Nebalus"
   |- /u
   |    |- /{username}   # Replace the {username} by the requested user... and if requested, it will show the linktree for the user
   |- /p  # Stands for 'projects'
