@@ -18,7 +18,6 @@ api.nebalus.dev
   |    |- /update
   |    |- /delete
 
-
 www.nebalus.dev
   |- /static      # Is not maintained by the Slim Router but by NGINX
   |    |- /js			# Default JavaScript Ordner
@@ -50,6 +49,7 @@ www.nebalus.dev
   |    |- /login
   |    |- /dashboard
   |- /linktree  # Shows the linktree from the owner
+  |- /blogs
   |- /u
   |    |- /{username}   # Replace the {username} by the requested user... and if requested, it will show the linktree for the user
   |- /p  # Stands for 'projects'
