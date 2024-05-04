@@ -34,9 +34,6 @@ class AuthMiddleware implements MiddlewareInterface
         if (empty($jwt)) {
             throw new ApiException("The 'Authorization' header is empty", 401);
         }
-        if (!Token::validate($jwt, $this->env->getJwtSecret())) {
-            throw new ApiException("The jwt is not valid", 401);
-        }
         $newJwt = Token::builder($this->env->getJwtSecret())
             ->setPayloadClaim("user_id", 1)
             ->setPayloadClaim("is_admin", true)
@@ -44,6 +41,9 @@ class AuthMiddleware implements MiddlewareInterface
             ->setIssuer("localhost")
             ->setIssuedAt(time())
             ->build();
+        if (!Token::validate($jwt, $this->env->getJwtSecret())) {
+            throw new ApiException("The jwt is not valid " . $newJwt->getToken(), 401);
+        }
 
         if (!Token::validateExpiration($jwt)) {
             throw new ApiException("The jwt has expired " . $newJwt->getToken(), 401);
