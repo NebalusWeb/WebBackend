@@ -7,7 +7,7 @@ use Nebalus\Webapi\Controller\User\UserCreateController;
 use Nebalus\Webapi\Controller\User\UserDeleteController;
 use Nebalus\Webapi\Controller\User\UserEditController;
 use Nebalus\Webapi\Controller\User\UserListAllController;
-use Nebalus\Webapi\Controller\User\UserAuthController;
+use Nebalus\Webapi\Controller\User\UserLoginController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeCreateController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeDeleteController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeEditController;
@@ -61,24 +61,29 @@ class RouteCollector
             });
         })->add(AuthMiddleware::class);
 
-        $this->app->group("/user", function (RouteCollectorProxy $group) {
-            $group->map(["POST"], "/auth", [UserAuthController::class, "action"]);
+        $this->app->group("/users", function (RouteCollectorProxy $group) {
+            $group->map(["POST"], "", [TempController::class, "action"]);
+            $group->map(["GET"], "/login", [UserLoginController::class, "action"]);
+            $group->map(["GET"], "/logout", [TempController::class, "action"]);
+            $group->group("/{username}", function (RouteCollectorProxy $group) {
+                $group->map(["GET"], "", [TempController::class, "action"]);
+                $group->map(["PATCH"], "", [TempController::class, "action"]);
+                $group->map(["DELETE"], "", [TempController::class, "action"]);
+                $group->group("/linktree", function (RouteCollectorProxy $group) {
+                    $group->map(["GET"], "", [TempController::class, "action"]);
+                    $group->map(["PATCH"], "/update", [TempController::class, "action"])->add(AuthMiddleware::class);
+                });
+            });
         });
 
-        $this->app->group("/linktree", function (RouteCollectorProxy $group) {
-            $group->map(["GET"], "/get", [LinktreeGetController::class, "action"]);
-            $group->map(["PUT"], "/create", [LinktreeCreateController::class, "action"])->add(AuthMiddleware::class);
-            $group->map(["PATCH"], "/update", [LinktreeEditController::class, "action"])->add(AuthMiddleware::class);
-            $group->map(["DELETE"], "/delete", [LinktreeDeleteController::class, "action"])->add(AuthMiddleware::class);
-        });
-
-        $this->app->group("/referral", function (RouteCollectorProxy $group) {
+        $this->app->group("/referrals", function (RouteCollectorProxy $group) {
             $group->map(["GET"], "/get/[{code}]", [ReferralGetController::class, "action"]);
-            $group->map(["PUT"], "/create", [ReferralCreateController::class, "action"])->add(AuthMiddleware::class);
+            $group->map(["POST"], "/create", [ReferralCreateController::class, "action"])->add(AuthMiddleware::class);
             $group->map(["PATCH"], "/update", [ReferralEditController::class, "action"])->add(AuthMiddleware::class);
             $group->map(["DELETE"], "/delete", [ReferralDeleteController::class, "action"])->add(AuthMiddleware::class);
         });
-        $this->app->group("/games", function (RouteCollectorProxy $group) {
+
+        $this->app->group("/projects", function (RouteCollectorProxy $group) {
             $group->group("/cosmoventure", function (RouteCollectorProxy $group) {
                 $group->get("/version", [TempController::class, "action"]);
             });

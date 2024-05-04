@@ -1,10 +1,10 @@
 <?php
 
-namespace Nebalus\Webapi\ValueObject\Account;
+namespace Nebalus\Webapi\ValueObject\User;
 
 use DateTime;
 
-class AccountObject
+class UserObject
 {
     private int $dbId;
     private DateTime $creationDate;
@@ -19,7 +19,7 @@ class AccountObject
 
     public static function from(int $dbId, DateTime $creationDate, string $username): self
     {
-        return new AccountObject($dbId, $creationDate, $username);
+        return new UserObject($dbId, $creationDate, $username);
     }
 
     public function getDbId(): int
