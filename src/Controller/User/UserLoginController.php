@@ -3,17 +3,17 @@
 namespace Nebalus\Webapi\Controller\User;
 
 use Nebalus\Webapi\Controller\GenericController;
-use Nebalus\Webapi\Service\User\UserAuthService;
+use Nebalus\Webapi\Service\User\UserLoginService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class UserAuthController implements GenericController
+class UserLoginController implements GenericController
 {
-    private UserAuthService $userAuthService;
+    private UserLoginService $userLoginService;
 
-    public function __construct(UserAuthService $userAuthService)
+    public function __construct(UserLoginService $userLoginService)
     {
-        $this->userAuthService = $userAuthService;
+        $this->userLoginService = $userLoginService;
     }
 
     public function action(Request $request, Response $response, array $args): Response

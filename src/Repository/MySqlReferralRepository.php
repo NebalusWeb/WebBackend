@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Repository;
 
 use DateTime;
 use Exception;
-use Nebalus\Webapi\ValueObject\Account\AccountObject;
+use Nebalus\Webapi\ValueObject\User\UserObject;
 use Nebalus\Webapi\ValueObject\Referral\ReferralObject;
 use PDO;
 
@@ -37,20 +37,20 @@ class MySqlReferralRepository
     {
     }
 
-    public function setViewCountByCode(string $code, int $viewcount): bool
+    public function setViewCountByCode(string $code, int $view_count): bool
     {
-        $sql = "UPDATE `referrals` SET `viewcount`=:viewcount WHERE BINARY `code`=:code";
+        $sql = "UPDATE `referrals` SET `view_count`=:view_count WHERE BINARY `code`=:code";
         $stmt = $this->pdo->prepare($sql);
 
         return $stmt->execute([
             "code" => $code,
-            "viewcount" => $viewcount
+            "view_count" => $view_count
         ]);
     }
 
     public function getReferralByCode(string $code): ReferralObject|false
     {
-        $sql = "SELECT `id`, `accountid`, `code`, `pointer`, `viewcount`, `creationdate`, `enabled` FROM `referrals` WHERE BINARY `code` = :code";
+        $sql = "SELECT `referral_id`, `user_id`, `code`, `pointer`, `view_count`, `creation_date`, `enabled` FROM `referrals` WHERE BINARY `code` = :code";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute([
@@ -58,8 +58,8 @@ class MySqlReferralRepository
         ]);
 
         if ($entry = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $creationDate = new DateTime($entry["creationdate"]);
-            return ReferralObject::from($entry["id"], $entry["accountid"], $entry["code"], $entry["pointer"], $entry["viewcount"], $creationDate, $entry["enabled"]);
+            $creationDate = new DateTime($entry["creation_date"]);
+            return ReferralObject::from($entry["referral_id"], $entry["user_id"], $entry["code"], $entry["pointer"], $entry["view_count"], $creationDate, $entry["enabled"]);
         }
         return false;
     }
