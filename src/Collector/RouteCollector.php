@@ -55,7 +55,6 @@ class RouteCollector
         // Definiert die Route
         $this->app->group("/admin", function (RouteCollectorProxy $group) {
             $group->group("/user", function (RouteCollectorProxy $group) {
-                $group->map(["PUT"], "/create", [UserCreateController::class, "action"]);
                 $group->map(["GET"], "/listall", [UserListAllController::class, "action"]);
                 $group->map(["PATCH"], "/update", [UserEditController::class, "action"]);
                 $group->map(["DELETE"], "/delete", [UserDeleteController::class, "action"]);
