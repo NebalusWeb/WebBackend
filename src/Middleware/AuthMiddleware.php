@@ -5,10 +5,12 @@ namespace Nebalus\Webapi\Middleware;
 use InvalidArgumentException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Option\EnvData;
+use Nebalus\Webapi\ValueObject\AccessLevel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use ReallySimpleJWT\Exception\BuildException;
 use ReallySimpleJWT\Token;
 use Slim\Middleware\RoutingMiddleware;
 use Slim\MiddlewareDispatcher;
@@ -34,6 +36,7 @@ class AuthMiddleware implements MiddlewareInterface
         if (empty($jwt)) {
             throw new ApiException("The 'Authorization' header is empty", 401);
         }
+
         $newJwt = Token::builder($this->env->getJwtSecret())
             ->setPayloadClaim("user_id", 1)
             ->setPayloadClaim("is_admin", true)
@@ -41,17 +44,20 @@ class AuthMiddleware implements MiddlewareInterface
             ->setIssuer("localhost")
             ->setIssuedAt(time())
             ->build();
+
         if (!Token::validate($jwt, $this->env->getJwtSecret())) {
-            throw new ApiException("The jwt is not valid " . $newJwt->getToken(), 401);
+            throw new ApiException("The JWT is not valid " . $newJwt->getToken(), 401);
         }
 
         if (!Token::validateExpiration($jwt)) {
-            throw new ApiException("The jwt has expired " . $newJwt->getToken(), 401);
+            throw new ApiException("The JWT has expired " . $newJwt->getToken(), 401);
         }
 
         $payload = Token::getPayload($jwt);
+
         if (empty($payload["is_admin"]) === false) {
-            $request = $request->withAttribute("isAdmin", $payload["is_admin"]);
+
+            $request = $request->withAttribute("access_level", AccessLevel::ADMINISTRATOR);
         }
 
         return $handler->handle($request);

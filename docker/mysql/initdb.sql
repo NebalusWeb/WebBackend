@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: May 04, 2024 at 08:21 PM
+-- Generation Time: May 06, 2024 at 07:40 AM
 -- Server version: 8.3.0
--- PHP Version: 8.2.16
+-- PHP Version: 8.2.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -73,7 +73,7 @@ INSERT INTO `referrals` (`referral_id`, `user_id`, `code`, `pointer`, `view_coun
                                                                                                                     (1, 1, 'TEST', '/', 0, '2024-02-25 00:00:00', 1),
                                                                                                                     (3, 1, 'TEST1', '/', 0, '2024-02-25 00:00:00', 1),
                                                                                                                     (5, 1, 'TEST42', '/', 0, '2024-02-27 11:04:20', 1),
-                                                                                                                    (6, 1, '42', '/', 0, '2024-02-28 21:30:24', 1);
+                                                                                                                    (6, 1, '42', '/', 15, '2024-02-28 21:30:24', 1);
 
 -- --------------------------------------------------------
 
@@ -109,7 +109,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `creation_date`, `description`, `is_admin`, `is_enabled`) VALUES
-    (1, 'Nebalus', 'a1d0c6e83f027327d8461063f4ac58a6', '2024-02-28 21:28:40', NULL, 20, 0);
+    (1, 'Nebalus', 'a1d0c6e83f027327d8461063f4ac58a6', '2024-02-28 21:28:40', 'Is the default test User', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -120,21 +120,21 @@ INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `creation_date`, `des
 --
 ALTER TABLE `linktrees`
     ADD PRIMARY KEY (`linktree_id`),
-  ADD UNIQUE KEY `account` (`user_id`);
+    ADD UNIQUE KEY `account` (`user_id`);
 
 --
 -- Indexes for table `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     ADD PRIMARY KEY (`linktree_entry_id`),
-  ADD UNIQUE KEY `linktree_id` (`linktree_id`,`position`);
+    ADD UNIQUE KEY `linktree_id` (`linktree_id`,`position`);
 
 --
 -- Indexes for table `referrals`
 --
 ALTER TABLE `referrals`
     ADD PRIMARY KEY (`referral_id`),
-  ADD UNIQUE KEY `refcode` (`code`) USING BTREE;
+    ADD UNIQUE KEY `refcode` (`code`) USING BTREE;
 
 --
 -- Indexes for table `tokens`

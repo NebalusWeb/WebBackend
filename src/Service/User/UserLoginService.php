@@ -16,6 +16,6 @@ class UserLoginService
 
     public function action()
     {
-        $this->mySqlUserRepository->getAccountFromId(1);
+        $this->mySqlUserRepository->getUserFromId(1);
     }
 }
