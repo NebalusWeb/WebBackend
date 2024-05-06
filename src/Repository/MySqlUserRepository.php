@@ -16,7 +16,7 @@ class MySqlUserRepository
         $this->pdo = $pdo;
     }
 
-    public function getAccountFromId(int $user_id): UserObject
+    public function getUserFromId(int $user_id): UserObject
     {
         $sql = "SELECT `user_id`, `creation_date`, `username` FROM `users` WHERE `user_id` = :user_id";
         $stmt = $this->pdo->prepare($sql);
