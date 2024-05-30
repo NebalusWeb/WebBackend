@@ -2,12 +2,12 @@
 
 namespace Nebalus\Webapi\Controller\Referral;
 
-use Nebalus\Webapi\Controller\GenericController;
+use Nebalus\Webapi\Controller\BaseController;
 use Nebalus\Webapi\ValueObject\ApiResponse\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ReferralDeleteController implements GenericController
+class ReferralDeleteController extends BaseController
 {
     public function __construct()
     {

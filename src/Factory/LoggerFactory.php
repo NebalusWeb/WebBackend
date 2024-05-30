@@ -4,7 +4,6 @@ namespace Nebalus\Webapi\Factory;
 
 use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\StreamHandler;
-use Monolog\Level;
 use Monolog\Logger;
 use Nebalus\Webapi\Option\EnvData;
 

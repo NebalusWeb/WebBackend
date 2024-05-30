@@ -7,17 +7,17 @@ use DateTime;
 class ReferralObject
 {
     private int $dbId;
-    private int $dbAccountId;
+    private int $dbUserId;
     private string $code;
     private string $pointer;
     private int $viewCount;
     private DateTime $creationDate;
     private bool $enabled;
 
-    private function __construct(int $dbId, int $dbAccountId, string $code, string $pointer, int $viewCount, DateTime $creationDate, bool $enabled)
+    private function __construct(int $dbId, int $dbUserId, string $code, string $pointer, int $viewCount, DateTime $creationDate, bool $enabled)
     {
         $this->dbId = $dbId;
-        $this->dbAccountId = $dbAccountId;
+        $this->dbUserId = $dbUserId;
         $this->code = $code;
         $this->pointer = $pointer;
         $this->viewCount = $viewCount;
@@ -25,17 +25,17 @@ class ReferralObject
         $this->enabled = $enabled;
     }
 
-    public static function from(int $dbId, int $dbAccountId, string $code, string $pointer, int $viewCount, DateTime $creationDate, bool $enabled): ReferralObject
+    public static function from(int $dbId, int $dbUserId, string $code, string $pointer, int $viewCount, DateTime $creationDate, bool $enabled): ReferralObject
     {
-        return new ReferralObject($dbId, $dbAccountId, $code, $pointer, $viewCount, $creationDate, $enabled);
+        return new ReferralObject($dbId, $dbUserId, $code, $pointer, $viewCount, $creationDate, $enabled);
     }
     public function getDbId(): int
     {
         return $this->dbId;
     }
-    public function getDbAccountId(): int
+    public function getDbUserId(): int
     {
-        return $this->dbAccountId;
+        return $this->dbUserId;
     }
     public function getCode(): string
     {

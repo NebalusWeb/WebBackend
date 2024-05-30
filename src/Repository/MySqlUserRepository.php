@@ -20,7 +20,6 @@ class MySqlUserRepository
     {
         $sql = "SELECT `user_id`, `creation_date`, `username` FROM `users` WHERE `user_id` = :user_id";
         $stmt = $this->pdo->prepare($sql);
-
         $stmt->execute([
             'user_id' => $user_id
         ]);

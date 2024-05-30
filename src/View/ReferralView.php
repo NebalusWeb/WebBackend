@@ -20,7 +20,7 @@ class ReferralView
 
         if ($safeMode === false) {
             $payload["id"] = $referral->getDbId();
-            $payload["owner_id"] = $referral->getDbAccountId();
+            $payload["owner_id"] = $referral->getDbUserId();
         }
 
         return ApiSuccessResponse::from($payload, 200);

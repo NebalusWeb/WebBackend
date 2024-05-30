@@ -7,7 +7,7 @@ use Nebalus\Webapi\Controller\User\UserCreateController;
 use Nebalus\Webapi\Controller\User\UserDeleteController;
 use Nebalus\Webapi\Controller\User\UserEditController;
 use Nebalus\Webapi\Controller\User\UserListAllController;
-use Nebalus\Webapi\Controller\User\UserLoginController;
+use Nebalus\Webapi\Controller\User\UserAuthController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeCreateController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeDeleteController;
 use Nebalus\Webapi\Controller\Linktree\LinktreeEditController;
@@ -53,18 +53,16 @@ class RouteCollector
     private function initRoutes(): void
     {
         // Definiert die Route
-
         $this->app->group("/user", function (RouteCollectorProxy $group) {
-            $group->map(["GET"], "/login", [UserLoginController::class, "action"]);
-            $group->map(["GET"], "/logout", [TempController::class, "action"]);
-            $group->map(["GET"], "/list", [TempController::class, "action"]);
+            $group->map(["POST"], "/login", [UserAuthController::class, "action"]);
+            $group->map(["GET"], "/listall", [TempController::class, "action"]);
         });
 
         $this->app->group("/users/{username}", function (RouteCollectorProxy $group) {
             $group->map(["GET"], "", [TempController::class, "action"])->add(AuthMiddleware::class);
             $group->map(["PATCH"], "", [TempController::class, "action"])->add(AuthMiddleware::class);
             $group->map(["DELETE"], "", [TempController::class, "action"])->add(AuthMiddleware::class);
-            $group->map(["POST"], "", [UserCreateController::class, "action"])->add(AuthMiddleware::class);
+            $group->map(["POST"], "", [UserCreateController::class, "entryAction"])->add(AuthMiddleware::class);
             $group->group("/linktree", function (RouteCollectorProxy $group) {
                 $group->map(["GET"], "", [TempController::class, "action"]);
                 $group->map(["PATCH"], "/update", [TempController::class, "action"])->add(AuthMiddleware::class);
@@ -76,6 +74,16 @@ class RouteCollector
             $group->map(["POST"], "", [ReferralCreateController::class, "action"])->add(AuthMiddleware::class);
             $group->map(["PATCH"], "", [ReferralEditController::class, "action"])->add(AuthMiddleware::class);
             $group->map(["DELETE"], "", [ReferralDeleteController::class, "action"])->add(AuthMiddleware::class);
+        });
+
+        $this->app->group("/analytics", function (RouteCollectorProxy $group) {
+            $group->group("/signatures", function (RouteCollectorProxy $group) {
+                $group->map(["GET"], "", [TempController::class, "action"]);
+            });
+            $group->group("/services/[{id}]", function (RouteCollectorProxy $group) {
+            });
+            $group->group("/charts/[{id}]", function (RouteCollectorProxy $group) {
+            });
         });
 
         $this->app->group("/projects", function (RouteCollectorProxy $group) {
