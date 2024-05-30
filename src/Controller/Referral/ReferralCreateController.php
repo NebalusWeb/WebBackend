@@ -2,11 +2,11 @@
 
 namespace Nebalus\Webapi\Controller\Referral;
 
-use Nebalus\Webapi\Controller\GenericController;
+use Nebalus\Webapi\Controller\BaseController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ReferralCreateController implements GenericController
+class ReferralCreateController extends BaseController
 {
     public function __construct()
     {

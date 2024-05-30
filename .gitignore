@@ -1,4 +1,7 @@
+/vendor/
 .idea/
-vendor/
+.git/
 coverage/
 logs/
+.phpunit.result.cache
+composer.lock
