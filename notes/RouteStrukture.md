@@ -1,5 +1,7 @@
 api.nebalus.dev
   |- /user
+  |    |- /listall   # Listed all users auf (Muss Admin sein)
+  |    |- /auth
   |    |- /register
   |    |- /delete
   |    |- /get
@@ -61,4 +63,4 @@ www.nebalus.dev
   |    |- /gfw
   |    |- /cybershot
   |- / 			# Ist die Standard seite
-  |- /ref?i=?????	 # Ist ein eigender Ref System
+  |- /ref/?????	 # Ist ein eigender Ref System

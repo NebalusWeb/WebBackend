@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nebalus\Webapi\Handler;
 
 use Monolog\Logger;
@@ -8,7 +10,6 @@ use Nebalus\Webapi\ValueObject\ApiResponse\ApiErrorResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Interfaces\ErrorHandlerInterface;
-use Slim\Psr7\Response;
 use Throwable;
 
 class ErrorHandler implements ErrorHandlerInterface

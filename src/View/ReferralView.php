@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nebalus\Webapi\View;
 
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponseInterface;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiSuccessResponse;
-use Nebalus\Webapi\ValueObject\Referral\ReferralObject;
+use Nebalus\Webapi\ValueObject\Referral\Referral;
 
 class ReferralView
 {
-    public function render(ReferralObject $referral, bool $safeMode = true): ApiResponseInterface
+    public function render(Referral $referral, bool $safeMode = true): ApiResponseInterface
     {
         $payload = [
             "code" => $referral->getCode(),
@@ -20,7 +22,7 @@ class ReferralView
 
         if ($safeMode === false) {
             $payload["id"] = $referral->getDbId();
-            $payload["owner_id"] = $referral->getDbAccountId();
+            $payload["owner_id"] = $referral->getDbUserId();
         }
 
         return ApiSuccessResponse::from($payload, 200);
