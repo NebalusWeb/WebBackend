@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nebalus\Webapi\Service\Referral;
 
 use Nebalus\Webapi\Exception\ApiException;
