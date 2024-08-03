@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nebalus\Webapi\Controller\Referral;
 
-use Nebalus\Webapi\Controller\GenericController;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Service\Referral\ReferralGetService;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiErrorResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ReferralGetController implements GenericController
+class ReferralGetController
 {
     private ReferralGetService $referralGetService;
 

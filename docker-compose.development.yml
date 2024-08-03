@@ -23,8 +23,10 @@ services:
       - '8080:80'
     environment:
       - PMA_HOST=mysql
+    depends_on:
+      - mysql
     networks:
-      - database-net
+      - private-net
       - public-net
 
   # INTERN PORT: 9000
@@ -33,42 +35,42 @@ services:
       context: .
       dockerfile: docker/php-fpm/Dockerfile
       target: development
-    user: '1000:1000' # Default User ID
+    user: '1001:1001' # Default User ID
     volumes:
       - ./:/var/www:rw
     environment:
       APP_ENV: "development"
       ERROR_LOGLEVEL: "Warning"
-      JWT_SECRET: "vtV!hGCp|uXB+-R-oO5j@H|4xA[0,T-x!Q*6S,P53;sikb|#Kk|QM=c70[edDP7m#}Fg4veq6ActKb.mhE.-S{k0dCb0'.:E=!"
+      JWT_SECRET: "vtV!hGCp|uXB+-R-oO5j@H|4xA[0,T-x!Q*6S,P53"
       MYSQL_HOST: "mysql:3306"
       MYSQL_DBNAME: "main"
       MYSQL_USER: "admin"
-      MYSQL_PASSWORD: "12346"
+      MYSQL_PASSWORD: "12345"
+      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
     depends_on:
       - mysql
     networks:
       - public-net
-      - database-net
+      - private-net
 
   # INTERN PORT: 3306
   mysql:
-    hostname: "mysql"
     build:
       context: .
       dockerfile: docker/mysql/Dockerfile
       target: base
     environment:
-      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_ROOT_PASSWORD: "12345"
       MYSQL_DATABASE: "main"
       MYSQL_USER: "admin"
-      MYSQL_PASSWORD: "12346"
+      MYSQL_PASSWORD: "12345"
     volumes:
       - /var/lib/mysql
     networks:
-      - database-net
+      - private-net
 
 networks:
   public-net:
     name: public-net
-  database-net:
-    name: database-net
+  private-net:
+    name: private-net
