@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nebalus\Webapi\Controller\User;
 
-use Nebalus\Webapi\Controller\BaseController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class UserCreateController extends BaseController
+class UserCreateController
 {
     public function action(Request $request, Response $response, array $args): Response
     {

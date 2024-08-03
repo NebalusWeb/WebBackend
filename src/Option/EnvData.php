@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nebalus\Webapi\Option;
 
 use Monolog\Level;
@@ -15,6 +17,7 @@ class EnvData
     private string $mysqlHost;
     private string $mysqlDbName;
     private string $mysqlUser;
+    private string $accessControlAllowOrigin;
 
     public function __construct()
     {
@@ -26,6 +29,7 @@ class EnvData
         $this->mysqlHost = getenv("MYSQL_HOST");
         $this->mysqlDbName = getenv("MYSQL_DBNAME");
         $this->mysqlUser = getenv("MYSQL_USER");
+        $this->accessControlAllowOrigin = getenv("ACCESS_CONTROL_ALLOW_ORIGIN");
     }
 
     public function isProduction(): bool
@@ -66,5 +70,10 @@ class EnvData
     public function getMySqlUser(): string
     {
         return $this->mysqlUser;
+    }
+
+    public function getAccessControlAllowOrigin(): string
+    {
+        return $this->accessControlAllowOrigin;
     }
 }

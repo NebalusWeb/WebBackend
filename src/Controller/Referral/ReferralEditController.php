@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nebalus\Webapi\Controller\Referral;
 
-use Nebalus\Webapi\Controller\BaseController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ReferralEditController extends BaseController
+class ReferralEditController
 {
     public function __construct()
     {
@@ -14,7 +15,7 @@ class ReferralEditController extends BaseController
 
     public function action(Request $request, Response $response, array $args): Response
     {
-        $response->getBody()->write("ReferralObject Api Update");
+        $response->getBody()->write("Referral Api Update");
 
         return $response->withStatus(200);
     }

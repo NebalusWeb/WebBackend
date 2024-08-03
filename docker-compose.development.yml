@@ -30,12 +30,12 @@ services:
       - public-net
 
   # INTERN PORT: 9000
-  api_php-fpm:
+  php-fpm:
     build:
       context: .
       dockerfile: docker/php-fpm/Dockerfile
       target: development
-    user: '1000:1000' # Default User ID
+    user: '1001:1001' # Default User ID
     volumes:
       - ./:/var/www:rw
     environment:
@@ -46,6 +46,7 @@ services:
       MYSQL_DBNAME: "main"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "12345"
+      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
     depends_on:
       - mysql
     networks:
