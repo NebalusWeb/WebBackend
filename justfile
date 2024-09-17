@@ -1,5 +1,5 @@
-dockerComposeDev := "docker-compose -f docker-compose.development.yml"
-dockerComposeProd := "docker-compose -f docker-compose.production.yml"
+dockerComposeDev := "docker compose -f docker-compose.development.yml"
+dockerComposeProd := "docker compose -f docker-compose.production.yml"
 
 test:
     {{dockerComposeDev}} run php-fpm /var/www/vendor/bin/phpunit -c /var/www/phpunit.xml
