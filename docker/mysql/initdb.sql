@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Aug 03, 2024 at 11:22 PM
--- Server version: 9.0.1
--- PHP Version: 8.2.21
+-- Erstellungszeit: 28. Sep 2024 um 16:04
+-- Server-Version: 9.0.1
+-- PHP-Version: 8.2.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,175 +18,191 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `main`
+-- Datenbank: `main`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `linktrees`
+-- Tabellenstruktur für Tabelle `linktrees`
 --
 
 CREATE TABLE `linktrees` (
                              `linktree_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
                              `user_id` int UNSIGNED NOT NULL COMMENT 'The ID of the user that owns this entry',
                              `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'This text is shown as the description',
+                             `view_count` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this entry was accessed',
+                             `is_enabled` tinyint(1) NOT NULL DEFAULT '0',
                              `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
-                             `view_count` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this entry was accessed'
+                             `last_time_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `linktree_entrys`
+-- Tabellenstruktur für Tabelle `linktree_entrys`
 --
 
 CREATE TABLE `linktree_entrys` (
                                    `linktree_entry_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
                                    `linktree_id` int UNSIGNED NOT NULL,
+                                   `position` int NOT NULL,
                                    `label` varchar(84) NOT NULL,
                                    `link` text NOT NULL,
-                                   `position` int NOT NULL
+                                   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                   `last_time_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `referrals`
+-- Tabellenstruktur für Tabelle `referrals`
 --
 
 CREATE TABLE `referrals` (
                              `referral_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
                              `user_id` int UNSIGNED NOT NULL COMMENT 'The ID of the user that owns this entry',
-                             `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'A unique code that is used for /ref?q=code',
+                             `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'A unique code that is used for /ref/code',
                              `pointer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '/' COMMENT 'Points to the Final URL (''/'' is the root path from the aktual webserver)',
                              `view_count` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this referral entry has been accessed',
+                             `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Defines if this referral is enabled',
                              `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
-                             `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Defines if this referral is enabled'
+                             `last_time_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `referrals`
+-- Daten für Tabelle `referrals`
 --
 
-INSERT INTO `referrals` (`referral_id`, `user_id`, `code`, `pointer`, `view_count`, `creation_date`, `enabled`) VALUES
-                                                                                                                    (1, 1, 'TEST', '/', 0, '2024-02-25 00:00:00', 1),
-                                                                                                                    (3, 1, 'TEST1', '/', 0, '2024-02-25 00:00:00', 1),
-                                                                                                                    (5, 1, 'TEST42', '/', 0, '2024-02-27 11:04:20', 1),
-                                                                                                                    (6, 1, '42', '/', 15, '2024-02-28 21:30:24', 1),
-                                                                                                                    (7, 1, '', '/', 0, '2024-08-03 23:20:58', 1);
+INSERT INTO `referrals` (`referral_id`, `user_id`, `code`, `pointer`, `view_count`, `enabled`, `creation_date`, `last_time_updated`) VALUES
+                                                                                                                                         (1, 1, 'TEST', '/', 0, 1, '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
+                                                                                                                                         (3, 1, 'TEST1', '/', 0, 1, '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
+                                                                                                                                         (5, 1, 'TEST42', '/', 0, 1, '2024-02-27 11:04:20', '2024-09-28 15:35:26'),
+                                                                                                                                         (6, 1, '42', '/', 15, 1, '2024-02-28 21:30:24', '2024-09-28 15:35:26'),
+                                                                                                                                         (7, 1, 'dfghdfgh', '/', 0, 1, '2024-08-03 23:20:58', '2024-09-28 15:35:26');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tokens`
---
-
-CREATE TABLE `tokens` (
-                          `token_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
-                          `user_id` int UNSIGNED NOT NULL,
-                          `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
-                          `expire_date` datetime NOT NULL COMMENT 'The expire date of this entry',
-                          `token` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
+-- Tabellenstruktur für Tabelle `users`
 --
 
 CREATE TABLE `users` (
-                         `user_id` int UNSIGNED NOT NULL COMMENT 'The database id of this user',
+                         `user_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key) 	',
                          `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `passwd_hash` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
                          `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
                          `is_admin` tinyint(1) NOT NULL DEFAULT '0',
                          `is_enabled` tinyint(1) NOT NULL DEFAULT '0',
+                         `created_from_activation_token_id` int UNSIGNED NOT NULL,
                          `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
                          `last_time_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `users`
+-- Daten für Tabelle `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description`, `is_admin`, `is_enabled`, `creation_date`, `last_time_updated`) VALUES
-    (1, 'Nebalus', 'a1d0c6e83f027327d8461063f4ac58a6', 'nebalus@proton.me', 'Is the default test User', 1, 1, '2024-02-28 21:28:40', '2024-08-03 23:07:10');
+INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description`, `is_admin`, `is_enabled`, `created_from_activation_token_id`, `creation_date`, `last_time_updated`) VALUES
+    (1, 'Nebalus', 'a1d0c6e83f027327d8461063f4ac58a6', 'nebalus@tuta.io', 'Is the default test User', 1, 1, 0, '2024-02-28 21:28:40', '2024-08-03 23:07:10');
+
+-- --------------------------------------------------------
 
 --
--- Indexes for dumped tables
+-- Tabellenstruktur für Tabelle `user_activation_tokens`
+--
+
+CREATE TABLE `user_activation_tokens` (
+                                          `token_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
+                                          `user_id` int UNSIGNED NOT NULL COMMENT 'The Foreign ID of an User (Foreign Key) 	',
+                                          `token_field_1` smallint UNSIGNED NOT NULL COMMENT 'Token Field 1 (XXXX-????-????-????-????)',
+                                          `token_field_2` smallint UNSIGNED NOT NULL COMMENT 'Token Field 2 (????-XXXX-????-????-????)',
+                                          `token_field_3` smallint UNSIGNED NOT NULL COMMENT 'Token Field 3 (????-????-XXXX-????-????)',
+                                          `token_field_4` smallint UNSIGNED NOT NULL COMMENT 'Token Field 4 (????-????-????-XXXX-????)',
+                                          `token_field_5` smallint UNSIGNED NOT NULL COMMENT 'Token Field 5 (????-????-????-????-XXXX)'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Daten für Tabelle `user_activation_tokens`
+--
+
+INSERT INTO `user_activation_tokens` (`token_id`, `user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
+    (1, 1, 2489, 2764, 9293, 4695, 5279);
+
+--
+-- Indizes der exportierten Tabellen
 --
 
 --
--- Indexes for table `linktrees`
+-- Indizes für die Tabelle `linktrees`
 --
 ALTER TABLE `linktrees`
     ADD PRIMARY KEY (`linktree_id`),
   ADD UNIQUE KEY `account` (`user_id`);
 
 --
--- Indexes for table `linktree_entrys`
+-- Indizes für die Tabelle `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     ADD PRIMARY KEY (`linktree_entry_id`),
   ADD UNIQUE KEY `linktree_id` (`linktree_id`,`position`);
 
 --
--- Indexes for table `referrals`
+-- Indizes für die Tabelle `referrals`
 --
 ALTER TABLE `referrals`
     ADD PRIMARY KEY (`referral_id`),
   ADD UNIQUE KEY `refcode` (`code`) USING BTREE;
 
 --
--- Indexes for table `tokens`
---
-ALTER TABLE `tokens`
-    ADD PRIMARY KEY (`token_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `users`
+-- Indizes für die Tabelle `users`
 --
 ALTER TABLE `users`
     ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indizes für die Tabelle `user_activation_tokens`
+--
+ALTER TABLE `user_activation_tokens`
+    ADD PRIMARY KEY (`token_id`),
+  ADD UNIQUE KEY `unique_token` (`token_field_1`,`token_field_2`,`token_field_3`,`token_field_4`,`token_field_5`),
+  ADD UNIQUE KEY `user_id` (`user_id`) USING BTREE;
+
+--
+-- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT for table `linktrees`
+-- AUTO_INCREMENT für Tabelle `linktrees`
 --
 ALTER TABLE `linktrees`
     MODIFY `linktree_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)';
 
 --
--- AUTO_INCREMENT for table `linktree_entrys`
+-- AUTO_INCREMENT für Tabelle `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     MODIFY `linktree_entry_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)';
 
 --
--- AUTO_INCREMENT for table `referrals`
+-- AUTO_INCREMENT für Tabelle `referrals`
 --
 ALTER TABLE `referrals`
     MODIFY `referral_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `tokens`
---
-ALTER TABLE `tokens`
-    MODIFY `token_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)';
-
---
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
-    MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The database id of this user', AUTO_INCREMENT=2;
+    MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key) 	', AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT für Tabelle `user_activation_tokens`
+--
+ALTER TABLE `user_activation_tokens`
+    MODIFY `token_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
