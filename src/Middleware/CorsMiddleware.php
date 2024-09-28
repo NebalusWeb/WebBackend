@@ -27,11 +27,14 @@ class CorsMiddleware implements MiddlewareInterface
     public function process(Request $request, RequestHandler $handler): Response
     {
         if ($request->getMethod() === 'OPTIONS') {
-            $response = $this->app->getResponseFactory()->createResponse();
-        } else {
-            $response = $handler->handle($request);
+            return $this->withCorsHeaders($this->app->getResponseFactory()->createResponse());
         }
 
+        return $this->withCorsHeaders($handler->handle($request));
+    }
+
+    private function withCorsHeaders(Response $response): Response
+    {
         return $response
             ->withHeader('Access-Control-Allow-Origin', $this->env->getAccessControlAllowOrigin())
             ->withHeader('Access-Control-Allow-Methods', 'Authorization')

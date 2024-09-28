@@ -4,20 +4,13 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Collector;
 
-use Nebalus\Webapi\Controller\Linktree\LinktreeGetController;
-use Nebalus\Webapi\Controller\User\UserCreateController;
-use Nebalus\Webapi\Controller\User\UserDeleteController;
-use Nebalus\Webapi\Controller\User\UserEditController;
-use Nebalus\Webapi\Controller\User\UserListAllController;
-use Nebalus\Webapi\Controller\User\UserAuthController;
-use Nebalus\Webapi\Controller\Linktree\LinktreeCreateController;
-use Nebalus\Webapi\Controller\Linktree\LinktreeDeleteController;
-use Nebalus\Webapi\Controller\Linktree\LinktreeEditController;
 use Nebalus\Webapi\Controller\Referral\ReferralCreateController;
 use Nebalus\Webapi\Controller\Referral\ReferralDeleteController;
-use Nebalus\Webapi\Controller\Referral\ReferralGetController;
 use Nebalus\Webapi\Controller\Referral\ReferralEditController;
+use Nebalus\Webapi\Controller\Referral\ReferralGetController;
 use Nebalus\Webapi\Controller\TempController;
+use Nebalus\Webapi\Controller\User\UserCreateController;
+use Nebalus\Webapi\Controller\AuthController;
 use Nebalus\Webapi\Handler\ErrorHandler;
 use Nebalus\Webapi\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Middleware\CorsMiddleware;
@@ -56,7 +49,7 @@ class RouteCollector
     private function initRoutes(): void
     {
         $this->app->group("/user", function (RouteCollectorProxy $group) {
-            $group->map(["POST"], "/auth", [UserAuthController::class, "action"]);
+            $group->map(["POST"], "/auth", [AuthController::class, "action"]);
             $group->group("/{username}", function (RouteCollectorProxy $group) {
                 $group->map(["GET"], "", [TempController::class, "action"])->add(AuthMiddleware::class);
                 $group->map(["PATCH"], "", [TempController::class, "action"])->add(AuthMiddleware::class);
