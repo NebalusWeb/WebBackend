@@ -35,7 +35,7 @@ class AuthMiddleware implements MiddlewareInterface
 
     #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
-        if (!$request->hasHeader("Authorization")) {
+        if ($request->hasHeader("Authorization") === false) {
             return $this->abort("The 'Authorization' header is not provided", 401);
         }
 

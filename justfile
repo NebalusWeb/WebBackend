@@ -15,10 +15,10 @@ start:
     {{dockerComposeDev}} up
 
 stop:
-    {{dockerComposeDev}} down
+    {{dockerComposeDev}} down --remove-orphans
 
 restart:
-    {{dockerComposeDev}} down
+    {{dockerComposeDev}} down --remove-orphans
     {{dockerComposeDev}} up
 
 build:
