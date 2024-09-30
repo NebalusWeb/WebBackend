@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Controller;
+namespace Nebalus\Webapi\Action;
 
 use Nebalus\Webapi\Service\User\UserLoginService;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiErrorResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class AuthController
+class AuthAction
 {
     private UserLoginService $userLoginService;
 

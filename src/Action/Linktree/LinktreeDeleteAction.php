@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Controller\Referral;
+namespace Nebalus\Webapi\Action\Linktree;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ReferralDeleteController
+class LinktreeDeleteAction
 {
     public function __construct()
     {
     }
 
-    public function action(Request $request, Response $response, array $args): Response
+    protected function action(Request $request, Response $response, array $args): Response
     {
-        $response->getBody()->write("Referral Api Delete");
+        $response->getBody()->write("Linktree Api Delete");
 
         return $response->withStatus(200);
     }
