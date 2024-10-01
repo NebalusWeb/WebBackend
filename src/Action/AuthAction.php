@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Action;
 
 use Nebalus\Webapi\Service\User\UserLoginService;
-use Nebalus\Webapi\ValueObject\ApiResponse\ApiErrorResponse;
+use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -23,6 +23,6 @@ class AuthAction
         $bodyParams = $request->getParsedBody();
 
 
-        $responseObject = ApiErrorResponse::from("Authentication failed", 401);
+        $responseObject = ApiResponse::createError("Authentication failed", 401);
     }
 }

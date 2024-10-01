@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\View;
 
+use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponseInterface;
-use Nebalus\Webapi\ValueObject\ApiResponse\ApiSuccessResponse;
 use Nebalus\Webapi\ValueObject\Referral\Referral;
 
 class ReferralView
@@ -25,6 +25,6 @@ class ReferralView
             $payload["owner_id"] = $referral->getDbUserId();
         }
 
-        return ApiSuccessResponse::from($payload, 200);
+        return ApiResponse::createSuccess($payload, 200);
     }
 }

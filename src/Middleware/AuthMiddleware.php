@@ -9,6 +9,7 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\ValueObject\AccessLevel;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiErrorResponse;
+use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -64,7 +65,7 @@ class AuthMiddleware implements MiddlewareInterface
 
     private function abort(string $errorMessage, int $code): Response
     {
-        $apiResponse = ApiErrorResponse::from($errorMessage, $code);
+        $apiResponse = ApiResponse::createError($errorMessage, $code);
         $response = $this->app->getResponseFactory()->createResponse();
         $response->getBody()->write($apiResponse);
         return $response;
