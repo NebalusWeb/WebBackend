@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Handler;
 
+use JsonException;
 use Monolog\Logger;
 use Nebalus\Webapi\Factory\ResponseFactory;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiErrorResponse;
+use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Interfaces\ErrorHandlerInterface;
@@ -23,6 +25,9 @@ class ErrorHandler implements ErrorHandlerInterface
         $this->errorLogger = $errorLogger;
     }
 
+    /**
+     * @throws JsonException
+     */
     public function __invoke(
         Request $request,
         Throwable $exception,
@@ -36,9 +41,9 @@ class ErrorHandler implements ErrorHandlerInterface
 
         $httpResponse = $this->responseFactory->createResponse($code);
 
-        $apiResponse = ApiErrorResponse::from($exception->getMessage(), $code);
+        $apiResponse = ApiResponse::createError($exception->getMessage(), $code);
 
-        $httpResponse->getBody()->write($apiResponse->getMessageAsJson());
+        $httpResponse->getBody()->write($apiResponse->getPayloadAsJson());
 
         return $httpResponse;
     }
