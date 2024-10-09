@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\View;
+namespace Nebalus\Webapi\View\Referral;
 
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponseInterface;
