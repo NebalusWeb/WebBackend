@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Collector;
 
+use Nebalus\Webapi\Action\Referral\ReferralClickAction;
 use Nebalus\Webapi\Action\Referral\ReferralCreateAction;
 use Nebalus\Webapi\Action\Referral\ReferralDeleteAction;
 use Nebalus\Webapi\Action\Referral\ReferralEditAction;
@@ -48,26 +49,24 @@ class RouteCollector
 
     private function initRoutes(): void
     {
-        $this->app->group("/user", function (RouteCollectorProxy $group) {
-            $group->map(["POST"], "/auth", [AuthAction::class, "action"]);
-            $group->group("/{username}", function (RouteCollectorProxy $group) {
-                $group->map(["GET"], "", [TempAction::class, "action"])->add(AuthMiddleware::class);
-                $group->map(["PATCH"], "", [TempAction::class, "action"])->add(AuthMiddleware::class);
-                $group->map(["DELETE"], "", [TempAction::class, "action"])->add(AuthMiddleware::class);
-                $group->map(["POST"], "", [UserCreateAction::class, "entryAction"])->add(AuthMiddleware::class);
-                $group->group("/linktree", function (RouteCollectorProxy $group) {
-                    $group->map(["GET"], "", [TempAction::class, "action"]);
-                    $group->map(["PATCH"], "/update", [TempAction::class, "action"])->add(AuthMiddleware::class);
-                });
+        $this->app->map(["POST"], "/auth", [AuthAction::class, "action"]);
+        $this->app->group("/user/{username}", function (RouteCollectorProxy $group) {
+            $group->map(["GET"], "", [TempAction::class, "action"]);
+            $group->map(["PATCH"], "", [TempAction::class, "action"]);
+            $group->map(["DELETE"], "", [TempAction::class, "action"]);
+            $group->map(["POST"], "", [UserCreateAction::class, "entryAction"]);
+            $group->group("/linktree", function (RouteCollectorProxy $group) {
+                $group->map(["PATCH"], "", [TempAction::class, "action"]);
             });
-        });
+            $group->group("/referrals", function (RouteCollectorProxy $group) {
+                $group->map(["GET"], "/[{code}]", [ReferralGetAction::class, "action"]);
+                $group->map(["POST"], "", [ReferralCreateAction::class, "action"]);
+                $group->map(["PATCH"], "/[{code}]", [ReferralEditAction::class, "action"]);
+                $group->map(["DELETE"], "/[{code}]", [ReferralDeleteAction::class, "action"]);
+            });
+        })->add(AuthMiddleware::class);
 
-        $this->app->group("/referrals/[{code}]", function (RouteCollectorProxy $group) {
-            $group->map(["GET"], "", [ReferralGetAction::class, "action"]);
-            $group->map(["POST"], "", [ReferralCreateAction::class, "action"])->add(AuthMiddleware::class);
-            $group->map(["PATCH"], "", [ReferralEditAction::class, "action"])->add(AuthMiddleware::class);
-            $group->map(["DELETE"], "", [ReferralDeleteAction::class, "action"])->add(AuthMiddleware::class);
-        });
+        $this->app->map(["GET"], "/referrals/[{code}]", [ReferralClickAction::class, "action"]);
 
         $this->app->group("/analytics", function (RouteCollectorProxy $group) {
             $group->group("/signatures", function (RouteCollectorProxy $group) {
