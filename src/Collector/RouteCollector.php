@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Collector;
 
+use Nebalus\Webapi\Action\Auth\AuthAction;
 use Nebalus\Webapi\Action\Referral\ReferralClickAction;
 use Nebalus\Webapi\Action\Referral\ReferralCreateAction;
 use Nebalus\Webapi\Action\Referral\ReferralDeleteAction;
@@ -11,7 +12,6 @@ use Nebalus\Webapi\Action\Referral\ReferralEditAction;
 use Nebalus\Webapi\Action\Referral\ReferralGetAction;
 use Nebalus\Webapi\Action\TempAction;
 use Nebalus\Webapi\Action\User\UserCreateAction;
-use Nebalus\Webapi\Action\AuthAction;
 use Nebalus\Webapi\Handler\ErrorHandler;
 use Nebalus\Webapi\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Middleware\CorsMiddleware;
@@ -21,13 +21,10 @@ use Slim\Routing\RouteCollectorProxy;
 
 class RouteCollector
 {
-    private App $app;
-    private EnvData $env;
-
-    public function __construct(App $app, EnvData $env)
-    {
-        $this->app = $app;
-        $this->env = $env;
+    public function __construct(
+        private readonly App $app,
+        private readonly EnvData $env
+    ) {
     }
 
     public function init(): void

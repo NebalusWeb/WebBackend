@@ -23,7 +23,8 @@
         "slim/psr7": "^1.6",
         "guzzlehttp/guzzle": "^7.8",
         "rbdwllr/reallysimplejwt": "^5.0",
-        "predis/predis": "^2.2"
+        "predis/predis": "^2.2",
+        "spomky-labs/otphp": "^11.3.0"
     },
     
     "autoload-dev": {
