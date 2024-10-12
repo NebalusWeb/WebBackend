@@ -9,13 +9,11 @@ use Nebalus\Webapi\Service\Auth\UserAuthService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class AuthAction
+readonly class AuthAction
 {
-    private UserAuthService $userAuthService;
-
-    public function __construct(UserAuthService $userAuthService)
-    {
-        $this->userAuthService = $userAuthService;
+    public function __construct(
+        private UserAuthService $userAuthService
+    ) {
     }
 
     /**

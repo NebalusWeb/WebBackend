@@ -19,11 +19,11 @@ use Nebalus\Webapi\Option\EnvData;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
-class RouteCollector
+readonly class RouteCollector
 {
     public function __construct(
-        private readonly App $app,
-        private readonly EnvData $env
+        private App $app,
+        private EnvData $env
     ) {
     }
 

@@ -36,7 +36,7 @@ services:
       dockerfile: docker/php-fpm/Dockerfile
       target: development
     container_name: api
-    user: '1000:1000' # Default User ID
+    user: '1001:1001' # Default User ID
     volumes:
       - ./:/var/www:rw
     environment:
