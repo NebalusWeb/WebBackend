@@ -114,7 +114,7 @@ INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description
 --
 
 CREATE TABLE `user_invitations_tokens` (
-                                          `token_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
+                                          `invitation_token_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
                                           `user_id` int UNSIGNED NOT NULL COMMENT 'The Foreign ID of an User (Foreign Key) 	',
                                           `token_field_1` smallint UNSIGNED NOT NULL COMMENT 'Token Field 1 (XXXX-????-????-????-????)',
                                           `token_field_2` smallint UNSIGNED NOT NULL COMMENT 'Token Field 2 (????-XXXX-????-????-????)',
@@ -127,7 +127,7 @@ CREATE TABLE `user_invitations_tokens` (
 -- Daten für Tabelle `user_invitations_tokens`
 --
 
-INSERT INTO `user_invitations_tokens` (`token_id`, `user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
+INSERT INTO `user_invitations_tokens` (`invitation_token_id`, `user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
     (1, 1, 2489, 2764, 9293, 4695, 5279);
 
 --
@@ -166,7 +166,7 @@ ALTER TABLE `users`
 -- Indizes für die Tabelle `user_invitations_tokens`
 --
 ALTER TABLE `user_invitations_tokens`
-    ADD PRIMARY KEY (`token_id`),
+    ADD PRIMARY KEY (`invitation_token_id`),
   ADD UNIQUE KEY `unique_token` (`token_field_1`,`token_field_2`,`token_field_3`,`token_field_4`,`token_field_5`),
   ADD UNIQUE KEY `user_id` (`user_id`) USING BTREE;
 
@@ -202,7 +202,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `user_invitations_tokens`
 --
 ALTER TABLE `user_invitations_tokens`
-    MODIFY `token_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=4;
+    MODIFY `invitation_token_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

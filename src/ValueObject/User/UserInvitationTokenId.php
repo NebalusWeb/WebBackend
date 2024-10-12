@@ -4,10 +4,10 @@ namespace Nebalus\Webapi\ValueObject\User;
 
 use InvalidArgumentException;
 
-readonly class UserId
+readonly class UserInvitationTokenId
 {
     private function __construct(
-        private int $userId
+        private int $userInvitationTokenId,
     ) {
     }
 
@@ -15,7 +15,7 @@ readonly class UserId
     {
         if ($userId < 0) {
             throw new InvalidArgumentException(
-                'Invalid userid: must be a non-negative integer'
+                'Invalid userInvitationTokenId: must be a non-negative integer'
             );
         }
 
@@ -24,11 +24,11 @@ readonly class UserId
 
     public function asInt(): int
     {
-        return $this->userId;
+        return $this->userInvitationTokenId;
     }
 
     public function __toString(): string
     {
-        return (string) $this->userId;
+        return (string) $this->userInvitationTokenId;
     }
 }
