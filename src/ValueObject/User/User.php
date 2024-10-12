@@ -6,20 +6,16 @@ namespace Nebalus\Webapi\ValueObject\User;
 
 use DateTime;
 
-class User
+readonly class User
 {
-    private int $dbId;
-    private DateTime $creationDate;
-    private string $username;
-
-    private function __construct(int $dbId, DateTime $creationDate, string $username)
-    {
-        $this->dbId = $dbId;
-        $this->creationDate = $creationDate;
-        $this->username = $username;
+    private function __construct(
+        private UserId $userId,
+        private DateTime $creationDate,
+        private string $username
+    ) {
     }
 
-    public static function from(int $dbId, DateTime $creationDate, string $username): self
+    public static function from(UserId $dbId, DateTime $creationDate, string $username): self
     {
         return new User($dbId, $creationDate, $username);
     }
