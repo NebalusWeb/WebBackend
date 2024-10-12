@@ -1,5 +1,3 @@
-version: "3.9"
-
 name: "testapi-development"
 services:
 
@@ -44,12 +42,15 @@ services:
     environment:
       APP_ENV: "development"
       ERROR_LOGLEVEL: "Warning"
-      JWT_SECRET: "vtV!hGCp|uXB+-R-oO5j@H|4xA[0,T-x!Q*6S,P53"
+      JWT_SECRET: "553!hGCp|uffhO)0274GTzui1oGsddasS,P53"
+      JWT_NORMAL_EXPIRATION_TIME: 86400
+      JWT_EXTENDED_EXPIRATION_TIME: 604800
+      PASSWD_HASH_KEY: "00456q+VJ1?#sdsdflm,.a_EUR*v[iP-"
+      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
       MYSQL_HOST: "mysql:3306"
       MYSQL_DBNAME: "main"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "12345"
-      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
     depends_on:
       - mysql
     networks:

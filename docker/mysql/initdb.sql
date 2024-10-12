@@ -92,7 +92,7 @@ CREATE TABLE `users` (
                          `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `passwd_hash` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-                         `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                         `description_for_admins` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
                          `is_admin` tinyint(1) NOT NULL DEFAULT '0',
                          `is_enabled` tinyint(1) NOT NULL DEFAULT '0',
                          `created_from_activation_token_id` int UNSIGNED NOT NULL,
@@ -104,16 +104,16 @@ CREATE TABLE `users` (
 -- Daten für Tabelle `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description`, `is_admin`, `is_enabled`, `created_from_activation_token_id`, `creation_date`, `last_time_updated`) VALUES
+INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description_for_admins`, `is_admin`, `is_enabled`, `created_from_activation_token_id`, `creation_date`, `last_time_updated`) VALUES
     (1, 'Nebalus', 'a1d0c6e83f027327d8461063f4ac58a6', 'nebalus@tuta.io', 'Is the default test User', 1, 1, 0, '2024-02-28 21:28:40', '2024-08-03 23:07:10');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_activation_tokens`
+-- Tabellenstruktur für Tabelle `user_invitations_tokens`
 --
 
-CREATE TABLE `user_activation_tokens` (
+CREATE TABLE `user_invitations_tokens` (
                                           `token_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
                                           `user_id` int UNSIGNED NOT NULL COMMENT 'The Foreign ID of an User (Foreign Key) 	',
                                           `token_field_1` smallint UNSIGNED NOT NULL COMMENT 'Token Field 1 (XXXX-????-????-????-????)',
@@ -124,10 +124,10 @@ CREATE TABLE `user_activation_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Daten für Tabelle `user_activation_tokens`
+-- Daten für Tabelle `user_invitations_tokens`
 --
 
-INSERT INTO `user_activation_tokens` (`token_id`, `user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
+INSERT INTO `user_invitations_tokens` (`token_id`, `user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
     (1, 1, 2489, 2764, 9293, 4695, 5279);
 
 --
@@ -163,9 +163,9 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indizes für die Tabelle `user_activation_tokens`
+-- Indizes für die Tabelle `user_invitations_tokens`
 --
-ALTER TABLE `user_activation_tokens`
+ALTER TABLE `user_invitations_tokens`
     ADD PRIMARY KEY (`token_id`),
   ADD UNIQUE KEY `unique_token` (`token_field_1`,`token_field_2`,`token_field_3`,`token_field_4`,`token_field_5`),
   ADD UNIQUE KEY `user_id` (`user_id`) USING BTREE;
@@ -199,9 +199,9 @@ ALTER TABLE `users`
     MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key) 	', AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT für Tabelle `user_activation_tokens`
+-- AUTO_INCREMENT für Tabelle `user_invitations_tokens`
 --
-ALTER TABLE `user_activation_tokens`
+ALTER TABLE `user_invitations_tokens`
     MODIFY `token_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=4;
 COMMIT;
 

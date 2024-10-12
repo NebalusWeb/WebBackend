@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Option;
 
 use Monolog\Level;
-use function DI\get;
 
 class EnvData
 {
@@ -18,6 +17,9 @@ class EnvData
     private string $mysqlDbName;
     private string $mysqlUser;
     private string $accessControlAllowOrigin;
+    private int $jwtNormalExpirationTime;
+    private int $jwtExtendedExpirationTime;
+    private string $passwdHashKey;
 
     public function __construct()
     {
@@ -25,10 +27,13 @@ class EnvData
         $this->isDevelopment = strtolower(getenv("APP_ENV")) === "development";
         $this->logLevel = Level::fromName(getenv("ERROR_LOGLEVEL"));
         $this->jwtSecret = getenv("JWT_SECRET");
+        $this->jwtNormalExpirationTime = (int)getenv('JWT_NORMAL_EXPIRATION_TIME');
+        $this->jwtExtendedExpirationTime = (int)getenv('JWT_EXTENDED_EXPIRATION_TIME');
         $this->mysqlPasswd = getenv("MYSQL_PASSWORD");
         $this->mysqlHost = getenv("MYSQL_HOST");
         $this->mysqlDbName = getenv("MYSQL_DBNAME");
         $this->mysqlUser = getenv("MYSQL_USER");
+        $this->passwdHashKey = getenv('PASSWD_HASH_KEY');
         $this->accessControlAllowOrigin = getenv("ACCESS_CONTROL_ALLOW_ORIGIN");
     }
 
@@ -72,6 +77,20 @@ class EnvData
         return $this->mysqlUser;
     }
 
+    public function getJwtNormalExpirationTime(): int
+    {
+        return $this->jwtNormalExpirationTime;
+    }
+
+    public function getJwtExtendedExpirationTime(): int
+    {
+        return $this->jwtExtendedExpirationTime;
+    }
+
+    public function getPasswdHashKey(): string
+    {
+        return $this->passwdHashKey;
+    }
     public function getAccessControlAllowOrigin(): string
     {
         return $this->accessControlAllowOrigin;
