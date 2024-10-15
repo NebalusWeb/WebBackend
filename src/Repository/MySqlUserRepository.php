@@ -7,6 +7,7 @@ namespace Nebalus\Webapi\Repository;
 use DateTime;
 use Exception;
 use Nebalus\Webapi\ValueObject\User\User;
+use Nebalus\Webapi\ValueObject\User\UserId;
 use PDO;
 
 class MySqlUserRepository
@@ -18,7 +19,7 @@ class MySqlUserRepository
         $this->pdo = $pdo;
     }
 
-    public function getUserFromId(int $user_id): User
+    public function getUserFromId(UserId $userId): User
     {
         $sql = "SELECT `user_id`, `creation_date`, `username` FROM `users` WHERE `user_id` = :user_id";
         $stmt = $this->pdo->prepare($sql);
