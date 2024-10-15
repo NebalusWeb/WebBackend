@@ -21,4 +21,9 @@ readonly class Email
 
         return new self($email);
     }
+
+    public function getEmailRaw(): string
+    {
+        return $this->email;
+    }
 }
