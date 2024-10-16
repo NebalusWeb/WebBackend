@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\ValueObject;
+namespace Nebalus\Webapi\ValueObject\User;
 
 use InvalidArgumentException;
 

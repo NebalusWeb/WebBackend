@@ -16,9 +16,9 @@ readonly class User
     ) {
     }
 
-    public static function from(UserId $dbId, Username $username, DateTimeImmutable $creationDate): self
+    public static function from(UserId $userId, Username $username, DateTimeImmutable $creationDate): self
     {
-        return new User($dbId, $username, $creationDate);
+        return new User($userId, $username, $creationDate);
     }
 
     public function getUserId(): UserId
