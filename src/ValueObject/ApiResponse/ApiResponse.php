@@ -25,7 +25,7 @@ readonly class ApiResponse implements ApiResponseInterface
 
     protected static function fromPayload(array $payload, int $statusCode, bool $success): static
     {
-        $payload = array_merge(['success' => $success], $payload);
+        $payload = array_merge(['success' => $success, 'code' => $statusCode], $payload);
 
         if ($statusCode < 100 || $statusCode > 599) {
             throw new InvalidArgumentException("Code '$statusCode' is not a valid http status code!", 500);
