@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 20. Okt 2024 um 01:16
+-- Erstellungszeit: 20. Okt 2024 um 02:07
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -128,7 +128,7 @@ CREATE TABLE `user_invitation_tokens` (
 --
 
 INSERT INTO `user_invitation_tokens` (`invitation_token_id`, `user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
-    (1, 1, 2489, 2764, 9293, 4695, 5279);
+    (1, 1, 2485, 2764, 9211, 4695, 4788);
 
 -- --------------------------------------------------------
 
