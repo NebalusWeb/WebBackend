@@ -5,39 +5,32 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\ValueObject\Referral;
 
 use DateTime;
+use Nebalus\Webapi\ValueObject\User\UserId;
 
-class Referral
+readonly class Referral
 {
-    private int $dbId;
-    private int $dbUserId;
-    private string $code;
-    private string $pointer;
-    private int $viewCount;
-    private DateTime $creationDate;
-    private bool $enabled;
-
-    private function __construct(int $dbId, int $dbUserId, string $code, string $pointer, int $viewCount, DateTime $creationDate, bool $enabled)
-    {
-        $this->dbId = $dbId;
-        $this->dbUserId = $dbUserId;
-        $this->code = $code;
-        $this->pointer = $pointer;
-        $this->viewCount = $viewCount;
-        $this->creationDate = $creationDate;
-        $this->enabled = $enabled;
+    private function __construct(
+        private int $referralId,
+        private UserId $userId,
+        private string $code,
+        private string $pointer,
+        private int $viewCount,
+        private DateTime $creationDate,
+        private bool $enabled
+    ) {
     }
 
-    public static function from(int $dbId, int $dbUserId, string $code, string $pointer, int $viewCount, DateTime $creationDate, bool $enabled): Referral
+    public static function from(int $referralId, UserId $userId, string $code, string $pointer, int $viewCount, DateTime $creationDate, bool $enabled): Referral
     {
-        return new Referral($dbId, $dbUserId, $code, $pointer, $viewCount, $creationDate, $enabled);
+        return new Referral($referralId, $userId, $code, $pointer, $viewCount, $creationDate, $enabled);
     }
-    public function getDbId(): int
+    public function getReferralId(): int
     {
-        return $this->dbId;
+        return $this->referralId;
     }
-    public function getDbUserId(): int
+    public function getUserId(): UserId
     {
-        return $this->dbUserId;
+        return $this->userId;
     }
     public function getCode(): string
     {

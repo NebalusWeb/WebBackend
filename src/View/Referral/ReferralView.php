@@ -16,13 +16,13 @@ class ReferralView
             "code" => $referral->getCode(),
             "pointer" => $referral->getPointer(),
             "view_count" => $referral->getViewCount(),
-            "creation_timestamp" => $referral->getCreationDate()->getTimestamp(),
+            "creation_date_timestamp" => $referral->getCreationDate()->getTimestamp(),
             "enabled" => $referral->isEnabled()
         ];
 
         if ($safeMode === false) {
-            $payload["id"] = $referral->getDbId();
-            $payload["owner_id"] = $referral->getDbUserId();
+            $payload["referral_id"] = $referral->getReferralId();
+            $payload["owner_id"] = $referral->getUserId()->asInt();
         }
 
         return ApiResponse::createSuccess($payload, 200);

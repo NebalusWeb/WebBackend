@@ -40,7 +40,7 @@ readonly class RouteCollector
         $errorMiddleware = $this->app->addErrorMiddleware($this->env->isDevelopment(), true, true);
 
 //        if ($this->env->isProduction()) {
-            $errorMiddleware->setDefaultErrorHandler(ErrorHandler::class);
+//            $errorMiddleware->setDefaultErrorHandler(ErrorHandler::class);
 //        }
     }
 
@@ -51,7 +51,7 @@ readonly class RouteCollector
             $group->map(["GET"], "", [TempAction::class, "action"]);
             $group->map(["PATCH"], "", [TempAction::class, "action"]);
             $group->map(["DELETE"], "", [TempAction::class, "action"]);
-            $group->map(["POST"], "", [UserCreateAction::class, "entryAction"]);
+            $group->map(["POST"], "", [UserCreateAction::class, "action"]);
             $group->group("/linktree", function (RouteCollectorProxy $group) {
                 $group->map(["PATCH"], "", [TempAction::class, "action"]);
             });

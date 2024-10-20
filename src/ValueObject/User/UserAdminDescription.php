@@ -17,11 +17,6 @@ readonly class UserAdminDescription
             return new self(null);
         }
 
-        if (strlen($description) > 200) {
-            throw new InvalidArgumentException(
-                'Invalid description: max length is 200 characters'
-            );
-        }
         return new self($description);
     }
 

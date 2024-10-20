@@ -35,7 +35,7 @@ readonly class Username
         return new self($username);
     }
 
-    public function __toString(): string
+    public function asString(): string
     {
         return $this->username;
     }

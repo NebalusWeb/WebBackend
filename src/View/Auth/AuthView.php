@@ -4,13 +4,24 @@ namespace Nebalus\Webapi\View\Auth;
 
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponseInterface;
+use Nebalus\Webapi\ValueObject\User\User;
+use ReallySimpleJWT\Jwt;
+use ReallySimpleJWT\Token;
 
 class AuthView
 {
-    public static function render(): ApiResponseInterface
+    public static function render(Jwt $jwt, User $user): ApiResponseInterface
     {
         $payload = [
-            "test" => 1
+            "jwt" => $jwt->getToken(),
+            "user" => [
+                "user_id" => $user->getUserId()->asInt(),
+                "username" => $user->getUsername()->asString(),
+                "email" => $user->getEmail()->asString(),
+                "is_admin" => $user->isAdmin(),
+                "is_enabled" => $user->isEnabled(),
+                "creation_date_timestamp" => $user->getCreationDate()->getTimestamp()
+            ]
         ];
 
         return ApiResponse::createSuccess($payload, 200);

@@ -22,7 +22,7 @@ readonly class Email
         return new self($email);
     }
 
-    public function getEmailRaw(): string
+    public function asString(): string
     {
         return $this->email;
     }
