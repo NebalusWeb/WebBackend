@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 20. Okt 2024 um 02:21
+-- Erstellungszeit: 20. Okt 2024 um 17:00
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -128,7 +128,8 @@ CREATE TABLE `user_invitation_tokens` (
 --
 
 INSERT INTO `user_invitation_tokens` (`invitation_token_id`, `owner_user_id`, `invited_user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
-    (1, 1, NULL, 2485, 2764, 9211, 4695, 4788);
+                                                                                                                                                                                          (1, 1, NULL, 2485, 2764, 9211, 4695, 4788),
+                                                                                                                                                                                          (6, 1, 1, 4586, 5863, 8326, 9386, 7040);
 
 -- --------------------------------------------------------
 
@@ -221,7 +222,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `user_invitation_tokens`
 --
 ALTER TABLE `user_invitation_tokens`
-    MODIFY `invitation_token_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=4;
+    MODIFY `invitation_token_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_login_history`
