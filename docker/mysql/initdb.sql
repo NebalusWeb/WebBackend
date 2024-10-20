@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 20. Okt 2024 um 02:07
+-- Erstellungszeit: 20. Okt 2024 um 02:21
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -95,7 +95,6 @@ CREATE TABLE `users` (
                          `description_for_admins` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
                          `is_admin` tinyint(1) NOT NULL DEFAULT '0',
                          `is_enabled` tinyint(1) NOT NULL DEFAULT '0',
-                         `created_from_invitation_token_id` int UNSIGNED NOT NULL,
                          `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
                          `last_time_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -104,8 +103,8 @@ CREATE TABLE `users` (
 -- Daten für Tabelle `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description_for_admins`, `is_admin`, `is_enabled`, `created_from_invitation_token_id`, `creation_date`, `last_time_updated`) VALUES
-    (1, 'Nebalus', 'f381ef6d4e5e29889f967cd06d71dd0fcd4af7f7aad53ae4931b07d4ee6b8144', 'nebalus@tuta.io', 'Is the default test User', 1, 1, 0, '2024-02-28 21:28:40', '2024-08-03 23:07:10');
+INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description_for_admins`, `is_admin`, `is_enabled`, `creation_date`, `last_time_updated`) VALUES
+    (1, 'Nebalus', 'f381ef6d4e5e29889f967cd06d71dd0fcd4af7f7aad53ae4931b07d4ee6b8144', 'nebalus@tuta.io', 'Is the default test User', 1, 1, '2024-02-28 21:28:40', '2024-08-03 23:07:10');
 
 -- --------------------------------------------------------
 
@@ -115,7 +114,8 @@ INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description
 
 CREATE TABLE `user_invitation_tokens` (
                                           `invitation_token_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
-                                          `user_id` int UNSIGNED NOT NULL COMMENT 'The Foreign ID of an User (Foreign Key) 	',
+                                          `owner_user_id` int UNSIGNED NOT NULL COMMENT 'The Foreign ID of an User (Foreign Key) 	',
+                                          `invited_user_id` int UNSIGNED DEFAULT NULL COMMENT 'The User Id of the Invited User',
                                           `token_field_1` smallint UNSIGNED NOT NULL COMMENT 'Token Field 1 (XXXX-????-????-????-????)',
                                           `token_field_2` smallint UNSIGNED NOT NULL COMMENT 'Token Field 2 (????-XXXX-????-????-????)',
                                           `token_field_3` smallint UNSIGNED NOT NULL COMMENT 'Token Field 3 (????-????-XXXX-????-????)',
@@ -127,8 +127,8 @@ CREATE TABLE `user_invitation_tokens` (
 -- Daten für Tabelle `user_invitation_tokens`
 --
 
-INSERT INTO `user_invitation_tokens` (`invitation_token_id`, `user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
-    (1, 1, 2485, 2764, 9211, 4695, 4788);
+INSERT INTO `user_invitation_tokens` (`invitation_token_id`, `owner_user_id`, `invited_user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
+    (1, 1, NULL, 2485, 2764, 9211, 4695, 4788);
 
 -- --------------------------------------------------------
 
@@ -181,7 +181,7 @@ ALTER TABLE `users`
 ALTER TABLE `user_invitation_tokens`
     ADD PRIMARY KEY (`invitation_token_id`),
   ADD UNIQUE KEY `unique_token` (`token_field_1`,`token_field_2`,`token_field_3`,`token_field_4`,`token_field_5`),
-  ADD UNIQUE KEY `user_id` (`user_id`) USING BTREE;
+  ADD UNIQUE KEY `invited_user_id` (`invited_user_id`);
 
 --
 -- Indizes für die Tabelle `user_login_history`

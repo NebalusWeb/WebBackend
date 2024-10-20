@@ -53,10 +53,6 @@ readonly class UserAuthService
             return ApiResponse::createError('Authentication failed: Wrong credentials.', 401);
         }
 
-        $token = $this->mySqlUserInvitationTokenRepository->getInvitationTokenFromUserId($user->getUserId());
-
-        var_dump($token->getToken());
-
         $expirationTime = time() + $this->envData->getJwtNormalExpirationTime();
 
         $token = Token::builder($this->envData->getJwtSecret())
