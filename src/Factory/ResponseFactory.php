@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Factory;
 
+use Override;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Response;
 
 class ResponseFactory implements ResponseFactoryInterface
 {
-    #[\Override] public function createResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
+    #[Override] public function createResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
     {
         $res = new Response($code);
 
