@@ -25,16 +25,20 @@ services:
       APP_ENV: "production"
       ERROR_LOGLEVEL: "Warning"
       JWT_SECRET: "t]VP1RJcL){v+BDC?{uyjUoD}]EX3B(pmGCfz147VMbj@3:Dck-jS2P'pj,rYzh6q@m4q()Ds}:|ljzqZRXdKxSv{PDO5X{h]hiH"
+      JWT_NORMAL_EXPIRATION_TIME: 86400
+      JWT_EXTENDED_EXPIRATION_TIME: 604800
+      PASSWD_HASH_KEY: "00456q+VJ1?#sdsdflm,.a_EUR*v[iP-"
+      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
       MYSQL_HOST: "mysql:3306"
       MYSQL_DBNAME: "main"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "&!7gmRdr&z4#E6"
-      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
     depends_on:
       - mysql
+      - redis
     networks:
       - public-net
-      - database-net
+      - private-net
 
   # INTERN PORT: 3306
   mysql:
@@ -51,7 +55,15 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
-      - database-net
+      - private-net
+
+  redis:
+    build:
+      context: .
+      dockerfile: docker/redis/Dockerfile
+      target: base
+    networks:
+      - private-net
 
 volumes:
   mysql-data:
@@ -59,5 +71,5 @@ volumes:
 networks:
   public-net:
     name: public-net
-  database-net:
-    name: database-net
+  private-net:
+    name: private-net

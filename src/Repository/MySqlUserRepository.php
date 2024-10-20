@@ -27,12 +27,12 @@ class MySqlUserRepository
      */
     public function findUserByCredentials(Username $username, UserHashedPassword $hashedPassword): ?User
     {
-        $sql = "SELECT * FROM `users` WHERE `username` = :username AND `passwd_hash` = :hashedPassword";
+        $sql = "SELECT * FROM `users` WHERE `username` = :username AND `passwd_hash` = :hashed_password";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute([
             'username' => $username->asString(),
-            'hashedPassword' => $hashedPassword->asString(),
+            'hashed_password' => $hashedPassword->asString(),
         ]);
 
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -44,17 +44,19 @@ class MySqlUserRepository
         return User::fromMySQL($data);
     }
 
+    /**
+     * @throws DateMalformedStringException
+     */
     public function getUserFromId(UserId $userId): User
     {
-        $sql = "SELECT `user_id`, `creation_date`, `username` FROM `users` WHERE `user_id` = :user_id";
+        $sql = "SELECT * FROM `users` WHERE `user_id` = :user_id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
-            'user_id' => $user_id
+            'user_id' => $userId->asInt()
         ]);
 
-        $values = $stmt->fetch(PDO::FETCH_ASSOC);
-        $creationDate = new DateTime($values["creation_date"]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return User::from($values["user_id"], $creationDate, $values["username"]);
+        return User::fromMySQL($data);
     }
 }

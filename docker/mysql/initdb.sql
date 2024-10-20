@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 20. Okt 2024 um 00:04
--- Server-Version: 9.0.1
+-- Erstellungszeit: 20. Okt 2024 um 01:16
+-- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -31,7 +31,7 @@ CREATE TABLE `linktrees` (
                              `linktree_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
                              `user_id` int UNSIGNED NOT NULL COMMENT 'The ID of the user that owns this entry',
                              `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'This text is shown as the description',
-                             `view_count` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this entry was accessed',
+                             `view_count` int UNSIGNED NOT NULL DEFAULT '0' COMMENT 'The amount of times this entry was accessed',
                              `is_enabled` tinyint(1) NOT NULL DEFAULT '0',
                              `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
                              `last_time_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -64,7 +64,7 @@ CREATE TABLE `referrals` (
                              `user_id` int UNSIGNED NOT NULL COMMENT 'The ID of the user that owns this entry',
                              `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'A unique code that is used for /ref/code',
                              `pointer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '/' COMMENT 'Points to the Final URL (''/'' is the root path from the aktual webserver)',
-                             `view_count` int NOT NULL DEFAULT '0' COMMENT 'The amount of times this referral entry has been accessed',
+                             `view_count` int UNSIGNED NOT NULL DEFAULT '0' COMMENT 'The amount of times this referral entry has been accessed',
                              `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Defines if this referral is enabled',
                              `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
                              `last_time_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
