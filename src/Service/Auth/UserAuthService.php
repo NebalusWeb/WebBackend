@@ -8,6 +8,7 @@ use DateMalformedStringException;
 use InvalidArgumentException;
 use Nebalus\Webapi\Filter\Auth\AuthFilter;
 use Nebalus\Webapi\Option\EnvData;
+use Nebalus\Webapi\Repository\MySqlUserInvitationTokenRepository;
 use Nebalus\Webapi\Repository\MySqlUserRepository;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponseInterface;
@@ -22,6 +23,7 @@ readonly class UserAuthService
     public function __construct(
         private AuthFilter $authFilter,
         private MySqlUserRepository $mySqlUserRepository,
+        private MySqlUserInvitationTokenRepository $mySqlUserInvitationTokenRepository,
         private EnvData $envData
     ) {
     }
@@ -50,6 +52,10 @@ readonly class UserAuthService
         if ($user === null) {
             return ApiResponse::createError('Authentication failed: Wrong credentials.', 401);
         }
+
+        $token = $this->mySqlUserInvitationTokenRepository->getInvitationTokenFromUserId($user->getUserId());
+
+        var_dump($token->getToken());
 
         $expirationTime = time() + $this->envData->getJwtNormalExpirationTime();
 

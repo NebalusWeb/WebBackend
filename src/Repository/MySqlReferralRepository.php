@@ -10,15 +10,12 @@ use Nebalus\Webapi\ValueObject\User\User;
 use Nebalus\Webapi\ValueObject\Referral\Referral;
 use PDO;
 
-class MySqlReferralRepository
+readonly class MySqlReferralRepository
 {
-    private PDO $pdo;
-
-    public function __construct(PDO $pdo)
-    {
-        $this->pdo = $pdo;
+    public function __construct(
+        private PDO $pdo
+    ) {
     }
-
     public function createReferral(string $code, string $pointer)
     {
     }
