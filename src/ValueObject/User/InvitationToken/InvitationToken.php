@@ -11,7 +11,8 @@ readonly class InvitationToken
 {
     private function __construct(
         private InvitationTokenId $invitationTokenId,
-        private UserId $userId,
+        private UserId $ownerUserId,
+        private ?UserId $invitedUserId,
         private InvitationTokenField $field1,
         private InvitationTokenField $field2,
         private InvitationTokenField $field3,
@@ -22,7 +23,8 @@ readonly class InvitationToken
 
     public static function from(
         InvitationTokenId $invitationTokenId,
-        UserId $userId,
+        UserId $ownerUserId,
+        ?UserId $invitedUserId,
         InvitationTokenField $field1,
         InvitationTokenField $field2,
         InvitationTokenField $field3,
@@ -35,7 +37,8 @@ readonly class InvitationToken
 
         return new self(
             $invitationTokenId,
-            $userId,
+            $ownerUserId,
+            $invitedUserId,
             $field1,
             $field2,
             $field3,
@@ -47,7 +50,8 @@ readonly class InvitationToken
     public static function fromMySQL(array $data): self
     {
         $invitationTokenId = InvitationTokenId::from($data['invitation_token_id']);
-        $userId = UserId::from($data['user_id']);
+        $ownerUserId = UserId::from($data['owner_user_id']);
+        $invitedUserId = empty($data['invited_user_id']) ? null : UserId::from($data['invited_user_id']);
         $field1 = InvitationTokenField::from($data['token_field_1']);
         $field2 = InvitationTokenField::from($data['token_field_2']);
         $field3 = InvitationTokenField::from($data['token_field_3']);
@@ -56,7 +60,8 @@ readonly class InvitationToken
 
         return new self(
             $invitationTokenId,
-            $userId,
+            $ownerUserId,
+            $invitedUserId,
             $field1,
             $field2,
             $field3,
@@ -86,9 +91,14 @@ readonly class InvitationToken
         return $this->invitationTokenId;
     }
 
-    public function getUserId(): UserId
+    public function getOwnerUserId(): UserId
     {
-        return $this->userId;
+        return $this->ownerUserId;
+    }
+
+    public function getInvitedUserId(): UserId
+    {
+        return $this->invitedUserId;
     }
 
     public function getField1(): InvitationTokenField

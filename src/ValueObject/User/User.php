@@ -6,7 +6,6 @@ namespace Nebalus\Webapi\ValueObject\User;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
-use Nebalus\Webapi\ValueObject\User\InvitationToken\InvitationTokenId;
 
 readonly class User
 {
@@ -17,7 +16,6 @@ readonly class User
         private UserAdminDescription $adminDescription,
         private bool $isAdmin,
         private bool $isEnabled,
-        private InvitationTokenId $createdFromInvitationTokenId,
         private DateTimeImmutable $creationDate,
         private DateTimeImmutable $lastTimeUpdated,
     ) {
@@ -30,7 +28,6 @@ readonly class User
         UserAdminDescription $adminDescription,
         bool $isAdmin,
         bool $isEnabled,
-        InvitationTokenId $createdFromInvitationTokenId,
         DateTimeImmutable $creationDate,
         DateTimeImmutable $lastTimeUpdated
     ): self {
@@ -42,7 +39,6 @@ readonly class User
             $adminDescription,
             $isAdmin,
             $isEnabled,
-            $createdFromInvitationTokenId,
             $creationDate,
             $lastTimeUpdated
         );
@@ -59,7 +55,6 @@ readonly class User
         $adminDescription = UserAdminDescription::from($data['description_for_admins']);
         $isAdmin = (bool) $data['is_admin'];
         $isEnabled = (bool) $data['is_enabled'];
-        $createdFromInvitationTokenId = InvitationTokenId::from($data['created_from_invitation_token_id']);
         $creationDate = new DateTimeImmutable($data['creation_date']);
         $lastTimeUpdated = new DateTimeImmutable($data['last_time_updated']);
 
@@ -70,7 +65,6 @@ readonly class User
             $adminDescription,
             $isAdmin,
             $isEnabled,
-            $createdFromInvitationTokenId,
             $creationDate,
             $lastTimeUpdated
         );
