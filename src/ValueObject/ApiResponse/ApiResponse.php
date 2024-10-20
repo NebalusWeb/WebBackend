@@ -8,12 +8,12 @@ use InvalidArgumentException;
 use JsonException;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponseInterface;
 
-class ApiResponse implements ApiResponseInterface
+readonly class ApiResponse implements ApiResponseInterface
 {
     private function __construct(
-        private readonly array $payload,
-        private readonly int $statusCode,
-        private readonly bool $success
+        private array $payload,
+        private int $statusCode,
+        private bool $success
     ) {
     }
 
