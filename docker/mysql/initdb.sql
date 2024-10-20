@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 28. Sep 2024 um 16:04
+-- Erstellungszeit: 20. Okt 2024 um 00:04
 -- Server-Version: 9.0.1
 -- PHP-Version: 8.2.23
 
@@ -90,12 +90,12 @@ INSERT INTO `referrals` (`referral_id`, `user_id`, `code`, `pointer`, `view_coun
 CREATE TABLE `users` (
                          `user_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key) 	',
                          `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                         `passwd_hash` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                         `passwd_hash` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
                          `description_for_admins` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
                          `is_admin` tinyint(1) NOT NULL DEFAULT '0',
                          `is_enabled` tinyint(1) NOT NULL DEFAULT '0',
-                         `created_from_activation_token_id` int UNSIGNED NOT NULL,
+                         `created_from_invitation_token_id` int UNSIGNED NOT NULL,
                          `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
                          `last_time_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -104,16 +104,16 @@ CREATE TABLE `users` (
 -- Daten für Tabelle `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description_for_admins`, `is_admin`, `is_enabled`, `created_from_activation_token_id`, `creation_date`, `last_time_updated`) VALUES
-    (1, 'Nebalus', 'a1d0c6e83f027327d8461063f4ac58a6', 'nebalus@tuta.io', 'Is the default test User', 1, 1, 0, '2024-02-28 21:28:40', '2024-08-03 23:07:10');
+INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description_for_admins`, `is_admin`, `is_enabled`, `created_from_invitation_token_id`, `creation_date`, `last_time_updated`) VALUES
+    (1, 'Nebalus', 'f381ef6d4e5e29889f967cd06d71dd0fcd4af7f7aad53ae4931b07d4ee6b8144', 'nebalus@tuta.io', 'Is the default test User', 1, 1, 0, '2024-02-28 21:28:40', '2024-08-03 23:07:10');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_invitations_tokens`
+-- Tabellenstruktur für Tabelle `user_invitation_tokens`
 --
 
-CREATE TABLE `user_invitations_tokens` (
+CREATE TABLE `user_invitation_tokens` (
                                           `invitation_token_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
                                           `user_id` int UNSIGNED NOT NULL COMMENT 'The Foreign ID of an User (Foreign Key) 	',
                                           `token_field_1` smallint UNSIGNED NOT NULL COMMENT 'Token Field 1 (XXXX-????-????-????-????)',
@@ -124,11 +124,24 @@ CREATE TABLE `user_invitations_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Daten für Tabelle `user_invitations_tokens`
+-- Daten für Tabelle `user_invitation_tokens`
 --
 
-INSERT INTO `user_invitations_tokens` (`invitation_token_id`, `user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
+INSERT INTO `user_invitation_tokens` (`invitation_token_id`, `user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
     (1, 1, 2489, 2764, 9293, 4695, 5279);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `user_login_history`
+--
+
+CREATE TABLE `user_login_history` (
+                                      `login_history_id` int UNSIGNED NOT NULL,
+                                      `user_id` int UNSIGNED NOT NULL,
+                                      `login_timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                      `ip_address` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indizes der exportierten Tabellen
@@ -163,12 +176,18 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indizes für die Tabelle `user_invitations_tokens`
+-- Indizes für die Tabelle `user_invitation_tokens`
 --
-ALTER TABLE `user_invitations_tokens`
+ALTER TABLE `user_invitation_tokens`
     ADD PRIMARY KEY (`invitation_token_id`),
   ADD UNIQUE KEY `unique_token` (`token_field_1`,`token_field_2`,`token_field_3`,`token_field_4`,`token_field_5`),
   ADD UNIQUE KEY `user_id` (`user_id`) USING BTREE;
+
+--
+-- Indizes für die Tabelle `user_login_history`
+--
+ALTER TABLE `user_login_history`
+    ADD PRIMARY KEY (`login_history_id`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -199,10 +218,16 @@ ALTER TABLE `users`
     MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key) 	', AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT für Tabelle `user_invitations_tokens`
+-- AUTO_INCREMENT für Tabelle `user_invitation_tokens`
 --
-ALTER TABLE `user_invitations_tokens`
+ALTER TABLE `user_invitation_tokens`
     MODIFY `invitation_token_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT für Tabelle `user_login_history`
+--
+ALTER TABLE `user_login_history`
+    MODIFY `login_history_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

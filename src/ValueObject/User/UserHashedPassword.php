@@ -17,17 +17,12 @@ readonly class UserHashedPassword
 
     public static function from(string $plainPassword, string $passwordHashKey): self
     {
-        if (strlen($plainPassword) > 20) {
-            throw new InvalidArgumentException('Invalid password: cannot be longer than 20 characters');
+        if (strlen($plainPassword) < 8) {
+            throw new InvalidArgumentException('Invalid password: must be longer than 8 characters');
         }
 
-        $passwordRegEx = '/^(?=(.*[A-Z]){2,})(?=(.*\d){2,})(?=(.*[a-z]){3,})(?=.*[!@#$&*?]).{8,}$/';
-
-        if (preg_match($passwordRegEx, $plainPassword) < 1) {
-            throw new InvalidArgumentException(
-                'Invalid password: must contain at least 2 uppercase and 3 lowercase letters, 2 numbers,' .
-                ' 1 special character(!@#$&*?) and be at least 8 characters long'
-            );
+        if (strlen($plainPassword) > 20) {
+            throw new InvalidArgumentException('Invalid password: cannot be longer than 20 characters');
         }
 
         $passwordHash = hash_hmac('sha256', $plainPassword, $passwordHashKey);
@@ -40,7 +35,7 @@ readonly class UserHashedPassword
         return new self($hashedPassword);
     }
 
-    public function __toString(): string
+    public function asString(): string
     {
         return $this->hashedPassword;
     }

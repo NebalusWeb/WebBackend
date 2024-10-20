@@ -4,22 +4,16 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Middleware;
 
-use InvalidArgumentException;
-use Nebalus\Webapi\Exception\ApiException;
+use JsonException;
 use Nebalus\Webapi\Option\EnvData;
-use Nebalus\Webapi\ValueObject\AccessLevel;
-use Nebalus\Webapi\ValueObject\ApiResponse\ApiErrorResponse;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use ReallySimpleJWT\Exception\BuildException;
 use ReallySimpleJWT\Token;
 use Slim\App;
-use Slim\Middleware\RoutingMiddleware;
-use Slim\MiddlewareDispatcher;
 
 class AuthMiddleware implements MiddlewareInterface
 {
@@ -34,6 +28,9 @@ class AuthMiddleware implements MiddlewareInterface
         $this->env = $env;
     }
 
+    /**
+     * @throws JsonException
+     */
     #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
         if ($request->hasHeader("Authorization") === false) {
@@ -63,11 +60,14 @@ class AuthMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
+    /**
+     * @throws JsonException
+     */
     private function abort(string $errorMessage, int $code): Response
     {
         $apiResponse = ApiResponse::createError($errorMessage, $code);
         $response = $this->app->getResponseFactory()->createResponse();
-        $response->getBody()->write($apiResponse);
+        $response->getBody()->write($apiResponse->getPayloadAsJson());
         return $response;
     }
 }

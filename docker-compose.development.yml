@@ -53,6 +53,7 @@ services:
       MYSQL_PASSWORD: "12345"
     depends_on:
       - mysql
+      - redis
     networks:
       - public-net
       - private-net
@@ -63,7 +64,7 @@ services:
       context: .
       dockerfile: docker/mysql/Dockerfile
       target: base
-    container_name: mysql-db
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: "12345"
       MYSQL_DATABASE: "main"
@@ -73,6 +74,16 @@ services:
       - /var/lib/mysql
     networks:
       - private-net
+
+  redis:
+    build:
+      context: .
+      dockerfile: docker/redis/Dockerfile
+      target: base
+    container_name: redis
+    networks:
+      - private-net
+
 
 networks:
   public-net:

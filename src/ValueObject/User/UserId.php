@@ -27,7 +27,7 @@ readonly class UserId
         return $this->userId;
     }
 
-    public function __toString(): string
+    public function asString(): string
     {
         return (string) $this->userId;
     }
