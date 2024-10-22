@@ -7,13 +7,13 @@ namespace Nebalus\Webapi\Service\Referral;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\MySqlReferralRepository;
 use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponseInterface;
-use Nebalus\Webapi\View\Referral\ReferralView;
+use Nebalus\Webapi\View\Referral\ReferralGetView;
 
 readonly class ReferralGetService
 {
     public function __construct(
         private MySqlReferralRepository $mySqlReferralRepository,
-        private ReferralView $referralView,
+        private ReferralGetView         $referralView,
     ) {
     }
 
