@@ -30,7 +30,7 @@ services:
       PASSWD_HASH_KEY: "00456q+VJ1?#sdsdflm,.a_EUR*v[iP-"
       ACCESS_CONTROL_ALLOW_ORIGIN: "*"
       MYSQL_HOST: "mysql:3306"
-      MYSQL_DBNAME: "main"
+      MYSQL_DATABASE: "main"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "&!7gmRdr&z4#E6"
     depends_on:

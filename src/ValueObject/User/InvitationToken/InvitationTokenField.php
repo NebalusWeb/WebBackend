@@ -3,7 +3,6 @@
 namespace Nebalus\Webapi\ValueObject\User\InvitationToken;
 
 use InvalidArgumentException;
-use Nebalus\Webapi\ValueObject\User\UserId;
 
 readonly class InvitationTokenField
 {

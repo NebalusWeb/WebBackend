@@ -21,7 +21,7 @@ readonly class MySqlUserInvitationTokenRepository
             'owner_user_id' => $ownerUserId->asInt()
         ]);
 
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $data = $stmt->fetch();
 
         return InvitationToken::fromMySQL($data);
     }

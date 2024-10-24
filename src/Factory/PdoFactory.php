@@ -21,8 +21,19 @@ class PdoFactory
      */
     public function build(): Pdo
     {
-        $dsn = 'mysql:host=' . $this->env->getMySqlHost() . ';dbname=' . $this->env->getMySqlDbName();
-
-        return new Pdo($dsn, $this->env->getMySqlUser(), $this->env->getMySqlPasswd());
+        $host = $this->env->getMySqlHost();
+        $port = $this->env->getMySqlPort();
+        $database = $this->env->getMySqlDatabase();
+        $username = $this->env->getMySqlUser();
+        $password = $this->env->getMySqlPasswd();
+        
+        $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s', $host, $port, $database);
+        $pdo = new PDO($dsn, $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+        return $pdo;
     }
 }
