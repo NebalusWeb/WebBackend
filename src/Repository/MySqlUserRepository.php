@@ -31,7 +31,7 @@ readonly class MySqlUserRepository
             'hashed_password' => $hashedPassword->asString(),
         ]);
 
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $data = $stmt->fetch();
 
         if (empty($data)) {
             return null;
@@ -51,7 +51,7 @@ readonly class MySqlUserRepository
             'user_id' => $userId->asInt()
         ]);
 
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $data = $stmt->fetch();
 
         return User::fromMySQL($data);
     }

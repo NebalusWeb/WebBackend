@@ -47,8 +47,9 @@ services:
       JWT_EXTENDED_EXPIRATION_TIME: 604800
       PASSWD_HASH_KEY: "00456q+VJ1?#sdsdflm,.a_EUR*v[iP-"
       ACCESS_CONTROL_ALLOW_ORIGIN: "*"
-      MYSQL_HOST: "mysql:3306"
-      MYSQL_DBNAME: "main"
+      MYSQL_HOST: "mysql"
+      MYSQL_PORT: "3306"
+      MYSQL_DATABASE: "main"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "12345"
     depends_on:

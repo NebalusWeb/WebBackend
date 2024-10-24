@@ -14,7 +14,8 @@ class EnvData
     private string $jwtSecret;
     private string $mysqlPasswd;
     private string $mysqlHost;
-    private string $mysqlDbName;
+    private string $mysqlPort;
+    private string $mysqlDatabase;
     private string $mysqlUser;
     private string $accessControlAllowOrigin;
     private int $jwtNormalExpirationTime;
@@ -31,7 +32,8 @@ class EnvData
         $this->jwtExtendedExpirationTime = (int)getenv('JWT_EXTENDED_EXPIRATION_TIME');
         $this->mysqlPasswd = getenv("MYSQL_PASSWORD");
         $this->mysqlHost = getenv("MYSQL_HOST");
-        $this->mysqlDbName = getenv("MYSQL_DBNAME");
+        $this->mysqlPort = getenv("MYSQL_PORT");
+        $this->mysqlDatabase = getenv("MYSQL_DATABASE");
         $this->mysqlUser = getenv("MYSQL_USER");
         $this->passwdHashKey = getenv('PASSWD_HASH_KEY');
         $this->accessControlAllowOrigin = getenv("ACCESS_CONTROL_ALLOW_ORIGIN");
@@ -67,9 +69,15 @@ class EnvData
         return $this->mysqlHost;
     }
 
-    public function getMySqlDbName(): string
+    public function getMySqlPort(): string
     {
-        return $this->mysqlDbName;
+        return $this->mysqlPort;
+    }
+
+
+    public function getMySqlDatabase(): string
+    {
+        return $this->mysqlDatabase;
     }
 
     public function getMySqlUser(): string

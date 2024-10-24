@@ -24,6 +24,7 @@ readonly class Referral
     {
         return new Referral($referralId, $userId, $code, $pointer, $viewCount, $creationDate, $enabled);
     }
+    
     public function getReferralId(): int
     {
         return $this->referralId;

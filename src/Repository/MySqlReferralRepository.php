@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository;
 
 use DateTime;
-use Exception;
-use Nebalus\Webapi\ValueObject\User\User;
 use Nebalus\Webapi\ValueObject\Referral\Referral;
 use PDO;
 
@@ -16,6 +14,7 @@ readonly class MySqlReferralRepository
         private PDO $pdo
     ) {
     }
+    
     public function createReferral(string $code, string $pointer)
     {
     }
@@ -56,7 +55,7 @@ readonly class MySqlReferralRepository
             "code" => $code
         ]);
 
-        if ($entry = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        if ($entry = $stmt->fetch()) {
             $creationDate = new DateTime($entry["creation_date"]);
             return Referral::from($entry["referral_id"], $entry["user_id"], $entry["code"], $entry["pointer"], $entry["view_count"], $creationDate, $entry["enabled"]);
         }
