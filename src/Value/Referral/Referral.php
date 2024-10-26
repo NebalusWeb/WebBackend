@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\ValueObject\Referral;
+namespace Nebalus\Webapi\Value\Referral;
 
 use DateTime;
-use Nebalus\Webapi\ValueObject\User\UserId;
+use Nebalus\Webapi\Value\User\UserId;
 
 readonly class Referral
 {

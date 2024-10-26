@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\View\Referral;
 
-use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
-use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponseInterface;
-use Nebalus\Webapi\ValueObject\Referral\Referral;
+use Nebalus\Webapi\Value\ApiResponse\ApiResponse;
+use Nebalus\Webapi\Value\ApiResponse\ApiResponseInterface;
+use Nebalus\Webapi\Value\Referral\Referral;
 
 class ReferralDeleteView
 {

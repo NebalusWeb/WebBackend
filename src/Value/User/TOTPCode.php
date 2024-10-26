@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\ValueObject\User;
+namespace Nebalus\Webapi\Value\User;
 
 readonly class TOTPCode
 {

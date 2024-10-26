@@ -6,7 +6,7 @@ namespace Nebalus\Webapi\Middleware;
 
 use JsonException;
 use Nebalus\Webapi\Option\EnvData;
-use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
+use Nebalus\Webapi\Value\ApiResponse\ApiResponse;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
