@@ -2,8 +2,8 @@
 
 namespace Nebalus\Webapi\Repository;
 
-use Nebalus\Webapi\ValueObject\User\InvitationToken\InvitationToken;
-use Nebalus\Webapi\ValueObject\User\UserId;
+use Nebalus\Webapi\Value\User\InvitationToken\InvitationToken;
+use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
 readonly class MySqlUserInvitationTokenRepository

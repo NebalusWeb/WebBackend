@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\ValueObject\ApiResponse;
+namespace Nebalus\Webapi\Value\ApiResponse;
 
 use InvalidArgumentException;
 use JsonException;
-use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponseInterface;
+use Nebalus\Webapi\Value\ApiResponse\ApiResponseInterface;
 
 readonly class ApiResponse implements ApiResponseInterface
 {

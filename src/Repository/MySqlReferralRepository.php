@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository;
 
 use DateTime;
-use Nebalus\Webapi\ValueObject\Referral\Referral;
+use Nebalus\Webapi\Value\Referral\Referral;
 use PDO;
 
 readonly class MySqlReferralRepository

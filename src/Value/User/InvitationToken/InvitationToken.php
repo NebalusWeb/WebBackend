@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\ValueObject\User\InvitationToken;
+namespace Nebalus\Webapi\Value\User\InvitationToken;
 
 use InvalidArgumentException;
-use Nebalus\Webapi\ValueObject\User\UserId;
+use Nebalus\Webapi\Value\User\UserId;
 
 readonly class InvitationToken
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\ValueObject;
+namespace Nebalus\Webapi\Value;
 
 enum AccessLevel
 {

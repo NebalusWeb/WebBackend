@@ -3,7 +3,7 @@
 namespace Nebalus\Webapi\Middleware;
 
 use JsonException;
-use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
+use Nebalus\Webapi\Value\ApiResponse\ApiResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\App;
 

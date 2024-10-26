@@ -2,9 +2,9 @@
 
 namespace Nebalus\Webapi\View\Auth;
 
-use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponse;
-use Nebalus\Webapi\ValueObject\ApiResponse\ApiResponseInterface;
-use Nebalus\Webapi\ValueObject\User\User;
+use Nebalus\Webapi\Value\ApiResponse\ApiResponse;
+use Nebalus\Webapi\Value\ApiResponse\ApiResponseInterface;
+use Nebalus\Webapi\Value\User\User;
 use ReallySimpleJWT\Jwt;
 use ReallySimpleJWT\Token;
 

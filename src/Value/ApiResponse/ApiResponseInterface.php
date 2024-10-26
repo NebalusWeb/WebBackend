@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\ValueObject\ApiResponse;
+namespace Nebalus\Webapi\Value\ApiResponse;
 
 use JsonException;
 

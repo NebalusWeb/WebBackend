@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\ValueObject\User;
+namespace Nebalus\Webapi\Value\User;
 
 use DateMalformedStringException;
 use DateTimeImmutable;

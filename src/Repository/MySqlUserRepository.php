@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
-use Nebalus\Webapi\ValueObject\User\User;
-use Nebalus\Webapi\ValueObject\User\UserHashedPassword;
-use Nebalus\Webapi\ValueObject\User\UserId;
-use Nebalus\Webapi\ValueObject\User\Username;
+use Nebalus\Webapi\Value\User\User;
+use Nebalus\Webapi\Value\User\UserHashedPassword;
+use Nebalus\Webapi\Value\User\UserId;
+use Nebalus\Webapi\Value\User\Username;
 use PDO;
 
 readonly class MySqlUserRepository
