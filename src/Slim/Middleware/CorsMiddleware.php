@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Middleware;
+namespace Nebalus\Webapi\Slim\Middleware;
 
 use Nebalus\Webapi\Option\EnvData;
 use Psr\Http\Message\ResponseInterface as Response;

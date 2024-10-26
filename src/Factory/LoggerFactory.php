@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Factory;
 
-use Monolog\Formatter\JsonFormatter;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Formatter\NormalizerFormatter;
 use Monolog\Handler\StreamHandler;

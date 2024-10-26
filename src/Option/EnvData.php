@@ -28,8 +28,8 @@ class EnvData
         $this->isDevelopment = strtolower(getenv("APP_ENV")) === "development";
         $this->logLevel = Level::fromName(getenv("ERROR_LOGLEVEL"));
         $this->jwtSecret = getenv("JWT_SECRET");
-        $this->jwtNormalExpirationTime = (int)getenv('JWT_NORMAL_EXPIRATION_TIME');
-        $this->jwtExtendedExpirationTime = (int)getenv('JWT_EXTENDED_EXPIRATION_TIME');
+        $this->jwtNormalExpirationTime = (int) getenv('JWT_NORMAL_EXPIRATION_TIME');
+        $this->jwtExtendedExpirationTime = (int) getenv('JWT_EXTENDED_EXPIRATION_TIME');
         $this->mysqlPasswd = getenv("MYSQL_PASSWORD");
         $this->mysqlHost = getenv("MYSQL_HOST");
         $this->mysqlPort = getenv("MYSQL_PORT");

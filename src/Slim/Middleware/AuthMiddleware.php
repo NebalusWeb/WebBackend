@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Middleware;
+namespace Nebalus\Webapi\Slim\Middleware;
 
 use JsonException;
 use Nebalus\Webapi\Option\EnvData;
-use Nebalus\Webapi\Value\ApiResponse\ApiResponse;
+use Nebalus\Webapi\Value\Result\Result;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -60,7 +60,7 @@ readonly class AuthMiddleware implements MiddlewareInterface
      */
     private function abort(string $errorMessage, int $code): Response
     {
-        $apiResponse = ApiResponse::createError($errorMessage, $code);
+        $apiResponse = Result::createError($errorMessage, $code);
         $response = $this->app->getResponseFactory()->createResponse();
         $response->getBody()->write($apiResponse->getPayloadAsJson());
         return $response;

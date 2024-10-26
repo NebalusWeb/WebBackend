@@ -9,7 +9,6 @@ use DI\ContainerBuilder;
 use Exception;
 use Monolog\Logger;
 use PDO;
-use Psr\Http\Message\ResponseFactoryInterface;
 
 use function DI\factory;
 
@@ -23,7 +22,6 @@ class DiContainerFactory
         $appDefinitions = [
             PDO::class => factory([PdoFactory::class, 'build']),
             Logger::class => factory([LoggerFactory::class, "build"]),
-            ResponseFactoryInterface::class => new ResponseFactory()
         ];
 
         $builder = new ContainerBuilder();
