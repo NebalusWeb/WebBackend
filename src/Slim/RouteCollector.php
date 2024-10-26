@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim;
 
-use Nebalus\Webapi\Action\Temp\TempAction;
+use Nebalus\Webapi\Api\Action\User\UserAuthAction;
+use Nebalus\Webapi\Api\Action\Temp\TempAction;
+use Nebalus\Webapi\Api\View\User\UserAuthView;
 use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
 use Slim\App;
+use Slim\Routing\RouteCollectorProxy;
 
 readonly class RouteCollector
 {
@@ -33,6 +36,8 @@ readonly class RouteCollector
 
     private function initRoutes(): void
     {
-        $this->app->get("/", TempAction::class);
+        $this->app->group("/ui", function (RouteCollectorProxy $group) {
+            $group->map(["POST"], "/auth", UserAuthAction::class);
+        });
     }
 }

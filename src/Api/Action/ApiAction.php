@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Action;
+namespace Nebalus\Webapi\Api\Action;
 
 use Psr\Http\Message\ResponseInterface as ResponseInterface;
 use Slim\Http\Response as Response;
