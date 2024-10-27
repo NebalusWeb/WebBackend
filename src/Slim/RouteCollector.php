@@ -39,5 +39,9 @@ readonly class RouteCollector
         $this->app->group("/ui", function (RouteCollectorProxy $group) {
             $group->map(["POST"], "/auth", UserAuthAction::class);
         });
+
+        $this->app->group("/services", function (RouteCollectorProxy $group) {
+            $group->map(["POST"], "/referral", UserAuthAction::class);
+        });
     }
 }
