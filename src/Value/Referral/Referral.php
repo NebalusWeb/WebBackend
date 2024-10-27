@@ -4,28 +4,38 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Value\Referral;
 
-use DateTime;
+use DateMalformedStringException;
+use DateTimeImmutable;
 use Nebalus\Webapi\Value\User\UserId;
 
 readonly class Referral
 {
     private function __construct(
-        private int $referralId,
+        private ReferralId $referralId,
         private UserId $userId,
         private string $code,
         private string $pointer,
-        private int $viewCount,
-        private DateTime $creationDate,
+        private DateTimeImmutable $creationDate,
         private bool $enabled
     ) {
     }
 
-    public static function from(int $referralId, UserId $userId, string $code, string $pointer, int $viewCount, DateTime $creationDate, bool $enabled): Referral
+    /**
+     * @throws DateMalformedStringException
+     */
+    public static function fromMySql(array $data): self
     {
-        return new Referral($referralId, $userId, $code, $pointer, $viewCount, $creationDate, $enabled);
+        $referralId = ReferralId::from($data["referral_id"]);
+        $userId = UserId::from($data["user_id"]);
+        $code = $data["code"];
+        $pointer = $data["pointer"];
+        $creationDate = new DateTimeImmutable($data["creation_date"]);
+        $enabled = $data["enabled"];
+
+        return new Referral($referralId, $userId, $code, $pointer, $creationDate, $enabled);
     }
-    
-    public function getReferralId(): int
+
+    public function getReferralId(): ReferralId
     {
         return $this->referralId;
     }
@@ -41,11 +51,7 @@ readonly class Referral
     {
         return $this->pointer;
     }
-    public function getViewCount(): int
-    {
-        return $this->viewCount;
-    }
-    public function getCreationDate(): DateTime
+    public function getCreationDate(): DateTimeImmutable
     {
         return $this->creationDate;
     }
