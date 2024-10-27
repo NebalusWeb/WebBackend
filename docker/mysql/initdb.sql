@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 20. Okt 2024 um 17:00
--- Server-Version: 9.1.0
--- PHP-Version: 8.2.23
+-- Generation Time: Oct 27, 2024 at 08:37 PM
+-- Server version: 9.1.0
+-- PHP Version: 8.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `main`
+-- Database: `main`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `linktrees`
+-- Table structure for table `linktrees`
 --
 
 CREATE TABLE `linktrees` (
@@ -40,7 +40,7 @@ CREATE TABLE `linktrees` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `linktree_entrys`
+-- Table structure for table `linktree_entrys`
 --
 
 CREATE TABLE `linktree_entrys` (
@@ -56,7 +56,7 @@ CREATE TABLE `linktree_entrys` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `referrals`
+-- Table structure for table `referrals`
 --
 
 CREATE TABLE `referrals` (
@@ -64,27 +64,37 @@ CREATE TABLE `referrals` (
                              `user_id` int UNSIGNED NOT NULL COMMENT 'The ID of the user that owns this entry',
                              `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'A unique code that is used for /ref/code',
                              `pointer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '/' COMMENT 'Points to the Final URL (''/'' is the root path from the aktual webserver)',
-                             `view_count` int UNSIGNED NOT NULL DEFAULT '0' COMMENT 'The amount of times this referral entry has been accessed',
                              `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Defines if this referral is enabled',
                              `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date of this entry',
                              `last_time_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Daten für Tabelle `referrals`
+-- Dumping data for table `referrals`
 --
 
-INSERT INTO `referrals` (`referral_id`, `user_id`, `code`, `pointer`, `view_count`, `enabled`, `creation_date`, `last_time_updated`) VALUES
-                                                                                                                                         (1, 1, 'TEST', '/', 0, 1, '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
-                                                                                                                                         (3, 1, 'TEST1', '/', 0, 1, '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
-                                                                                                                                         (5, 1, 'TEST42', '/', 0, 1, '2024-02-27 11:04:20', '2024-09-28 15:35:26'),
-                                                                                                                                         (6, 1, '42', '/', 15, 1, '2024-02-28 21:30:24', '2024-09-28 15:35:26'),
-                                                                                                                                         (7, 1, 'dfghdfgh', '/', 0, 1, '2024-08-03 23:20:58', '2024-09-28 15:35:26');
+INSERT INTO `referrals` (`referral_id`, `user_id`, `code`, `pointer`, `enabled`, `creation_date`, `last_time_updated`) VALUES
+                                                                                                                           (1, 1, 'TEST', '/', 1, '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
+                                                                                                                           (3, 1, 'TEST1', '/', 1, '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
+                                                                                                                           (5, 1, 'TEST42', '/', 1, '2024-02-27 11:04:20', '2024-09-28 15:35:26'),
+                                                                                                                           (6, 1, '42', '/', 1, '2024-02-28 21:30:24', '2024-09-28 15:35:26'),
+                                                                                                                           (7, 1, 'dfghdfgh', '/', 1, '2024-08-03 23:20:58', '2024-09-28 15:35:26');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `users`
+-- Table structure for table `referral_clicks`
+--
+
+CREATE TABLE `referral_clicks` (
+                                   `referral_id` int UNSIGNED NOT NULL,
+                                   `click_timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -100,7 +110,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Daten für Tabelle `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description_for_admins`, `is_admin`, `is_enabled`, `creation_date`, `last_time_updated`) VALUES
@@ -109,7 +119,7 @@ INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_invitation_tokens`
+-- Table structure for table `user_invitation_tokens`
 --
 
 CREATE TABLE `user_invitation_tokens` (
@@ -124,7 +134,7 @@ CREATE TABLE `user_invitation_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Daten für Tabelle `user_invitation_tokens`
+-- Dumping data for table `user_invitation_tokens`
 --
 
 INSERT INTO `user_invitation_tokens` (`invitation_token_id`, `owner_user_id`, `invited_user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
@@ -134,50 +144,51 @@ INSERT INTO `user_invitation_tokens` (`invitation_token_id`, `owner_user_id`, `i
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_login_history`
+-- Table structure for table `user_login_history`
 --
 
 CREATE TABLE `user_login_history` (
                                       `login_history_id` int UNSIGNED NOT NULL,
                                       `user_id` int UNSIGNED NOT NULL,
                                       `login_timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                      `ip_address` blob NOT NULL
+                                      `ip_address` blob NOT NULL,
+                                      `success` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Indizes der exportierten Tabellen
+-- Indexes for dumped tables
 --
 
 --
--- Indizes für die Tabelle `linktrees`
+-- Indexes for table `linktrees`
 --
 ALTER TABLE `linktrees`
     ADD PRIMARY KEY (`linktree_id`),
   ADD UNIQUE KEY `account` (`user_id`);
 
 --
--- Indizes für die Tabelle `linktree_entrys`
+-- Indexes for table `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     ADD PRIMARY KEY (`linktree_entry_id`),
   ADD UNIQUE KEY `linktree_id` (`linktree_id`,`position`);
 
 --
--- Indizes für die Tabelle `referrals`
+-- Indexes for table `referrals`
 --
 ALTER TABLE `referrals`
     ADD PRIMARY KEY (`referral_id`),
   ADD UNIQUE KEY `refcode` (`code`) USING BTREE;
 
 --
--- Indizes für die Tabelle `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
     ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indizes für die Tabelle `user_invitation_tokens`
+-- Indexes for table `user_invitation_tokens`
 --
 ALTER TABLE `user_invitation_tokens`
     ADD PRIMARY KEY (`invitation_token_id`),
@@ -185,47 +196,47 @@ ALTER TABLE `user_invitation_tokens`
   ADD UNIQUE KEY `invited_user_id` (`invited_user_id`);
 
 --
--- Indizes für die Tabelle `user_login_history`
+-- Indexes for table `user_login_history`
 --
 ALTER TABLE `user_login_history`
     ADD PRIMARY KEY (`login_history_id`);
 
 --
--- AUTO_INCREMENT für exportierte Tabellen
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT für Tabelle `linktrees`
+-- AUTO_INCREMENT for table `linktrees`
 --
 ALTER TABLE `linktrees`
     MODIFY `linktree_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)';
 
 --
--- AUTO_INCREMENT für Tabelle `linktree_entrys`
+-- AUTO_INCREMENT for table `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     MODIFY `linktree_entry_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)';
 
 --
--- AUTO_INCREMENT für Tabelle `referrals`
+-- AUTO_INCREMENT for table `referrals`
 --
 ALTER TABLE `referrals`
     MODIFY `referral_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT für Tabelle `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
     MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key) 	', AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT für Tabelle `user_invitation_tokens`
+-- AUTO_INCREMENT for table `user_invitation_tokens`
 --
 ALTER TABLE `user_invitation_tokens`
     MODIFY `invitation_token_id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The ID of this entry (Primary Key)', AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT für Tabelle `user_login_history`
+-- AUTO_INCREMENT for table `user_login_history`
 --
 ALTER TABLE `user_login_history`
     MODIFY `login_history_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
