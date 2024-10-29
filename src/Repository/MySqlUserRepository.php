@@ -24,12 +24,11 @@ readonly class MySqlUserRepository
     public function findUserByCredentials(Username $username, UserHashedPassword $hashedPassword): ?User
     {
         $sql = "SELECT * FROM `users` WHERE `username` = :username AND `passwd_hash` = :hashed_password";
-        $stmt = $this->pdo->prepare($sql);
 
-        $stmt->execute([
-            'username' => $username->asString(),
-            'hashed_password' => $hashedPassword->asString(),
-        ]);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('username', $username->asString());
+        $stmt->bindValue('hashed_password', $hashedPassword->asString());
+        $stmt->execute();
 
         $data = $stmt->fetch();
 
@@ -46,10 +45,10 @@ readonly class MySqlUserRepository
     public function getUserFromId(UserId $userId): User
     {
         $sql = "SELECT * FROM `users` WHERE `user_id` = :user_id";
+
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([
-            'user_id' => $userId->asInt()
-        ]);
+        $stmt->bindValue(':user_id', $userId->asInt());
+        $stmt->execute();
 
         $data = $stmt->fetch();
 

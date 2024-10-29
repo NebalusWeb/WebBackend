@@ -16,10 +16,10 @@ readonly class MySqlUserInvitationTokenRepository
     public function getInvitationTokenFromOwnerUserId(UserId $ownerUserId): InvitationToken
     {
         $sql = "SELECT * FROM `user_invitation_tokens` WHERE `owner_user_id` = :owner_user_id";
+
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([
-            'owner_user_id' => $ownerUserId->asInt()
-        ]);
+        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
+        $stmt->execute();
 
         $data = $stmt->fetch();
 
