@@ -26,7 +26,7 @@ readonly class Result implements ResultInterface
             'success' => $success,
             'message' => $message,
             'status_code' => $statusCode,
-            'data' => $fields,
+            'payload' => $fields,
         ];
 
         return new static($success, $message, $statusCode, $payload);

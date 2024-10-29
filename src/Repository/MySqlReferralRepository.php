@@ -6,6 +6,7 @@ namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
 use DateTime;
+use DateTimeImmutable;
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Referral\ReferralId;
 use PDO;
@@ -37,21 +38,34 @@ readonly class MySqlReferralRepository
     {
     }
 
+    public function createReferralClickEntry(ReferralId $id): bool
+    {
+        $sql = "INSERT INTO `referral_clicks`(`referral_id`) VALUES (:referral_id)";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':referral_id', $id->asInt());
+        $stmt->execute();
+
+        return $stmt->rowCount() === 1;
+    }
+
     /**
      * @throws DateMalformedStringException
      */
-    public function getReferralByCode(string $code): Referral|false
+    public function getReferralByCode(string $code): Referral|null
     {
-        $sql = "SELECT `referral_id`, `user_id`, `code`, `pointer`, `creation_date`, `enabled` FROM `referrals` WHERE BINARY `code` = :code";
+        $sql = "SELECT * FROM `referrals` WHERE BINARY `code` = :code";
+
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':code', $code);
+        $stmt->execute();
 
-        $stmt->execute([
-            "code" => $code
-        ]);
+        $data = $stmt->fetch();
 
-        if ($entry = $stmt->fetch()) {
-            return Referral::fromMySql($entry);
+        if (empty($data)) {
+            return null;
         }
-        return false;
+
+        return Referral::fromMySql($data);
     }
 }

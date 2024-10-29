@@ -12,6 +12,7 @@ use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Repository\MySqlUserInvitationTokenRepository;
 use Nebalus\Webapi\Repository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
+use Nebalus\Webapi\Value\Result\ResultInterface;
 use Nebalus\Webapi\Value\User\UserHashedPassword;
 use Nebalus\Webapi\Value\User\Username;
 use ReallySimpleJWT\Exception\BuildException;
@@ -30,7 +31,7 @@ readonly class UserAuthService
      * @throws DateMalformedStringException
      * @throws BuildException
      */
-    public function execute(array $params): Result
+    public function execute(array $params): ResultInterface
     {
         if ($this->authFilter->filterAndCheckIfStructureIsValid($params) === false) {
             return Result::createError($this->authFilter->getErrorMessage(), 401);

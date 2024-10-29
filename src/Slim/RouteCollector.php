@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim;
 
+use Nebalus\Webapi\Api\Action\Referral\ReferralClickAction;
 use Nebalus\Webapi\Api\Action\User\UserAuthAction;
 use Nebalus\Webapi\Api\Action\Temp\TempAction;
+use Nebalus\Webapi\Api\Service\Referral\ReferralClickService;
 use Nebalus\Webapi\Api\View\User\UserAuthView;
 use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
@@ -41,7 +43,7 @@ readonly class RouteCollector
         });
 
         $this->app->group("/services", function (RouteCollectorProxy $group) {
-            $group->map(["POST"], "/referral", UserAuthAction::class);
+            $group->map(["GET"], "/referral", ReferralClickAction::class);
         });
     }
 }

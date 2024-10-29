@@ -30,7 +30,7 @@ readonly class Referral
         $code = $data["code"];
         $pointer = $data["pointer"];
         $creationDate = new DateTimeImmutable($data["creation_date"]);
-        $enabled = $data["enabled"];
+        $enabled = (bool) $data["enabled"];
 
         return new Referral($referralId, $userId, $code, $pointer, $creationDate, $enabled);
     }
