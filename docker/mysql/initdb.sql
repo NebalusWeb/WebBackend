@@ -46,7 +46,7 @@ CREATE TABLE `linktrees` (
 CREATE TABLE `linktree_entrys` (
                                    `linktree_entry_id` int UNSIGNED NOT NULL COMMENT 'The ID of this entry (Primary Key)',
                                    `linktree_id` int UNSIGNED NOT NULL,
-                                   `position` int NOT NULL,
+                                   `position` int UNSIGNED NOT NULL,
                                    `label` varchar(84) NOT NULL,
                                    `link` text NOT NULL,
                                    `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
