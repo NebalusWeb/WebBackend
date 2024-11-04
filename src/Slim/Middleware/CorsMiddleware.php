@@ -31,6 +31,7 @@ readonly class CorsMiddleware implements MiddlewareInterface
     private function withCorsHeaders(Response $response): Response
     {
         return $response
+            ->withHeader('Content-Type', 'application/json')
             ->withHeader('Access-Control-Allow-Origin', $this->env->getAccessControlAllowOrigin())
             ->withHeader('Access-Control-Allow-Methods', 'Authorization')
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');

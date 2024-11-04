@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
-use DateTime;
-use DateTimeImmutable;
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Referral\ReferralId;
 use Nebalus\Webapi\Value\User\UserId;
@@ -51,7 +49,7 @@ readonly class MySqlReferralRepository
 
     public function createReferralClickEntry(ReferralId $referralId): bool
     {
-        $sql = "INSERT INTO `referral_clicks`(`referral_id`) VALUES (:referral_id)";
+        $sql = "INSERT INTO `analytics_referral_clicks`(`referral_id`) VALUES (:referral_id)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':referral_id', $referralId->asInt());

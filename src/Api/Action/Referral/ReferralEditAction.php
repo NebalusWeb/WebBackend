@@ -13,8 +13,7 @@ class ReferralEditAction extends ApiAction
 {
     public function __construct(
         private readonly ReferralEditService $referralEditService
-    )
-    {
+    ) {
     }
 
     protected function execute(Request $request, Response $response, array $args): Response

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim\Middleware;
 
-use JsonException;
 use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Value\Result\Result;
 use Override;
@@ -23,13 +22,10 @@ readonly class AuthMiddleware implements MiddlewareInterface
     ) {
     }
 
-    /**
-     * @throws JsonException
-     */
     #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
         if ($request->hasHeader("Authorization") === false) {
-            return $this->abort("The 'Authorization' header is not provided", 401);
+            return $this->abort("The Authorization header is not provided", 401);
         }
 
         $jwt = $request->getHeader("Authorization")[0];
@@ -55,9 +51,6 @@ readonly class AuthMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    /**
-     * @throws JsonException
-     */
     private function abort(string $errorMessage, int $code): Response
     {
         $apiResponse = Result::createError($errorMessage, $code);

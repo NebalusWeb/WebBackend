@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Api\Action\Referral;
+namespace Nebalus\Webapi\Api\Action\Linktree;
 
 use DateMalformedStringException;
 use Nebalus\Webapi\Api\Action\ApiAction;
-use Nebalus\Webapi\Api\Service\Referral\LinktreeCreateService;
+use Nebalus\Webapi\Api\Service\Linktree\LinktreeCreateService;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 
@@ -17,9 +17,6 @@ class LinktreeCreateAction extends ApiAction
     ) {
     }
 
-    /**
-     * @throws DateMalformedStringException
-     */
     protected function execute(Request $request, Response $response, array $args): Response
     {
         $params = $request->getParams() ?? [];

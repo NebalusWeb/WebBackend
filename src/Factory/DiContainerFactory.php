@@ -9,7 +9,6 @@ use DI\ContainerBuilder;
 use Exception;
 use Monolog\Logger;
 use PDO;
-
 use function DI\factory;
 
 class DiContainerFactory

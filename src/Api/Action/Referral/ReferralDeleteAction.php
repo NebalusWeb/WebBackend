@@ -13,8 +13,7 @@ class ReferralDeleteAction extends ApiAction
 {
     public function __construct(
         private readonly ReferralDeleteService $referralDeleteService
-    )
-    {
+    ) {
     }
 
     protected function execute(Request $request, Response $response, array $args): Response

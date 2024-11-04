@@ -1,8 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Service\Referral;
+namespace Nebalus\Webapi\Api\Service\Linktree;
 
-use Nebalus\Webapi\Api\View\Referral\LinktreeCreateView;
+use Nebalus\Webapi\Api\View\Linktree\LinktreeCreateView;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
 readonly class LinktreeCreateService

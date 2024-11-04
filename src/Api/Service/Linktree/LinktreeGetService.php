@@ -1,8 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Service\Referral;
+namespace Nebalus\Webapi\Api\Service\Linktree;
 
-use Nebalus\Webapi\Api\View\Referral\LinktreeGetView;
+use Nebalus\Webapi\Api\View\Linktree\LinktreeGetView;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
 readonly class LinktreeGetService

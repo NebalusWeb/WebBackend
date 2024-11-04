@@ -1,8 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Service\Referral;
+namespace Nebalus\Webapi\Api\Service\Linktree;
 
-use Nebalus\Webapi\Api\View\Referral\LinktreeDeleteView;
+use Nebalus\Webapi\Api\View\Linktree\LinktreeDeleteView;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
 readonly class LinktreeDeleteService

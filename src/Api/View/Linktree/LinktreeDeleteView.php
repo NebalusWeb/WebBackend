@@ -1,8 +1,7 @@
 <?php
 
-namespace Nebalus\Webapi\Api\View\Referral;
+namespace Nebalus\Webapi\Api\View\Linktree;
 
-use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 

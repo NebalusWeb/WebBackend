@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api\View\Referral;
+namespace Nebalus\Webapi\Api\View\Referral\Analytics;
 
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Result\Result;

@@ -1,12 +1,11 @@
 <?php
 
-namespace Nebalus\Webapi\Api\View\Referral;
+namespace Nebalus\Webapi\Api\View\User;
 
-use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
-class LinktreeClickView
+class UserRegisterView
 {
     public static function render(): ResultInterface
     {

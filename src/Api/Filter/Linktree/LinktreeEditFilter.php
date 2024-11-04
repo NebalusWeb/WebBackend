@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Filter\Referral;
+namespace Nebalus\Webapi\Api\Filter\Linktree;
 
 use Nebalus\Webapi\Api\Filter\AbstractFilter;
 use Override;

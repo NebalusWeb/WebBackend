@@ -3,8 +3,8 @@
 namespace Nebalus\Webapi\Api\Service\Referral;
 
 use DateMalformedStringException;
-use Nebalus\Webapi\Api\Filter\Referral\ReferralClickFilter;
-use Nebalus\Webapi\Api\View\Referral\ReferralClickView;
+use Nebalus\Webapi\Api\Filter\Referral\Analytics\ReferralClickFilter;
+use Nebalus\Webapi\Api\View\Referral\Analytics\ReferralClickView;
 use Nebalus\Webapi\Repository\MySqlReferralRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
