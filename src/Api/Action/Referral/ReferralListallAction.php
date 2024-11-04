@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Api\Action\Referral;
 
 use Nebalus\Webapi\Api\Action\ApiAction;
-use Nebalus\Webapi\Api\Service\Referral\ReferralDeleteService;
+use Nebalus\Webapi\Api\Service\Referral\ReferralCreateService;
+use Nebalus\Webapi\Api\Service\Referral\ReferralListallService;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 
-class ReferralDeleteAction extends ApiAction
+class ReferralListallAction extends ApiAction
 {
     public function __construct(
-        private readonly ReferralDeleteService $referralDeleteService
+        private readonly ReferralListallService $referralListallService
     )
     {
     }
@@ -20,7 +21,7 @@ class ReferralDeleteAction extends ApiAction
     protected function execute(Request $request, Response $response, array $args): Response
     {
         $params = $request->getParams() ?? [];
-        $result = $this->referralDeleteService->execute($params);
+        $result = $this->referralListallService->execute($params);
 
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }

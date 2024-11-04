@@ -3,11 +3,13 @@
 namespace Nebalus\Webapi\Slim\Middleware;
 
 use JsonException;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Nebalus\Webapi\Value\Result\Result;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\App;
+use Slim\Http\Response as Response;
+use Slim\Http\ServerRequest as Request;
+
 
 readonly class AdminPermissionMiddleware implements MiddlewareInterface
 {
@@ -26,9 +28,9 @@ readonly class AdminPermissionMiddleware implements MiddlewareInterface
      */
     private function abort(string $errorMessage, int $code): Response
     {
-        $apiResponse = Response::createError($errorMessage, $code);
+        $result = Result::createError($errorMessage, $code);
         $response = $this->app->getResponseFactory()->createResponse();
-        $response->getBody()->write($apiResponse->getPayloadAsJson());
+        $response->withJson($result->getPayload());
         return $response;
     }
 }

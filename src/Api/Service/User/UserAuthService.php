@@ -9,7 +9,6 @@ use InvalidArgumentException;
 use Nebalus\Webapi\Api\Filter\User\UserAuthFilter;
 use Nebalus\Webapi\Api\View\User\UserAuthView;
 use Nebalus\Webapi\Option\EnvData;
-use Nebalus\Webapi\Repository\MySqlUserInvitationTokenRepository;
 use Nebalus\Webapi\Repository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
