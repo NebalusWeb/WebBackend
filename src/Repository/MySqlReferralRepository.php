@@ -71,7 +71,7 @@ readonly class MySqlReferralRepository
 
         $data = $stmt->fetch();
 
-        if (empty($data)) {
+        if (!$data) {
             return null;
         }
 

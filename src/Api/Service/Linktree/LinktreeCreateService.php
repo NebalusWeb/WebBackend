@@ -7,8 +7,8 @@ use Nebalus\Webapi\Value\Result\ResultInterface;
 
 readonly class LinktreeCreateService
 {
-    public function __construct(
-    ) {
+    public function __construct()
+    {
     }
 
     public function execute(array $params): ResultInterface

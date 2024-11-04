@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Slim;
 
 use Nebalus\Webapi\Api\Action\ApiAction;
+use Nebalus\Webapi\Api\Action\Linktree\Analytics\LinktreeClickAction;
 use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClickAction;
 use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClickHistoryAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeDeleteAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeEditAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeGetAction;
-use Nebalus\Webapi\Api\Action\Linktree\ReferralCreateAction;
-use Nebalus\Webapi\Api\Action\Linktree\ReferralDeleteAction;
-use Nebalus\Webapi\Api\Action\Linktree\ReferralEditAction;
-use Nebalus\Webapi\Api\Action\Linktree\ReferralGetAction;
+use Nebalus\Webapi\Api\Action\Referral\ReferralCreateAction;
+use Nebalus\Webapi\Api\Action\Referral\ReferralDeleteAction;
+use Nebalus\Webapi\Api\Action\Referral\ReferralEditAction;
+use Nebalus\Webapi\Api\Action\Referral\ReferralGetAction;
 use Nebalus\Webapi\Api\Action\User\UserAuthAction;
+use Nebalus\Webapi\Api\Action\User\UserRegisterAction;
+use Nebalus\Webapi\Api\Service\User\UserRegisterService;
 use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
@@ -47,7 +50,7 @@ readonly class RouteCollector
     {
         $this->app->group("/ui", function (RouteCollectorProxy $group) {
             $group->map(["POST"], "/auth", UserAuthAction::class);
-            $group->map(["POST"], "/register", ApiAction::class);
+            $group->map(["POST"], "/register", UserRegisterAction::class);
             $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 $group->group("/services", function (RouteCollectorProxy $group) {
                     $group->group("/linktree", function (RouteCollectorProxy $group) {
@@ -57,7 +60,7 @@ readonly class RouteCollector
                     });
                     $group->group("/referrals", function (RouteCollectorProxy $group) {
                         $group->map(["POST"], "", ReferralCreateAction::class);
-                        $group->group("/[{code}]", function (RouteCollectorProxy $group) {
+                        $group->group("/{code}", function (RouteCollectorProxy $group) {
                             $group->map(["GET"], "", ReferralGetAction::class);
                             $group->map(["PATCH"], "", ReferralEditAction::class);
                             $group->map(["DELETE"], "", ReferralDeleteAction::class);

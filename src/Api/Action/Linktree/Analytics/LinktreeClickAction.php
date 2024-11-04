@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Api\Action\Linktree\Analytics;
 
 use Nebalus\Webapi\Api\Action\ApiAction;
-use Nebalus\Webapi\Api\Service\Linktree\LinktreeClickService;
+use Nebalus\Webapi\Api\Service\Linktree\Analytics\LinktreeClickService;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 
-class LinktreeClickAction extends ApiAction
+class
+LinktreeClickAction extends ApiAction
 {
     public function __construct(
         private readonly LinktreeClickService $linktreeClickService,

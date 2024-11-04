@@ -1,11 +1,11 @@
 <?php
 
-namespace Nebalus\Webapi\Api\View\Referral;
+namespace Nebalus\Webapi\Api\View\Referral\Analytics;
 
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
-class ReferralListallView
+class ReferralClickHistoryView
 {
     public static function render(): ResultInterface
     {

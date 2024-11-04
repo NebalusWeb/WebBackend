@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Api\Action\Referral;
 
 use Nebalus\Webapi\Api\Action\ApiAction;
-use Nebalus\Webapi\Api\Service\Referral\ReferralListallService;
+use Nebalus\Webapi\Api\Service\Referral\ReferralListAllService;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 
-class ReferralListallAction extends ApiAction
+class ReferralListAllAction extends ApiAction
 {
     public function __construct(
-        private readonly ReferralListallService $referralListallService
+        private readonly ReferralListAllService $referralListallService
     ) {
     }
 

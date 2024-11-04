@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\Filter\Referral;
 use Nebalus\Webapi\Api\Filter\AbstractFilter;
 use Override;
 
-class ReferralListallFilter extends AbstractFilter
+class ReferralListAllFilter extends AbstractFilter
 {
     #[Override] public function filterAndCheckIfStructureIsValid(array $params): bool
     {

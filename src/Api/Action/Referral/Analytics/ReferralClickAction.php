@@ -6,7 +6,7 @@ namespace Nebalus\Webapi\Api\Action\Referral\Analytics;
 
 use DateMalformedStringException;
 use Nebalus\Webapi\Api\Action\ApiAction;
-use Nebalus\Webapi\Api\Service\Referral\ReferralClickService;
+use Nebalus\Webapi\Api\Service\Referral\Analytics\ReferralClickService;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 

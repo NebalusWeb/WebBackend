@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Service\Referral;
+namespace Nebalus\Webapi\Api\Service\Referral\Analytics;
 
 use DateMalformedStringException;
 use Nebalus\Webapi\Api\Filter\Referral\Analytics\ReferralClickFilter;

@@ -9,8 +9,6 @@ class ReferralDeleteView
 {
     public static function render(): ResultInterface
     {
-        $fields = [];
-
-        return Result::createSuccess("PLACEHOLDER", 200, $fields);
+        return Result::createSuccess("Referral deleted", 200);
     }
 }

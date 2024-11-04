@@ -20,7 +20,7 @@ use ReallySimpleJWT\Token;
 readonly class UserAuthService
 {
     public function __construct(
-        private UserAuthFilter $authFilter,
+        private UserAuthFilter $filter,
         private MySqlUserRepository $mySqlUserRepository,
         private EnvData $envData
     ) {
@@ -32,11 +32,11 @@ readonly class UserAuthService
      */
     public function execute(array $params): ResultInterface
     {
-        if ($this->authFilter->filterAndCheckIfStructureIsValid($params) === false) {
-            return Result::createError($this->authFilter->getErrorMessage(), 401);
+        if ($this->filter->filterAndCheckIfStructureIsValid($params) === false) {
+            return Result::createError($this->filter->getErrorMessage(), 401);
         }
 
-        $filteredData = $this->authFilter->getFilteredData();
+        $filteredData = $this->filter->getFilteredData();
 
         try {
             $username = Username::from($filteredData['username']);

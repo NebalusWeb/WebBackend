@@ -2,15 +2,23 @@
 
 namespace Nebalus\Webapi\Api\View\Referral;
 
+use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
 class ReferralGetView
 {
-    public static function render(): ResultInterface
+    public static function render(Referral $referral): ResultInterface
     {
-        $fields = [];
+        $fields = [
+            "referral_id" => $referral->getReferralId()->asInt(),
+            "user_id" => $referral->getUserId()->asInt(),
+            "code" => $referral->getCode(),
+            "pointer" => $referral->getPointer(),
+            "creation_date" => $referral->getCreationDate()->getTimestamp(),
+            "enabled" => $referral->isEnabled(),
+        ];
 
-        return Result::createSuccess("PLACEHOLDER", 200, $fields);
+        return Result::createSuccess("Referral fetched", 200, $fields);
     }
 }
