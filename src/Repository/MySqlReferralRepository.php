@@ -9,6 +9,7 @@ use DateTime;
 use DateTimeImmutable;
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Referral\ReferralId;
+use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
 readonly class MySqlReferralRepository
@@ -18,8 +19,18 @@ readonly class MySqlReferralRepository
     ) {
     }
 
-    public function createReferral(string $code, string $pointer)
+    public function createReferral(UserId $userId, string $code, string $pointer, bool $enabled = false): bool
     {
+        $sql = "INSERT INTO `referrals`(`user_id`, `code`, `pointer`, `enabled`) VALUES (:user_id, :code, :pointer, :enabled)";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':user_id', $userId->asInt());
+        $stmt->bindValue(':code', $code);
+        $stmt->bindValue(':pointer', $pointer);
+        $stmt->bindValue(':enabled', $enabled);
+        $stmt->execute();
+
+        return $stmt->rowCount() === 1;
     }
 
     public function deleteReferralById(ReferralId $id)
@@ -38,12 +49,12 @@ readonly class MySqlReferralRepository
     {
     }
 
-    public function createReferralClickEntry(ReferralId $id): bool
+    public function createReferralClickEntry(ReferralId $referralId): bool
     {
         $sql = "INSERT INTO `referral_clicks`(`referral_id`) VALUES (:referral_id)";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':referral_id', $id->asInt());
+        $stmt->bindValue(':referral_id', $referralId->asInt());
         $stmt->execute();
 
         return $stmt->rowCount() === 1;

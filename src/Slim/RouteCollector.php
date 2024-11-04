@@ -53,7 +53,6 @@ readonly class RouteCollector
                         $group->map(["PATCH"], "", LinktreeEditAction::class);
                         $group->map(["DELETE"], "", LinktreeDeleteAction::class);
                     });
-                    });
                     $group->group("/referrals", function (RouteCollectorProxy $group) {
                         $group->map(["POST"], "",  ReferralCreateAction::class);
                         $group->group("/[{code}]", function (RouteCollectorProxy $group) {
