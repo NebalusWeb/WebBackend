@@ -17,15 +17,26 @@ readonly class MySqlReferralRepository
     ) {
     }
 
-    public function createReferral(UserId $userId, string $code, string $pointer, bool $enabled = false): bool
+    public function createReferral(UserId $userId, string $code, string $pointer, bool $disabled = true): bool
     {
-        $sql = "INSERT INTO `referrals`(`user_id`, `code`, `pointer`, `enabled`) VALUES (:user_id, :code, :pointer, :enabled)";
+        $sql = "INSERT INTO `referrals`(`user_id`, `code`, `pointer`, `disabled`) VALUES (:user_id, :code, :pointer, :disabled)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':user_id', $userId->asInt());
         $stmt->bindValue(':code', $code);
         $stmt->bindValue(':pointer', $pointer);
-        $stmt->bindValue(':enabled', $enabled);
+        $stmt->bindValue(':disabled', $disabled);
+        $stmt->execute();
+
+        return $stmt->rowCount() === 1;
+    }
+
+    public function createReferralClickEntry(ReferralId $referralId): bool
+    {
+        $sql = "INSERT INTO `analytics_referral_clicks`(`referral_id`) VALUES (:referral_id)";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':referral_id', $referralId->asInt());
         $stmt->execute();
 
         return $stmt->rowCount() === 1;
@@ -45,17 +56,6 @@ readonly class MySqlReferralRepository
 
     public function getReferralById(ReferralId $id)
     {
-    }
-
-    public function createReferralClickEntry(ReferralId $referralId): bool
-    {
-        $sql = "INSERT INTO `analytics_referral_clicks`(`referral_id`) VALUES (:referral_id)";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':referral_id', $referralId->asInt());
-        $stmt->execute();
-
-        return $stmt->rowCount() === 1;
     }
 
     /**

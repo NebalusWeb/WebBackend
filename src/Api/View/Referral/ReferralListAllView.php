@@ -10,7 +10,6 @@ class ReferralListAllView
 {
     public static function render(Referrals $referrals): ResultInterface
     {
-
         $fields = [
 
         ];

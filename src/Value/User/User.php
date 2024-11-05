@@ -12,9 +12,10 @@ readonly class User
     private function __construct(
         private UserId $userId,
         private Username $username,
+        private UserEmail $email,
         private UserAdminDescription $adminDescription,
         private bool $isAdmin,
-        private bool $isEnabled,
+        private bool $disabled,
         private DateTimeImmutable $createdAtDate,
         private DateTimeImmutable $updatedAtDate,
     ) {
@@ -23,9 +24,10 @@ readonly class User
     public static function from(
         UserId $userId,
         Username $username,
+        UserEmail $email,
         UserAdminDescription $adminDescription,
         bool $isAdmin,
-        bool $isEnabled,
+        bool $disabled,
         DateTimeImmutable $createdAtDate,
         DateTimeImmutable $updatedAtDate
     ): self {
@@ -33,9 +35,10 @@ readonly class User
         return new User(
             $userId,
             $username,
+            $email,
             $adminDescription,
             $isAdmin,
-            $isEnabled,
+            $disabled,
             $createdAtDate,
             $updatedAtDate
         );
@@ -48,18 +51,20 @@ readonly class User
     {
         $userId = UserId::from($data['user_id']);
         $username = Username::from($data['username']);
+        $email = UserEmail::from($data['email']);
         $adminDescription = UserAdminDescription::from($data['description_for_admins']);
         $isAdmin = (bool) $data['is_admin'];
-        $isEnabled = (bool) $data['is_enabled'];
+        $disabled = (bool) $data['disabled'];
         $createdAtDate = new DateTimeImmutable($data['created_at']);
         $updatedAtDate = new DateTimeImmutable($data['updated_at']);
 
         return new User(
             $userId,
             $username,
+            $email,
             $adminDescription,
             $isAdmin,
-            $isEnabled,
+            $disabled,
             $createdAtDate,
             $updatedAtDate
         );
@@ -74,14 +79,19 @@ readonly class User
         return $this->username;
     }
 
+    public function getEmail(): UserEmail
+    {
+        return $this->email;
+    }
+
     public function isAdmin(): bool
     {
         return $this->isAdmin;
     }
 
-    public function isEnabled(): bool
+    public function isDisabled(): bool
     {
-        return $this->isEnabled;
+        return $this->disabled;
     }
 
     public function getCreatedAtDate(): DateTimeImmutable

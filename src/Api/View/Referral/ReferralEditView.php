@@ -16,7 +16,7 @@ class ReferralEditView
             "code" => $referral->getCode(),
             "pointer" => $referral->getPointer(),
             "created_at_timestamp" => $referral->getCreatedAtDate()->getTimestamp(),
-            "enabled" => $referral->isEnabled(),
+            "disabled" => $referral->isDisabled(),
         ];
 
         return Result::createSuccess("Referral edited", 200, $fields);

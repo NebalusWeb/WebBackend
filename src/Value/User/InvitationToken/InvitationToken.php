@@ -11,7 +11,6 @@ use Nebalus\Webapi\Value\User\UserId;
 readonly class InvitationToken
 {
     private function __construct(
-        private InvitationTokenId $invitationTokenId,
         private UserId $ownerUserId,
         private ?UserId $invitedUserId,
         private PureInvitationToken $pureInvitationToken,
@@ -21,7 +20,6 @@ readonly class InvitationToken
     }
 
     public static function from(
-        InvitationTokenId $invitationTokenId,
         UserId $ownerUserId,
         ?UserId $invitedUserId,
         PureInvitationToken $pureInvitationToken,
@@ -29,7 +27,6 @@ readonly class InvitationToken
         ?DateTimeImmutable $usedTimestamp
     ): self {
         return new self(
-            $invitationTokenId,
             $ownerUserId,
             $invitedUserId,
             $pureInvitationToken,
@@ -43,15 +40,13 @@ readonly class InvitationToken
      */
     public static function fromMySQL(array $data): self
     {
-        $invitationTokenId = InvitationTokenId::from($data['invitation_token_id']);
         $ownerUserId = UserId::from($data['owner_user_id']);
         $invitedUserId = empty($data['invited_user_id']) ? null : UserId::from($data['invited_user_id']);
         $pureInvitationToken = PureInvitationToken::fromMySQL($data);
         $createdAtDate = new DateTimeImmutable($data['created_at']);
-        $usedAtDate = new DateTimeImmutable($data['used_at']);
+        $usedAtDate = empty($data['used_at']) ? null : new DateTimeImmutable($data['used_at']);
 
         return new self(
-            $invitationTokenId,
             $ownerUserId,
             $invitedUserId,
             $pureInvitationToken,
@@ -60,17 +55,12 @@ readonly class InvitationToken
         );
     }
 
-    public function getInvitationTokenId(): InvitationTokenId
-    {
-        return $this->invitationTokenId;
-    }
-
     public function getOwnerUserId(): UserId
     {
         return $this->ownerUserId;
     }
 
-    public function getInvitedUserId(): UserId
+    public function getInvitedUserId(): ?UserId
     {
         return $this->invitedUserId;
     }
@@ -88,5 +78,10 @@ readonly class InvitationToken
     public function getUsedAtDate(): ?DateTimeImmutable
     {
         return $this->usedAtDate;
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->invitedUserId !== null || $this->usedAtDate !== null;
     }
 }

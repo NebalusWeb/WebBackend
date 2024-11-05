@@ -24,8 +24,6 @@ readonly class ReferralCreateService
 
         $filteredData = $this->referralCreateFilter->getFilteredData();
 
-
-
         return ReferralCreateView::render();
     }
 }

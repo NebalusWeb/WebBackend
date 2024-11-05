@@ -30,7 +30,7 @@ readonly class ReferralClickService
 
         $referral = $this->referralRepository->getReferralByCode($filteredData['code']);
 
-        if (empty($referral) || $referral->isEnabled() === false) {
+        if (empty($referral) || $referral->isDisabled()) {
             return Result::createError("Referral code not found", 404);
         }
 

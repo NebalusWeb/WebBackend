@@ -1,10 +1,10 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\Email;
+namespace Nebalus\Webapi\Value\User;
 
 use InvalidArgumentException;
 
-readonly class PureEmail
+readonly class UserEmail
 {
     private function __construct(
         private string $email,
