@@ -19,12 +19,14 @@ readonly class UserRegisterService
 {
     public function __construct(
         private UserRegisterFilter $filter,
-        private MySqlUserRepository $mySqlUserRepository,
         private MySqlUserInvitationTokenRepository $mySqlUserInvitationTokenRepository,
         private EnvData $envData
     ) {
     }
 
+    /**
+     * @throws \DateMalformedStringException
+     */
     public function execute(array $params): ResultInterface
     {
         if ($this->filter->filterAndCheckIfStructureIsValid($params) === false) {

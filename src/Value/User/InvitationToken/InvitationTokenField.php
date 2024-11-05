@@ -14,7 +14,6 @@ readonly class InvitationTokenField
 
     public static function from(int $tokenField): self
     {
-        var_dump($tokenField);
         if ($tokenField < 0 || $tokenField > 9999) {
             throw new InvalidArgumentException('Invalid tokenField: can be exactly or between 0 and 9999');
         }

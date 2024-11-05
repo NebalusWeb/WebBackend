@@ -16,16 +16,19 @@ readonly class MySqlUserInvitationTokenRepository
     ) {
     }
 
+    /**
+     * @throws DateMalformedStringException
+     */
     public function findInvitationTokenByFields(PureInvitationToken $token): ?InvitationToken
     {
-        $sql = "SELECT * FROM `user_invitation_tokens` WHERE `token_field_1` = :token_field_1 AND `token_field_2` = :token_field_2 AND `token_field_3` = :token_field_3 AND `token_field_4` = :token_field_4 AND `token_field_5` = :token_field_5";
+        $sql = "SELECT * FROM user_invitation_tokens WHERE token_field_1 = :token_field_1 AND token_field_2 = :token_field_2 AND token_field_3 = :token_field_3 AND token_field_4 = :token_field_4 AND token_field_5 = :token_field_5";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':token_field_1', $token->getField1());
-        $stmt->bindValue(':token_field_2', $token->getField2());
-        $stmt->bindValue(':token_field_3', $token->getField3());
-        $stmt->bindValue(':token_field_4', $token->getField4());
-        $stmt->bindValue(':token_field_5', $token->getChecksumField());
+        $stmt->bindValue(':token_field_1', $token->getField1()->asInt());
+        $stmt->bindValue(':token_field_2', $token->getField2()->asInt());
+        $stmt->bindValue(':token_field_3', $token->getField3()->asInt());
+        $stmt->bindValue(':token_field_4', $token->getField4()->asInt());
+        $stmt->bindValue(':token_field_5', $token->getChecksumField()->asInt());
         $stmt->execute();
 
         $data = $stmt->fetch();

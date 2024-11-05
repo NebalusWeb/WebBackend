@@ -50,6 +50,7 @@ readonly class PureInvitationToken
 
     public static function fromMySQL(array $data): self
     {
+        var_dump($data);
         $field1 = InvitationTokenField::from($data['token_field_1']);
         $field2 = InvitationTokenField::from($data['token_field_2']);
         $field3 = InvitationTokenField::from($data['token_field_3']);
