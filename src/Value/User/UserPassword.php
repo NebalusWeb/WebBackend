@@ -15,7 +15,7 @@ readonly class UserPassword
     ) {
     }
 
-    public static function fromPlain(string $plainPassword, string $salt = ""): self
+    public static function fromPlain(string $plainPassword, int $cost = 10): self
     {
         if (strlen($plainPassword) < 8) {
             throw new InvalidArgumentException('Invalid password: must be longer than 8 characters');
@@ -25,7 +25,7 @@ readonly class UserPassword
             throw new InvalidArgumentException('Invalid password: cannot be longer than 20 characters');
         }
 
-        $passwordHash = password_hash($plainPassword . $salt, PASSWORD_BCRYPT);
+        $passwordHash = password_hash($plainPassword, PASSWORD_BCRYPT, ['cost' => $cost]);
 
         return new self($passwordHash);
     }
@@ -35,9 +35,9 @@ readonly class UserPassword
         return new self($hashedPassword);
     }
 
-    public function verify(string $plainPassword, string $salt = ""): bool
+    public function verify(string $plainPassword): bool
     {
-        return password_verify($plainPassword . $salt, $this->password);
+        return password_verify($plainPassword, $this->password);
     }
 
     public function asString(): string

@@ -51,7 +51,7 @@ readonly class UserAuthService
             return Result::createError('Authentication failed: Wrong credentials.', 401);
         }
 
-        if ($user->getPassword()->verify($filteredData['password'], (string)$user->getCreatedAtDate()->getTimestamp()) === false) {
+        if ($user->getPassword()->verify($filteredData['password']) === false) {
             return Result::createError('Authentication failed: Wrong credentials.', 401);
         }
 

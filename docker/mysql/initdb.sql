@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 05. Nov 2024 um 22:28
+-- Erstellungszeit: 05. Nov 2024 um 23:03
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -66,7 +66,18 @@ INSERT INTO `analytics_referral_clicks` (`referral_id`, `clicked_at`) VALUES
                                                                           (6, '2024-11-05 15:50:28'),
                                                                           (6, '2024-11-05 15:50:29'),
                                                                           (6, '2024-11-05 15:50:29'),
-                                                                          (6, '2024-11-05 15:50:30');
+                                                                          (6, '2024-11-05 15:50:30'),
+                                                                          (6, '2024-11-05 23:02:33'),
+                                                                          (6, '2024-11-05 23:02:34'),
+                                                                          (6, '2024-11-05 23:02:34'),
+                                                                          (1, '2024-11-05 23:02:38'),
+                                                                          (1, '2024-11-05 23:02:39'),
+                                                                          (1, '2024-11-05 23:02:42'),
+                                                                          (1, '2024-11-05 23:02:46'),
+                                                                          (5, '2024-11-05 23:02:49'),
+                                                                          (5, '2024-11-05 23:02:50'),
+                                                                          (5, '2024-11-05 23:02:51'),
+                                                                          (6, '2024-11-05 23:02:54');
 
 -- --------------------------------------------------------
 
@@ -149,7 +160,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `description_for_admins`, `is_admin`, `disabled`, `created_at`, `updated_at`) VALUES
-    (1, 'Nebalus', 'f381ef6d4e5e29889f967cd06d71dd0fcd4af7f7aad53ae4931b07d4ee6b8144', 'contact@nebalus.dev', 'Is the default test User', 1, 0, '2024-02-28 21:28:40', '2024-08-03 23:07:10');
+    (1, 'Nebalus', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'contact@nebalus.dev', 'Is the default test User', 1, 0, '2024-02-28 21:28:40', '2024-08-03 23:07:10');
 
 -- --------------------------------------------------------
 
