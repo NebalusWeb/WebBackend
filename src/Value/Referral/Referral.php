@@ -15,7 +15,7 @@ readonly class Referral
         private UserId $userId,
         private string $code,
         private string $pointer,
-        private DateTimeImmutable $creationDate,
+        private DateTimeImmutable $createdAtDate,
         private bool $enabled
     ) {
     }
@@ -29,10 +29,10 @@ readonly class Referral
         $userId = UserId::from($data["user_id"]);
         $code = $data["code"];
         $pointer = $data["pointer"];
-        $creationDate = new DateTimeImmutable($data["creation_date"]);
+        $createdAtDate = new DateTimeImmutable($data["creation_date"]);
         $enabled = (bool) $data["enabled"];
 
-        return new Referral($referralId, $userId, $code, $pointer, $creationDate, $enabled);
+        return new Referral($referralId, $userId, $code, $pointer, $createdAtDate, $enabled);
     }
 
     public function getReferralId(): ReferralId
@@ -51,9 +51,9 @@ readonly class Referral
     {
         return $this->pointer;
     }
-    public function getCreationDate(): DateTimeImmutable
+    public function getCreatedAtDate(): DateTimeImmutable
     {
-        return $this->creationDate;
+        return $this->createdAtDate;
     }
     public function isEnabled(): bool
     {

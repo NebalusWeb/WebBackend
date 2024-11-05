@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 05. Nov 2024 um 08:09
+-- Erstellungszeit: 05. Nov 2024 um 09:48
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.25
 
@@ -172,16 +172,18 @@ CREATE TABLE `user_invitation_tokens` (
   `token_field_2` smallint UNSIGNED NOT NULL COMMENT 'Token Field 2 (????-XXXX-????-????-????)',
   `token_field_3` smallint UNSIGNED NOT NULL COMMENT 'Token Field 3 (????-????-XXXX-????-????)',
   `token_field_4` smallint UNSIGNED NOT NULL COMMENT 'Token Field 4 (????-????-????-XXXX-????)',
-  `token_field_5` smallint UNSIGNED NOT NULL COMMENT 'Token Field 5 (????-????-????-????-XXXX)'
+  `token_field_5` smallint UNSIGNED NOT NULL COMMENT 'Token Field 5 (????-????-????-????-XXXX)',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `used_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Daten für Tabelle `user_invitation_tokens`
 --
 
-INSERT INTO `user_invitation_tokens` (`invitation_token_id`, `owner_user_id`, `invited_user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`) VALUES
-(1, 1, NULL, 2485, 2764, 9211, 4695, 4788),
-(6, 1, 1, 4586, 5863, 8326, 9386, 7040);
+INSERT INTO `user_invitation_tokens` (`invitation_token_id`, `owner_user_id`, `invited_user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_field_5`, `created_at`, `used_at`) VALUES
+(1, 1, NULL, 2485, 2764, 9211, 4695, 4788, '2024-11-05 08:12:38', NULL),
+(6, 1, 1, 4586, 5863, 8326, 9386, 7040, '2024-11-05 08:12:38', '2024-11-01 09:14:41');
 
 -- --------------------------------------------------------
 

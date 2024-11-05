@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Value\User;
 
 use InvalidArgumentException;
 
-readonly class Email
+readonly class PureEmail
 {
     private function __construct(
         private string $email,

@@ -10,7 +10,7 @@ use Nebalus\Webapi\Repository\MySqlUserInvitationTokenRepository;
 use Nebalus\Webapi\Repository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
-use Nebalus\Webapi\Value\User\Email;
+use Nebalus\Webapi\Value\User\PureEmail;
 use Nebalus\Webapi\Value\User\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\User\UserHashedPassword;
 use Nebalus\Webapi\Value\User\Username;
@@ -35,7 +35,7 @@ readonly class UserRegisterService
 
         try {
             $pureInvitationToken = PureInvitationToken::fromString($filteredData['invitation_token']);
-            $email = Email::from($filteredData['email']);
+            $pureEmail = PureEmail::from($filteredData['email']);
             $username = Username::from($filteredData['username']);
             $password = UserHashedPassword::from($filteredData['password'], $this->envData->getPasswdHashKey());
         } catch (InvalidArgumentException $e) {
