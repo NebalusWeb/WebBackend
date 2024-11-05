@@ -51,6 +51,8 @@ readonly class RouteCollector
             $group->map(["POST"], "/register", UserRegisterAction::class);
             $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 $group->group("/services", function (RouteCollectorProxy $group) {
+                    $group->group("/invitationtokens", function (RouteCollectorProxy $group) {
+                    });
                     $group->group("/linktree", function (RouteCollectorProxy $group) {
                         $group->map(["GET"], "", LinktreeGetAction::class);
                         $group->map(["PATCH"], "", LinktreeEditAction::class);
