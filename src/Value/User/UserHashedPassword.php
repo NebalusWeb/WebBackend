@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Value\User;
 
 use InvalidArgumentException;
+
 use function strlen;
 
 readonly class UserHashedPassword
