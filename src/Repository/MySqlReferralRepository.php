@@ -61,7 +61,7 @@ readonly class MySqlReferralRepository
     /**
      * @throws DateMalformedStringException
      */
-    public function getReferralByCode(string $code): Referral|null
+    public function getReferralByCode(string $code): ?Referral
     {
         $sql = "SELECT * FROM `referrals` WHERE BINARY `code` = :code";
 
