@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User;
+namespace Nebalus\Webapi\Value\User\Email;
 
 use InvalidArgumentException;
 

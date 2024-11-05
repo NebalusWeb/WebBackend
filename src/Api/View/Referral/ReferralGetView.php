@@ -15,7 +15,7 @@ class ReferralGetView
             "user_id" => $referral->getUserId()->asInt(),
             "code" => $referral->getCode(),
             "pointer" => $referral->getPointer(),
-            "creation_date" => $referral->getCreationDate()->getTimestamp(),
+            "created_at_timestamp" => $referral->getCreatedAtDate()->getTimestamp(),
             "enabled" => $referral->isEnabled(),
         ];
 

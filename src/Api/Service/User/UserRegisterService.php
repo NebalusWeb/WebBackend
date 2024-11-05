@@ -10,7 +10,7 @@ use Nebalus\Webapi\Repository\MySqlUserInvitationTokenRepository;
 use Nebalus\Webapi\Repository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
-use Nebalus\Webapi\Value\User\PureEmail;
+use Nebalus\Webapi\Value\User\Email\PureEmail;
 use Nebalus\Webapi\Value\User\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\User\UserHashedPassword;
 use Nebalus\Webapi\Value\User\Username;
@@ -41,7 +41,7 @@ readonly class UserRegisterService
         } catch (InvalidArgumentException $e) {
             return Result::createError('Registration failed: sd', 401);
         }
-        
+
         $dbInvitationToken = $this->mySqlUserInvitationTokenRepository->findInvitationTokenByFields($pureInvitationToken);
 
         return UserRegisterView::render();

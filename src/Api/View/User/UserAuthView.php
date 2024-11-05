@@ -16,10 +16,9 @@ class UserAuthView
             "user" => [
                 "user_id" => $user->getUserId()->asInt(),
                 "username" => $user->getUsername()->asString(),
-                "email" => $user->getEmail()->asString(),
                 "is_admin" => $user->isAdmin(),
                 "is_enabled" => $user->isEnabled(),
-                "creation_date_timestamp" => $user->getCreationDate()->getTimestamp()
+                "created_at_timestamp" => $user->getCreatedAtDate()->getTimestamp(),
             ]
         ];
 

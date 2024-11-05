@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim;
 
-use Nebalus\Webapi\Api\Action\ApiAction;
 use Nebalus\Webapi\Api\Action\Linktree\Analytics\LinktreeClickAction;
-use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClickAction;
-use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClickHistoryAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeDeleteAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeEditAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeGetAction;
+use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClickAction;
+use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClickHistoryAction;
 use Nebalus\Webapi\Api\Action\Referral\ReferralCreateAction;
 use Nebalus\Webapi\Api\Action\Referral\ReferralDeleteAction;
 use Nebalus\Webapi\Api\Action\Referral\ReferralEditAction;
 use Nebalus\Webapi\Api\Action\Referral\ReferralGetAction;
 use Nebalus\Webapi\Api\Action\User\UserAuthAction;
 use Nebalus\Webapi\Api\Action\User\UserRegisterAction;
-use Nebalus\Webapi\Api\Service\User\UserRegisterService;
 use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;

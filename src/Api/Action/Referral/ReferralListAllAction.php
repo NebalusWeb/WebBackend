@@ -12,14 +12,14 @@ use Slim\Http\ServerRequest as Request;
 class ReferralListAllAction extends ApiAction
 {
     public function __construct(
-        private readonly ReferralListAllService $referralListallService
+        private readonly ReferralListAllService $referralListAllService
     ) {
     }
 
     protected function execute(Request $request, Response $response, array $args): Response
     {
         $params = $request->getParams() ?? [];
-        $result = $this->referralListallService->execute($params);
+        $result = $this->referralListAllService->execute($params);
 
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }

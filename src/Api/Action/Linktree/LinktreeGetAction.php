@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Api\Action\Linktree;
 
-use DateMalformedStringException;
 use Nebalus\Webapi\Api\Action\ApiAction;
 use Nebalus\Webapi\Api\Service\Linktree\LinktreeGetService;
 use Slim\Http\Response as Response;

@@ -1,10 +1,7 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User;
-
-use InvalidArgumentException;
+namespace Nebalus\Webapi\Value\User\Email;
 
 readonly class UserEmail
 {
-   
 }

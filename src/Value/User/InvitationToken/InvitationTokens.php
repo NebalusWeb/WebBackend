@@ -1,8 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\Referral;
-
-use Nebalus\Webapi\Value\User\InvitationToken\InvitationToken;
+namespace Nebalus\Webapi\Value\User\InvitationToken;
 
 class InvitationTokens
 {
