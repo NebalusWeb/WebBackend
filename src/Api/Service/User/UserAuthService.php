@@ -8,11 +8,11 @@ use DateMalformedStringException;
 use InvalidArgumentException;
 use Nebalus\Webapi\Api\Filter\User\UserAuthFilter;
 use Nebalus\Webapi\Api\View\User\UserAuthView;
+use Nebalus\Webapi\Exception\ApiDatabaseException;
 use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Repository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
-use Nebalus\Webapi\Value\User\UserHashedPassword;
 use Nebalus\Webapi\Value\User\Username;
 use ReallySimpleJWT\Exception\BuildException;
 use ReallySimpleJWT\Token;
@@ -29,6 +29,7 @@ readonly class UserAuthService
     /**
      * @throws DateMalformedStringException
      * @throws BuildException
+     * @throws ApiDatabaseException
      */
     public function execute(array $params): ResultInterface
     {
@@ -40,14 +41,17 @@ readonly class UserAuthService
 
         try {
             $username = Username::from($filteredData['username']);
-            $hashedPassword = UserHashedPassword::from($filteredData['password'], $this->envData->getPasswdHashKey());
         } catch (InvalidArgumentException) {
             return Result::createError('Authentication failed: Wrong credentials.', 401);
         }
 
-        $user = $this->mySqlUserRepository->findUserByCredentials($username, $hashedPassword);
+        $user = $this->mySqlUserRepository->getUserFromUsername($username);
 
         if ($user === null) {
+            return Result::createError('Authentication failed: Wrong credentials.', 401);
+        }
+
+        if ($user->getPassword()->verify($filteredData['password'], (string)$user->getCreatedAtDate()->getTimestamp()) === false) {
             return Result::createError('Authentication failed: Wrong credentials.', 401);
         }
 

@@ -20,7 +20,6 @@ class EnvData
     private string $accessControlAllowOrigin;
     private int $jwtNormalExpirationTime;
     private int $jwtExtendedExpirationTime;
-    private string $passwdHashKey;
 
     public function __construct()
     {
@@ -35,7 +34,6 @@ class EnvData
         $this->mysqlPort = getenv("MYSQL_PORT");
         $this->mysqlDatabase = getenv("MYSQL_DATABASE");
         $this->mysqlUser = getenv("MYSQL_USER");
-        $this->passwdHashKey = getenv('PASSWD_HASH_KEY');
         $this->accessControlAllowOrigin = getenv("ACCESS_CONTROL_ALLOW_ORIGIN");
     }
 
@@ -93,11 +91,6 @@ class EnvData
     public function getJwtExtendedExpirationTime(): int
     {
         return $this->jwtExtendedExpirationTime;
-    }
-
-    public function getPasswdHashKey(): string
-    {
-        return $this->passwdHashKey;
     }
     public function getAccessControlAllowOrigin(): string
     {

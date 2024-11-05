@@ -11,15 +11,14 @@ use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 use Nebalus\Webapi\Value\User\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\User\UserEmail;
-use Nebalus\Webapi\Value\User\UserHashedPassword;
+use Nebalus\Webapi\Value\User\UserPassword;
 use Nebalus\Webapi\Value\User\Username;
 
 readonly class UserRegisterService
 {
     public function __construct(
         private UserRegisterFilter $filter,
-        private MySqlUserInvitationTokenRepository $mySqlUserInvitationTokenRepository,
-        private EnvData $envData
+        private MySqlUserInvitationTokenRepository $mySqlUserInvitationTokenRepository
     ) {
     }
 
@@ -38,7 +37,7 @@ readonly class UserRegisterService
             $pureInvitationToken = PureInvitationToken::fromString($filteredData['invitation_token']);
             $email = UserEmail::from($filteredData['email']);
             $username = Username::from($filteredData['username']);
-            $password = UserHashedPassword::from($filteredData['password'], $this->envData->getPasswdHashKey());
+            $password = UserPassword::fromPlain($filteredData['password']);
         } catch (InvalidArgumentException $e) {
             return Result::createError('Registration failed: PLACEHOLDER', 401);
         }

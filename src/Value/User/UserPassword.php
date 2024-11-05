@@ -8,14 +8,14 @@ use InvalidArgumentException;
 
 use function strlen;
 
-readonly class UserHashedPassword
+readonly class UserPassword
 {
     private function __construct(
-        private string $hashedPassword
+        private string $password
     ) {
     }
 
-    public static function from(string $plainPassword, string $passwordHashKey): self
+    public static function fromPlain(string $plainPassword, string $salt = ""): self
     {
         if (strlen($plainPassword) < 8) {
             throw new InvalidArgumentException('Invalid password: must be longer than 8 characters');
@@ -25,18 +25,23 @@ readonly class UserHashedPassword
             throw new InvalidArgumentException('Invalid password: cannot be longer than 20 characters');
         }
 
-        $passwordHash = hash_hmac('sha256', $plainPassword, $passwordHashKey);
+        $passwordHash = password_hash($plainPassword . $salt, PASSWORD_BCRYPT);
 
         return new self($passwordHash);
     }
 
-    public static function fromHashedPassword(string $hashedPassword): self
+    public static function fromHash(string $hashedPassword): self
     {
         return new self($hashedPassword);
     }
 
+    public function verify(string $plainPassword, string $salt = ""): bool
+    {
+        return password_verify($plainPassword . $salt, $this->password);
+    }
+
     public function asString(): string
     {
-        return $this->hashedPassword;
+        return $this->password;
     }
 }

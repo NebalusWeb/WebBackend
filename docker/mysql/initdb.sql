@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 05. Nov 2024 um 16:06
+-- Erstellungszeit: 05. Nov 2024 um 22:28
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -135,7 +135,7 @@ INSERT INTO `referrals` (`referral_id`, `user_id`, `code`, `pointer`, `disabled`
 CREATE TABLE `users` (
                          `user_id` int UNSIGNED NOT NULL,
                          `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                         `passwd_hash` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                         `password` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `email` varchar(255) NOT NULL,
                          `description_for_admins` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
                          `is_admin` tinyint(1) NOT NULL DEFAULT '0',
@@ -148,7 +148,7 @@ CREATE TABLE `users` (
 -- Daten für Tabelle `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `passwd_hash`, `email`, `description_for_admins`, `is_admin`, `disabled`, `created_at`, `updated_at`) VALUES
+INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `description_for_admins`, `is_admin`, `disabled`, `created_at`, `updated_at`) VALUES
     (1, 'Nebalus', 'f381ef6d4e5e29889f967cd06d71dd0fcd4af7f7aad53ae4931b07d4ee6b8144', 'contact@nebalus.dev', 'Is the default test User', 1, 0, '2024-02-28 21:28:40', '2024-08-03 23:07:10');
 
 -- --------------------------------------------------------

@@ -11,6 +11,7 @@ readonly class User
 {
     private function __construct(
         private UserId $userId,
+        private UserPassword $password,
         private Username $username,
         private UserEmail $email,
         private UserAdminDescription $adminDescription,
@@ -23,6 +24,7 @@ readonly class User
 
     public static function from(
         UserId $userId,
+        UserPassword $password,
         Username $username,
         UserEmail $email,
         UserAdminDescription $adminDescription,
@@ -34,6 +36,7 @@ readonly class User
 
         return new User(
             $userId,
+            $password,
             $username,
             $email,
             $adminDescription,
@@ -50,6 +53,7 @@ readonly class User
     public static function fromMySQL(array $data): self
     {
         $userId = UserId::from($data['user_id']);
+        $password = UserPassword::fromHash($data['password']);
         $username = Username::from($data['username']);
         $email = UserEmail::from($data['email']);
         $adminDescription = UserAdminDescription::from($data['description_for_admins']);
@@ -60,6 +64,7 @@ readonly class User
 
         return new User(
             $userId,
+            $password,
             $username,
             $email,
             $adminDescription,
@@ -74,6 +79,12 @@ readonly class User
     {
         return $this->userId;
     }
+
+    public function getPassword(): UserPassword
+    {
+        return $this->password;
+    }
+
     public function getUsername(): Username
     {
         return $this->username;

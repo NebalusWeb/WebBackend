@@ -4,6 +4,6 @@ namespace Nebalus\Webapi\Exception;
 
 use Exception;
 
-class ApiException extends Exception
+abstract class ApiException extends Exception
 {
 }
