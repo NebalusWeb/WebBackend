@@ -39,9 +39,4 @@ readonly class UserPassword
     {
         return password_verify($plainPassword, $this->password);
     }
-
-    public function asString(): string
-    {
-        return $this->password;
-    }
 }
