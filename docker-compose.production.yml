@@ -27,7 +27,6 @@ services:
       JWT_SECRET: "t]VP1RJcL){v+BDC?{uyjUoD}]EX3B(pmGCfz147VMbj@3:Dck-jS2P'pj,rYzh6q@m4q()Ds}:|ljzqZRXdKxSv{PDO5X{h]hiH"
       JWT_NORMAL_EXPIRATION_TIME: 86400
       JWT_EXTENDED_EXPIRATION_TIME: 604800
-      PASSWD_HASH_KEY: "00456q+VJ1?#sdsdflm,.a_EUR*v[iP-"
       ACCESS_CONTROL_ALLOW_ORIGIN: "*"
       MYSQL_HOST: "mysql:3306"
       MYSQL_DATABASE: "main"

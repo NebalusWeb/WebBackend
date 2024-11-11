@@ -1,0 +1,1 @@
+INSERT INTO `user_login_history`(`user_id`, `ip_address`, `success`) VALUES ('1',INET_ATON('127.0.0.1'),1)

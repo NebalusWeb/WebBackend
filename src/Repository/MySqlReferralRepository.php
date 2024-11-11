@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Repository;
 
-use DateTime;
+use DateMalformedStringException;
 use Nebalus\Webapi\Value\Referral\Referral;
+use Nebalus\Webapi\Value\Referral\ReferralId;
+use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
 readonly class MySqlReferralRepository
@@ -14,12 +16,33 @@ readonly class MySqlReferralRepository
         private PDO $pdo
     ) {
     }
-    
-    public function createReferral(string $code, string $pointer)
+
+    public function createReferral(UserId $userId, string $code, string $pointer, bool $disabled = true): bool
     {
+        $sql = "INSERT INTO `referrals`(`user_id`, `code`, `pointer`, `disabled`) VALUES (:user_id, :code, :pointer, :disabled)";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':user_id', $userId->asInt());
+        $stmt->bindValue(':code', $code);
+        $stmt->bindValue(':pointer', $pointer);
+        $stmt->bindValue(':disabled', $disabled);
+        $stmt->execute();
+
+        return $stmt->rowCount() === 1;
     }
 
-    public function deleteReferralById(int $id)
+    public function createReferralClickEntry(ReferralId $referralId): bool
+    {
+        $sql = "INSERT INTO `analytics_referral_clicks`(`referral_id`) VALUES (:referral_id)";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':referral_id', $referralId->asInt());
+        $stmt->execute();
+
+        return $stmt->rowCount() === 1;
+    }
+
+    public function deleteReferralById(ReferralId $id)
     {
     }
 
@@ -31,34 +54,27 @@ readonly class MySqlReferralRepository
     {
     }
 
-    public function getReferralById(int $id)
+    public function getReferralById(ReferralId $id)
     {
     }
 
-    public function setViewCountByCode(string $code, int $view_count): bool
+    /**
+     * @throws DateMalformedStringException
+     */
+    public function getReferralByCode(string $code): ?Referral
     {
-        $sql = "UPDATE `referrals` SET `view_count`=:view_count WHERE BINARY `code`=:code";
+        $sql = "SELECT * FROM `referrals` WHERE BINARY `code` = :code";
+
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':code', $code);
+        $stmt->execute();
 
-        return $stmt->execute([
-            "code" => $code,
-            "view_count" => $view_count
-        ]);
-    }
+        $data = $stmt->fetch();
 
-    public function getReferralByCode(string $code): Referral|false
-    {
-        $sql = "SELECT `referral_id`, `user_id`, `code`, `pointer`, `view_count`, `creation_date`, `enabled` FROM `referrals` WHERE BINARY `code` = :code";
-        $stmt = $this->pdo->prepare($sql);
-
-        $stmt->execute([
-            "code" => $code
-        ]);
-
-        if ($entry = $stmt->fetch()) {
-            $creationDate = new DateTime($entry["creation_date"]);
-            return Referral::from($entry["referral_id"], $entry["user_id"], $entry["code"], $entry["pointer"], $entry["view_count"], $creationDate, $entry["enabled"]);
+        if (!$data) {
+            return null;
         }
-        return false;
+
+        return Referral::fromMySql($data);
     }
 }
