@@ -1,6 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User;
+namespace Nebalus\Webapi\Value\User\Totp;
+
+use InvalidArgumentException;
 
 readonly class TOTPCode
 {
@@ -11,6 +13,12 @@ readonly class TOTPCode
 
     public static function from(string $code): self
     {
+        $usernamePattern = '/^[\d]{6}$/';
+        if (preg_match($usernamePattern, $code) < 1) {
+            throw new InvalidArgumentException(
+                'Invalid totp code'
+            );
+        }
         return new self($code);
     }
 

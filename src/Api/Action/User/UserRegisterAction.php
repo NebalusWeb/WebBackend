@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api\Action\User;
 
+use DateMalformedStringException;
 use Nebalus\Webapi\Api\Action\ApiAction;
 use Nebalus\Webapi\Api\Service\User\UserRegisterService;
 use Slim\Http\Response as Response;
@@ -14,6 +15,9 @@ class UserRegisterAction extends ApiAction
     ) {
     }
 
+    /**
+     * @throws DateMalformedStringException
+     */
     protected function execute(Request $request, Response $response, array $args): Response
     {
         $bodyParams = $request->getParsedBody() ?? [];
