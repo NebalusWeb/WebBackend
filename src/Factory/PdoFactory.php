@@ -26,7 +26,7 @@ class PdoFactory
         $database = $this->env->getMySqlDatabase();
         $username = $this->env->getMySqlUser();
         $password = $this->env->getMySqlPasswd();
-        
+
         $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s', $host, $port, $database);
         $pdo = new PDO($dsn, $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

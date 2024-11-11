@@ -2,6 +2,7 @@ FROM php:8.3.12-fpm-alpine AS base
 WORKDIR /var/www/
 RUN chown -R www-data:www-data .
 RUN docker-php-ext-install pdo pdo_mysql
+RUN apk add --no-cache php83-simplexml php83-fileinfo
 
 FROM composer:latest AS composerinstaller
 WORKDIR /composer

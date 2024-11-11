@@ -4,28 +4,40 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Value\Referral;
 
-use DateTime;
+use DateMalformedStringException;
+use DateTimeImmutable;
 use Nebalus\Webapi\Value\User\UserId;
 
 readonly class Referral
 {
     private function __construct(
-        private int $referralId,
+        private ReferralId $referralId,
         private UserId $userId,
         private string $code,
         private string $pointer,
-        private int $viewCount,
-        private DateTime $creationDate,
-        private bool $enabled
+        private bool $disabled,
+        private DateTimeImmutable $createdAt,
+        private DateTimeImmutable $updatedAt,
     ) {
     }
 
-    public static function from(int $referralId, UserId $userId, string $code, string $pointer, int $viewCount, DateTime $creationDate, bool $enabled): Referral
+    /**
+     * @throws DateMalformedStringException
+     */
+    public static function fromMySql(array $data): self
     {
-        return new Referral($referralId, $userId, $code, $pointer, $viewCount, $creationDate, $enabled);
+        $referralId = ReferralId::from($data["referral_id"]);
+        $userId = UserId::from($data["user_id"]);
+        $code = $data["code"];
+        $pointer = $data["pointer"];
+        $disabled = (bool) $data["disabled"];
+        $createdAt = new DateTimeImmutable($data["created_at"]);
+        $updatedAt = new DateTimeImmutable($data["updated_at"]);
+
+        return new Referral($referralId, $userId, $code, $pointer, $disabled, $createdAt, $updatedAt);
     }
-    
-    public function getReferralId(): int
+
+    public function getReferralId(): ReferralId
     {
         return $this->referralId;
     }
@@ -41,16 +53,12 @@ readonly class Referral
     {
         return $this->pointer;
     }
-    public function getViewCount(): int
+    public function isDisabled(): bool
     {
-        return $this->viewCount;
+        return $this->disabled;
     }
-    public function getCreationDate(): DateTime
+    public function getCreatedAtDate(): DateTimeImmutable
     {
-        return $this->creationDate;
-    }
-    public function isEnabled(): bool
-    {
-        return $this->enabled;
+        return $this->createdAt;
     }
 }

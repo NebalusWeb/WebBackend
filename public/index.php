@@ -1,7 +1,7 @@
 <?php
 
-use Nebalus\Webapi\Collector\RouteCollector;
 use Nebalus\Webapi\Factory\DiContainerFactory;
+use Nebalus\Webapi\Slim\RouteCollector;
 use Slim\App;
 use Slim\Factory\AppFactory;
 

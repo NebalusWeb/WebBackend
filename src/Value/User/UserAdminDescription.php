@@ -2,8 +2,6 @@
 
 namespace Nebalus\Webapi\Value\User;
 
-use InvalidArgumentException;
-
 readonly class UserAdminDescription
 {
     private function __construct(
