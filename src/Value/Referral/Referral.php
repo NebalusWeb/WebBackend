@@ -6,14 +6,14 @@ namespace Nebalus\Webapi\Value\Referral;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
-use Nebalus\Webapi\Value\User\UserId;
+use Nebalus\Webapi\Value\ID;
 
 readonly class Referral
 {
     private function __construct(
-        private ReferralId $referralId,
-        private UserId $userId,
-        private string $code,
+        private ID $referralId,
+        private ID $userId,
+        private ReferralCode $code,
         private string $pointer,
         private bool $disabled,
         private DateTimeImmutable $createdAt,
@@ -26,26 +26,26 @@ readonly class Referral
      */
     public static function fromMySql(array $data): self
     {
-        $referralId = ReferralId::from($data["referral_id"]);
-        $userId = UserId::from($data["user_id"]);
-        $code = $data["code"];
+        $referralId = ID::from($data["referral_id"]);
+        $userId = ID::from($data["user_id"]);
+        $code = ReferralCode::from($data["code"]);
         $pointer = $data["pointer"];
         $disabled = (bool) $data["disabled"];
         $createdAt = new DateTimeImmutable($data["created_at"]);
         $updatedAt = new DateTimeImmutable($data["updated_at"]);
 
-        return new Referral($referralId, $userId, $code, $pointer, $disabled, $createdAt, $updatedAt);
+        return new self($referralId, $userId, $code, $pointer, $disabled, $createdAt, $updatedAt);
     }
 
-    public function getReferralId(): ReferralId
+    public function getReferralId(): ID
     {
         return $this->referralId;
     }
-    public function getUserId(): UserId
+    public function getUserId(): ID
     {
         return $this->userId;
     }
-    public function getCode(): string
+    public function getCode(): ReferralCode
     {
         return $this->code;
     }
@@ -60,5 +60,9 @@ readonly class Referral
     public function getCreatedAtDate(): DateTimeImmutable
     {
         return $this->createdAt;
+    }
+    public function getUpdatedAtDate(): DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }

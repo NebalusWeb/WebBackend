@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Slim;
 
 use Nebalus\Webapi\Api\Action\Linktree\Analytics\LinktreeClickAction;
+use Nebalus\Webapi\Api\Action\Linktree\Analytics\LinktreeClickHistoryAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeDeleteAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeEditAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeGetAction;
@@ -51,12 +52,13 @@ readonly class RouteCollector
             $group->map(["POST"], "/register", UserRegisterAction::class);
             $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 $group->group("/services", function (RouteCollectorProxy $group) {
-                    $group->group("/invitationtokens", function (RouteCollectorProxy $group) {
+                    $group->group("/invitationtoken", function (RouteCollectorProxy $group) {
                     });
                     $group->group("/linktree", function (RouteCollectorProxy $group) {
                         $group->map(["GET"], "", LinktreeGetAction::class);
                         $group->map(["PATCH"], "", LinktreeEditAction::class);
                         $group->map(["DELETE"], "", LinktreeDeleteAction::class);
+                        $group->map(["GET"], "/history", LinktreeClickHistoryAction::class);
                     });
                     $group->group("/referrals", function (RouteCollectorProxy $group) {
                         $group->map(["POST"], "", ReferralCreateAction::class);

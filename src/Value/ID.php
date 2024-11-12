@@ -1,34 +1,34 @@
 <?php
 
-namespace Nebalus\Webapi\Value\Referral;
+namespace Nebalus\Webapi\Value;
 
 use InvalidArgumentException;
 
-readonly class ReferralId
+readonly class ID
 {
     private function __construct(
-        private int $referralId
+        private int $id
     ) {
     }
 
-    public static function from(int $referralId): self
+    public static function from(int $id): self
     {
-        if ($referralId < 0) {
+        if ($id < 0) {
             throw new InvalidArgumentException(
                 'Invalid referralId: must be a non-negative integer'
             );
         }
 
-        return new self($referralId);
+        return new self($id);
     }
 
     public function asInt(): int
     {
-        return $this->referralId;
+        return $this->id;
     }
 
     public function asString(): string
     {
-        return (string) $this->referralId;
+        return (string) $this->id;
     }
 }
