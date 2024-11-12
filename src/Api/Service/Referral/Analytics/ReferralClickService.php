@@ -6,6 +6,7 @@ use DateMalformedStringException;
 use Nebalus\Webapi\Api\Filter\Referral\Analytics\ReferralClickFilter;
 use Nebalus\Webapi\Api\View\Referral\Analytics\ReferralClickView;
 use Nebalus\Webapi\Repository\MySqlReferralRepository;
+use Nebalus\Webapi\Value\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
@@ -28,7 +29,7 @@ readonly class ReferralClickService
 
         $filteredData = $this->referralClickFilter->getFilteredData();
 
-        $referral = $this->referralRepository->getReferralByCode($filteredData['code']);
+        $referral = $this->referralRepository->getReferralByCode(ReferralCode::from($filteredData['code']));
 
         if (empty($referral) || $referral->isDisabled()) {
             return Result::createError("Referral code not found", 404);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 12. Nov 2024 um 19:59
+-- Erstellungszeit: 12. Nov 2024 um 22:15
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -89,7 +89,7 @@ CREATE TABLE `linktree_entrys` (
 INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `position`, `label`, `uri`, `created_at`, `updated_at`) VALUES
                                                                                                                                (1, 1, 1, 'Youtube', 'https://youtube.com', '2024-11-12 19:20:35', '2024-11-12 19:20:35'),
                                                                                                                                (2, 1, 2, 'Github', 'https://github.com/Nebalus', '2024-11-12 19:21:38', '2024-11-12 19:21:38'),
-                                                                                                                               (3, 1, 3, 'Crunchyroll', 'https://www.crunchyroll.com/', '2024-11-12 19:22:36', '2024-11-12 19:22:36'),
+                                                                                                                               (3, 1, 3, 'Crunchyroll', 'https://www.crunchyroll.com/', '2024-11-12 19:22:36', '2024-11-14 19:22:36'),
                                                                                                                                (4, 3, 1, 'ChatGPT', 'https://chatgpt.com/', '2024-11-12 19:26:10', '2024-11-12 19:26:10');
 
 -- --------------------------------------------------------
@@ -188,7 +188,24 @@ INSERT INTO `referral_analytics_clicks` (`referral_id`, `clicked_at`) VALUES
                                                                           (11, '2024-11-12 17:56:47'),
                                                                           (5, '2024-11-12 17:56:52'),
                                                                           (5, '2024-11-12 17:56:52'),
-                                                                          (6, '2024-11-12 17:56:58');
+                                                                          (6, '2024-11-12 17:56:58'),
+                                                                          (6, '2024-11-12 22:07:57'),
+                                                                          (7, '2024-11-12 22:08:26'),
+                                                                          (7, '2024-11-12 22:08:27'),
+                                                                          (7, '2024-11-12 22:08:28'),
+                                                                          (3, '2024-11-12 22:08:38'),
+                                                                          (3, '2024-11-12 22:08:39'),
+                                                                          (3, '2024-11-12 22:08:39'),
+                                                                          (3, '2024-11-12 22:08:40'),
+                                                                          (3, '2024-11-12 22:09:52'),
+                                                                          (1, '2024-11-12 22:10:02'),
+                                                                          (1, '2024-11-12 22:10:05'),
+                                                                          (1, '2024-11-12 22:10:05'),
+                                                                          (1, '2024-11-12 22:10:09'),
+                                                                          (1, '2024-11-12 22:10:10'),
+                                                                          (1, '2024-11-12 22:10:10'),
+                                                                          (1, '2024-11-12 22:10:11'),
+                                                                          (6, '2024-11-12 22:10:15');
 
 -- --------------------------------------------------------
 
@@ -303,7 +320,7 @@ INSERT INTO `user_punishments` (`punishment_id`, `punished_user_id`, `moderator_
 --
 ALTER TABLE `linktrees`
     ADD PRIMARY KEY (`linktree_id`),
-  ADD UNIQUE KEY `account` (`user_id`);
+    ADD UNIQUE KEY `account` (`user_id`);
 
 --
 -- Indizes für die Tabelle `linktree_analytics_clicks`
@@ -316,15 +333,15 @@ ALTER TABLE `linktree_analytics_clicks`
 --
 ALTER TABLE `linktree_entrys`
     ADD PRIMARY KEY (`linktree_entry_id`),
-  ADD UNIQUE KEY `linktree_id` (`linktree_id`,`position`);
+    ADD UNIQUE KEY `linktree_id` (`linktree_id`,`position`);
 
 --
 -- Indizes für die Tabelle `referrals`
 --
 ALTER TABLE `referrals`
     ADD PRIMARY KEY (`referral_id`),
-  ADD UNIQUE KEY `refcode` (`code`) USING BTREE,
-  ADD KEY `user_id` (`user_id`);
+    ADD UNIQUE KEY `refcode` (`code`) USING BTREE,
+    ADD KEY `user_id` (`user_id`);
 
 --
 -- Indizes für die Tabelle `referral_analytics_clicks`
@@ -337,30 +354,30 @@ ALTER TABLE `referral_analytics_clicks`
 --
 ALTER TABLE `users`
     ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `username` (`username`);
+    ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indizes für die Tabelle `user_invitation_tokens`
 --
 ALTER TABLE `user_invitation_tokens`
     ADD PRIMARY KEY (`token_field_1`,`token_field_2`,`token_field_3`,`token_field_4`,`token_checksum`) USING BTREE,
-  ADD UNIQUE KEY `invited_user_id` (`invited_user_id`),
-  ADD KEY `owner_user_id` (`owner_user_id`);
+    ADD UNIQUE KEY `invited_user_id` (`invited_user_id`),
+    ADD KEY `owner_user_id` (`owner_user_id`);
 
 --
 -- Indizes für die Tabelle `user_login_history`
 --
 ALTER TABLE `user_login_history`
     ADD PRIMARY KEY (`login_history_id`),
-  ADD KEY `user_id` (`user_id`);
+    ADD KEY `user_id` (`user_id`);
 
 --
 -- Indizes für die Tabelle `user_punishments`
 --
 ALTER TABLE `user_punishments`
     ADD PRIMARY KEY (`punishment_id`),
-  ADD KEY `punished_user_id` (`punished_user_id`),
-  ADD KEY `moderator_user_id` (`moderator_user_id`);
+    ADD KEY `punished_user_id` (`punished_user_id`),
+    ADD KEY `moderator_user_id` (`moderator_user_id`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -441,7 +458,7 @@ ALTER TABLE `referral_analytics_clicks`
 --
 ALTER TABLE `user_invitation_tokens`
     ADD CONSTRAINT `user_invitation_tokens_ibfk_1` FOREIGN KEY (`owner_user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `user_invitation_tokens_ibfk_2` FOREIGN KEY (`invited_user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    ADD CONSTRAINT `user_invitation_tokens_ibfk_2` FOREIGN KEY (`invited_user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints der Tabelle `user_login_history`
@@ -454,7 +471,7 @@ ALTER TABLE `user_login_history`
 --
 ALTER TABLE `user_punishments`
     ADD CONSTRAINT `user_punishments_ibfk_1` FOREIGN KEY (`punished_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  ADD CONSTRAINT `user_punishments_ibfk_2` FOREIGN KEY (`moderator_user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    ADD CONSTRAINT `user_punishments_ibfk_2` FOREIGN KEY (`moderator_user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
