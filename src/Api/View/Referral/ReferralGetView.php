@@ -15,8 +15,9 @@ class ReferralGetView
             "user_id" => $referral->getUserId()->asInt(),
             "code" => $referral->getCode(),
             "pointer" => $referral->getPointer(),
+            "disabled" => $referral->isDisabled(),
             "created_at_timestamp" => $referral->getCreatedAtDate()->getTimestamp(),
-            "disabled" => $referral->isDisabled()
+            "updated_at_timestamp" => $referral->getUpdatedAtDate()->getTimestamp(),
         ];
 
         return Result::createSuccess("Referral fetched", 200, $fields);
