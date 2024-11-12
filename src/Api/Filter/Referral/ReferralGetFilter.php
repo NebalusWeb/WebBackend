@@ -9,13 +9,14 @@ class ReferralGetFilter extends AbstractFilter
 {
     #[Override] public function filterAndCheckIfStructureIsValid(array $params): bool
     {
-        $requiredParams = [];
+        $requiredParams = ['code'];
         if ($this->checkIfAnyRequiredParamsAreMissing($requiredParams, $params)) {
-            $this->errorMessage = 'PLACEHOLDER';
             return false;
         }
 
-        $this->data = [];
+        $this->data = [
+            "code" => $params['code'],
+        ];
 
         return true;
     }

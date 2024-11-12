@@ -11,7 +11,6 @@ class LinktreeClickFilter extends AbstractFilter
     {
         $requiredParams = [];
         if ($this->checkIfAnyRequiredParamsAreMissing($requiredParams, $params)) {
-            $this->errorMessage = 'PLACEHOLDER';
             return false;
         }
 
