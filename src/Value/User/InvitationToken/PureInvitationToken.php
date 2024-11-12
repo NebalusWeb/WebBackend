@@ -54,7 +54,7 @@ readonly class PureInvitationToken
         $field2 = InvitationTokenField::from($data['token_field_2']);
         $field3 = InvitationTokenField::from($data['token_field_3']);
         $field4 = InvitationTokenField::from($data['token_field_4']);
-        $checksumField = InvitationTokenField::from($data['token_field_5']);
+        $checksumField = InvitationTokenField::from($data['token_checksum']);
 
         return new self($field1, $field2, $field3, $field4, $checksumField);
     }
@@ -100,7 +100,7 @@ readonly class PureInvitationToken
         return $this->checksumField;
     }
 
-    public function getToken(): string
+    public function asString(): string
     {
         return sprintf("%s-%s-%s-%s-%s", $this->field1->asString(), $this->field2->asString(), $this->field3->asString(), $this->field4->asString(), $this->checksumField->asString());
     }

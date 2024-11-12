@@ -6,13 +6,13 @@ namespace Nebalus\Webapi\Value\User\InvitationToken;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
-use Nebalus\Webapi\Value\User\UserId;
+use Nebalus\Webapi\Value\ID;
 
 readonly class InvitationToken
 {
     private function __construct(
-        private UserId $ownerUserId,
-        private ?UserId $invitedUserId,
+        private ID $ownerUserId,
+        private ?ID $invitedUserId,
         private PureInvitationToken $pureInvitationToken,
         private DateTimeImmutable $createdAtDate,
         private ?DateTimeImmutable $usedAtDate
@@ -20,8 +20,8 @@ readonly class InvitationToken
     }
 
     public static function from(
-        UserId $ownerUserId,
-        ?UserId $invitedUserId,
+        ID $ownerUserId,
+        ?ID $invitedUserId,
         PureInvitationToken $pureInvitationToken,
         DateTimeImmutable $creationTimestamp,
         ?DateTimeImmutable $usedTimestamp
@@ -40,8 +40,8 @@ readonly class InvitationToken
      */
     public static function fromMySQL(array $data): self
     {
-        $ownerUserId = UserId::from($data['owner_user_id']);
-        $invitedUserId = empty($data['invited_user_id']) ? null : UserId::from($data['invited_user_id']);
+        $ownerUserId = ID::from($data['owner_user_id']);
+        $invitedUserId = empty($data['invited_user_id']) ? null : ID::from($data['invited_user_id']);
         $pureInvitationToken = PureInvitationToken::fromMySQL($data);
         $createdAtDate = new DateTimeImmutable($data['created_at']);
         $usedAtDate = empty($data['used_at']) ? null : new DateTimeImmutable($data['used_at']);
@@ -55,12 +55,12 @@ readonly class InvitationToken
         );
     }
 
-    public function getOwnerUserId(): UserId
+    public function getOwnerUserId(): ID
     {
         return $this->ownerUserId;
     }
 
-    public function getInvitedUserId(): ?UserId
+    public function getInvitedUserId(): ?ID
     {
         return $this->invitedUserId;
     }

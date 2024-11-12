@@ -55,9 +55,9 @@ readonly class UserAuthService
             return Result::createError('Authentication failed: Wrong credentials.', 401);
         }
 
-        if ($user->) {
-
-        }
+//        if ($user->) {
+//
+//        }
 
         $expirationTime = time() + $this->envData->getJwtNormalExpirationTime();
 

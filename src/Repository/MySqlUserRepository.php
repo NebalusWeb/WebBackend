@@ -6,9 +6,8 @@ namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiDatabaseException;
+use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\User;
-use Nebalus\Webapi\Value\User\UserPassword;
-use Nebalus\Webapi\Value\User\UserId;
 use Nebalus\Webapi\Value\User\Username;
 use PDO;
 use PDOException;
@@ -23,7 +22,7 @@ readonly class MySqlUserRepository
     /**
      * @throws ApiDatabaseException|DateMalformedStringException
      */
-    public function getUserFromId(UserId $userId): User
+    public function getUserFromId(ID $userId): User
     {
         try {
             $sql = "SELECT * FROM `users` WHERE `user_id` = :user_id";

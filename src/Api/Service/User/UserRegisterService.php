@@ -2,10 +2,10 @@
 
 namespace Nebalus\Webapi\Api\Service\User;
 
+use DateMalformedStringException;
 use InvalidArgumentException;
 use Nebalus\Webapi\Api\Filter\User\UserRegisterFilter;
 use Nebalus\Webapi\Api\View\User\UserRegisterView;
-use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Repository\MySqlUserInvitationTokenRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
@@ -23,7 +23,7 @@ readonly class UserRegisterService
     }
 
     /**
-     * @throws \DateMalformedStringException
+     * @throws DateMalformedStringException
      */
     public function execute(array $params): ResultInterface
     {
