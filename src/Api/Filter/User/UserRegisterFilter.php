@@ -11,7 +11,6 @@ class UserRegisterFilter extends AbstractFilter
     {
         $requiredParams = ['invitation_token', 'email', 'username', 'password'];
         if ($this->checkIfAnyRequiredParamsAreMissing($requiredParams, $params)) {
-            $this->errorMessage = 'Registration failed: missing values';
             return false;
         }
 

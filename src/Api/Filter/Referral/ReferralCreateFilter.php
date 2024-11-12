@@ -9,13 +9,18 @@ class ReferralCreateFilter extends AbstractFilter
 {
     #[Override] public function filterAndCheckIfStructureIsValid(array $params): bool
     {
-        $requiredParams = [];
+        $requiredParams = ["code", "pointer"];
         if ($this->checkIfAnyRequiredParamsAreMissing($requiredParams, $params)) {
-            $this->errorMessage = 'PLACEHOLDER';
             return false;
         }
 
-        $this->data = [];
+        $disabled = isset($params['disabled']) ? filter_var($params['disabled'], FILTER_VALIDATE_BOOLEAN) : false;
+
+        $this->data = [
+            "code" => $params['code'],
+            "pointer" => $params['pointer'],
+            "disabled" => $disabled,
+        ];
 
         return true;
     }
