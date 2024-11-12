@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 12. Nov 2024 um 22:15
+-- Erstellungszeit: 12. Nov 2024 um 22:48
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -77,7 +77,7 @@ CREATE TABLE `linktree_entrys` (
                                    `linktree_id` int UNSIGNED NOT NULL,
                                    `position` int UNSIGNED NOT NULL,
                                    `label` varchar(84) NOT NULL,
-                                   `uri` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                   `url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                                    `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                    `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -86,10 +86,10 @@ CREATE TABLE `linktree_entrys` (
 -- Daten für Tabelle `linktree_entrys`
 --
 
-INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `position`, `label`, `uri`, `created_at`, `updated_at`) VALUES
+INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `position`, `label`, `url`, `created_at`, `updated_at`) VALUES
                                                                                                                                (1, 1, 1, 'Youtube', 'https://youtube.com', '2024-11-12 19:20:35', '2024-11-12 19:20:35'),
                                                                                                                                (2, 1, 2, 'Github', 'https://github.com/Nebalus', '2024-11-12 19:21:38', '2024-11-12 19:21:38'),
-                                                                                                                               (3, 1, 3, 'Crunchyroll', 'https://www.crunchyroll.com/', '2024-11-12 19:22:36', '2024-11-14 19:22:36'),
+                                                                                                                               (3, 1, 3, 'Crunchyroll', 'https://www.crunchyroll.com/', '2024-11-12 19:22:36', '2024-11-12 19:22:36'),
                                                                                                                                (4, 3, 1, 'ChatGPT', 'https://chatgpt.com/', '2024-11-12 19:26:10', '2024-11-12 19:26:10');
 
 -- --------------------------------------------------------
@@ -188,24 +188,7 @@ INSERT INTO `referral_analytics_clicks` (`referral_id`, `clicked_at`) VALUES
                                                                           (11, '2024-11-12 17:56:47'),
                                                                           (5, '2024-11-12 17:56:52'),
                                                                           (5, '2024-11-12 17:56:52'),
-                                                                          (6, '2024-11-12 17:56:58'),
-                                                                          (6, '2024-11-12 22:07:57'),
-                                                                          (7, '2024-11-12 22:08:26'),
-                                                                          (7, '2024-11-12 22:08:27'),
-                                                                          (7, '2024-11-12 22:08:28'),
-                                                                          (3, '2024-11-12 22:08:38'),
-                                                                          (3, '2024-11-12 22:08:39'),
-                                                                          (3, '2024-11-12 22:08:39'),
-                                                                          (3, '2024-11-12 22:08:40'),
-                                                                          (3, '2024-11-12 22:09:52'),
-                                                                          (1, '2024-11-12 22:10:02'),
-                                                                          (1, '2024-11-12 22:10:05'),
-                                                                          (1, '2024-11-12 22:10:05'),
-                                                                          (1, '2024-11-12 22:10:09'),
-                                                                          (1, '2024-11-12 22:10:10'),
-                                                                          (1, '2024-11-12 22:10:10'),
-                                                                          (1, '2024-11-12 22:10:11'),
-                                                                          (6, '2024-11-12 22:10:15');
+                                                                          (6, '2024-11-12 17:56:58');
 
 -- --------------------------------------------------------
 
