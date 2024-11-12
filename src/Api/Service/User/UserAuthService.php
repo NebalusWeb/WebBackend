@@ -47,24 +47,16 @@ readonly class UserAuthService
 
         $user = $this->mySqlUserRepository->getUserFromUsername($username);
 
-        if ($user === null) {
+        if ($user === null || $user->isDisabled() || $user->getPassword()->verify($filteredData['password']) === false) {
             return Result::createError('Authentication failed: Wrong credentials.', 401);
         }
-
-        if ($user->getPassword()->verify($filteredData['password']) === false) {
-            return Result::createError('Authentication failed: Wrong credentials.', 401);
-        }
-
-//        if ($user->) {
-//
-//        }
 
         $expirationTime = time() + $this->envData->getJwtNormalExpirationTime();
 
         $token = Token::builder($this->envData->getJwtSecret())
             ->setIssuer("NebalusWebApi")
-            ->setPayloadClaim("email", $user->getEmail())
-            ->setPayloadClaim("sub", $user->getUserId()->asInt())
+            ->setPayloadClaim("email", $user->getEmail()->asString())
+            ->setPayloadClaim("username", $user->getUsername()->asString())
             ->setPayloadClaim("sub", $user->getUserId()->asInt())
             ->setIssuedAt(time())
             ->setExpiration($expirationTime)
