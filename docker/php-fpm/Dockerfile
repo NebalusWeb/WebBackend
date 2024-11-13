@@ -1,8 +1,8 @@
 FROM php:8.3.13-fpm-alpine AS base
 WORKDIR /var/www/
 RUN chown -R www-data:www-data .
+RUN apk update && apk add --no-cache php83-dev $PHPIZE_DEPS
 RUN docker-php-ext-install pdo pdo_mysql
-RUN apk update && apk add --no-cache php83-simplexml php83-fileinfo pcre-dev $PHPIZE_DEPS
 RUN pecl install redis && docker-php-ext-enable redis.so
 
 ####################################################################################
@@ -10,7 +10,7 @@ RUN pecl install redis && docker-php-ext-enable redis.so
 FROM composer:latest AS composerinstaller
 WORKDIR /composer
 COPY ./composer.json /composer
-RUN composer install
+RUN composer install --ignore-platform-req=ext-redis
 
 ####################################################################################
 
