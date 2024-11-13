@@ -4,7 +4,6 @@ RUN chown -R www-data:www-data .
 RUN docker-php-ext-install pdo pdo_mysql
 RUN apk update && apk add --no-cache php83-simplexml php83-fileinfo pcre-dev $PHPIZE_DEPS
 RUN pecl install redis && docker-php-ext-enable redis
-RUN adduser --disabled-password --no-create-home --home /app/ --gecos '' app
 
 ####################################################################################
 
