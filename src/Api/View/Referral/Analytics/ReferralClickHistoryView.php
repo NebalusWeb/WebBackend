@@ -11,6 +11,6 @@ class ReferralClickHistoryView
     {
         $fields = [];
 
-        return Result::createSuccess("PLACEHOLDER", 200, $fields);
+        return Result::createSuccess("Referral history found", 200, $fields);
     }
 }

@@ -14,6 +14,6 @@ class ReferralClickView
             "pointer" => $referral->getPointer()
         ];
 
-        return Result::createSuccess("Referral Found", 200, $fields);
+        return Result::createSuccess("Referral found", 200, $fields);
     }
 }

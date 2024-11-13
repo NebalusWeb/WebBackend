@@ -23,6 +23,6 @@ class ReferralListAllView
             ];
         }
 
-        return Result::createSuccess("PLACEHOLDER", 200, $fields);
+        return Result::createSuccess("List of referrals found", 200, $fields);
     }
 }
