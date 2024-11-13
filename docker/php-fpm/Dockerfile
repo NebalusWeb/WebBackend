@@ -3,7 +3,7 @@ WORKDIR /var/www/
 RUN chown -R www-data:www-data .
 RUN docker-php-ext-install pdo pdo_mysql
 RUN apk update && apk add --no-cache php83-simplexml php83-fileinfo pcre-dev $PHPIZE_DEPS
-RUN pecl install redis && docker-php-ext-enable redis
+RUN pecl install redis && docker-php-ext-enable redis.so
 
 ####################################################################################
 
@@ -17,7 +17,6 @@ RUN composer install
 FROM base AS development
 COPY ./docker/php-fpm/development.ini $PHP_INI_DIR/conf.d/custom.php.ini
 RUN apk add --update linux-headers
-RUN apk add --no-cache $PHPIZE_DEPS
 RUN pecl install xdebug-3.3.1 && docker-php-ext-enable xdebug
 
 ####################################################################################
