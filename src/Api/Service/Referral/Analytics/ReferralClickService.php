@@ -29,13 +29,13 @@ readonly class ReferralClickService
 
         $filteredData = $this->referralClickFilter->getFilteredData();
 
-        $referral = $this->referralRepository->getReferralByCode(ReferralCode::from($filteredData['code']));
+        $referral = $this->referralRepository->findReferralByCode(ReferralCode::from($filteredData['code']));
 
         if (empty($referral) || $referral->isDisabled()) {
             return Result::createError("Referral code not found", 404);
         }
 
-        $this->referralRepository->createReferralClickEntry($referral->getReferralId());
+        $this->referralRepository->insertReferralClickEntry($referral->getReferralId());
 
         return ReferralClickView::render($referral);
     }

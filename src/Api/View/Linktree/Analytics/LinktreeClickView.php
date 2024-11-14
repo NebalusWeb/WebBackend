@@ -31,6 +31,6 @@ class LinktreeClickView
             ]
         ];
 
-        return Result::createSuccess("PLACEHOLDER", 200, $fields);
+        return Result::createSuccess("Linktree found", 200, $fields);
     }
 }
