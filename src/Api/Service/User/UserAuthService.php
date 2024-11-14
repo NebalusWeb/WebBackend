@@ -54,7 +54,7 @@ readonly class UserAuthService
         $expirationTime = time() + $this->envData->getJwtNormalExpirationTime();
 
         $token = Token::builder($this->envData->getJwtSecret())
-            ->setIssuer("NebalusWebApi")
+            ->setIssuer("https://api.nebalus.dev")
             ->setPayloadClaim("email", $user->getEmail()->asString())
             ->setPayloadClaim("username", $user->getUsername()->asString())
             ->setPayloadClaim("sub", $user->getUserId()->asInt())
