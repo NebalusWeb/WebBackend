@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Value\User\InvitationToken;
 
 use InvalidArgumentException;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 
 readonly class InvitationTokenField
 {
@@ -12,10 +13,13 @@ readonly class InvitationTokenField
     ) {
     }
 
+    /**
+     * @throws ApiUnableToBuildValueObjectException
+     */
     public static function from(int $tokenField): self
     {
         if ($tokenField < 0 || $tokenField > 9999) {
-            throw new InvalidArgumentException('Invalid tokenField: can be exactly or between 0 and 9999');
+            throw new ApiUnableToBuildValueObjectException('Invalid tokenField: can be exactly or between 0 and 9999');
         }
 
         $stringifyToken = (string) $tokenField;

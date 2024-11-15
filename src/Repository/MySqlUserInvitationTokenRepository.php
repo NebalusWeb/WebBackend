@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\InvitationToken\InvitationToken;
 use Nebalus\Webapi\Value\User\InvitationToken\InvitationTokens;
@@ -18,6 +19,7 @@ readonly class MySqlUserInvitationTokenRepository
 
     /**
      * @throws DateMalformedStringException
+     * @throws ApiUnableToBuildValueObjectException
      */
     public function findInvitationTokenByFields(PureInvitationToken $token): ?InvitationToken
     {
@@ -42,6 +44,7 @@ readonly class MySqlUserInvitationTokenRepository
 
     /**
      * @throws DateMalformedStringException
+     * @throws ApiUnableToBuildValueObjectException
      */
     public function getInvitationTokensFromOwnerUserId(ID $ownerUserId): InvitationTokens
     {

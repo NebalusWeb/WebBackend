@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use Nebalus\Webapi\Api\Filter\User\UserAuthFilter;
 use Nebalus\Webapi\Api\View\User\UserAuthView;
 use Nebalus\Webapi\Exception\ApiDatabaseException;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Repository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
@@ -30,6 +31,7 @@ readonly class UserAuthService
      * @throws DateMalformedStringException
      * @throws BuildException
      * @throws ApiDatabaseException
+     * @throws ApiUnableToBuildValueObjectException
      */
     public function execute(array $params): ResultInterface
     {
