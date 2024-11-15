@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
@@ -28,9 +29,7 @@ readonly class MySqlReferralRepository
         $stmt->bindValue(':code', $code->asString());
         $stmt->bindValue(':pointer', $pointer->asString());
         $stmt->bindValue(':disabled', $disabled);
-        $stmt->execute();
-
-        return $stmt->rowCount() === 1;
+        return $stmt->execute();
     }
 
     public function insertReferralClickEntry(ID $referralId): bool
@@ -39,9 +38,7 @@ readonly class MySqlReferralRepository
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':referral_id', $referralId->asInt());
-        $stmt->execute();
-
-        return $stmt->rowCount() === 1;
+        return $stmt->execute();
     }
 
     public function deleteReferralById(ID $referralId): bool
@@ -50,9 +47,7 @@ readonly class MySqlReferralRepository
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':referral_id', $referralId->asInt());
-        $stmt->execute();
-
-        return $stmt->rowCount() === 1;
+        return $stmt->execute();
     }
 
     public function deleteReferralByCode(ReferralCode $code): bool
@@ -61,9 +56,7 @@ readonly class MySqlReferralRepository
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':code', $code->asString());
-        $stmt->execute();
-
-        return $stmt->rowCount() === 1;
+        return $stmt->execute();
     }
 
     public function updateReferral()
@@ -72,6 +65,7 @@ readonly class MySqlReferralRepository
 
     /**
      * @throws DateMalformedStringException
+     * @throws ApiUnableToBuildValueObjectException
      */
     public function getReferralsFromUserId(ID $userId): Referrals
     {
@@ -92,6 +86,7 @@ readonly class MySqlReferralRepository
 
     /**
      * @throws DateMalformedStringException
+     * @throws ApiUnableToBuildValueObjectException
      */
     public function findReferralById(ID $id): ?Referral
     {
@@ -112,6 +107,7 @@ readonly class MySqlReferralRepository
 
     /**
      * @throws DateMalformedStringException
+     * @throws ApiUnableToBuildValueObjectException
      */
     public function findReferralByCode(ReferralCode $code): ?Referral
     {

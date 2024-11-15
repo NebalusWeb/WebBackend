@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User\Totp;
 
-use InvalidArgumentException;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 
 readonly class TOTPCode
 {
@@ -11,11 +11,14 @@ readonly class TOTPCode
     ) {
     }
 
+    /**
+     * @throws ApiUnableToBuildValueObjectException
+     */
     public static function from(string $code): self
     {
         $usernamePattern = '/^[\d]{6}$/';
         if (preg_match($usernamePattern, $code) < 1) {
-            throw new InvalidArgumentException(
+            throw new ApiUnableToBuildValueObjectException(
                 'Invalid totp code'
             );
         }

@@ -6,6 +6,7 @@ namespace Nebalus\Webapi\Value\User\InvitationToken;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 use Nebalus\Webapi\Value\ID;
 
 readonly class InvitationToken
@@ -37,6 +38,7 @@ readonly class InvitationToken
 
     /**
      * @throws DateMalformedStringException
+     * @throws ApiUnableToBuildValueObjectException
      */
     public static function fromMySQL(array $data): self
     {

@@ -6,6 +6,7 @@ namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiDatabaseException;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\User;
 use Nebalus\Webapi\Value\User\Username;
@@ -20,7 +21,9 @@ readonly class MySqlUserRepository
     }
 
     /**
-     * @throws ApiDatabaseException|DateMalformedStringException
+     * @throws DateMalformedStringException
+     * @throws ApiDatabaseException
+     * @throws ApiUnableToBuildValueObjectException
      */
     public function getUserFromId(ID $userId): User
     {
@@ -44,7 +47,7 @@ readonly class MySqlUserRepository
     }
 
     /**
-     * @throws ApiDatabaseException|DateMalformedStringException
+     * @throws ApiDatabaseException|DateMalformedStringException|ApiUnableToBuildValueObjectException
      */
     public function getUserFromUsername(Username $username): ?User
     {
