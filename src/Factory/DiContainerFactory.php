@@ -10,6 +10,7 @@ use Exception;
 use Monolog\Logger;
 use PDO;
 
+use Redis;
 use function DI\factory;
 
 class DiContainerFactory
@@ -22,6 +23,7 @@ class DiContainerFactory
         $appDefinitions = [
             PDO::class => factory([PdoFactory::class, 'build']),
             Logger::class => factory([LoggerFactory::class, "build"]),
+            Redis::class => factory([RedisFactory::class, "build"]),
         ];
 
         $builder = new ContainerBuilder();
