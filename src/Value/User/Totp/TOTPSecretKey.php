@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User\Totp;
 
-use InvalidArgumentException;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 
 readonly class TOTPSecretKey
 {
@@ -11,11 +11,14 @@ readonly class TOTPSecretKey
     ) {
     }
 
+    /**
+     * @throws ApiUnableToBuildValueObjectException
+     */
     public static function from(string $secret): self
     {
         $usernamePattern = '/^[\d\w]{64}$/';
         if (preg_match($usernamePattern, $secret) < 1) {
-            throw new InvalidArgumentException(
+            throw new ApiUnableToBuildValueObjectException(
                 'Invalid totp code secret'
             );
         }

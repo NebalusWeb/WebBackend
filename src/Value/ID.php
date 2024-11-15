@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value;
 
-use InvalidArgumentException;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 
 readonly class ID
 {
@@ -11,10 +11,13 @@ readonly class ID
     ) {
     }
 
+    /**
+     * @throws ApiUnableToBuildValueObjectException
+     */
     public static function from(int $id): self
     {
         if ($id < 0) {
-            throw new InvalidArgumentException(
+            throw new ApiUnableToBuildValueObjectException(
                 'Invalid referralId: must be a non-negative integer'
             );
         }

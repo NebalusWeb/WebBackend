@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Value\User;
 
 use InvalidArgumentException;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 
 readonly class UserEmail
 {
@@ -11,12 +12,15 @@ readonly class UserEmail
     ) {
     }
 
+    /**
+     * @throws ApiUnableToBuildValueObjectException
+     */
     public static function from(string $email): self
     {
         $emailRegEx = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
 
         if (preg_match($emailRegEx, $email) === false) {
-            throw new InvalidArgumentException('Invalid email: ' . $email);
+            throw new ApiUnableToBuildValueObjectException('Invalid email');
         }
 
         return new self($email);

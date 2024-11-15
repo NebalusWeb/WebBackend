@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Value\User\InvitationToken;
 
 use InvalidArgumentException;
+use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
 
 readonly class PureInvitationToken
 {
@@ -15,6 +16,9 @@ readonly class PureInvitationToken
     ) {
     }
 
+    /**
+     * @throws ApiUnableToBuildValueObjectException
+     */
     public static function from(
         InvitationTokenField $field1,
         InvitationTokenField $field2,
@@ -23,16 +27,19 @@ readonly class PureInvitationToken
         InvitationTokenField $checksumField
     ): self {
         if (self::calculateChecksum($field1, $field2, $field3, $field4) !== $checksumField->asInt()) {
-            throw new InvalidArgumentException('Invalid Token: Checksum does not match');
+            throw new ApiUnableToBuildValueObjectException('Invalid Token: Checksum does not match');
         }
         return new self($field1, $field2, $field3, $field4, $checksumField);
     }
 
+    /**
+     * @throws ApiUnableToBuildValueObjectException
+     */
     public static function fromString(
         string $token,
     ): self {
         if (!preg_match('/^(([0-9]{4})-){4}([0-9]{4})$/', $token)) {
-            throw new InvalidArgumentException(
+            throw new ApiUnableToBuildValueObjectException(
                 'PLACEHOLDER'
             );
         }
@@ -48,6 +55,9 @@ readonly class PureInvitationToken
         return self::from($field1, $field2, $field3, $field4, $checksumField);
     }
 
+    /**
+     * @throws ApiUnableToBuildValueObjectException
+     */
     public static function fromMySQL(array $data): self
     {
         $field1 = InvitationTokenField::from($data['token_field_1']);
