@@ -7,6 +7,13 @@ use Override;
 
 class ReferralClickFilter extends AbstractFilter
 {
+    public function __construct()
+    {
+        parent::__construct([
+//            "code" => fn() {},
+        ]);
+    }
+
     #[Override] public function filterAndCheckIfStructureIsValid(array $params): bool
     {
         $requiredParams = ['code'];
@@ -15,7 +22,7 @@ class ReferralClickFilter extends AbstractFilter
             return false;
         }
 
-        $this->data = [
+        $this->filteredData = [
             'code' => $params['code'],
         ];
 
