@@ -14,7 +14,7 @@ class ReferralGetFilter extends AbstractFilter
             return false;
         }
 
-        $this->data = [
+        $this->filteredData = [
             "code" => $params['code'],
         ];
 

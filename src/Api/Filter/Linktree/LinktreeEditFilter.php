@@ -14,7 +14,7 @@ class LinktreeEditFilter extends AbstractFilter
             return false;
         }
 
-        $this->data = [];
+        $this->filteredData = [];
 
         return true;
     }

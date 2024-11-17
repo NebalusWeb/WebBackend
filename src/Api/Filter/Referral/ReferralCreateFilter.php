@@ -16,7 +16,7 @@ class ReferralCreateFilter extends AbstractFilter
 
         $disabled = isset($params['disabled']) ? filter_var($params['disabled'], FILTER_VALIDATE_BOOLEAN) : false;
 
-        $this->data = [
+        $this->filteredData = [
             "code" => $params['code'],
             "pointer" => $params['pointer'],
             "disabled" => $disabled,

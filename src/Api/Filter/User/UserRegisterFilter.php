@@ -14,7 +14,7 @@ class UserRegisterFilter extends AbstractFilter
             return false;
         }
 
-        $this->data = [
+        $this->filteredData = [
             'invitation_token' => $params['invitation_token'],
             'email' => $params['email'],
             'username' => $params['username'],

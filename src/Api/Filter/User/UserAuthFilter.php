@@ -16,7 +16,7 @@ class UserAuthFilter extends AbstractFilter
 
         $rememberMe = isset($params['remember_me']) ? filter_var($params['remember_me'], FILTER_VALIDATE_BOOLEAN) : false;
 
-        $this->data = [
+        $this->filteredData = [
             'username' => $params['username'],
             'password' => $params['password'],
             'rememberMe' => $rememberMe,

@@ -5,11 +5,11 @@ namespace Nebalus\Webapi\Api\Filter;
 abstract class AbstractFilter implements FilterInterface
 {
     protected string $errorMessage;
-    protected array $data;
+    protected array $filteredData;
 
-    public function __construct()
+    public function __construct($dataFormat)
     {
-        $this->data = [];
+        $this->filteredData = [];
         $this->errorMessage = '';
     }
 
@@ -22,7 +22,7 @@ abstract class AbstractFilter implements FilterInterface
 
     public function getFilteredData(): array
     {
-        return $this->data;
+        return $this->filteredData;
     }
 
     protected function checkIfAnyRequiredParamsAreMissing(array $requiredParams = [], array $providedParams = []): bool
