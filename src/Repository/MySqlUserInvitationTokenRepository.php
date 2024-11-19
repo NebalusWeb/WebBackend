@@ -3,7 +3,7 @@
 namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
-use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\InvitationToken\InvitationToken;
 use Nebalus\Webapi\Value\User\InvitationToken\InvitationTokens;
@@ -19,7 +19,7 @@ readonly class MySqlUserInvitationTokenRepository
 
     /**
      * @throws DateMalformedStringException
-     * @throws ApiUnableToBuildValueObjectException
+     * @throws ApiInvalidArgumentException
      */
     public function findInvitationTokenByFields(PureInvitationToken $token): ?InvitationToken
     {
@@ -44,11 +44,11 @@ readonly class MySqlUserInvitationTokenRepository
 
     /**
      * @throws DateMalformedStringException
-     * @throws ApiUnableToBuildValueObjectException
+     * @throws ApiInvalidArgumentException
      */
     public function getInvitationTokensFromOwnerUserId(ID $ownerUserId): InvitationTokens
     {
-        $sql = "SELECT * FROM `user_invitation_tokens` WHERE `owner_user_id` = :owner_user_id";
+        $sql = "SELECT * FROM user_invitation_tokens WHERE owner_user_id = :owner_user_id";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
