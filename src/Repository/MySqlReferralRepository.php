@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
-use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
@@ -65,7 +65,7 @@ readonly class MySqlReferralRepository
 
     /**
      * @throws DateMalformedStringException
-     * @throws ApiUnableToBuildValueObjectException
+     * @throws ApiInvalidArgumentException
      */
     public function getReferralsFromUserId(ID $userId): Referrals
     {
@@ -86,7 +86,7 @@ readonly class MySqlReferralRepository
 
     /**
      * @throws DateMalformedStringException
-     * @throws ApiUnableToBuildValueObjectException
+     * @throws ApiInvalidArgumentException
      */
     public function findReferralById(ID $id): ?Referral
     {
@@ -107,7 +107,7 @@ readonly class MySqlReferralRepository
 
     /**
      * @throws DateMalformedStringException
-     * @throws ApiUnableToBuildValueObjectException
+     * @throws ApiInvalidArgumentException
      */
     public function findReferralByCode(ReferralCode $code): ?Referral
     {

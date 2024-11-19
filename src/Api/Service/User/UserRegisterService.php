@@ -6,7 +6,7 @@ use DateMalformedStringException;
 use InvalidArgumentException;
 use Nebalus\Webapi\Api\Filter\User\UserRegisterFilter;
 use Nebalus\Webapi\Api\View\User\UserRegisterView;
-use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Repository\MySqlUserInvitationTokenRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
@@ -24,7 +24,7 @@ readonly class UserRegisterService
     }
 
     /**
-     * @throws DateMalformedStringException|ApiUnableToBuildValueObjectException
+     * @throws DateMalformedStringException|ApiInvalidArgumentException
      */
     public function execute(array $params): ResultInterface
     {
@@ -39,7 +39,7 @@ readonly class UserRegisterService
             $email = UserEmail::from($filteredData['email']);
             $username = Username::from($filteredData['username']);
             $password = UserPassword::fromPlain($filteredData['password']);
-        } catch (ApiUnableToBuildValueObjectException $e) {
+        } catch (ApiInvalidArgumentException $e) {
             return Result::createError('Registration failed: PLACEHOLDER', 401);
         }
 

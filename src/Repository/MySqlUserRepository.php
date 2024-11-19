@@ -6,7 +6,7 @@ namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiDatabaseException;
-use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\User;
 use Nebalus\Webapi\Value\User\Username;
@@ -23,12 +23,12 @@ readonly class MySqlUserRepository
     /**
      * @throws DateMalformedStringException
      * @throws ApiDatabaseException
-     * @throws ApiUnableToBuildValueObjectException
+     * @throws ApiInvalidArgumentException
      */
     public function getUserFromId(ID $userId): User
     {
         try {
-            $sql = "SELECT * FROM `users` WHERE `user_id` = :user_id";
+            $sql = "SELECT * FROM users WHERE user_id = :user_id";
 
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':user_id', $userId->asInt());
@@ -47,12 +47,12 @@ readonly class MySqlUserRepository
     }
 
     /**
-     * @throws ApiDatabaseException|DateMalformedStringException|ApiUnableToBuildValueObjectException
+     * @throws ApiDatabaseException|DateMalformedStringException|ApiInvalidArgumentException
      */
     public function getUserFromUsername(Username $username): ?User
     {
         try {
-            $sql = "SELECT * FROM `users` WHERE `username` = :username";
+            $sql = "SELECT * FROM users WHERE username = :username";
 
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':username', $username->asString());

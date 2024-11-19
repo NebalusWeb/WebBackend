@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Value\Result;
 
 use InvalidArgumentException;
-use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 readonly class Result implements ResultInterface
 {
