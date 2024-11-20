@@ -2,9 +2,12 @@
 
 namespace Nebalus\Webapi\Api\Action;
 
+use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\Result\Result;
 use Psr\Http\Message\ResponseInterface as ResponseInterface;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
+use Throwable;
 
 abstract class ApiAction
 {
@@ -13,7 +16,23 @@ abstract class ApiAction
         Response $response,
         array $args
     ): ResponseInterface {
-        return $this->execute($request, $response, $args);
+        try {
+            $response = $this->execute($request, $response, $args);
+        } catch (ApiException $exception) {
+            $result = Result::createFromException(
+                $exception,
+                $exception->getCode()
+            );
+            $response->getBody()->write($result->getPayloadAsJson());
+            return $response->withStatus($result->getStatusCode());
+        } catch (Throwable $exception) {
+            $result = Result::createFromException(
+                $exception
+            );
+            $response->getBody()->write($result->getPayloadAsJson());
+            return $response->withStatus($result->getStatusCode());
+        }
+        return $response;
     }
 
     abstract protected function execute(

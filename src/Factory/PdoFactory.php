@@ -6,19 +6,15 @@ namespace Nebalus\Webapi\Factory;
 
 use Nebalus\Webapi\Option\EnvData;
 use PDO;
-use PDOException;
 
-class PdoFactory
+readonly class PdoFactory
 {
     public function __construct(
         private EnvData $env
     ) {
     }
 
-    /**
-     * @throws PDOException
-     */
-    public function build(): Pdo
+    public function __invoke(): Pdo
     {
         $host = $this->env->getMySqlHost();
         $port = $this->env->getMySqlPort();

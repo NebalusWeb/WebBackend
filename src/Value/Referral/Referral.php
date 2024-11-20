@@ -6,7 +6,7 @@ namespace Nebalus\Webapi\Value\Referral;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
-use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 
 readonly class Referral
@@ -24,7 +24,7 @@ readonly class Referral
 
     /**
      * @throws DateMalformedStringException
-     * @throws ApiUnableToBuildValueObjectException
+     * @throws ApiInvalidArgumentException
      */
     public static function fromMySql(array $data): self
     {

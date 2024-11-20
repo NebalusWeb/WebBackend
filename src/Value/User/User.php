@@ -6,7 +6,7 @@ namespace Nebalus\Webapi\Value\User;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
-use Nebalus\Webapi\Exception\ApiUnableToBuildValueObjectException;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\Totp\TOTPSecretKey;
 
@@ -55,7 +55,7 @@ readonly class User
 
     /**
      * @throws DateMalformedStringException
-     * @throws ApiUnableToBuildValueObjectException
+     * @throws ApiInvalidArgumentException
      */
     public static function fromMySQL(array $data): self
     {
