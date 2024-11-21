@@ -24,14 +24,14 @@ services:
     environment:
       APP_ENV: "production"
       ERROR_LOGLEVEL: "Warning"
-      JWT_SECRET: "t]VP1RJcL){v+BDC?{uyjUoD}]EX3B(pmGCfz147VMbj@3:Dck-jS2P'pj,rYzh6q@m4q()Ds}:|ljzqZRXdKxSv{PDO5X{h]hiH"
+      JWT_SECRET: "tVP1RJcLvBDCuyjUoDEX3BpmGCfz147VMbjDckjS2pjYzh6qm4qDsljzqZRXdKxSvPDO5XhhiH"
       JWT_NORMAL_EXPIRATION_TIME: 86400
       JWT_EXTENDED_EXPIRATION_TIME: 604800
       ACCESS_CONTROL_ALLOW_ORIGIN: "*"
       MYSQL_HOST: "mysql:3306"
       MYSQL_DATABASE: "main"
       MYSQL_USER: "admin"
-      MYSQL_PASSWORD: "&!7gmRdr&z4#E6"
+      MYSQL_PASSWORD: "7gmRdrz4E6"
     depends_on:
       - mysql
       - redis
@@ -50,7 +50,7 @@ services:
       MYSQL_ROOT_PASSWORD: "%!28dnZY7%5U$Z"
       MYSQL_DATABASE: "main"
       MYSQL_USER: "admin"
-      MYSQL_PASSWORD: "&!7gmRdr&z4#E6"
+      MYSQL_PASSWORD: "7gmRdrz4E6"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:

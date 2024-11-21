@@ -21,7 +21,7 @@ class UserAuthAction extends ApiAction
 
     /**
      * @throws DateMalformedStringException
-     * @throws BuildException|ApiDatabaseException
+     * @throws BuildException|ApiDatabaseException|\Nebalus\Webapi\Exception\ApiInvalidArgumentException
      */
     protected function execute(Request $request, Response $response, array $args): Response
     {

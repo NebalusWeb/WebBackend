@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\Referral\Referral;
@@ -34,7 +35,7 @@ readonly class MySqlReferralRepository
 
     public function insertReferralClickEntry(ID $referralId): bool
     {
-        $sql = "INSERT INTO referral_analytics_clicks(referral_id) VALUES (:referral_id)";
+        $sql = "INSERT INTO referral_clicks(referral_id) VALUES (:referral_id)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':referral_id', $referralId->asInt());
@@ -64,8 +65,7 @@ readonly class MySqlReferralRepository
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public function getReferralsFromUserId(ID $userId): Referrals
     {
@@ -78,15 +78,14 @@ readonly class MySqlReferralRepository
         $data = [];
 
         while ($row = $stmt->fetch()) {
-            $data[] = Referral::fromMySQL($row);
+            $data[] = Referral::fromDatabase($row);
         }
 
         return Referrals::fromArray(...$data);
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public function findReferralById(ID $id): ?Referral
     {
@@ -102,12 +101,11 @@ readonly class MySqlReferralRepository
             return null;
         }
 
-        return Referral::fromMySql($data);
+        return Referral::fromDatabase($data);
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public function findReferralByCode(ReferralCode $code): ?Referral
     {
@@ -123,6 +121,6 @@ readonly class MySqlReferralRepository
             return null;
         }
 
-        return Referral::fromMySql($data);
+        return Referral::fromDatabase($data);
     }
 }

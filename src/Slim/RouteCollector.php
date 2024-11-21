@@ -9,6 +9,7 @@ use Nebalus\Webapi\Api\Action\Linktree\Analytics\LinktreeClickHistoryAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeDeleteAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeEditAction;
 use Nebalus\Webapi\Api\Action\Linktree\LinktreeGetAction;
+use Nebalus\Webapi\Api\Action\MetricsAction;
 use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClickAction;
 use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClickHistoryAction;
 use Nebalus\Webapi\Api\Action\Referral\ReferralCreateAction;
@@ -72,6 +73,8 @@ readonly class RouteCollector
                 });
             })->add(AuthMiddleware::class);
         });
+
+        $this->app->map(["GET"], "/metrics", MetricsAction::class);
 
         $this->app->group("/services", function (RouteCollectorProxy $group) {
             $group->map(["GET"], "/referral/{code}", ReferralClickAction::class);

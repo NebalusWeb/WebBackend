@@ -6,6 +6,8 @@ namespace Nebalus\Webapi\Value\Referral;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
+use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 
@@ -17,26 +19,38 @@ readonly class Referral
         private ReferralCode $code,
         private string $pointer,
         private bool $disabled,
-        private DateTimeImmutable $createdAt,
-        private DateTimeImmutable $updatedAt,
+        private DateTimeImmutable $createdAtDate,
+        private DateTimeImmutable $updatedAtDate,
     ) {
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
-    public static function fromMySql(array $data): self
+    public static function fromDatabase(array $data): self
     {
+        try {
+            $createdAtDate = new DateTimeImmutable($data["created_at"]);
+            $updatedAtDate = new DateTimeImmutable($data["updated_at"]);
+        } catch (DateMalformedStringException $exception) {
+            throw new ApiDateMalformedStringException($exception);
+        }
+
         $referralId = ID::from($data["referral_id"]);
         $userId = ID::from($data["user_id"]);
         $code = ReferralCode::from($data["code"]);
         $pointer = $data["pointer"];
         $disabled = (bool) $data["disabled"];
-        $createdAt = new DateTimeImmutable($data["created_at"]);
-        $updatedAt = new DateTimeImmutable($data["updated_at"]);
 
-        return new self($referralId, $userId, $code, $pointer, $disabled, $createdAt, $updatedAt);
+        return new self(
+            $referralId,
+            $userId,
+            $code,
+            $pointer,
+            $disabled,
+            $createdAtDate,
+            $updatedAtDate
+        );
     }
 
     public function getReferralId(): ID
@@ -61,10 +75,10 @@ readonly class Referral
     }
     public function getCreatedAtDate(): DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->createdAtDate;
     }
     public function getUpdatedAtDate(): DateTimeImmutable
     {
-        return $this->updatedAt;
+        return $this->updatedAtDate;
     }
 }

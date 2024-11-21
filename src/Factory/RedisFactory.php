@@ -6,11 +6,7 @@ use Redis;
 
 class RedisFactory
 {
-    public function __construct()
-    {
-    }
-
-    public function build(): Redis
+    public function __invoke(): Redis
     {
         $host = "127.0.0.1";
         $port = "6379";

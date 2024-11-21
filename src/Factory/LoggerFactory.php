@@ -10,14 +10,13 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Nebalus\Webapi\Option\EnvData;
 
-class LoggerFactory
+readonly class LoggerFactory
 {
     public function __construct(
         private EnvData $env
     ) {
     }
-
-    public function build(): Logger
+    public function __invoke(): Logger
     {
         $format = "%datetime% | %level_name% | %message% | %context%\n";
         $formatter = new LineFormatter($format, NormalizerFormatter::SIMPLE_DATE);

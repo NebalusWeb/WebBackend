@@ -3,7 +3,6 @@
 namespace Nebalus\Webapi\Api\Service\User;
 
 use DateMalformedStringException;
-use InvalidArgumentException;
 use Nebalus\Webapi\Api\Filter\User\UserRegisterFilter;
 use Nebalus\Webapi\Api\View\User\UserRegisterView;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
@@ -12,8 +11,8 @@ use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 use Nebalus\Webapi\Value\User\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\User\UserEmail;
-use Nebalus\Webapi\Value\User\UserPassword;
 use Nebalus\Webapi\Value\User\Username;
+use Nebalus\Webapi\Value\User\UserPassword;
 
 readonly class UserRegisterService
 {

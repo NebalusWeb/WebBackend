@@ -25,7 +25,8 @@
         "slim/http": "^1.4",
         "guzzlehttp/guzzle": "^7.8",
         "rbdwllr/reallysimplejwt": "^5.0",
-        "spomky-labs/otphp": "^11.3.0"
+        "spomky-labs/otphp": "^11.3.0",
+        "promphp/prometheus_client_php": "^2.12"
     },
     
     "autoload-dev": {
