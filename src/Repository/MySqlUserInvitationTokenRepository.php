@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\InvitationToken\InvitationToken;
@@ -18,8 +19,7 @@ readonly class MySqlUserInvitationTokenRepository
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public function findInvitationTokenByFields(PureInvitationToken $token): ?InvitationToken
     {
@@ -39,12 +39,11 @@ readonly class MySqlUserInvitationTokenRepository
             return null;
         }
 
-        return InvitationToken::fromMySQL($data);
+        return InvitationToken::fromDatabase($data);
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public function getInvitationTokensFromOwnerUserId(ID $ownerUserId): InvitationTokens
     {
@@ -57,7 +56,7 @@ readonly class MySqlUserInvitationTokenRepository
         $data = [];
 
         while ($row = $stmt->fetch()) {
-            $data[] = InvitationToken::fromMySQL($row);
+            $data[] = InvitationToken::fromDatabase($row);
         }
 
         return InvitationTokens::fromArray(...$data);

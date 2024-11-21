@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User;
 
-readonly class UserAdminDescription
+readonly class UserDescription
 {
     private function __construct(
         private ?string $description
