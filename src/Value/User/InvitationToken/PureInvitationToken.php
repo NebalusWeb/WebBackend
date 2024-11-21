@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User\InvitationToken;
 
-use InvalidArgumentException;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 readonly class PureInvitationToken
@@ -17,7 +17,7 @@ readonly class PureInvitationToken
     }
 
     /**
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public static function from(
         InvitationTokenField $field1,
@@ -33,7 +33,7 @@ readonly class PureInvitationToken
     }
 
     /**
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public static function fromString(
         string $token,
@@ -56,9 +56,9 @@ readonly class PureInvitationToken
     }
 
     /**
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
-    public static function fromMySQL(array $data): self
+    public static function fromDatabase(array $data): self
     {
         $field1 = InvitationTokenField::from($data['token_field_1']);
         $field2 = InvitationTokenField::from($data['token_field_2']);

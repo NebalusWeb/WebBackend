@@ -25,7 +25,7 @@ readonly class TOTPSecretKey
         return new self($secret);
     }
 
-    private function asString(): string
+    public function asString(): string
     {
         return $this->secret;
     }

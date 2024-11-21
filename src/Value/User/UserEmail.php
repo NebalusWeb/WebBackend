@@ -2,7 +2,6 @@
 
 namespace Nebalus\Webapi\Value\User;
 
-use InvalidArgumentException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 readonly class UserEmail

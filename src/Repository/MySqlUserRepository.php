@@ -6,6 +6,7 @@ namespace Nebalus\Webapi\Repository;
 
 use DateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiDatabaseException;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\User;
@@ -21,14 +22,12 @@ readonly class MySqlUserRepository
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws ApiDatabaseException
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public function getUserFromId(ID $userId): User
     {
         try {
-            $sql = "SELECT * FROM users WHERE user_id = :user_id";
+            $sql = "SELECT * FROM `users` WHERE `user_id` = :user_id";
 
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':user_id', $userId->asInt());
@@ -36,10 +35,10 @@ readonly class MySqlUserRepository
 
             $data = $stmt->fetch();
 
-            return User::fromMySQL($data);
+            return User::fromDatabase($data);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
-                "Failed to retrieve user data",
+                "Failed to retrieve user data from userid",
                 500,
                 $e
             );
@@ -47,12 +46,12 @@ readonly class MySqlUserRepository
     }
 
     /**
-     * @throws ApiDatabaseException|DateMalformedStringException|ApiInvalidArgumentException
+     * @throws ApiException
      */
     public function getUserFromUsername(Username $username): ?User
     {
         try {
-            $sql = "SELECT * FROM users WHERE username = :username";
+            $sql = "SELECT * FROM `users` WHERE `username` = :username";
 
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':username', $username->asString());
@@ -60,10 +59,10 @@ readonly class MySqlUserRepository
 
             $data = $stmt->fetch();
 
-            return User::fromMySQL($data);
+            return User::fromDatabase($data);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
-                "Failed to retrieve user data",
+                "Failed to retrieve user data from username",
                 500,
                 $e
             );

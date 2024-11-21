@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Value\Result;
 
 use InvalidArgumentException;
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+use Throwable;
 
 readonly class Result implements ResultInterface
 {
@@ -33,14 +33,34 @@ readonly class Result implements ResultInterface
         return new static($success, $message, $statusCode, $payload);
     }
 
-    public static function createSuccess(?string $message, int $statusCode, array $fields = []): static
+    public static function createSuccess(?string $message, int $statusCode = 200, array $fields = []): static
     {
         return static::from(true, $message, $statusCode, $fields);
     }
 
-    public static function createError(?string $message, int $statusCode, array $fields = []): static
+    public static function createError(?string $message, int $statusCode = 500, array $fields = []): static
     {
         return static::from(false, $message, $statusCode, $fields);
+    }
+
+    public static function createFromException(Throwable $throwable, int $statusCode = 500): static
+    {
+        $isProduction = getenv('APP_ENV') === 'production';
+
+        $throwableAsArray = [
+            'error' => 'An error occurred',
+        ];
+
+        if ($isProduction === false) {
+            $throwableAsArray['error'] = $throwable->getMessage();
+            $throwableAsArray['topic'] = get_class($throwable);
+            $throwableAsArray['code'] = $throwable->getCode();
+            $throwableAsArray['file'] = $throwable->getFile();
+            $throwableAsArray['line'] = $throwable->getLine();
+            $throwableAsArray['trace'] = $throwable->getTrace();
+        }
+
+        return static::from(false, $throwableAsArray['error'], $statusCode, $throwableAsArray);
     }
 
     public function getPayload(): array

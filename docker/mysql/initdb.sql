@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Nov 13, 2024 at 05:48 PM
--- Server version: 9.1.0
--- PHP Version: 8.2.23
+-- Erstellungszeit: 21. Nov 2024 um 00:08
+-- Server-Version: 9.1.0
+-- PHP-Version: 8.2.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `main`
+-- Datenbank: `main`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `linktrees`
+-- Tabellenstruktur für Tabelle `linktrees`
 --
 
 CREATE TABLE `linktrees` (
@@ -37,7 +37,7 @@ CREATE TABLE `linktrees` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `linktrees`
+-- Daten für Tabelle `linktrees`
 --
 
 INSERT INTO `linktrees` (`linktree_id`, `user_id`, `description`, `disabled`, `created_at`, `updated_at`) VALUES
@@ -47,29 +47,29 @@ INSERT INTO `linktrees` (`linktree_id`, `user_id`, `description`, `disabled`, `c
 -- --------------------------------------------------------
 
 --
--- Table structure for table `linktree_analytics_clicks`
+-- Tabellenstruktur für Tabelle `linktree_clicks`
 --
 
-CREATE TABLE `linktree_analytics_clicks` (
-                                             `linktree_id` int UNSIGNED NOT NULL,
-                                             `clicked_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `linktree_clicks` (
+                                   `linktree_id` int UNSIGNED NOT NULL,
+                                   `clicked_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `linktree_analytics_clicks`
+-- Daten für Tabelle `linktree_clicks`
 --
 
-INSERT INTO `linktree_analytics_clicks` (`linktree_id`, `clicked_at`) VALUES
-                                                                          (1, '2024-11-12 19:23:40'),
-                                                                          (1, '2024-11-12 19:23:43'),
-                                                                          (1, '2024-11-12 19:23:46'),
-                                                                          (1, '2024-11-12 19:24:15'),
-                                                                          (1, '2024-11-12 19:24:15');
+INSERT INTO `linktree_clicks` (`linktree_id`, `clicked_at`) VALUES
+                                                                (1, '2024-11-12 19:23:40'),
+                                                                (1, '2024-11-12 19:23:43'),
+                                                                (1, '2024-11-12 19:23:46'),
+                                                                (1, '2024-11-12 19:24:15'),
+                                                                (1, '2024-11-12 19:24:15');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `linktree_entrys`
+-- Tabellenstruktur für Tabelle `linktree_entrys`
 --
 
 CREATE TABLE `linktree_entrys` (
@@ -83,7 +83,7 @@ CREATE TABLE `linktree_entrys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `linktree_entrys`
+-- Daten für Tabelle `linktree_entrys`
 --
 
 INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `position`, `label`, `url`, `created_at`, `updated_at`) VALUES
@@ -95,7 +95,7 @@ INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `position`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `referrals`
+-- Tabellenstruktur für Tabelle `referrals`
 --
 
 CREATE TABLE `referrals` (
@@ -109,7 +109,7 @@ CREATE TABLE `referrals` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `referrals`
+-- Daten für Tabelle `referrals`
 --
 
 INSERT INTO `referrals` (`referral_id`, `user_id`, `code`, `pointer`, `disabled`, `created_at`, `updated_at`) VALUES
@@ -123,94 +123,94 @@ INSERT INTO `referrals` (`referral_id`, `user_id`, `code`, `pointer`, `disabled`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `referral_analytics_clicks`
+-- Tabellenstruktur für Tabelle `referral_clicks`
 --
 
-CREATE TABLE `referral_analytics_clicks` (
-                                             `referral_id` int UNSIGNED NOT NULL,
-                                             `clicked_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `referral_clicks` (
+                                   `referral_id` int UNSIGNED NOT NULL,
+                                   `clicked_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `referral_analytics_clicks`
+-- Daten für Tabelle `referral_clicks`
 --
 
-INSERT INTO `referral_analytics_clicks` (`referral_id`, `clicked_at`) VALUES
-                                                                          (6, '2024-11-05 15:41:25'),
-                                                                          (6, '2024-11-05 15:41:30'),
-                                                                          (6, '2024-11-05 15:41:35'),
-                                                                          (6, '2024-11-05 15:50:28'),
-                                                                          (6, '2024-11-05 15:50:28'),
-                                                                          (6, '2024-11-05 15:50:29'),
-                                                                          (6, '2024-11-05 15:50:29'),
-                                                                          (6, '2024-11-05 15:50:30'),
-                                                                          (6, '2024-11-05 23:02:33'),
-                                                                          (6, '2024-11-05 23:02:34'),
-                                                                          (6, '2024-11-05 23:02:34'),
-                                                                          (1, '2024-11-05 23:02:38'),
-                                                                          (1, '2024-11-05 23:02:39'),
-                                                                          (1, '2024-11-05 23:02:42'),
-                                                                          (1, '2024-11-05 23:02:46'),
-                                                                          (5, '2024-11-05 23:02:49'),
-                                                                          (5, '2024-11-05 23:02:50'),
-                                                                          (5, '2024-11-05 23:02:51'),
-                                                                          (6, '2024-11-05 23:02:54'),
-                                                                          (6, '2024-11-11 18:08:28'),
-                                                                          (6, '2024-11-11 18:08:37'),
-                                                                          (6, '2024-11-11 18:08:38'),
-                                                                          (6, '2024-11-11 18:08:38'),
-                                                                          (6, '2024-11-11 18:08:39'),
-                                                                          (6, '2024-11-11 18:08:45'),
-                                                                          (5, '2024-11-11 18:08:52'),
-                                                                          (1, '2024-11-11 18:08:57'),
-                                                                          (1, '2024-11-11 18:08:58'),
-                                                                          (1, '2024-11-11 18:08:59'),
-                                                                          (1, '2024-11-11 18:09:46'),
-                                                                          (1, '2024-11-11 18:09:55'),
-                                                                          (1, '2024-11-11 18:09:56'),
-                                                                          (1, '2024-11-11 18:09:57'),
-                                                                          (1, '2024-11-11 18:09:58'),
-                                                                          (1, '2024-11-11 18:09:59'),
-                                                                          (1, '2024-11-11 18:09:59'),
-                                                                          (3, '2024-11-11 18:26:47'),
-                                                                          (3, '2024-11-11 18:26:49'),
-                                                                          (3, '2024-11-11 18:26:50'),
-                                                                          (3, '2024-11-11 18:50:51'),
-                                                                          (6, '2024-11-11 18:50:55'),
-                                                                          (6, '2024-11-11 18:50:57'),
-                                                                          (6, '2024-11-11 18:50:58'),
-                                                                          (6, '2024-11-12 17:56:25'),
-                                                                          (1, '2024-11-12 17:56:39'),
-                                                                          (1, '2024-11-12 17:56:39'),
-                                                                          (11, '2024-11-12 17:56:45'),
-                                                                          (11, '2024-11-12 17:56:46'),
-                                                                          (11, '2024-11-12 17:56:47'),
-                                                                          (11, '2024-11-12 17:56:47'),
-                                                                          (5, '2024-11-12 17:56:52'),
-                                                                          (5, '2024-11-12 17:56:52'),
-                                                                          (6, '2024-11-12 17:56:58'),
-                                                                          (1, '2024-11-13 17:46:51'),
-                                                                          (1, '2024-11-13 17:46:52'),
-                                                                          (6, '2024-11-13 17:46:56'),
-                                                                          (6, '2024-11-13 17:46:57'),
-                                                                          (1, '2024-11-13 17:47:01'),
-                                                                          (1, '2024-11-13 17:47:02'),
-                                                                          (1, '2024-11-13 17:47:14'),
-                                                                          (1, '2024-11-13 17:47:15'),
-                                                                          (6, '2024-11-13 17:47:20'),
-                                                                          (6, '2024-11-13 17:47:21'),
-                                                                          (6, '2024-11-13 17:47:22'),
-                                                                          (11, '2024-11-13 17:47:27'),
-                                                                          (11, '2024-11-13 17:47:27'),
-                                                                          (11, '2024-11-13 17:47:28'),
-                                                                          (11, '2024-11-13 17:47:28'),
-                                                                          (11, '2024-11-13 17:47:29'),
-                                                                          (1, '2024-11-13 17:47:35');
+INSERT INTO `referral_clicks` (`referral_id`, `clicked_at`) VALUES
+                                                                (6, '2024-11-05 15:41:25'),
+                                                                (6, '2024-11-05 15:41:30'),
+                                                                (6, '2024-11-05 15:41:35'),
+                                                                (6, '2024-11-05 15:50:28'),
+                                                                (6, '2024-11-05 15:50:28'),
+                                                                (6, '2024-11-05 15:50:29'),
+                                                                (6, '2024-11-05 15:50:29'),
+                                                                (6, '2024-11-05 15:50:30'),
+                                                                (6, '2024-11-05 23:02:33'),
+                                                                (6, '2024-11-05 23:02:34'),
+                                                                (6, '2024-11-05 23:02:34'),
+                                                                (1, '2024-11-05 23:02:38'),
+                                                                (1, '2024-11-05 23:02:39'),
+                                                                (1, '2024-11-05 23:02:42'),
+                                                                (1, '2024-11-05 23:02:46'),
+                                                                (5, '2024-11-05 23:02:49'),
+                                                                (5, '2024-11-05 23:02:50'),
+                                                                (5, '2024-11-05 23:02:51'),
+                                                                (6, '2024-11-05 23:02:54'),
+                                                                (6, '2024-11-11 18:08:28'),
+                                                                (6, '2024-11-11 18:08:37'),
+                                                                (6, '2024-11-11 18:08:38'),
+                                                                (6, '2024-11-11 18:08:38'),
+                                                                (6, '2024-11-11 18:08:39'),
+                                                                (6, '2024-11-11 18:08:45'),
+                                                                (5, '2024-11-11 18:08:52'),
+                                                                (1, '2024-11-11 18:08:57'),
+                                                                (1, '2024-11-11 18:08:58'),
+                                                                (1, '2024-11-11 18:08:59'),
+                                                                (1, '2024-11-11 18:09:46'),
+                                                                (1, '2024-11-11 18:09:55'),
+                                                                (1, '2024-11-11 18:09:56'),
+                                                                (1, '2024-11-11 18:09:57'),
+                                                                (1, '2024-11-11 18:09:58'),
+                                                                (1, '2024-11-11 18:09:59'),
+                                                                (1, '2024-11-11 18:09:59'),
+                                                                (3, '2024-11-11 18:26:47'),
+                                                                (3, '2024-11-11 18:26:49'),
+                                                                (3, '2024-11-11 18:26:50'),
+                                                                (3, '2024-11-11 18:50:51'),
+                                                                (6, '2024-11-11 18:50:55'),
+                                                                (6, '2024-11-11 18:50:57'),
+                                                                (6, '2024-11-11 18:50:58'),
+                                                                (6, '2024-11-12 17:56:25'),
+                                                                (1, '2024-11-12 17:56:39'),
+                                                                (1, '2024-11-12 17:56:39'),
+                                                                (11, '2024-11-12 17:56:45'),
+                                                                (11, '2024-11-12 17:56:46'),
+                                                                (11, '2024-11-12 17:56:47'),
+                                                                (11, '2024-11-12 17:56:47'),
+                                                                (5, '2024-11-12 17:56:52'),
+                                                                (5, '2024-11-12 17:56:52'),
+                                                                (6, '2024-11-12 17:56:58'),
+                                                                (1, '2024-11-13 17:46:51'),
+                                                                (1, '2024-11-13 17:46:52'),
+                                                                (6, '2024-11-13 17:46:56'),
+                                                                (6, '2024-11-13 17:46:57'),
+                                                                (1, '2024-11-13 17:47:01'),
+                                                                (1, '2024-11-13 17:47:02'),
+                                                                (1, '2024-11-13 17:47:14'),
+                                                                (1, '2024-11-13 17:47:15'),
+                                                                (6, '2024-11-13 17:47:20'),
+                                                                (6, '2024-11-13 17:47:21'),
+                                                                (6, '2024-11-13 17:47:22'),
+                                                                (11, '2024-11-13 17:47:27'),
+                                                                (11, '2024-11-13 17:47:27'),
+                                                                (11, '2024-11-13 17:47:28'),
+                                                                (11, '2024-11-13 17:47:28'),
+                                                                (11, '2024-11-13 17:47:29'),
+                                                                (1, '2024-11-13 17:47:35');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Tabellenstruktur für Tabelle `users`
 --
 
 CREATE TABLE `users` (
@@ -219,7 +219,7 @@ CREATE TABLE `users` (
                          `email` varchar(255) NOT NULL,
                          `password` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `totp_secret_key` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                         `description_for_admins` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                         `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
                          `is_admin` bit(1) NOT NULL DEFAULT b'0',
                          `disabled` bit(1) NOT NULL DEFAULT b'0',
                          `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -227,19 +227,19 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `users`
+-- Daten für Tabelle `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description_for_admins`, `is_admin`, `disabled`, `created_at`, `updated_at`) VALUES
-                                                                                                                                                                      (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'Y540HUTSIUVHDHY1L83ZYPMLZL0AZ80FUP8HC85XK9PY43VSQ53USYRSLGIRTYQT', 'Is the default test User', b'1', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
-                                                                                                                                                                      (2, 'Tester', 'tester@nebalus.dev', '', 'ZM9XE1IVSUY1IR5QZ1AIXPH9OPVL3RJSJYLILL2KBGGR4H8PTGLAWML72ED1ID1F', 'Password = Tester42', b'0', b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
-                                                                                                                                                                      (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'COH5JL4G865EEUMR6LMKH6LZ5MIBLK8VDI1IJ1HJUBYKHWY453KEHKJQOLVQ88MX', 'Password = BAnnedTester11', b'0', b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
-                                                                                                                                                                      (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '', 'LEMJ3UYRV2RURCFS1CBO4VXX6SBBD0BRQHZZEYZ86447PTD3TO4P31XK734C0O5W', 'Password = TEST1234!', b'0', b'1', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description`, `is_admin`, `disabled`, `created_at`, `updated_at`) VALUES
+                                                                                                                                                           (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'Y540HUTSIUVHDHY1L83ZYPMLZL0AZ80FUP8HC85XK9PY43VSQ53USYRSLGIRTYQT', 'Is the default test User', b'1', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
+                                                                                                                                                           (2, 'Tester', 'tester@nebalus.dev', '', 'ZM9XE1IVSUY1IR5QZ1AIXPH9OPVL3RJSJYLILL2KBGGR4H8PTGLAWML72ED1ID1F', 'Password = Tester42', b'0', b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
+                                                                                                                                                           (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'COH5JL4G865EEUMR6LMKH6LZ5MIBLK8VDI1IJ1HJUBYKHWY453KEHKJQOLVQ88MX', 'Password = BAnnedTester11', b'0', b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
+                                                                                                                                                           (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '', 'LEMJ3UYRV2RURCFS1CBO4VXX6SBBD0BRQHZZEYZ86447PTD3TO4P31XK734C0O5W', 'Password = TEST1234!', b'0', b'1', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_invitation_tokens`
+-- Tabellenstruktur für Tabelle `user_invitation_tokens`
 --
 
 CREATE TABLE `user_invitation_tokens` (
@@ -255,7 +255,7 @@ CREATE TABLE `user_invitation_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `user_invitation_tokens`
+-- Daten für Tabelle `user_invitation_tokens`
 --
 
 INSERT INTO `user_invitation_tokens` (`owner_user_id`, `invited_user_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_checksum`, `created_at`, `used_at`) VALUES
@@ -267,7 +267,7 @@ INSERT INTO `user_invitation_tokens` (`owner_user_id`, `invited_user_id`, `token
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_login_history`
+-- Tabellenstruktur für Tabelle `user_login_history`
 --
 
 CREATE TABLE `user_login_history` (
@@ -279,7 +279,7 @@ CREATE TABLE `user_login_history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `user_login_history`
+-- Daten für Tabelle `user_login_history`
 --
 
 INSERT INTO `user_login_history` (`login_history_id`, `user_id`, `ip_address`, `success`, `logged_in_at`) VALUES
@@ -291,7 +291,7 @@ INSERT INTO `user_login_history` (`login_history_id`, `user_id`, `ip_address`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_punishments`
+-- Tabellenstruktur für Tabelle `user_punishments`
 --
 
 CREATE TABLE `user_punishments` (
@@ -305,38 +305,38 @@ CREATE TABLE `user_punishments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `user_punishments`
+-- Daten für Tabelle `user_punishments`
 --
 
 INSERT INTO `user_punishments` (`punishment_id`, `punished_user_id`, `moderator_user_id`, `punishment_type`, `reason`, `start_at`, `end_at`) VALUES
     (1, 3, 1, 1, 'Just for Existence', '2024-11-07 08:13:47', NULL);
 
 --
--- Indexes for dumped tables
+-- Indizes der exportierten Tabellen
 --
 
 --
--- Indexes for table `linktrees`
+-- Indizes für die Tabelle `linktrees`
 --
 ALTER TABLE `linktrees`
     ADD PRIMARY KEY (`linktree_id`),
     ADD UNIQUE KEY `account` (`user_id`);
 
 --
--- Indexes for table `linktree_analytics_clicks`
+-- Indizes für die Tabelle `linktree_clicks`
 --
-ALTER TABLE `linktree_analytics_clicks`
+ALTER TABLE `linktree_clicks`
     ADD KEY `analytics_linktree_clicks_ibfk_1` (`linktree_id`);
 
 --
--- Indexes for table `linktree_entrys`
+-- Indizes für die Tabelle `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     ADD PRIMARY KEY (`linktree_entry_id`),
     ADD UNIQUE KEY `linktree_id` (`linktree_id`,`position`);
 
 --
--- Indexes for table `referrals`
+-- Indizes für die Tabelle `referrals`
 --
 ALTER TABLE `referrals`
     ADD PRIMARY KEY (`referral_id`),
@@ -344,20 +344,20 @@ ALTER TABLE `referrals`
     ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `referral_analytics_clicks`
+-- Indizes für die Tabelle `referral_clicks`
 --
-ALTER TABLE `referral_analytics_clicks`
+ALTER TABLE `referral_clicks`
     ADD KEY `referral_id` (`referral_id`);
 
 --
--- Indexes for table `users`
+-- Indizes für die Tabelle `users`
 --
 ALTER TABLE `users`
     ADD PRIMARY KEY (`user_id`),
     ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `user_invitation_tokens`
+-- Indizes für die Tabelle `user_invitation_tokens`
 --
 ALTER TABLE `user_invitation_tokens`
     ADD PRIMARY KEY (`token_field_1`,`token_field_2`,`token_field_3`,`token_field_4`,`token_checksum`) USING BTREE,
@@ -365,14 +365,14 @@ ALTER TABLE `user_invitation_tokens`
     ADD KEY `owner_user_id` (`owner_user_id`);
 
 --
--- Indexes for table `user_login_history`
+-- Indizes für die Tabelle `user_login_history`
 --
 ALTER TABLE `user_login_history`
     ADD PRIMARY KEY (`login_history_id`),
     ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `user_punishments`
+-- Indizes für die Tabelle `user_punishments`
 --
 ALTER TABLE `user_punishments`
     ADD PRIMARY KEY (`punishment_id`),
@@ -380,94 +380,94 @@ ALTER TABLE `user_punishments`
     ADD KEY `moderator_user_id` (`moderator_user_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT for table `linktrees`
+-- AUTO_INCREMENT für Tabelle `linktrees`
 --
 ALTER TABLE `linktrees`
     MODIFY `linktree_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `linktree_entrys`
+-- AUTO_INCREMENT für Tabelle `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     MODIFY `linktree_entry_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `referrals`
+-- AUTO_INCREMENT für Tabelle `referrals`
 --
 ALTER TABLE `referrals`
     MODIFY `referral_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
     MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `user_login_history`
+-- AUTO_INCREMENT für Tabelle `user_login_history`
 --
 ALTER TABLE `user_login_history`
     MODIFY `login_history_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `user_punishments`
+-- AUTO_INCREMENT für Tabelle `user_punishments`
 --
 ALTER TABLE `user_punishments`
     MODIFY `punishment_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
+-- Constraints der exportierten Tabellen
 --
 
 --
--- Constraints for table `linktrees`
+-- Constraints der Tabelle `linktrees`
 --
 ALTER TABLE `linktrees`
     ADD CONSTRAINT `linktrees_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `linktree_analytics_clicks`
+-- Constraints der Tabelle `linktree_clicks`
 --
-ALTER TABLE `linktree_analytics_clicks`
-    ADD CONSTRAINT `linktree_analytics_clicks_ibfk_1` FOREIGN KEY (`linktree_id`) REFERENCES `linktrees` (`linktree_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE `linktree_clicks`
+    ADD CONSTRAINT `linktree_clicks_ibfk_1` FOREIGN KEY (`linktree_id`) REFERENCES `linktrees` (`linktree_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `linktree_entrys`
+-- Constraints der Tabelle `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     ADD CONSTRAINT `linktree_entrys_ibfk_1` FOREIGN KEY (`linktree_id`) REFERENCES `linktrees` (`linktree_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `referrals`
+-- Constraints der Tabelle `referrals`
 --
 ALTER TABLE `referrals`
     ADD CONSTRAINT `referrals_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `referral_analytics_clicks`
+-- Constraints der Tabelle `referral_clicks`
 --
-ALTER TABLE `referral_analytics_clicks`
-    ADD CONSTRAINT `referral_analytics_clicks_ibfk_1` FOREIGN KEY (`referral_id`) REFERENCES `referrals` (`referral_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE `referral_clicks`
+    ADD CONSTRAINT `referral_clicks_ibfk_1` FOREIGN KEY (`referral_id`) REFERENCES `referrals` (`referral_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `user_invitation_tokens`
+-- Constraints der Tabelle `user_invitation_tokens`
 --
 ALTER TABLE `user_invitation_tokens`
     ADD CONSTRAINT `user_invitation_tokens_ibfk_1` FOREIGN KEY (`owner_user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
     ADD CONSTRAINT `user_invitation_tokens_ibfk_2` FOREIGN KEY (`invited_user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
--- Constraints for table `user_login_history`
+-- Constraints der Tabelle `user_login_history`
 --
 ALTER TABLE `user_login_history`
     ADD CONSTRAINT `user_login_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `user_punishments`
+-- Constraints der Tabelle `user_punishments`
 --
 ALTER TABLE `user_punishments`
     ADD CONSTRAINT `user_punishments_ibfk_1` FOREIGN KEY (`punished_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT,

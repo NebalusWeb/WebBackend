@@ -6,6 +6,8 @@ namespace Nebalus\Webapi\Value\User;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
+use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\Totp\TOTPSecretKey;
@@ -18,7 +20,7 @@ readonly class User
         private UserEmail $email,
         private UserPassword $password,
         private TOTPSecretKey $totpSecretKey,
-        private UserAdminDescription $adminDescription,
+        private UserDescription $description,
         private bool $isAdmin,
         private bool $disabled,
         private DateTimeImmutable $createdAtDate,
@@ -32,7 +34,7 @@ readonly class User
         UserEmail $email,
         UserPassword $password,
         TOTPSecretKey $totpSecretKey,
-        UserAdminDescription $adminDescription,
+        UserDescription $description,
         bool $isAdmin,
         bool $disabled,
         DateTimeImmutable $createdAtDate,
@@ -45,7 +47,7 @@ readonly class User
             $email,
             $password,
             $totpSecretKey,
-            $adminDescription,
+            $description,
             $isAdmin,
             $disabled,
             $createdAtDate,
@@ -54,21 +56,25 @@ readonly class User
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
-    public static function fromMySQL(array $data): self
+    public static function fromDatabase(array $data): self
     {
+        try {
+            $createdAtDate = new DateTimeImmutable($data['created_at']);
+            $updatedAtDate = new DateTimeImmutable($data['updated_at']);
+        } catch (DateMalformedStringException $exception) {
+            throw new ApiDateMalformedStringException($exception);
+        }
+
         $userId = ID::from($data['user_id']);
         $username = Username::from($data['username']);
         $email = UserEmail::from($data['email']);
         $password = UserPassword::fromHash($data['password']);
         $totpSecretKey = TOTPSecretKey::from($data['totp_secret_key']);
-        $adminDescription = UserAdminDescription::from($data['description_for_admins']);
+        $description = UserDescription::from($data['description']);
         $isAdmin = (bool) $data['is_admin'];
         $disabled = (bool) $data['disabled'];
-        $createdAtDate = new DateTimeImmutable($data['created_at']);
-        $updatedAtDate = new DateTimeImmutable($data['updated_at']);
 
         return new self(
             $userId,
@@ -76,12 +82,28 @@ readonly class User
             $email,
             $password,
             $totpSecretKey,
-            $adminDescription,
+            $description,
             $isAdmin,
             $disabled,
             $createdAtDate,
             $updatedAtDate
         );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'user_id' => $this->userId->asInt(),
+            'username' => $this->username->asString(),
+            'email' => $this->email->asString(),
+            'password' => $this->password->asString(),
+            'totp_secret_key' => $this->totpSecretKey->asString(),
+            'description' => $this->description->asString(),
+            'is_admin' => $this->isAdmin,
+            'disabled' => $this->disabled,
+            'created_at' => $this->createdAtDate->format(DATE_ATOM),
+            'updated_at' => $this->updatedAtDate->format(DATE_ATOM),
+        ];
     }
 
     public function getUserId(): ID
@@ -119,9 +141,9 @@ readonly class User
         return $this->disabled;
     }
 
-    public function getAdminDescription(): UserAdminDescription
+    public function getDescription(): UserDescription
     {
-        return $this->adminDescription;
+        return $this->description;
     }
 
     public function getCreatedAtDate(): DateTimeImmutable
