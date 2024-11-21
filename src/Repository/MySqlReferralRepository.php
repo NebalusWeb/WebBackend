@@ -35,7 +35,7 @@ readonly class MySqlReferralRepository
 
     public function insertReferralClickEntry(ID $referralId): bool
     {
-        $sql = "INSERT INTO referral_analytics_clicks(referral_id) VALUES (:referral_id)";
+        $sql = "INSERT INTO referral_clicks(referral_id) VALUES (:referral_id)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':referral_id', $referralId->asInt());
