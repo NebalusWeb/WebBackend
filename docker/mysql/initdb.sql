@@ -219,7 +219,7 @@ CREATE TABLE `users` (
                          `email` varchar(255) NOT NULL,
                          `password` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `totp_secret_key` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                         `description_for_admins` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                         `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
                          `is_admin` bit(1) NOT NULL DEFAULT b'0',
                          `disabled` bit(1) NOT NULL DEFAULT b'0',
                          `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -230,7 +230,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description_for_admins`, `is_admin`, `disabled`, `created_at`, `updated_at`) VALUES
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description`, `is_admin`, `disabled`, `created_at`, `updated_at`) VALUES
                                                                                                                                                                       (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'Y540HUTSIUVHDHY1L83ZYPMLZL0AZ80FUP8HC85XK9PY43VSQ53USYRSLGIRTYQT', 'Is the default test User', b'1', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
                                                                                                                                                                       (2, 'Tester', 'tester@nebalus.dev', '', 'ZM9XE1IVSUY1IR5QZ1AIXPH9OPVL3RJSJYLILL2KBGGR4H8PTGLAWML72ED1ID1F', 'Password = Tester42', b'0', b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
                                                                                                                                                                       (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'COH5JL4G865EEUMR6LMKH6LZ5MIBLK8VDI1IJ1HJUBYKHWY453KEHKJQOLVQ88MX', 'Password = BAnnedTester11', b'0', b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),

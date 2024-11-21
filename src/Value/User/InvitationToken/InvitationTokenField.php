@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User\InvitationToken;
 
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 readonly class InvitationTokenField
@@ -13,7 +14,7 @@ readonly class InvitationTokenField
     }
 
     /**
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public static function from(int $tokenField): self
     {

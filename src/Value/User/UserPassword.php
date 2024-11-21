@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Value\User;
 
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+
 use function strlen;
 
 readonly class UserPassword
 {
     private function __construct(
-        private string $password
+        private string $passwordHash
     ) {
     }
 
@@ -39,6 +40,11 @@ readonly class UserPassword
 
     public function verify(string $plainPassword): bool
     {
-        return password_verify($plainPassword, $this->password);
+        return password_verify($plainPassword, $this->passwordHash);
+    }
+
+    public function asString(): string
+    {
+        return $this->passwordHash;
     }
 }
