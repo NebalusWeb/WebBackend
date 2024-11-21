@@ -11,11 +11,14 @@ use Throwable;
 
 abstract class ApiAction
 {
+
+
     public function __invoke(
         Request $request,
         Response $response,
         array $args
     ): ResponseInterface {
+        var_dump($request->getUri()->getPath());
         try {
             $response = $this->execute($request, $response, $args);
         } catch (ApiException $exception) {
