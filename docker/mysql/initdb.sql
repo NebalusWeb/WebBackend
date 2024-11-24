@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 21. Nov 2024 um 00:08
+-- Erstellungszeit: 23. Nov 2024 um 18:49
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -75,9 +75,10 @@ INSERT INTO `linktree_clicks` (`linktree_id`, `clicked_at`) VALUES
 CREATE TABLE `linktree_entrys` (
                                    `linktree_entry_id` int UNSIGNED NOT NULL,
                                    `linktree_id` int UNSIGNED NOT NULL,
-                                   `position` int UNSIGNED NOT NULL,
-                                   `label` varchar(84) NOT NULL,
+                                   `label` varchar(84) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                                    `url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                   `description` text,
+                                   `display_order` int UNSIGNED NOT NULL,
                                    `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                    `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -86,11 +87,11 @@ CREATE TABLE `linktree_entrys` (
 -- Daten für Tabelle `linktree_entrys`
 --
 
-INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `position`, `label`, `url`, `created_at`, `updated_at`) VALUES
-                                                                                                                               (1, 1, 1, 'Youtube', 'https://youtube.com', '2024-11-12 19:20:35', '2024-11-12 19:20:35'),
-                                                                                                                               (2, 1, 2, 'Github', 'https://github.com/Nebalus', '2024-11-12 19:21:38', '2024-11-12 19:21:38'),
-                                                                                                                               (3, 1, 3, 'Crunchyroll', 'https://www.crunchyroll.com/', '2024-11-12 19:22:36', '2024-11-12 19:22:36'),
-                                                                                                                               (4, 3, 1, 'ChatGPT', 'https://chatgpt.com/', '2024-11-12 19:26:10', '2024-11-12 19:26:10');
+INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `label`, `url`, `description`, `display_order`, `created_at`, `updated_at`) VALUES
+                                                                                                                                                   (1, 1, 'Youtube', 'https://youtube.com', NULL, 1, '2024-11-12 19:20:35', '2024-11-12 19:20:35'),
+                                                                                                                                                   (2, 1, 'Github', 'https://github.com/Nebalus', NULL, 2, '2024-11-12 19:21:38', '2024-11-12 19:21:38'),
+                                                                                                                                                   (3, 1, 'Crunchyroll', 'https://www.crunchyroll.com/', NULL, 3, '2024-11-12 19:22:36', '2024-11-12 19:22:36'),
+                                                                                                                                                   (4, 3, 'ChatGPT', 'https://chatgpt.com/', NULL, 1, '2024-11-12 19:26:10', '2024-11-12 19:26:10');
 
 -- --------------------------------------------------------
 
@@ -218,7 +219,7 @@ CREATE TABLE `users` (
                          `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `email` varchar(255) NOT NULL,
                          `password` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                         `totp_secret_key` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                         `totp_secret_key` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
                          `is_admin` bit(1) NOT NULL DEFAULT b'0',
                          `disabled` bit(1) NOT NULL DEFAULT b'0',
@@ -231,10 +232,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description`, `is_admin`, `disabled`, `created_at`, `updated_at`) VALUES
-                                                                                                                                                           (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'Y540HUTSIUVHDHY1L83ZYPMLZL0AZ80FUP8HC85XK9PY43VSQ53USYRSLGIRTYQT', 'Is the default test User', b'1', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
-                                                                                                                                                           (2, 'Tester', 'tester@nebalus.dev', '', 'ZM9XE1IVSUY1IR5QZ1AIXPH9OPVL3RJSJYLILL2KBGGR4H8PTGLAWML72ED1ID1F', 'Password = Tester42', b'0', b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
-                                                                                                                                                           (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'COH5JL4G865EEUMR6LMKH6LZ5MIBLK8VDI1IJ1HJUBYKHWY453KEHKJQOLVQ88MX', 'Password = BAnnedTester11', b'0', b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
-                                                                                                                                                           (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '', 'LEMJ3UYRV2RURCFS1CBO4VXX6SBBD0BRQHZZEYZ86447PTD3TO4P31XK734C0O5W', 'Password = TEST1234!', b'0', b'1', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
+                                                                                                                                                           (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'S61WXXWZU5J6QT0H4CX4B02X2HET0LYW', 'Is the default test User', b'1', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
+                                                                                                                                                           (2, 'Tester', 'tester@nebalus.dev', '', '5BO8E403VD95MT6XCHWFXOKP8LZCGRKY', 'Password = Tester42', b'0', b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
+                                                                                                                                                           (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'DXUZV74K66YCFV4E9WD9T9G4TYO6SWH7', 'Password = BAnnedTester11', b'0', b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
+                                                                                                                                                           (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '', '5VX7YY1UH0U4DECIJHB1AY6PHL6IGHKP', 'Password = TEST1234!', b'0', b'1', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
 
 -- --------------------------------------------------------
 
@@ -300,15 +301,15 @@ CREATE TABLE `user_punishments` (
                                     `moderator_user_id` int UNSIGNED NOT NULL,
                                     `punishment_type` int NOT NULL,
                                     `reason` text NOT NULL,
-                                    `start_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                    `end_at` datetime DEFAULT NULL
+                                    `starts_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                    `ends_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Daten für Tabelle `user_punishments`
 --
 
-INSERT INTO `user_punishments` (`punishment_id`, `punished_user_id`, `moderator_user_id`, `punishment_type`, `reason`, `start_at`, `end_at`) VALUES
+INSERT INTO `user_punishments` (`punishment_id`, `punished_user_id`, `moderator_user_id`, `punishment_type`, `reason`, `starts_at`, `ends_at`) VALUES
     (1, 3, 1, 1, 'Just for Existence', '2024-11-07 08:13:47', NULL);
 
 --
@@ -333,7 +334,7 @@ ALTER TABLE `linktree_clicks`
 --
 ALTER TABLE `linktree_entrys`
     ADD PRIMARY KEY (`linktree_entry_id`),
-    ADD UNIQUE KEY `linktree_id` (`linktree_id`,`position`);
+    ADD UNIQUE KEY `linktree_id` (`linktree_id`,`display_order`);
 
 --
 -- Indizes für die Tabelle `referrals`

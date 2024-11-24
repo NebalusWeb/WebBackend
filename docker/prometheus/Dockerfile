@@ -1,1 +1,1 @@
-FROM prom/prometheus:latest AS base
+FROM prom/prometheus:v3.0.0 AS base

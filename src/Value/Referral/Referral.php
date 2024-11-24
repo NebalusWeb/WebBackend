@@ -8,7 +8,6 @@ use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 
 readonly class Referral

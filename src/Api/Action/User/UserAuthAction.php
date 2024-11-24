@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Api\Action\User;
 
-use DateMalformedStringException;
 use Nebalus\Webapi\Api\Action\ApiAction;
 use Nebalus\Webapi\Api\Service\User\UserAuthService;
-use Nebalus\Webapi\Exception\ApiDatabaseException;
+use Nebalus\Webapi\Exception\ApiException;
 use ReallySimpleJWT\Exception\BuildException;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
@@ -20,8 +19,7 @@ class UserAuthAction extends ApiAction
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws BuildException|ApiDatabaseException|\Nebalus\Webapi\Exception\ApiInvalidArgumentException
+     * @throws ApiException|BuildException
      */
     protected function execute(Request $request, Response $response, array $args): Response
     {

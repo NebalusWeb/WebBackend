@@ -18,7 +18,6 @@ abstract class ApiAction
         Response $response,
         array $args
     ): ResponseInterface {
-        var_dump($request->getUri()->getPath());
         try {
             $response = $this->execute($request, $response, $args);
         } catch (ApiException $exception) {
@@ -38,6 +37,9 @@ abstract class ApiAction
         return $response;
     }
 
+    /**
+     * @throws ApiException
+     */
     abstract protected function execute(
         Request $request,
         Response $response,
