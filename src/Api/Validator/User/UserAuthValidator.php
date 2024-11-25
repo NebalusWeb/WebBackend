@@ -30,7 +30,7 @@ class UserAuthValidator extends AbstractValidator
         $this->username = Username::from($filteredData['username']);
         $this->userPassword = UserPassword::fromPlain($filteredData['password']);
         $this->rememberMe = is_null($filteredData['remember_me']) ? null : $filteredData['remember_me'];
-        $this->TOTPCode = is_null($filteredData['TOTP']) ? null : TOTPCode::from($filteredData['TOTP']);
+        $this->TOTPCode = is_null($filteredData['totp']) ? null : TOTPCode::from($filteredData['totp']);
     }
 
     public function getUsername(): Username
