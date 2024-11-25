@@ -2,7 +2,10 @@
 
 namespace Nebalus\Webapi\Value\User\InvitationToken;
 
-class InvitationTokens
+use IteratorAggregate;
+use Traversable;
+
+class InvitationTokens implements IteratorAggregate
 {
     private array $invitationsTokens;
 
@@ -19,5 +22,10 @@ class InvitationTokens
     public function getInvitationTokens(): array
     {
         return $this->invitationsTokens;
+    }
+
+    public function getIterator(): Traversable
+    {
+        yield from $this->invitationsTokens;
     }
 }

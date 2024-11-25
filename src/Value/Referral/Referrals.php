@@ -2,7 +2,10 @@
 
 namespace Nebalus\Webapi\Value\Referral;
 
-class Referrals
+use IteratorAggregate;
+use Traversable;
+
+class Referrals implements IteratorAggregate
 {
     private array $referrals;
 
@@ -19,5 +22,10 @@ class Referrals
     public function getReferrals(): array
     {
         return $this->referrals;
+    }
+
+    public function getIterator(): Traversable
+    {
+        yield from $this->referrals;
     }
 }
