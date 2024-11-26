@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Api\Service\Referral\Analytics;
 
 use Nebalus\Webapi\Api\Filter\Referral\Analytics\ReferralClickFilter;
+use Nebalus\Webapi\Api\Validator\Referral\Analytics\ReferralClickValidator;
 use Nebalus\Webapi\Api\View\Referral\Analytics\ReferralClickView;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
@@ -20,9 +21,9 @@ readonly class ReferralClickService
     /**
      * @throws ApiException
      */
-    public function execute(array $params): ResultInterface
+    public function execute(ReferralClickValidator $validator): ResultInterface
     {
-        $referral = $this->referralRepository->findReferralByCode(ReferralCode::from($filteredData['code']));
+        $referral = $this->referralRepository->findReferralByCode($validator->getReferralCode());
 
         if (empty($referral) || $referral->isDisabled()) {
             return Result::createError("Referral code not found", 404);

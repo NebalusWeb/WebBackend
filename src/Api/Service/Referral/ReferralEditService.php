@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api\Service\Referral;
 
+use Nebalus\Webapi\Api\Validator\Referral\ReferralEditValidator;
 use Nebalus\Webapi\Api\View\Referral\ReferralEditView;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Value\Result\ResultInterface;
@@ -13,7 +14,7 @@ readonly class ReferralEditService
     ) {
     }
 
-    public function execute(array $params): ResultInterface
+    public function execute(ReferralEditValidator $validator): ResultInterface
     {
         return ReferralEditView::render();
     }

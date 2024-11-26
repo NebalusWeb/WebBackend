@@ -28,7 +28,7 @@ readonly class UserRegisterService
         }
 
         if ($invitationToken->isExpired()) {
-            return Result::createError('Registration failed: The Invitation Token you provided already expired', 401);
+            return Result::createError('Registration failed: The Invitation Token you provided is already expired', 401);
         }
 
         return UserRegisterView::render();

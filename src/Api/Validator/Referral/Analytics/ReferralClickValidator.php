@@ -1,0 +1,29 @@
+<?php
+
+namespace Nebalus\Webapi\Api\Validator\Referral\Analytics;
+
+use Nebalus\Webapi\Api\Validator\AbstractValidator;
+use Nebalus\Webapi\Value\Referral\ReferralCode;
+
+class ReferralClickValidator extends AbstractValidator
+{
+    private ReferralCode $referralCode;
+
+    public function __construct()
+    {
+        $rules = [
+            'code' => [ 'required' => true, 'nullable' => false, 'datatype' => "string" ],
+        ];
+        parent::__construct($rules);
+    }
+
+    protected function onValidate(array $filteredData): void
+    {
+        $this->referralCode = ReferralCode::from($filteredData['code']);
+    }
+
+    public function getReferralCode(): ReferralCode
+    {
+        return $this->referralCode;
+    }
+}

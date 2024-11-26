@@ -40,7 +40,7 @@ services:
     volumes:
       - ./:/var/www:rw
     environment:
-      APP_ENV: "production"
+      APP_ENV: "development"
       ERROR_LOGLEVEL: "Warning"
       JWT_SECRET: "Fm4}hopm2JGs]#h:!EE1)w0#?b9-8abjGg6PCuk.-j2R7w8OIqSO3D'ev@2]h!"
       JWT_NORMAL_EXPIRATION_TIME: 86400

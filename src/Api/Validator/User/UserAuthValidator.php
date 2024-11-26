@@ -5,7 +5,6 @@ namespace Nebalus\Webapi\Api\Validator\User;
 use Nebalus\Webapi\Api\Validator\AbstractValidator;
 use Nebalus\Webapi\Value\User\Totp\TOTPCode;
 use Nebalus\Webapi\Value\User\Username;
-use Nebalus\Webapi\Value\User\UserPassword;
 
 class UserAuthValidator extends AbstractValidator
 {
