@@ -11,7 +11,7 @@ class ReferralListAllView
     public static function render(Referrals $referrals): ResultInterface
     {
         $fields = [];
-        foreach ($referrals->getReferrals() as $referral) {
+        foreach ($referrals as $referral) {
             $fields[] = [
                 "referral_id" => $referral->getReferralId()->asInt(),
                 "user_id" => $referral->getUserId()->asInt(),

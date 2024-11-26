@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Repository;
+namespace Nebalus\Webapi\Repository\ReferralRepository;
 
-use DateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
@@ -17,7 +15,8 @@ use PDO;
 readonly class MySqlReferralRepository
 {
     public function __construct(
-        private PDO $pdo
+        private PDO $pdo,
+        private RedisReferralCachingRepository $redis
     ) {
     }
 
@@ -48,7 +47,9 @@ readonly class MySqlReferralRepository
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':referral_id', $referralId->asInt());
-        return $stmt->execute();
+        $stmt->execute();
+
+        return $stmt->rowCount() === 1;
     }
 
     public function deleteReferralByCode(ReferralCode $code): bool
@@ -57,7 +58,9 @@ readonly class MySqlReferralRepository
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':code', $code->asString());
-        return $stmt->execute();
+        $stmt->execute();
+
+        return $stmt->rowCount() === 1;
     }
 
     public function updateReferral()

@@ -1,10 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\Repository;
+namespace Nebalus\Webapi\Repository\UserInvitationTokenRepository;
 
-use DateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\InvitationToken\InvitationToken;
 use Nebalus\Webapi\Value\User\InvitationToken\InvitationTokens;
@@ -39,7 +37,7 @@ readonly class MySqlUserInvitationTokenRepository
             return null;
         }
 
-        return InvitationToken::fromMySQL($data);
+        return InvitationToken::fromDatabase($data);
     }
 
     /**

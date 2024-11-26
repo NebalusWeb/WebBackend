@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Value\Result;
 
 use InvalidArgumentException;
+use Nebalus\Webapi\Exception\ApiException;
 use Throwable;
 
 readonly class Result implements ResultInterface
@@ -47,20 +48,19 @@ readonly class Result implements ResultInterface
     {
         $isProduction = getenv('APP_ENV') === 'production';
 
-        $throwableAsArray = [
-            'error' => 'An error occurred',
-        ];
+        $throwableAsArray = [];
 
-        if ($isProduction === false) {
+        if ($isProduction === false && $throwable instanceof ApiException === false) {
             $throwableAsArray['error'] = $throwable->getMessage();
             $throwableAsArray['topic'] = get_class($throwable);
             $throwableAsArray['code'] = $throwable->getCode();
             $throwableAsArray['file'] = $throwable->getFile();
             $throwableAsArray['line'] = $throwable->getLine();
             $throwableAsArray['trace'] = $throwable->getTrace();
+            return static::from(false, $throwableAsArray['error'], $statusCode, $throwableAsArray);
         }
 
-        return static::from(false, $throwableAsArray['error'], $statusCode, $throwableAsArray);
+        return static::from(false, $throwable->getMessage(), $statusCode, $throwableAsArray);
     }
 
     public function getPayload(): array

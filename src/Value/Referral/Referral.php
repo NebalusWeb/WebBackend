@@ -8,7 +8,6 @@ use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 
 readonly class Referral
@@ -51,6 +50,19 @@ readonly class Referral
             $createdAtDate,
             $updatedAtDate
         );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            "referral_id" => $this->referralId->asInt(),
+            "user_id" => $this->userId->asInt(),
+            "code" => $this->code->asString(),
+            "pointer" => $this->pointer,
+            "disabled" => $this->disabled,
+            "created_at" => $this->createdAtDate->format(DATE_ATOM),
+            "updated_at" => $this->updatedAtDate->format(DATE_ATOM),
+        ];
     }
 
     public function getReferralId(): ID

@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\Validator\Referral;
 use Nebalus\Webapi\Api\Validator\AbstractValidator;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
 
-class ReferralCreateValidator extends AbstractValidator
+class ReferralEditValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
     private ?string $pointer;
@@ -15,7 +15,7 @@ class ReferralCreateValidator extends AbstractValidator
     {
         $rules = [
             'code' => [ 'required' => true, 'nullable' => false, 'datatype' => "string" ],
-            'pointer' => [ 'required' => true, 'nullable' => true, 'datatype' => "string" ],
+            'pointer' => [ 'required' => false, 'nullable' => true, 'datatype' => "string" ],
             'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'datatype' => "boolean" ],
         ];
         parent::__construct($rules);

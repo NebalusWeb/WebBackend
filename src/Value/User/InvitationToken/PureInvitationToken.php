@@ -20,39 +20,21 @@ readonly class PureInvitationToken
      * @throws ApiException
      */
     public static function from(
-        InvitationTokenField $field1,
-        InvitationTokenField $field2,
-        InvitationTokenField $field3,
-        InvitationTokenField $field4,
-        InvitationTokenField $checksumField
+        int $field1,
+        int $field2,
+        int $field3,
+        int $field4,
+        int $checksumField
     ): self {
-        if (self::calculateChecksum($field1, $field2, $field3, $field4) !== $checksumField->asInt()) {
+        $inviteField1 = InvitationTokenField::from($field1);
+        $inviteField2 = InvitationTokenField::from($field2);
+        $inviteField3 = InvitationTokenField::from($field3);
+        $inviteField4 = InvitationTokenField::from($field4);
+        $inviteChecksum = InvitationTokenField::from($checksumField);
+        if (self::calculateChecksum($inviteField1, $inviteField2, $inviteField3, $inviteField4) !== $inviteChecksum->asInt()) {
             throw new ApiInvalidArgumentException('Invalid Token: Checksum does not match');
         }
-        return new self($field1, $field2, $field3, $field4, $checksumField);
-    }
-
-    /**
-     * @throws ApiException
-     */
-    public static function fromString(
-        string $token,
-    ): self {
-        if (!preg_match('/^(([0-9]{4})-){4}([0-9]{4})$/', $token)) {
-            throw new ApiInvalidArgumentException(
-                'PLACEHOLDER'
-            );
-        }
-
-        $fields = explode("-", $token);
-
-        $field1 = InvitationTokenField::from(intval($fields[0]));
-        $field2 = InvitationTokenField::from(intval($fields[1]));
-        $field3 = InvitationTokenField::from(intval($fields[2]));
-        $field4 = InvitationTokenField::from(intval($fields[3]));
-        $checksumField = InvitationTokenField::from(intval($fields[4]));
-
-        return self::from($field1, $field2, $field3, $field4, $checksumField);
+        return new self($inviteField1, $inviteField2, $inviteField3, $inviteField4, $inviteChecksum);
     }
 
     /**
@@ -67,6 +49,17 @@ readonly class PureInvitationToken
         $checksumField = InvitationTokenField::from($data['token_checksum']);
 
         return new self($field1, $field2, $field3, $field4, $checksumField);
+    }
+
+    public function toArray(): array
+    {
+        return [
+            "token_field_1" => $this->field1->asString(),
+            "token_field_2" => $this->field2->asString(),
+            "token_field_3" => $this->field3->asString(),
+            "token_field_4" => $this->field4->asString(),
+            "token_checksum" => $this->checksumField->asString(),
+        ];
     }
 
     private static function calculateChecksum(
