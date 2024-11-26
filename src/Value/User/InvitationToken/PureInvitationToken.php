@@ -51,6 +51,17 @@ readonly class PureInvitationToken
         return new self($field1, $field2, $field3, $field4, $checksumField);
     }
 
+    public function toArray(): array
+    {
+        return [
+            "token_field_1" => $this->field1->asString(),
+            "token_field_2" => $this->field2->asString(),
+            "token_field_3" => $this->field3->asString(),
+            "token_field_4" => $this->field4->asString(),
+            "token_checksum" => $this->checksumField->asString(),
+        ];
+    }
+
     private static function calculateChecksum(
         InvitationTokenField $field1,
         InvitationTokenField $field2,

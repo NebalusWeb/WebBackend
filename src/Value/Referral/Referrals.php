@@ -19,11 +19,6 @@ class Referrals implements IteratorAggregate
         return new self(...$referrals);
     }
 
-    public function getReferrals(): array
-    {
-        return $this->referrals;
-    }
-
     public function getIterator(): Traversable
     {
         yield from $this->referrals;

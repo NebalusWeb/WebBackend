@@ -24,7 +24,7 @@ class UserRegisterValidator extends AbstractValidator
                 'nullable' => false,
                 'datatype' => "object",
                 'children' => [
-                    "field_1" => [ 'required' => true, 'nullable' => false, 'datatype' => "integer" ],
+                    "field_1" => [ 'required' => true, 'nullable' => true, "default" => 2222, 'datatype' => "integer" ],
                     "field_2" => [ 'required' => true, 'nullable' => false, 'datatype' => "integer" ],
                     "field_3" => [ 'required' => true, 'nullable' => false, 'datatype' => "integer" ],
                     "field_4" => [ 'required' => true, 'nullable' => false, 'datatype' => "integer" ],

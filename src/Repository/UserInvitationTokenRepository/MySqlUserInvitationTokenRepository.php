@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Repository;
+namespace Nebalus\Webapi\Repository\UserInvitationTokenRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\ID;

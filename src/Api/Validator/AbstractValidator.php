@@ -7,7 +7,6 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Exception\ApiValidationException;
 use Psr\Http\Message\ServerRequestInterface;
-use function PHPUnit\Framework\isType;
 
 abstract class AbstractValidator
 {
@@ -50,26 +49,29 @@ abstract class AbstractValidator
 
         foreach ($ruleLayer as $param => $rule) {
             $currentPath = $path . $param;
+            $isKeyExisting = key_exists($param, $dataLayer);
             $isRequired = $rule['required'] ?? false;
             $isNullable = $rule['nullable'] ?? false;
             $defaultValue = $rule['default'] ?? null;
-            $datatype = strtolower($rule['datatype']) ?? null;
+            $datatype = strtolower($rule['datatype'] ?? "string"); // Todo: String entfernen
             $childrenRules = $rule['children'] ?? [];
-            echo("----------------------------------- \n");
-            echo("LayerID: \n");
-            var_dump($layerId);
-            echo("CurrentPath: \n");
-            var_dump($currentPath);
-            echo("IsRequired: \n");
-            var_dump($isRequired);
-            echo("IsNullable: \n");
-            var_dump($isNullable);
-            echo("DefaultValue: \n");
-            var_dump($defaultValue);
-            echo("Datatype: \n");
-            var_dump($datatype);
-            echo(" \n");
-            if ($isRequired && key_exists($param, $dataLayer) === false) {
+//            echo("----------------------------------- \n");
+//            echo("LayerID: \n");
+//            var_dump($layerId);
+//            echo("CurrentPath: \n");
+//            var_dump($currentPath);
+//            echo("IsKeyExisting: \n");
+//            var_dump($isKeyExisting);
+//            echo("IsRequired: \n");
+//            var_dump($isRequired);
+//            echo("IsNullable: \n");
+//            var_dump($isNullable);
+//            echo("DefaultValue: \n");
+//            var_dump($defaultValue);
+//            echo("Datatype: \n");
+//            var_dump($datatype);
+
+            if ($isRequired && $isKeyExisting === false) {
                 throw new ApiInvalidArgumentException(
                     "Parameter '{$currentPath}' is required in the JSON request",
                     400
@@ -77,6 +79,23 @@ abstract class AbstractValidator
             }
 
             $value = $dataLayer[$param];
+//
+//            echo("Pre Value: \n");
+//            var_dump($value);
+
+            if ($defaultValue !== null) {
+                if (
+                    $isRequired === true && $isNullable === true && $value === null ||
+                    $isRequired === false && $isKeyExisting === false ||
+                    $isRequired === false && $isKeyExisting === true && $isNullable === true && $value === null
+                ) {
+                    $value = $defaultValue;
+                }
+            }
+//
+//            echo("Final Value: \n");
+//            var_dump($value);
+//            echo(" \n");
 
             if ($isNullable === false && is_null($value)) {
                 throw new ApiInvalidArgumentException(
@@ -85,36 +104,29 @@ abstract class AbstractValidator
                 );
             }
 
-            if ($isNullable && is_null($value)) {
-                $value = $defaultValue;
+            if ($datatype === 'string' && is_string($value) === true) {
+                $processedData[$param] = $value;
+                continue;
+            } elseif ($datatype === 'integer' && is_int($value) === true) {
+                $processedData[$param] = $value;
+                continue;
+            } elseif ($datatype === 'float' && is_float($value) === true) {
+                $processedData[$param] = $value;
+                continue;
+            } elseif ($datatype === 'boolean' && is_bool($value) === true) {
+                $processedData[$param] = $value;
+                continue;
+            } elseif ($datatype === 'object' && is_array($value) && empty($value) === false) {
+                if ($childrenRules !== []) {
+                    $processedData[$param] = $this->processRecursiveRules($value, $childrenRules, $maxRecursion, $layerId, $currentPath . ".");
+                }
+                continue;
             }
 
-            if ($datatype === 'string' && is_string($value) === false) {
-                throw new ApiInvalidArgumentException(
-                    "Parameter '{$currentPath}' can't be casted to a string",
-                    400
-                );
-            } elseif ($datatype === 'integer' && is_int($value) === false) {
-                throw new ApiInvalidArgumentException(
-                    "Parameter '{$currentPath}' can't be casted to a integer",
-                    400
-                );
-            } elseif ($datatype === 'float' && is_float($value) === false) {
-                throw new ApiInvalidArgumentException(
-                    "Parameter '{$currentPath}' can't be casted to a float",
-                    400
-                );
-            } elseif ($datatype === 'boolean' && is_bool($value) === false) {
-                throw new ApiInvalidArgumentException(
-                    "Parameter '{$currentPath}' can't be casted to a boolean",
-                    400
-                );
-            } elseif ($datatype === 'object') {
-                if ($childrenRules !== []) {
-                    $value = $this->processRecursiveRules($dataLayer[$param], $childrenRules, $maxRecursion, $layerId, $currentPath . ".");
-                }
-            }
-            $processedData[$param] = $value;
+            throw new ApiInvalidArgumentException(
+                "Parameter '{$currentPath}' can't be casted to a $datatype",
+                400
+            );
         }
         return $processedData;
     }

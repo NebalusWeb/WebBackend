@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\Service\User;
 use Nebalus\Webapi\Api\Validator\User\UserRegisterValidator;
 use Nebalus\Webapi\Api\View\User\UserRegisterView;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Repository\MySqlUserInvitationTokenRepository;
+use Nebalus\Webapi\Repository\UserInvitationTokenRepository\MySqlUserInvitationTokenRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 

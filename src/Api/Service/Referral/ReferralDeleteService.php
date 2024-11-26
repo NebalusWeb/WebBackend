@@ -3,7 +3,7 @@
 namespace Nebalus\Webapi\Api\Service\Referral;
 
 use Nebalus\Webapi\Api\View\Referral\ReferralDeleteView;
-use Nebalus\Webapi\Repository\MySqlReferralRepository;
+use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
 readonly class ReferralDeleteService

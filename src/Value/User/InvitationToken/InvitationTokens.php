@@ -19,11 +19,6 @@ class InvitationTokens implements IteratorAggregate
         return new self(...$invitationsTokens);
     }
 
-    public function getInvitationTokens(): array
-    {
-        return $this->invitationsTokens;
-    }
-
     public function getIterator(): Traversable
     {
         yield from $this->invitationsTokens;

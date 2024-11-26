@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Repository;
+namespace Nebalus\Webapi\Repository\ReferralRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\ID;
@@ -15,7 +15,8 @@ use PDO;
 readonly class MySqlReferralRepository
 {
     public function __construct(
-        private PDO $pdo
+        private PDO $pdo,
+        private RedisReferralCachingRepository $redis
     ) {
     }
 

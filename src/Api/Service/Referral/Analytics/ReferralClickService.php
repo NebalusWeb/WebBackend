@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\Service\Referral\Analytics;
 use Nebalus\Webapi\Api\Filter\Referral\Analytics\ReferralClickFilter;
 use Nebalus\Webapi\Api\View\Referral\Analytics\ReferralClickView;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Repository\MySqlReferralRepository;
+use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
