@@ -32,7 +32,7 @@ abstract class AbstractValidator
         }
 
         $filteredData = $this->processRecursiveRules($data, $this->rules, 5);
-        echo json_encode($filteredData, JSON_PRETTY_PRINT, 5) . "\n\n";
+//        echo json_encode($filteredData, JSON_PRETTY_PRINT, 5) . "\n\n";
         $this->onValidate($filteredData);
     }
 
@@ -78,7 +78,7 @@ abstract class AbstractValidator
                 );
             }
 
-            $value = $dataLayer[$param];
+            $value = $dataLayer[$param] ?? $defaultValue;
 //
 //            echo("Pre Value: \n");
 //            var_dump($value);
@@ -104,29 +104,32 @@ abstract class AbstractValidator
                 );
             }
 
-            if ($datatype === 'string' && is_string($value) === true) {
-                $processedData[$param] = $value;
-                continue;
-            } elseif ($datatype === 'integer' && is_int($value) === true) {
-                $processedData[$param] = $value;
-                continue;
-            } elseif ($datatype === 'float' && is_float($value) === true) {
-                $processedData[$param] = $value;
-                continue;
-            } elseif ($datatype === 'boolean' && is_bool($value) === true) {
-                $processedData[$param] = $value;
-                continue;
-            } elseif ($datatype === 'object' && is_array($value) && empty($value) === false) {
-                if ($childrenRules !== []) {
-                    $processedData[$param] = $this->processRecursiveRules($value, $childrenRules, $maxRecursion, $layerId, $currentPath . ".");
+            if ($value !== null) {
+                if ($datatype === 'string' && is_string($value) === true) {
+                    $processedData[$param] = $value;
+                    continue;
+                } elseif ($datatype === 'integer' && is_int($value) === true) {
+                    $processedData[$param] = $value;
+                    continue;
+                } elseif ($datatype === 'float' && is_float($value) === true) {
+                    $processedData[$param] = $value;
+                    continue;
+                } elseif ($datatype === 'boolean' && is_bool($value) === true) {
+                    $processedData[$param] = $value;
+                    continue;
+                } elseif ($datatype === 'object' && is_array($value) && empty($value) === false) {
+                    if ($childrenRules !== []) {
+                        $processedData[$param] = $this->processRecursiveRules($value, $childrenRules, $maxRecursion, $layerId, $currentPath . ".");
+                    }
+                    continue;
                 }
-                continue;
-            }
 
-            throw new ApiInvalidArgumentException(
-                "Parameter '{$currentPath}' can't be casted to a $datatype",
-                400
-            );
+                throw new ApiInvalidArgumentException(
+                    "Parameter '{$currentPath}' must to an $datatype",
+                    400
+                );
+            }
+            $processedData[$param] = $value;
         }
         return $processedData;
     }

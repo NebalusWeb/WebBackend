@@ -12,8 +12,8 @@ use Slim\Http\ServerRequest as Request;
 class UserRegisterAction extends ApiAction
 {
     public function __construct(
-        private readonly UserRegisterValidator $userRegisterValidator,
-        private readonly UserRegisterService $userRegisterService,
+        private readonly UserRegisterValidator $validator,
+        private readonly UserRegisterService $service,
     ) {
     }
 
@@ -22,8 +22,8 @@ class UserRegisterAction extends ApiAction
      */
     protected function execute(Request $request, Response $response, array $args): Response
     {
-        $this->userRegisterValidator->validate($request);
-        $result = $this->userRegisterService->execute($this->userRegisterValidator);
+        $this->validator->validate($request);
+        $result = $this->service->execute($this->validator);
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

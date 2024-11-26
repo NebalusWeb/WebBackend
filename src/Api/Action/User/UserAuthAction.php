@@ -6,6 +6,7 @@ namespace Nebalus\Webapi\Api\Action\User;
 
 use Nebalus\Webapi\Api\Action\ApiAction;
 use Nebalus\Webapi\Api\Service\User\UserAuthService;
+use Nebalus\Webapi\Api\Validator\User\UserAuthValidator;
 use Nebalus\Webapi\Exception\ApiException;
 use ReallySimpleJWT\Exception\BuildException;
 use Slim\Http\Response as Response;
@@ -14,7 +15,8 @@ use Slim\Http\ServerRequest as Request;
 class UserAuthAction extends ApiAction
 {
     public function __construct(
-        private readonly UserAuthService $userAuthService
+        private readonly UserAuthValidator $validator,
+        private readonly UserAuthService $service
     ) {
     }
 
@@ -23,9 +25,8 @@ class UserAuthAction extends ApiAction
      */
     protected function execute(Request $request, Response $response, array $args): Response
     {
-        $bodyParams = $request->getParsedBody() ?? [];
-        $result = $this->userAuthService->execute($bodyParams);
-
+        $this->validator->validate($request);
+        $result = $this->service->execute($this->validator);
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }
