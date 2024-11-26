@@ -4,52 +4,32 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Api\Service\User;
 
-use DateMalformedStringException;
-use InvalidArgumentException;
-use Nebalus\Webapi\Api\Filter\User\UserAuthFilter;
+use Nebalus\Webapi\Api\Validator\User\UserAuthValidator;
 use Nebalus\Webapi\Api\View\User\UserAuthView;
-use Nebalus\Webapi\Exception\ApiDatabaseException;
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Option\EnvData;
-use Nebalus\Webapi\Repository\MySqlUserRepository;
+use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
-use Nebalus\Webapi\Value\User\Username;
 use ReallySimpleJWT\Exception\BuildException;
 use ReallySimpleJWT\Token;
 
 readonly class UserAuthService
 {
     public function __construct(
-        private UserAuthFilter $filter,
         private MySqlUserRepository $mySqlUserRepository,
         private EnvData $envData
     ) {
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws BuildException
-     * @throws ApiDatabaseException
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException|BuildException
      */
-    public function execute(array $params): ResultInterface
+    public function execute(UserAuthValidator $validator): ResultInterface
     {
-        if ($this->filter->filterAndCheckIfStructureIsValid($params) === false) {
-            return Result::createError($this->filter->getErrorMessage(), 401);
-        }
+        $user = $this->mySqlUserRepository->findUserFromUsername($validator->getUsername());
 
-        $filteredData = $this->filter->getFilteredData();
-
-        try {
-            $username = Username::from($filteredData['username']);
-        } catch (InvalidArgumentException) {
-            return Result::createError('Authentication failed: Wrong credentials.', 401);
-        }
-
-        $user = $this->mySqlUserRepository->getUserFromUsername($username);
-
-        if ($user === null || $user->isDisabled() || $user->getPassword()->verify($filteredData['password']) === false) {
+        if ($user === null || $user->isDisabled() || $user->getPassword()->verify($validator->getPassword()) === false) {
             return Result::createError('Authentication failed: Wrong credentials.', 401);
         }
 

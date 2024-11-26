@@ -16,7 +16,7 @@ readonly class TOTPSecretKey
      */
     public static function from(string $secret): self
     {
-        $usernamePattern = '/^[\d\w]{64}$/';
+        $usernamePattern = '/^[\d\w]{32}$/';
         if (preg_match($usernamePattern, $secret) < 1) {
             throw new ApiInvalidArgumentException(
                 'Invalid totp code secret'

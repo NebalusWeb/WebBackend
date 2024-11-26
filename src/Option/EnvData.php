@@ -17,6 +17,8 @@ class EnvData
     private string $mysqlPort;
     private string $mysqlDatabase;
     private string $mysqlUser;
+    private string $redisHost;
+    private string $redisPort;
     private string $accessControlAllowOrigin;
     private int $jwtNormalExpirationTime;
     private int $jwtExtendedExpirationTime;
@@ -34,6 +36,8 @@ class EnvData
         $this->mysqlPort = getenv("MYSQL_PORT");
         $this->mysqlDatabase = getenv("MYSQL_DATABASE");
         $this->mysqlUser = getenv("MYSQL_USER");
+        $this->redisHost = getenv("REDIS_HOST");
+        $this->redisPort = getenv("REDIS_PORT");
         $this->accessControlAllowOrigin = getenv("ACCESS_CONTROL_ALLOW_ORIGIN");
     }
 
@@ -81,6 +85,16 @@ class EnvData
     public function getMySqlUser(): string
     {
         return $this->mysqlUser;
+    }
+
+    public function getRedisHost(): string
+    {
+        return $this->redisHost;
+    }
+
+    public function getRedisPort(): string
+    {
+        return $this->redisPort;
     }
 
     public function getJwtNormalExpirationTime(): int

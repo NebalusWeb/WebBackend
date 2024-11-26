@@ -2,17 +2,20 @@
 
 namespace Nebalus\Webapi\Factory;
 
+use Nebalus\Webapi\Option\EnvData;
 use Redis;
 
-class RedisFactory
+readonly class RedisFactory
 {
+    public function __construct(
+        private EnvData $envData
+    ) {
+    }
+
     public function __invoke(): Redis
     {
-        $host = "127.0.0.1";
-        $port = "6379";
-
         $redis = new Redis();
-        $redis->connect($host, $port);
+        $redis->connect($this->envData->getRedisHost(), $this->envData->getRedisPort());
 
         return $redis;
     }

@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Repository;
+namespace Nebalus\Webapi\Repository\UserRepository;
 
-use DateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiDatabaseException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\User;
 use Nebalus\Webapi\Value\User\Username;
@@ -24,7 +22,7 @@ readonly class MySqlUserRepository
     /**
      * @throws ApiException
      */
-    public function getUserFromId(ID $userId): User
+    public function findUserFromId(ID $userId): User
     {
         try {
             $sql = "SELECT * FROM `users` WHERE `user_id` = :user_id";
@@ -48,7 +46,7 @@ readonly class MySqlUserRepository
     /**
      * @throws ApiException
      */
-    public function getUserFromUsername(Username $username): ?User
+    public function findUserFromUsername(Username $username): ?User
     {
         try {
             $sql = "SELECT * FROM `users` WHERE `username` = :username";

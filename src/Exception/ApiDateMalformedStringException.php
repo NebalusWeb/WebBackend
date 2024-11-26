@@ -3,7 +3,6 @@
 namespace Nebalus\Webapi\Exception;
 
 use Exception;
-use Nebalus\Webapi\Exception\ApiException;
 
 class ApiDateMalformedStringException extends ApiException
 {

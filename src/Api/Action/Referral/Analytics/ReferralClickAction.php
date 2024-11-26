@@ -7,23 +7,22 @@ namespace Nebalus\Webapi\Api\Action\Referral\Analytics;
 use DateMalformedStringException;
 use Nebalus\Webapi\Api\Action\ApiAction;
 use Nebalus\Webapi\Api\Service\Referral\Analytics\ReferralClickService;
+use Nebalus\Webapi\Api\Validator\Referral\Analytics\ReferralClickValidator;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 
 class ReferralClickAction extends ApiAction
 {
     public function __construct(
-        private readonly ReferralClickService $referralClickService,
+        private readonly ReferralClickValidator $validator,
+        private readonly ReferralClickService $service,
     ) {
     }
 
-    /**
-     * @throws DateMalformedStringException
-     */
     protected function execute(Request $request, Response $response, array $args): Response
     {
-        $result = $this->referralClickService->execute($args);
-
+        $this->validator->validate($request);
+        $result = $this->service->execute($this->validator);
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

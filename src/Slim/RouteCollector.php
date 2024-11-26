@@ -77,8 +77,8 @@ readonly class RouteCollector
         $this->app->map(["GET"], "/metrics", MetricsAction::class);
 
         $this->app->group("/services", function (RouteCollectorProxy $group) {
-            $group->map(["GET"], "/referral/{code}", ReferralClickAction::class);
-            $group->map(["GET"], "/linktree/{name}", LinktreeClickAction::class);
+            $group->map(["GET"], "/referral", ReferralClickAction::class);
+            $group->map(["GET"], "/linktree", LinktreeClickAction::class);
         });
     }
 }
