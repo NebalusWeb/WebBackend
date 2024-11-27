@@ -2,7 +2,9 @@
 
 namespace Nebalus\Webapi\Value\User\Totp;
 
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+use Random\RandomException;
 
 class TOTPSecretKey
 {
@@ -12,7 +14,18 @@ class TOTPSecretKey
     }
 
     /**
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
+     */
+    public static function create(): self
+    {
+        try {
+            return self::from(bin2hex(random_bytes(16)));
+        } catch (RandomException $e) {
+            throw new ApiInvalidArgumentException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+    /**
+     * @throws ApiException
      */
     public static function from(string $secret): self
     {

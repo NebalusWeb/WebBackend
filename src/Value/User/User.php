@@ -14,7 +14,7 @@ use Nebalus\Webapi\Value\User\Totp\TOTPSecretKey;
 class User
 {
     private function __construct(
-        private readonly ID $userId,
+        private readonly ?ID $userId,
         private readonly Username $username,
         private readonly UserEmail $email,
         private readonly UserPassword $password,
@@ -27,8 +27,20 @@ class User
     ) {
     }
 
+    /**
+     * @throws ApiException
+     */
+    public function create(Username $username, UserEmail $email, UserPassword $password): self
+    {
+        $totpSecretKey = TOTPSecretKey::create();
+        $description = UserDescription::from(null);
+        $createdAtDate = new DateTimeImmutable();
+        $updatedAtDate = new DateTimeImmutable();
+        return self::from(null, $username, $email, $password, $totpSecretKey, $description, false, false, $createdAtDate, $updatedAtDate);
+    }
+
     public static function from(
-        ID $userId,
+        ?ID $userId,
         Username $username,
         UserEmail $email,
         UserPassword $password,
@@ -66,7 +78,7 @@ class User
             throw new ApiDateMalformedStringException($exception);
         }
 
-        $userId = ID::from($data['user_id']);
+        $userId = empty($data['user_id']) ? null : ID::from($data['user_id']);
         $username = Username::from($data['username']);
         $email = UserEmail::from($data['email']);
         $password = UserPassword::fromHash($data['password']);
@@ -92,7 +104,7 @@ class User
     public function toArray(): array
     {
         return [
-            'user_id' => $this->userId->asInt(),
+            'user_id' => $this->userId?->asInt(),
             'username' => $this->username->asString(),
             'email' => $this->email->asString(),
             'password' => $this->password->asString(),
@@ -105,7 +117,7 @@ class User
         ];
     }
 
-    public function getUserId(): ID
+    public function getUserId(): ?ID
     {
         return $this->userId;
     }
