@@ -11,7 +11,7 @@ use Slim\Http\ServerRequest as Request;
 class ReferralClickHistoryAction extends ApiAction
 {
     public function __construct(
-        private readonly ReferralClickService $referralClickService,
+        private readonly ReferralClick $referralClickService,
     ) {
     }
 

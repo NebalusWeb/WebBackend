@@ -4,10 +4,10 @@ namespace Nebalus\Webapi\Value;
 
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class ID
+class ID
 {
     private function __construct(
-        private int $id
+        private readonly int $id
     ) {
     }
 

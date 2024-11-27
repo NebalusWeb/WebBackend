@@ -8,13 +8,13 @@ use InvalidArgumentException;
 use Nebalus\Webapi\Exception\ApiException;
 use Throwable;
 
-readonly class Result implements ResultInterface
+class Result implements ResultInterface
 {
     private function __construct(
-        private bool $success,
-        private ?string $message,
-        private int $statusCode,
-        private array $payload
+        private readonly bool $success,
+        private readonly ?string $message,
+        private readonly int $statusCode,
+        private readonly array $payload
     ) {
     }
 

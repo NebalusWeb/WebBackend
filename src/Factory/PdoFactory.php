@@ -7,10 +7,10 @@ namespace Nebalus\Webapi\Factory;
 use Nebalus\Webapi\Option\EnvData;
 use PDO;
 
-readonly class PdoFactory
+class PdoFactory
 {
     public function __construct(
-        private EnvData $env
+        private readonly EnvData $env
     ) {
     }
 

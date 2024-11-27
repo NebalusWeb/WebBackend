@@ -10,16 +10,16 @@ use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\ID;
 
-readonly class Referral
+class Referral
 {
     private function __construct(
-        private ID $referralId,
-        private ID $userId,
-        private ReferralCode $code,
-        private string $pointer,
-        private bool $disabled,
-        private DateTimeImmutable $createdAtDate,
-        private DateTimeImmutable $updatedAtDate,
+        private readonly ID $referralId,
+        private readonly ID $userId,
+        private readonly ReferralCode $code,
+        private readonly string $pointer,
+        private readonly bool $disabled,
+        private readonly DateTimeImmutable $createdAtDate,
+        private readonly DateTimeImmutable $updatedAtDate,
     ) {
     }
 

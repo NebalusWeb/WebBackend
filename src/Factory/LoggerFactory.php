@@ -10,10 +10,10 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Nebalus\Webapi\Option\EnvData;
 
-readonly class LoggerFactory
+class LoggerFactory
 {
     public function __construct(
-        private EnvData $env
+        private readonly EnvData $env
     ) {
     }
     public function __invoke(): Logger

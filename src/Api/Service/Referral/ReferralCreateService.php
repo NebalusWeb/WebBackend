@@ -8,10 +8,10 @@ use Nebalus\Webapi\Api\View\Referral\ReferralCreateView;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
-readonly class ReferralCreateService
+class ReferralCreateService
 {
     public function __construct(
-        private MySQlReferralRepository $referralRepository,
+        private readonly MySQlReferralRepository $referralRepository,
     ) {
     }
 

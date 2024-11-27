@@ -7,10 +7,10 @@ namespace Nebalus\Webapi\Value\User;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use function strlen;
 
-readonly class UserPassword
+class UserPassword
 {
     private function __construct(
-        private string $passwordHash
+        private readonly string $passwordHash
     ) {
     }
 
