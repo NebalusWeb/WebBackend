@@ -39,7 +39,7 @@ class UserAuthService
             ->setIssuer("https://api.nebalus.dev")
             ->setPayloadClaim("email", $user->getEmail()->asString())
             ->setPayloadClaim("username", $user->getUsername()->asString())
-            ->setPayloadClaim("sub", $user->getUserId()->asInt())
+            ->setPayloadClaim("sub", $user->getUserId()?->asInt())
             ->setIssuedAt(time())
             ->setExpiration($expirationTime)
             ->build();
