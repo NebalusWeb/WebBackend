@@ -115,7 +115,7 @@ services:
       context: .
       dockerfile: docker/grafana/Dockerfile
       target: base
-    container_name: grafana
+    container_name: grafana-nebalus-api
     restart: unless-stopped
     ports:
       - '3031:3000'
