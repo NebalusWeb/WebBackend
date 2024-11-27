@@ -4,10 +4,10 @@ namespace Nebalus\Webapi\Value\User\Totp;
 
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class TOTPSecretKey
+class TOTPSecretKey
 {
     private function __construct(
-        private string $secret
+        private readonly string $secret
     ) {
     }
 

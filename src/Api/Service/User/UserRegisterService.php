@@ -9,10 +9,10 @@ use Nebalus\Webapi\Repository\UserInvitationTokenRepository\MySqlUserInvitationT
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
-readonly class UserRegisterService
+class UserRegisterService
 {
     public function __construct(
-        private MySqlUserInvitationTokenRepository $mySqlUserInvitationTokenRepository
+        private readonly MySqlUserInvitationTokenRepository $mySqlUserInvitationTokenRepository
     ) {
     }
 

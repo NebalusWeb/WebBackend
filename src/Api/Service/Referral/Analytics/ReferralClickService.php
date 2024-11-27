@@ -7,14 +7,13 @@ use Nebalus\Webapi\Api\Validator\Referral\Analytics\ReferralClickValidator;
 use Nebalus\Webapi\Api\View\Referral\Analytics\ReferralClickView;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
-use Nebalus\Webapi\Value\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
-readonly class ReferralClickService
+class ReferralClickService
 {
     public function __construct(
-        private MySQlReferralRepository $referralRepository
+        private readonly MySQlReferralRepository $referralRepository
     ) {
     }
 

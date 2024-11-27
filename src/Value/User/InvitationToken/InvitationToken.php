@@ -10,14 +10,14 @@ use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\ID;
 
-readonly class InvitationToken
+class InvitationToken
 {
     private function __construct(
-        private ID $ownerUserId,
-        private ?ID $invitedUserId,
-        private PureInvitationToken $pureInvitationToken,
-        private DateTimeImmutable $createdAtDate,
-        private ?DateTimeImmutable $usedAtDate
+        private readonly ID $ownerUserId,
+        private readonly ?ID $invitedUserId,
+        private readonly PureInvitationToken $pureInvitationToken,
+        private readonly DateTimeImmutable $createdAtDate,
+        private readonly ?DateTimeImmutable $usedAtDate
     ) {
     }
 

@@ -5,10 +5,10 @@ namespace Nebalus\Webapi\Factory;
 use Nebalus\Webapi\Option\EnvData;
 use Redis;
 
-readonly class RedisFactory
+class RedisFactory
 {
     public function __construct(
-        private EnvData $envData
+        private readonly EnvData $envData
     ) {
     }
 

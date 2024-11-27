@@ -11,8 +11,6 @@ use Throwable;
 
 abstract class ApiAction
 {
-
-
     public function __invoke(
         Request $request,
         Response $response,

@@ -5,14 +5,14 @@ namespace Nebalus\Webapi\Value\User\InvitationToken;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class PureInvitationToken
+class PureInvitationToken
 {
     private function __construct(
-        private InvitationTokenField $field1,
-        private InvitationTokenField $field2,
-        private InvitationTokenField $field3,
-        private InvitationTokenField $field4,
-        private InvitationTokenField $checksumField,
+        private readonly InvitationTokenField $field1,
+        private readonly InvitationTokenField $field2,
+        private readonly InvitationTokenField $field3,
+        private readonly InvitationTokenField $field4,
+        private readonly InvitationTokenField $checksumField,
     ) {
     }
 

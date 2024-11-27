@@ -11,19 +11,19 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\Totp\TOTPSecretKey;
 
-readonly class User
+class User
 {
     private function __construct(
-        private ID $userId,
-        private Username $username,
-        private UserEmail $email,
-        private UserPassword $password,
-        private TOTPSecretKey $totpSecretKey,
-        private UserDescription $description,
-        private bool $isAdmin,
-        private bool $disabled,
-        private DateTimeImmutable $createdAtDate,
-        private DateTimeImmutable $updatedAtDate,
+        private readonly ID $userId,
+        private readonly Username $username,
+        private readonly UserEmail $email,
+        private readonly UserPassword $password,
+        private readonly TOTPSecretKey $totpSecretKey,
+        private readonly UserDescription $description,
+        private readonly bool $isAdmin,
+        private readonly bool $disabled,
+        private readonly DateTimeImmutable $createdAtDate,
+        private readonly DateTimeImmutable $updatedAtDate,
     ) {
     }
 

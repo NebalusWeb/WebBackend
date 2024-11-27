@@ -5,11 +5,11 @@ namespace Nebalus\Webapi\Value\User\InvitationToken;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class InvitationTokenField
+class InvitationTokenField
 {
     private function __construct(
-        private string $fieldAsString,
-        private int $fieldAsInt,
+        private readonly string $fieldAsString,
+        private readonly int $fieldAsInt,
     ) {
     }
 

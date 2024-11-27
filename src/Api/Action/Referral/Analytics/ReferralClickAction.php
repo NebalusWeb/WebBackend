@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Api\Action\Referral\Analytics;
 
-use DateMalformedStringException;
 use Nebalus\Webapi\Api\Action\ApiAction;
 use Nebalus\Webapi\Api\Service\Referral\Analytics\ReferralClickService;
 use Nebalus\Webapi\Api\Validator\Referral\Analytics\ReferralClickValidator;

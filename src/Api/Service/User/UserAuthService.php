@@ -14,11 +14,11 @@ use Nebalus\Webapi\Value\Result\ResultInterface;
 use ReallySimpleJWT\Exception\BuildException;
 use ReallySimpleJWT\Token;
 
-readonly class UserAuthService
+class UserAuthService
 {
     public function __construct(
-        private MySqlUserRepository $mySqlUserRepository,
-        private EnvData $envData
+        private readonly MySqlUserRepository $mySqlUserRepository,
+        private readonly EnvData $envData
     ) {
     }
 
