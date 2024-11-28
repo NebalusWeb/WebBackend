@@ -133,6 +133,11 @@ class InvitationToken
         return $this->pureInvitationToken->getChecksumField();
     }
 
+    public function setInvitedUserId(ID $newId): self
+    {
+        return new self($this->ownerUserId, $newId, $this->pureInvitationToken, $this->createdAtDate, new DateTimeImmutable());
+    }
+
     public function isExpired(): bool
     {
         return $this->invitedUserId !== null || $this->usedAtDate !== null;
