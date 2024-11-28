@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Value;
 
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class ID
@@ -12,13 +13,27 @@ class ID
     }
 
     /**
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public static function from(int $id): self
     {
         if ($id < 0) {
             throw new ApiInvalidArgumentException(
-                'Invalid referralId: must be a non-negative integer'
+                'Invalid id: must be a non-negative integer'
+            );
+        }
+
+        return new self($id);
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public static function fromString(string $id): self
+    {
+        if (is_numeric($id) === false) {
+            throw new ApiInvalidArgumentException(
+                'Invalid id: must be a number'
             );
         }
 

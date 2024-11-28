@@ -108,6 +108,31 @@ class InvitationToken
         return $this->usedAtDate;
     }
 
+    public function getField1(): InvitationTokenField
+    {
+        return $this->pureInvitationToken->getField1();
+    }
+
+    public function getField2(): InvitationTokenField
+    {
+        return $this->pureInvitationToken->getField2();
+    }
+
+    public function getField3(): InvitationTokenField
+    {
+        return $this->pureInvitationToken->getField3();
+    }
+
+    public function getField4(): InvitationTokenField
+    {
+        return $this->pureInvitationToken->getField4();
+    }
+
+    public function getChecksumField(): InvitationTokenField
+    {
+        return $this->pureInvitationToken->getChecksumField();
+    }
+
     public function isExpired(): bool
     {
         return $this->invitedUserId !== null || $this->usedAtDate !== null;

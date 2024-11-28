@@ -13,21 +13,51 @@ use Nebalus\Webapi\Value\User\Username;
 use PDO;
 use PDOException;
 
-readonly class MySqlUserRepository
+class MySqlUserRepository
 {
     public function __construct(
-        private PDO $pdo
+        private readonly PDO $pdo
     ) {
     }
-
-//    public function insertUser(User $user): ID
-//    {
-//    }
 
     /**
      * @throws ApiException
      */
-    public function findUserFromId(ID $userId): User
+    public function insertUser(User $user): User
+    {
+        try {
+            $sql = "INSERT INTO `users`(`username`, `email`, `password`, `totp_secret_key`, `description`, `is_admin`, `disabled`, `created_at`, `updated_at`) 
+                                VALUES (:username,:email,:password,:totp_secret_key,:description,:is_admin,:disabled,:created_at,:updated_at)";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':username', $user->getUsername()->asString());
+            $stmt->bindValue(':email', $user->getEmail()->asString());
+            $stmt->bindValue(':password', $user->getPassword()->asString());
+            $stmt->bindValue(':totp_secret_key', $user->getTotpSecretKey()->asString());
+            $stmt->bindValue(':description', $user->getDescription()->asString());
+            $stmt->bindValue(':is_admin', $user->isAdmin());
+            $stmt->bindValue(':disabled', $user->isDisabled());
+            $stmt->bindValue(':created_at', $user->getCreatedAtDate()->format("Y-m-d H:i:s"));
+            $stmt->bindValue(':updated_at', $user->getUpdatedAtDate()->format("Y-m-d H:i:s"));
+            $stmt->execute();
+
+            $userToArray = $user->toArray();
+            $userToArray["user_id"] = ID::fromString($this->pdo->lastInsertId())->asInt();
+
+            return User::fromDatabase($userToArray);
+        } catch (PDOException $e) {
+            throw new ApiDatabaseException(
+                "Failed to insert a new user",
+                500,
+                $e
+            );
+        }
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public function findUserFromId(ID $userId): ?User
     {
         try {
             $sql = "SELECT * FROM `users` WHERE `user_id` = :user_id";
@@ -37,6 +67,9 @@ readonly class MySqlUserRepository
             $stmt->execute();
 
             $data = $stmt->fetch();
+            if (!$data) {
+                return null;
+            }
 
             return User::fromDatabase($data);
         } catch (PDOException $e) {
@@ -61,6 +94,9 @@ readonly class MySqlUserRepository
             $stmt->execute();
 
             $data = $stmt->fetch();
+            if (!$data) {
+                return null;
+            }
 
             return User::fromDatabase($data);
         } catch (PDOException $e) {
@@ -85,6 +121,9 @@ readonly class MySqlUserRepository
             $stmt->execute();
 
             $data = $stmt->fetch();
+            if (!$data) {
+                return null;
+            }
 
             return User::fromDatabase($data);
         } catch (PDOException $e) {

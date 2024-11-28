@@ -30,7 +30,7 @@ class UserAuthService
         $user = $this->mySqlUserRepository->findUserFromUsername($validator->getUsername());
 
         if ($user === null || $user->isDisabled() || $user->getPassword()->verify($validator->getPassword()) === false) {
-            return Result::createError('Authentication failed: Wrong credentials.', 401);
+            return Result::createError('Authentication failed: Wrong credentials', 401);
         }
 
         $expirationTime = time() + $this->envData->getJwtNormalExpirationTime();
