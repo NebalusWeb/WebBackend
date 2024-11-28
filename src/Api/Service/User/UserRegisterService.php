@@ -6,7 +6,6 @@ use DateTimeImmutable;
 use Nebalus\Webapi\Api\Validator\User\UserRegisterValidator;
 use Nebalus\Webapi\Api\View\User\UserRegisterView;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Repository\UserInvitationTokenRepository\MySqlUserInvitationTokenRepository;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
@@ -16,7 +15,6 @@ use Nebalus\Webapi\Value\User\User;
 class UserRegisterService
 {
     public function __construct(
-        private readonly MySqlUserInvitationTokenRepository $mySqlUserInvitationTokenRepository,
         private readonly MySqlUserRepository $mySqlUserRepository,
     ) {
     }
@@ -26,7 +24,7 @@ class UserRegisterService
      */
     public function execute(UserRegisterValidator $validator): ResultInterface
     {
-        $invitationToken = $this->mySqlUserInvitationTokenRepository->findInvitationTokenByFields($validator->getPureInvitationToken());
+        $invitationToken = $this->mySqlUserRepository->findInvitationTokenByFields($validator->getPureInvitationToken());
 
         if ($invitationToken === null) {
             return Result::createError('Registration failed: The Invitation Token you provided does not exist', 403);
@@ -50,10 +48,8 @@ class UserRegisterService
 
         $preUser = User::create($validator->getUsername(), $validator->getUserEmail(), $validator->getUserPassword());
 
-        $createdUser = $this->mySqlUserRepository->insertUser($preUser);
-
-        $preInvitationToken = InvitationToken::from($invitationToken->getOwnerUserId(), $createdUser->getUserId(), $validator->getPureInvitationToken(), $invitationToken->getCreatedAtDate(), new DateTimeImmutable());
-        $this->mySqlUserInvitationTokenRepository->updateInvitationToken($preInvitationToken);
+        $createdUser = $this->mySqlUserRepository->registerUser($preUser, $preInvitationToken);
+        $this->mySqlUserRepository->updateInvitationToken($preInvitationToken);
 
         return UserRegisterView::render($createdUser);
     }
