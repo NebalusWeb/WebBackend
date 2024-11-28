@@ -30,7 +30,7 @@ class User
     /**
      * @throws ApiException
      */
-    public function create(Username $username, UserEmail $email, UserPassword $password): self
+    public static function create(Username $username, UserEmail $email, UserPassword $password): self
     {
         $totpSecretKey = TOTPSecretKey::create();
         $description = UserDescription::from(null);

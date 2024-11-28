@@ -19,7 +19,7 @@ class TOTPSecretKey
     public static function create(): self
     {
         try {
-            return self::from(bin2hex(random_bytes(16)));
+            return self::from(strtoupper(bin2hex(random_bytes(16))));
         } catch (RandomException $e) {
             throw new ApiInvalidArgumentException($e->getMessage(), $e->getCode(), $e);
         }
