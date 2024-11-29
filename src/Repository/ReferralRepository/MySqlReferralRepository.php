@@ -81,7 +81,7 @@ class MySqlReferralRepository
         $data = [];
 
         while ($row = $stmt->fetch()) {
-            $data[] = Referral::fromDatabase($row);
+            $data[] = Referral::fromArray($row);
         }
 
         return Referrals::fromArray(...$data);
@@ -104,7 +104,7 @@ class MySqlReferralRepository
             return null;
         }
 
-        return Referral::fromDatabase($data);
+        return Referral::fromArray($data);
     }
 
     /**
@@ -124,6 +124,6 @@ class MySqlReferralRepository
             return null;
         }
 
-        return Referral::fromDatabase($data);
+        return Referral::fromArray($data);
     }
 }

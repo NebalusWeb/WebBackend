@@ -69,7 +69,7 @@ class MySqlUserRepository
             $userToArray = $user->toArray();
             $userToArray["user_id"] = ID::fromString($this->pdo->lastInsertId())->asInt();
 
-            return User::fromDatabase($userToArray);
+            return User::fromArray($userToArray);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
                 "Failed to insert a new user",
@@ -96,7 +96,7 @@ class MySqlUserRepository
                 return null;
             }
 
-            return User::fromDatabase($data);
+            return User::fromArray($data);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
                 "Failed to retrieve user data from userid",
@@ -123,7 +123,7 @@ class MySqlUserRepository
                 return null;
             }
 
-            return User::fromDatabase($data);
+            return User::fromArray($data);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
                 "Failed to retrieve user data from email",
@@ -150,7 +150,7 @@ class MySqlUserRepository
                 return null;
             }
 
-            return User::fromDatabase($data);
+            return User::fromArray($data);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
                 "Failed to retrieve user data from username",
@@ -212,7 +212,7 @@ class MySqlUserRepository
                 return null;
             }
 
-            return InvitationToken::fromDatabase($data);
+            return InvitationToken::fromArray($data);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
                 "Failed to edit the Invitation Token",
@@ -233,7 +233,7 @@ class MySqlUserRepository
             $stmt->execute();
 
             while ($row = $stmt->fetch()) {
-                $data[] = InvitationToken::fromDatabase($row);
+                $data[] = InvitationToken::fromArray($row);
             }
         } catch (PDOException | ApiException) {
         }

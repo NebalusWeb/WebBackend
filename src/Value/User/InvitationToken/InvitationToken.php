@@ -40,7 +40,7 @@ class InvitationToken
     /**
      * @throws ApiException
      */
-    public static function fromDatabase(array $data): self
+    public static function fromArray(array $data): self
     {
         try {
             $createdAtDate = new DateTimeImmutable($data['created_at']);
@@ -51,7 +51,7 @@ class InvitationToken
 
         $ownerUserId = ID::from($data['owner_user_id']);
         $invitedUserId = empty($data['invited_user_id']) ? null : ID::from($data['invited_user_id']);
-        $pureInvitationToken = PureInvitationToken::fromDatabase([
+        $pureInvitationToken = PureInvitationToken::fromArray([
             "token_field_1" => $data['token_field_1'],
             "token_field_2" => $data['token_field_2'],
             "token_field_3" => $data['token_field_3'],

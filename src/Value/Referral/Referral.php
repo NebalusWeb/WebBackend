@@ -26,7 +26,7 @@ class Referral
     /**
      * @throws ApiException
      */
-    public static function fromDatabase(array $data): self
+    public static function fromArray(array $data): self
     {
         try {
             $createdAtDate = new DateTimeImmutable($data["created_at"]);
@@ -51,7 +51,6 @@ class Referral
             $updatedAtDate
         );
     }
-
     public function toArray(): array
     {
         return [

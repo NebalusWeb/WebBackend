@@ -57,7 +57,7 @@ class RedisReferralCachingRepository
             $itemData = $this->redis->hget(self::HASH_KEY, $referralId->asString());
             if ($itemData) {
                 $dataArray = json_decode($itemData, true);
-                return Referral::fromDatabase($dataArray);
+                return Referral::fromArray($dataArray);
             }
         } catch (RedisException | ApiException) {
         }
@@ -74,7 +74,7 @@ class RedisReferralCachingRepository
         $referrals = [];
         foreach ($items as $referralId => $referralData) {
             try {
-                $referrals[] = Referral::fromDatabase($referralData);
+                $referrals[] = Referral::fromArray($referralData);
             } catch (ApiException | RedisException) {
             }
         }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Value\User;
 
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+
 use function strlen;
 
 class UserPassword
@@ -15,7 +17,7 @@ class UserPassword
     }
 
     /**
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public static function fromPlain(string $plainPassword, int $cost = 10): self
     {

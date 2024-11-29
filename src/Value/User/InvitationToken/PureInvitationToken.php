@@ -20,27 +20,43 @@ class PureInvitationToken
      * @throws ApiException
      */
     public static function from(
-        int $field1,
-        int $field2,
-        int $field3,
-        int $field4,
-        int $checksumField
+        int $value1,
+        int $value2,
+        int $value3,
+        int $value4,
+        int $checksumValue
     ): self {
-        $inviteField1 = InvitationTokenField::from($field1);
-        $inviteField2 = InvitationTokenField::from($field2);
-        $inviteField3 = InvitationTokenField::from($field3);
-        $inviteField4 = InvitationTokenField::from($field4);
-        $inviteChecksum = InvitationTokenField::from($checksumField);
-        if (self::calculateChecksum($inviteField1, $inviteField2, $inviteField3, $inviteField4) !== $inviteChecksum->asInt()) {
+        $field1 = InvitationTokenField::from($value1);
+        $field2 = InvitationTokenField::from($value2);
+        $field3 = InvitationTokenField::from($value3);
+        $field4 = InvitationTokenField::from($value4);
+        $checksum = InvitationTokenField::from($checksumValue);
+
+        if (self::calculateChecksum($field1, $field2, $field3, $field4) !== $checksum->asInt()) {
             throw new ApiInvalidArgumentException('Invalid Token: Checksum does not match');
         }
-        return new self($inviteField1, $inviteField2, $inviteField3, $inviteField4, $inviteChecksum);
+
+        return new self($field1, $field2, $field3, $field4, $checksum);
     }
 
     /**
      * @throws ApiException
      */
-    public static function fromDatabase(array $data): self
+    public static function create(): self
+    {
+        $field1 = InvitationTokenField::create();
+        $field2 = InvitationTokenField::create();
+        $field3 = InvitationTokenField::create();
+        $field4 = InvitationTokenField::create();
+        $checksum = InvitationTokenField::from(self::calculateChecksum($field1, $field2, $field3, $field4));
+
+        return new self($field1, $field2, $field3, $field4, $checksum);
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public static function fromArray(array $data): self
     {
         $field1 = InvitationTokenField::from($data['token_field_1']);
         $field2 = InvitationTokenField::from($data['token_field_2']);
