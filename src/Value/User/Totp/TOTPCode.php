@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User\Totp;
 
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class TOTPCode
@@ -12,7 +13,7 @@ class TOTPCode
     }
 
     /**
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public static function from(string $code): self
     {

@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User;
 
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class Username
@@ -12,7 +13,7 @@ class Username
     }
 
     /**
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public static function from(string $username): self
     {

@@ -8,42 +8,54 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 class InvitationTokenField
 {
     private function __construct(
-        private readonly string $fieldAsString,
-        private readonly int $fieldAsInt,
+        private readonly string $valueAsString,
+        private readonly int $valueAsInt,
     ) {
     }
 
     /**
      * @throws ApiException
      */
-    public static function from(int $tokenField): self
+    public static function from(int $value): self
     {
-        if ($tokenField < 0 || $tokenField > 9999) {
-            throw new ApiInvalidArgumentException('Invalid tokenField: can be exactly or between 0 and 9999');
+        if ($value < 0 || $value > 9999) {
+            throw new ApiInvalidArgumentException('Invalid token value: can be exactly or between 0 and 9999');
         }
 
-        $stringifyToken = (string) $tokenField;
-        if (strlen($stringifyToken) === 1) {
-            $stringifyToken = "000" . $stringifyToken;
+        return new self(self::stringifyValue($value), $value);
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public static function create(): self
+    {
+        return self::from(rand(0, 9999));
+    }
+
+    private static function stringifyValue(string $value): string
+    {
+        if (strlen($value) === 1) {
+            $value = "000" . $value;
         }
 
-        if (strlen($stringifyToken) === 2) {
-            $stringifyToken = "00" . $stringifyToken;
+        if (strlen($value) === 2) {
+            $value = "00" . $value;
         }
 
-        if (strlen($stringifyToken) === 3) {
-            $stringifyToken = "0" . $stringifyToken;
+        if (strlen($value) === 3) {
+            $value = "0" . $value;
         }
-        return new self($stringifyToken, $tokenField);
+        return $value;
     }
 
     public function asString(): string
     {
-        return $this->fieldAsString;
+        return $this->valueAsString;
     }
 
     public function asInt(): int
     {
-        return $this->fieldAsInt;
+        return $this->valueAsInt;
     }
 }
