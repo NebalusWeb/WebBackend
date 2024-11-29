@@ -29,10 +29,20 @@ class MySqlUserRepository
     public function registerUser(User $user, InvitationToken $invitationToken): User
     {
         $this->pdo->beginTransaction();
-        $newUser = $this->insertUser($user);
-        $preInvitationToken = $invitationToken->setInvitedUserId($newUser->getUserId());
-        $this->updateInvitationToken($preInvitationToken);
-        $this->pdo->commit();
+        try {
+            $newUser = $this->insertUser($user);
+            $preInvitationToken = $invitationToken->setInvitedUserId($newUser->getUserId());
+            $this->updateInvitationToken($preInvitationToken);
+            $this->pdo->commit();
+            return $newUser;
+        } catch (PDOException | ApiException $e) {
+            $this->pdo->rollBack();
+            throw new ApiDatabaseException(
+                "Failed to register a new user",
+                500,
+                $e
+            );
+        }
     }
 
     /**

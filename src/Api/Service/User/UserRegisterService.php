@@ -48,8 +48,7 @@ class UserRegisterService
 
         $preUser = User::create($validator->getUsername(), $validator->getUserEmail(), $validator->getUserPassword());
 
-        $createdUser = $this->mySqlUserRepository->registerUser($preUser, $preInvitationToken);
-        $this->mySqlUserRepository->updateInvitationToken($preInvitationToken);
+        $createdUser = $this->mySqlUserRepository->registerUser($preUser, $invitationToken);
 
         return UserRegisterView::render($createdUser);
     }
