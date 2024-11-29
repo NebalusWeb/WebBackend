@@ -77,50 +77,50 @@ services:
     networks:
       - private-net
 
-#  redis:
-#    build:
-#      context: .
-#      dockerfile: docker/redis/Dockerfile
-#      target: base
-#    container_name: redis-nebalus-api
-##    environment:
-##      REDIS_PASSWORD: "12345"
-##    command: [ "redis-server", "--requirepass", "$$REDIS_PASSWORD" ]
-#    command: [ "redis-server" ]
-#    networks:
-#      - private-net
-
-#  redis-exporter:
-#    image: oliver006/redis_exporter:latest
-#    container_name: redis-exporter-nebalus-api
+  redis:
+    build:
+      context: .
+      dockerfile: docker/redis/Dockerfile
+      target: base
+    container_name: redis-nebalus-api
 #    environment:
-#      REDIS_ADDR: "redis:6379"
-##      REDIS_PASSWORD: "12345"
-#    networks:
-#      - private-net
+#      REDIS_PASSWORD: "12345"
+#    command: [ "redis-server", "--requirepass", "$$REDIS_PASSWORD" ]
+    command: [ "redis-server" ]
+    networks:
+      - private-net
 
-#  prometheus:
-#    build:
-#      context: .
-#      dockerfile: docker/prometheus/Dockerfile
-#      target: base
-#    container_name: prometheus-nebalus-api
-#    ports:
-#      - '9393:9090'
-#    networks:
-#      - private-net
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: redis-exporter-nebalus-api
+    environment:
+      REDIS_ADDR: "redis:6379"
+#      REDIS_PASSWORD: "12345"
+    networks:
+      - private-net
 
-#  grafana:
-#    build:
-#      context: .
-#      dockerfile: docker/grafana/Dockerfile
-#      target: base
-#    container_name: grafana-nebalus-api
-#    restart: unless-stopped
-#    ports:
-#      - '3031:3000'
-#    networks:
-#      - public-net
+  prometheus:
+    build:
+      context: .
+      dockerfile: docker/prometheus/Dockerfile
+      target: base
+    container_name: prometheus-nebalus-api
+    ports:
+      - '9393:9090'
+    networks:
+      - private-net
+
+  grafana:
+    build:
+      context: .
+      dockerfile: docker/grafana/Dockerfile
+      target: base
+    container_name: grafana-nebalus-api
+    restart: unless-stopped
+    ports:
+      - '3031:3000'
+    networks:
+      - public-net
 
 networks:
   public-net:
