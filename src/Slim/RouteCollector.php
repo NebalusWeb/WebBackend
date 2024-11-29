@@ -24,11 +24,11 @@ use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
-readonly class RouteCollector
+class RouteCollector
 {
     public function __construct(
-        private App $app,
-        private EnvData $env
+        private readonly App $app,
+        private readonly EnvData $env
     ) {
     }
 

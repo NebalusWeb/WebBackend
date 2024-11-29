@@ -11,11 +11,11 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\App;
 
-readonly class CorsMiddleware implements MiddlewareInterface
+class CorsMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private App $app,
-        private EnvData $env
+        private readonly App $app,
+        private readonly EnvData $env
     ) {
     }
 
