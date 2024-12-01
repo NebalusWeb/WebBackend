@@ -22,18 +22,18 @@ class UserRegisterValidator extends AbstractValidator
             'invitation_token' => [
                 'required' => true,
                 'nullable' => false,
-                'datatype' => "object",
+                'type' => "object",
                 'children' => [
-                    "field_1" => [ 'required' => true, 'nullable' => true, "default" => 2222, 'datatype' => "integer" ],
-                    "field_2" => [ 'required' => true, 'nullable' => false, 'datatype' => "integer" ],
-                    "field_3" => [ 'required' => true, 'nullable' => false, 'datatype' => "integer" ],
-                    "field_4" => [ 'required' => true, 'nullable' => false, 'datatype' => "integer" ],
-                    "checksum" => [ 'required' => true, 'nullable' => false, 'datatype' => "integer" ],
+                    "field_1" => [ 'required' => true, 'nullable' => true, "default" => 2222, 'type' => "integer" ],
+                    "field_2" => [ 'required' => true, 'nullable' => false, 'type' => "integer" ],
+                    "field_3" => [ 'required' => true, 'nullable' => false, 'type' => "integer" ],
+                    "field_4" => [ 'required' => true, 'nullable' => false, 'type' => "integer" ],
+                    "checksum" => [ 'required' => true, 'nullable' => false, 'type' => "integer" ],
                 ]
             ],
-            'email' => [ 'required' => true, 'nullable' => false, 'datatype' => "string" ],
-            'username' => [ 'required' => true, 'nullable' => false, 'datatype' => "string" ],
-            'password' => [ 'required' => true, 'nullable' => false, 'datatype' => "string" ],
+            'email' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
+            'username' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
+            'password' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
         ];
         parent::__construct($rules);
     }

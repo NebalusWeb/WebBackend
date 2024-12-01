@@ -14,9 +14,9 @@ class ReferralEditValidator extends AbstractValidator
     public function __construct()
     {
         $rules = [
-            'code' => [ 'required' => true, 'nullable' => false, 'datatype' => "string" ],
-            'pointer' => [ 'required' => false, 'nullable' => true, 'datatype' => "string" ],
-            'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'datatype' => "boolean" ],
+            'code' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
+            'pointer' => [ 'required' => false, 'nullable' => true, 'type' => "string" ],
+            'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => "boolean" ],
         ];
         parent::__construct($rules);
     }

@@ -53,7 +53,7 @@ abstract class AbstractValidator
             $isRequired = $rule['required'] ?? false;
             $isNullable = $rule['nullable'] ?? false;
             $defaultValue = $rule['default'] ?? null;
-            $datatype = strtolower($rule['datatype'] ?? "string"); // Todo: String entfernen
+            $type = strtolower($rule['type'] ?? "string"); // Todo: String entfernen
             $childrenRules = $rule['children'] ?? [];
 //            echo("----------------------------------- \n");
 //            echo("LayerID: \n");
@@ -105,19 +105,19 @@ abstract class AbstractValidator
             }
 
             if ($value !== null) {
-                if ($datatype === 'string' && is_string($value) === true) {
+                if ($type === 'string' && is_string($value) === true) {
                     $processedData[$param] = $value;
                     continue;
-                } elseif ($datatype === 'integer' && is_int($value) === true) {
+                } elseif ($type === 'integer' && is_int($value) === true) {
                     $processedData[$param] = $value;
                     continue;
-                } elseif ($datatype === 'float' && is_float($value) === true) {
+                } elseif ($type === 'float' && is_float($value) === true) {
                     $processedData[$param] = $value;
                     continue;
-                } elseif ($datatype === 'boolean' && is_bool($value) === true) {
+                } elseif ($type === 'boolean' && is_bool($value) === true) {
                     $processedData[$param] = $value;
                     continue;
-                } elseif ($datatype === 'object' && is_array($value) && empty($value) === false) {
+                } elseif ($type === 'object' && is_array($value) && empty($value) === false) {
                     if ($childrenRules !== []) {
                         $processedData[$param] = $this->processRecursiveRules($value, $childrenRules, $maxRecursion, $layerId, $currentPath . ".");
                     }
@@ -125,7 +125,7 @@ abstract class AbstractValidator
                 }
 
                 throw new ApiInvalidArgumentException(
-                    "Parameter '{$currentPath}' must to an $datatype",
+                    "Parameter '{$currentPath}' must to an $type",
                     400
                 );
             }

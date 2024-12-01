@@ -16,10 +16,10 @@ class UserAuthValidator extends AbstractValidator
     public function __construct()
     {
         $rules = [
-            'username' => [ 'required' => true, 'nullable' => false, 'datatype' => "string" ],
-            'password' => [ 'required' => true, 'nullable' => false, 'datatype' => "string" ],
-            'remember_me' => [ 'required' => false, 'nullable' => false, 'default' => false, 'datatype' => "boolean" ],
-            'totp' => [ 'required' => false, 'nullable' => true, 'datatype' => "integer" ],
+            'username' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
+            'password' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
+            'remember_me' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => "boolean" ],
+            'totp' => [ 'required' => false, 'nullable' => true, 'type' => "integer" ],
         ];
         parent::__construct($rules);
     }

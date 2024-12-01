@@ -12,7 +12,7 @@ class ReferralClickValidator extends AbstractValidator
     public function __construct()
     {
         $rules = [
-            'code' => [ 'required' => true, 'nullable' => false, 'datatype' => "string" ],
+            'code' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
         ];
         parent::__construct($rules);
     }
