@@ -8,9 +8,10 @@ use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\ArrayConvertible;
 use Nebalus\Webapi\Value\ID;
 
-class Referral
+class Referral implements ArrayConvertible
 {
     private function __construct(
         private readonly ID $referralId,

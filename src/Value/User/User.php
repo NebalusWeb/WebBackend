@@ -11,6 +11,7 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\ArrayConvertible;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\Totp\TOTPSecretKey;
+use Override;
 
 class User implements ArrayConvertible
 {
@@ -70,7 +71,7 @@ class User implements ArrayConvertible
     /**
      * @throws ApiException
      */
-    public static function fromArray(array $data): self
+    #[Override] public static function fromArray(array $data): self
     {
         try {
             $createdAtDate = new DateTimeImmutable($data['created_at']);
@@ -102,7 +103,7 @@ class User implements ArrayConvertible
         );
     }
 
-    public function toArray(): array
+    #[Override] public function toArray(): array
     {
         return [
             'user_id' => $this->userId?->asInt(),

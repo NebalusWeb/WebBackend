@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Value\User\InvitationToken;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\ArrayConvertible;
+use Override;
 
 class PureInvitationToken implements ArrayConvertible
 {
@@ -57,7 +58,7 @@ class PureInvitationToken implements ArrayConvertible
     /**
      * @throws ApiException
      */
-    public static function fromArray(array $data): self
+    #[Override] public static function fromArray(array $data): self
     {
         $field1 = InvitationTokenField::from($data['token_field_1']);
         $field2 = InvitationTokenField::from($data['token_field_2']);
@@ -68,7 +69,7 @@ class PureInvitationToken implements ArrayConvertible
         return new self($field1, $field2, $field3, $field4, $checksumField);
     }
 
-    public function toArray(): array
+    #[Override] public function toArray(): array
     {
         return [
             "token_field_1" => $this->field1->asString(),
