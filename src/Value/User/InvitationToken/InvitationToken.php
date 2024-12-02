@@ -8,9 +8,11 @@ use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\ArrayConvertible;
 use Nebalus\Webapi\Value\ID;
+use Override;
 
-class InvitationToken
+class InvitationToken implements ArrayConvertible
 {
     private function __construct(
         private readonly ID $ownerUserId,
@@ -40,7 +42,7 @@ class InvitationToken
     /**
      * @throws ApiException
      */
-    public static function fromArray(array $data): self
+    #[Override] public static function fromArray(array $data): self
     {
         try {
             $createdAtDate = new DateTimeImmutable($data['created_at']);
@@ -68,7 +70,7 @@ class InvitationToken
         );
     }
 
-    public function toArray(): array
+    #[Override] public function toArray(): array
     {
         return [
             'owner_user_id' => $this->ownerUserId->asInt(),

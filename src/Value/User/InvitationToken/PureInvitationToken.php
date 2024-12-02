@@ -4,8 +4,9 @@ namespace Nebalus\Webapi\Value\User\InvitationToken;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+use Nebalus\Webapi\Value\ArrayConvertible;
 
-class PureInvitationToken
+class PureInvitationToken implements ArrayConvertible
 {
     private function __construct(
         private readonly InvitationTokenField $field1,
