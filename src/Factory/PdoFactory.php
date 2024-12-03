@@ -22,7 +22,7 @@ class PdoFactory
         $username = $this->env->getMySqlUser();
         $password = $this->env->getMySqlPasswd();
 
-        $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s', $host, $port, $database);
+        $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8', $host, $port, $database);
         $pdo = new PDO($dsn, $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
