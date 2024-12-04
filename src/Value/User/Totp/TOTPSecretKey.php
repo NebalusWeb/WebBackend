@@ -24,6 +24,7 @@ class TOTPSecretKey
             throw new ApiInvalidArgumentException($e->getMessage(), $e->getCode(), $e);
         }
     }
+
     /**
      * @throws ApiException
      */
