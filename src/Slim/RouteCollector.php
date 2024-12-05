@@ -51,6 +51,10 @@ readonly class RouteCollector
         $this->app->group("/ui", function (RouteCollectorProxy $group) {
             $group->map(["POST"], "/auth", UserAuthAction::class);
             $group->map(["POST"], "/register", UserRegisterAction::class);
+            $group->group("/admin", function (RouteCollectorProxy $group) {
+                $group->group("/user/{username}", function (RouteCollectorProxy $group) {
+                });
+            });
             $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 $group->group("/services", function (RouteCollectorProxy $group) {
                     $group->group("/invitationtoken", function (RouteCollectorProxy $group) {

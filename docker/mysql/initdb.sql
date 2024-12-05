@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 26. Nov 2024 um 23:24
+-- Erstellungszeit: 05. Dez 2024 um 02:41
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -24,6 +24,16 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `accounts`
+--
+
+CREATE TABLE `accounts` (
+                            `account_id` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `linktrees`
 --
 
@@ -31,7 +41,6 @@ CREATE TABLE `linktrees` (
                              `linktree_id` int UNSIGNED NOT NULL,
                              `user_id` int UNSIGNED NOT NULL,
                              `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-                             `disabled` bit(1) NOT NULL DEFAULT b'0',
                              `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                              `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -40,9 +49,9 @@ CREATE TABLE `linktrees` (
 -- Daten für Tabelle `linktrees`
 --
 
-INSERT INTO `linktrees` (`linktree_id`, `user_id`, `description`, `disabled`, `created_at`, `updated_at`) VALUES
-                                                                                                              (1, 1, 'The Description from Nebalus', b'0', '2024-11-12 19:19:41', '2024-11-12 19:19:41'),
-                                                                                                              (3, 2, 'Testers Account', b'0', '2024-11-12 19:25:09', '2024-11-12 19:25:09');
+INSERT INTO `linktrees` (`linktree_id`, `user_id`, `description`, `created_at`, `updated_at`) VALUES
+                                                                                                  (1, 1, 'The Description from Nebalus', '2024-11-12 19:19:41', '2024-11-12 19:19:41'),
+                                                                                                  (3, 2, 'Testers Account', '2024-11-12 19:25:09', '2024-11-12 19:25:09');
 
 -- --------------------------------------------------------
 
@@ -292,7 +301,6 @@ CREATE TABLE `users` (
                          `password` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `totp_secret_key` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-                         `is_admin` bit(1) NOT NULL DEFAULT b'0',
                          `disabled` bit(1) NOT NULL DEFAULT b'0',
                          `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                          `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -302,11 +310,11 @@ CREATE TABLE `users` (
 -- Daten für Tabelle `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description`, `is_admin`, `disabled`, `created_at`, `updated_at`) VALUES
-                                                                                                                                                           (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'S61WXXWZU5J6QT0H4CX4B02X2HET0LYW', 'Is the default test User', b'1', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
-                                                                                                                                                           (2, 'Tester', 'tester@nebalus.dev', '', '5BO8E403VD95MT6XCHWFXOKP8LZCGRKY', 'Password = Tester42', b'0', b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
-                                                                                                                                                           (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'DXUZV74K66YCFV4E9WD9T9G4TYO6SWH7', 'Password = BAnnedTester11', b'0', b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
-                                                                                                                                                           (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '', '5VX7YY1UH0U4DECIJHB1AY6PHL6IGHKP', 'Password = TEST1234!', b'0', b'1', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description`, `disabled`, `created_at`, `updated_at`) VALUES
+                                                                                                                                               (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'S61WXXWZU5J6QT0H4CX4B02X2HET0LYW', 'Is the default test User', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
+                                                                                                                                               (2, 'Tester', 'tester@nebalus.dev', '', '5BO8E403VD95MT6XCHWFXOKP8LZCGRKY', 'Password = Tester42', b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
+                                                                                                                                               (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'DXUZV74K66YCFV4E9WD9T9G4TYO6SWH7', 'Password = BAnnedTester11', b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
+                                                                                                                                               (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '', '5VX7YY1UH0U4DECIJHB1AY6PHL6IGHKP', 'Password = TEST1234!', b'1', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
 
 -- --------------------------------------------------------
 
@@ -364,6 +372,19 @@ INSERT INTO `user_login_history` (`login_history_id`, `user_id`, `ip_address`, `
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `user_permissions`
+--
+
+CREATE TABLE `user_permissions` (
+                                    `user_id` int UNSIGNED NOT NULL,
+                                    `is_admin` bit(1) NOT NULL DEFAULT b'0',
+                                    `is_moderator` bit(1) NOT NULL DEFAULT b'0',
+                                    `permissions` json NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `user_punishments`
 --
 
@@ -387,6 +408,12 @@ INSERT INTO `user_punishments` (`punishment_id`, `punished_user_id`, `moderator_
 --
 -- Indizes der exportierten Tabellen
 --
+
+--
+-- Indizes für die Tabelle `accounts`
+--
+ALTER TABLE `accounts`
+    ADD PRIMARY KEY (`account_id`);
 
 --
 -- Indizes für die Tabelle `linktrees`
@@ -445,6 +472,12 @@ ALTER TABLE `user_invitation_tokens`
 ALTER TABLE `user_login_history`
     ADD PRIMARY KEY (`login_history_id`),
     ADD KEY `user_id` (`user_id`);
+
+--
+-- Indizes für die Tabelle `user_permissions`
+--
+ALTER TABLE `user_permissions`
+    ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
 -- Indizes für die Tabelle `user_punishments`
@@ -552,6 +585,12 @@ ALTER TABLE `user_invitation_tokens`
 --
 ALTER TABLE `user_login_history`
     ADD CONSTRAINT `user_login_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+--
+-- Constraints der Tabelle `user_permissions`
+--
+ALTER TABLE `user_permissions`
+    ADD CONSTRAINT `user_permissions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints der Tabelle `user_punishments`
