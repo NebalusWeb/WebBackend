@@ -375,12 +375,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description`, `disabled`, `created_at`, `updated_at`) VALUES
-                                                                                                                                               (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'S61WXXWZU5J6QT0H4CX4B02X2HET0LYW', 'Is the default test User', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
-                                                                                                                                               (2, 'Tester', 'tester@nebalus.dev', '', '5BO8E403VD95MT6XCHWFXOKP8LZCGRKY', 'Password = Tester42', b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
-                                                                                                                                               (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'DXUZV74K66YCFV4E9WD9T9G4TYO6SWH7', 'Password = BAnnedTester11', b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
-                                                                                                                                               (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '', '5VX7YY1UH0U4DECIJHB1AY6PHL6IGHKP', 'Password = TEST1234!', b'1', '2024-11-11 18:31:01', '2024-11-11 18:31:01'),
-                                                                                                                                               (6, 'xxvcc', '', '', '5BO8E403VD95MT6XCHWFXOKP8LZCGRKY', NULL, b'0', '2024-12-05 10:28:37', '2024-12-05 10:28:37');
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description`, `created_at`, `updated_at`) VALUES
+                                                                                                                                               (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'S61WXXWZU5J6QT0H4CX4B02X2HET0LYW', 'Is the default test User', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
+                                                                                                                                               (2, 'Tester', 'tester@nebalus.dev', '', '5BO8E403VD95MT6XCHWFXOKP8LZCGRKY', 'Password = Tester42', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
+                                                                                                                                               (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'DXUZV74K66YCFV4E9WD9T9G4TYO6SWH7', 'Password = BAnnedTester11', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
+                                                                                                                                               (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '', '5VX7YY1UH0U4DECIJHB1AY6PHL6IGHKP', 'Password = TEST1234!', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
 
 -- --------------------------------------------------------
 
