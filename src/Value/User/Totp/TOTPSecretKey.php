@@ -6,10 +6,10 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Random\RandomException;
 
-class TOTPSecretKey
+readonly class TOTPSecretKey
 {
     private function __construct(
-        private readonly string $secret
+        private string $secret
     ) {
     }
 

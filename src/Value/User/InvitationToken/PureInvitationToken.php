@@ -4,17 +4,15 @@ namespace Nebalus\Webapi\Value\User\InvitationToken;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Value\ArrayConvertible;
-use Override;
 
-class PureInvitationToken implements ArrayConvertible
+readonly class PureInvitationToken
 {
     private function __construct(
-        private readonly InvitationTokenField $field1,
-        private readonly InvitationTokenField $field2,
-        private readonly InvitationTokenField $field3,
-        private readonly InvitationTokenField $field4,
-        private readonly InvitationTokenField $checksumField,
+        private InvitationTokenField $field1,
+        private InvitationTokenField $field2,
+        private InvitationTokenField $field3,
+        private InvitationTokenField $field4,
+        private InvitationTokenField $checksumField,
     ) {
     }
 
@@ -58,7 +56,7 @@ class PureInvitationToken implements ArrayConvertible
     /**
      * @throws ApiException
      */
-    #[Override] public static function fromArray(array $data): self
+    public static function fromArray(array $data): self
     {
         $field1 = InvitationTokenField::from($data['token_field_1']);
         $field2 = InvitationTokenField::from($data['token_field_2']);
@@ -69,7 +67,7 @@ class PureInvitationToken implements ArrayConvertible
         return new self($field1, $field2, $field3, $field4, $checksumField);
     }
 
-    #[Override] public function toArray(): array
+    public function asArray(): array
     {
         return [
             "token_field_1" => $this->field1->asString(),
@@ -78,22 +76,6 @@ class PureInvitationToken implements ArrayConvertible
             "token_field_4" => $this->field4->asString(),
             "token_checksum" => $this->checksumField->asString(),
         ];
-    }
-
-    private static function calculateChecksum(
-        InvitationTokenField $field1,
-        InvitationTokenField $field2,
-        InvitationTokenField $field3,
-        InvitationTokenField $field4,
-    ): int {
-        $checksum = 0;
-        $checksum += $field1->asInt();
-        $checksum += $field2->asInt();
-        $checksum += $field3->asInt();
-        $checksum += $field4->asInt();
-        $checksum = abs($checksum);
-        $checksum /= 4;
-        return (int) floor($checksum);
     }
 
     public function getField1(): InvitationTokenField
@@ -124,5 +106,21 @@ class PureInvitationToken implements ArrayConvertible
     public function asString(): string
     {
         return sprintf("%s-%s-%s-%s-%s", $this->field1->asString(), $this->field2->asString(), $this->field3->asString(), $this->field4->asString(), $this->checksumField->asString());
+    }
+
+    private static function calculateChecksum(
+        InvitationTokenField $field1,
+        InvitationTokenField $field2,
+        InvitationTokenField $field3,
+        InvitationTokenField $field4,
+    ): int {
+        $checksum = 0;
+        $checksum += $field1->asInt();
+        $checksum += $field2->asInt();
+        $checksum += $field3->asInt();
+        $checksum += $field4->asInt();
+        $checksum = abs($checksum);
+        $checksum /= 4;
+        return (int) floor($checksum);
     }
 }

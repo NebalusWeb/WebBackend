@@ -2,10 +2,10 @@
 
 namespace Nebalus\Webapi\Value\Referral;
 
-class ReferralCode
+readonly class ReferralCode
 {
     private function __construct(
-        private readonly string $code
+        private string $code
     ) {
     }
 

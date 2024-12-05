@@ -12,11 +12,11 @@ use Nebalus\Webapi\Value\Referral\ReferralPointer;
 use Nebalus\Webapi\Value\Referral\Referrals;
 use PDO;
 
-class MySqlReferralRepository
+readonly class MySqlReferralRepository
 {
     public function __construct(
-        private readonly PDO $pdo,
-        private readonly RedisReferralCachingRepository $redis
+        private PDO $pdo,
+        private RedisReferralCachingRepository $redis
     ) {
     }
 

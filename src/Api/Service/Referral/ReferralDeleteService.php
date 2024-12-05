@@ -7,10 +7,10 @@ use Nebalus\Webapi\Api\View\Referral\ReferralDeleteView;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
-class ReferralDeleteService
+readonly class ReferralDeleteService
 {
     public function __construct(
-        private readonly MySQlReferralRepository $referralRepository
+        private MySQlReferralRepository $referralRepository
     ) {
     }
 

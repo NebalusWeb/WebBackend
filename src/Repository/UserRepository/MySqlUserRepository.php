@@ -16,10 +16,10 @@ use Nebalus\Webapi\Value\User\Username;
 use PDO;
 use PDOException;
 
-class MySqlUserRepository
+readonly class MySqlUserRepository
 {
     public function __construct(
-        private readonly PDO $pdo
+        private PDO $pdo
     ) {
     }
 
@@ -48,7 +48,7 @@ class MySqlUserRepository
     /**
      * @throws ApiException
      */
-    public function insertUser(User $user): User
+    private function insertUser(User $user): User
     {
         try {
             $sql = "INSERT INTO `users`(`username`, `email`, `password`, `totp_secret_key`, `description`, `is_admin`, `disabled`, `created_at`, `updated_at`) 
@@ -66,7 +66,7 @@ class MySqlUserRepository
             $stmt->bindValue(':updated_at', $user->getUpdatedAtDate()->format("Y-m-d H:i:s"));
             $stmt->execute();
 
-            $userToArray = $user->toArray();
+            $userToArray = $user->asArray();
             $userToArray["user_id"] = ID::fromString($this->pdo->lastInsertId())->asInt();
 
             return User::fromArray($userToArray);

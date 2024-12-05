@@ -8,24 +8,23 @@ use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\ArrayConvertible;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\Totp\TOTPSecretKey;
 use Override;
 
-class User implements ArrayConvertible
+readonly class User
 {
     private function __construct(
-        private readonly ?ID $userId,
-        private readonly Username $username,
-        private readonly UserEmail $email,
-        private readonly UserPassword $password,
-        private readonly TOTPSecretKey $totpSecretKey,
-        private readonly UserDescription $description,
-        private readonly bool $isAdmin,
-        private readonly bool $disabled,
-        private readonly DateTimeImmutable $createdAtDate,
-        private readonly DateTimeImmutable $updatedAtDate,
+        private ?ID $userId,
+        private Username $username,
+        private UserEmail $email,
+        private UserPassword $password,
+        private TOTPSecretKey $totpSecretKey,
+        private UserDescription $description,
+        private bool $isAdmin,
+        private bool $disabled,
+        private DateTimeImmutable $createdAtDate,
+        private DateTimeImmutable $updatedAtDate,
     ) {
     }
 
@@ -41,6 +40,7 @@ class User implements ArrayConvertible
         return self::from(null, $username, $email, $password, $totpSecretKey, $description, false, false, $createdAtDate, $updatedAtDate);
     }
 
+
     public static function from(
         ?ID $userId,
         Username $username,
@@ -53,8 +53,7 @@ class User implements ArrayConvertible
         DateTimeImmutable $createdAtDate,
         DateTimeImmutable $updatedAtDate
     ): self {
-
-        return new User(
+        return new self(
             $userId,
             $username,
             $email,
@@ -71,7 +70,7 @@ class User implements ArrayConvertible
     /**
      * @throws ApiException
      */
-    #[Override] public static function fromArray(array $data): self
+    public static function fromDatabase(array $data): self
     {
         try {
             $createdAtDate = new DateTimeImmutable($data['created_at']);
@@ -103,7 +102,42 @@ class User implements ArrayConvertible
         );
     }
 
-    #[Override] public function toArray(): array
+    /**
+     * @throws ApiException
+     */
+    public static function fromArray(array $data): self
+    {
+        try {
+            $createdAtDate = new DateTimeImmutable($data['created_at']);
+            $updatedAtDate = new DateTimeImmutable($data['updated_at']);
+        } catch (DateMalformedStringException $exception) {
+            throw new ApiDateMalformedStringException($exception);
+        }
+
+        $userId = empty($data['user_id']) ? null : ID::from($data['user_id']);
+        $username = Username::from($data['username']);
+        $email = UserEmail::from($data['email']);
+        $password = UserPassword::fromHash($data['password']);
+        $totpSecretKey = TOTPSecretKey::from($data['totp_secret_key']);
+        $description = UserDescription::from($data['description']);
+        $isAdmin = (bool) $data['is_admin'];
+        $disabled = (bool) $data['disabled'];
+
+        return new self(
+            $userId,
+            $username,
+            $email,
+            $password,
+            $totpSecretKey,
+            $description,
+            $isAdmin,
+            $disabled,
+            $createdAtDate,
+            $updatedAtDate
+        );
+    }
+
+    public function asArray(): array
     {
         return [
             'user_id' => $this->userId?->asInt(),

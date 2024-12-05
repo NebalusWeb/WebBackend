@@ -14,11 +14,11 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use ReallySimpleJWT\Token;
 use Slim\App;
 
-class AuthMiddleware implements MiddlewareInterface
+readonly class AuthMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private readonly App $app,
-        private readonly EnvData $env
+        private App $app,
+        private EnvData $env
     ) {
     }
 

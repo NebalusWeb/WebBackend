@@ -5,10 +5,10 @@ namespace Nebalus\Webapi\Value\User;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class Username
+readonly class Username
 {
     private function __construct(
-        private readonly string $username
+        private string $username
     ) {
     }
 
