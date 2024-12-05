@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Dec 05, 2024 at 10:40 AM
+-- Generation Time: Dec 05, 2024 at 11:15 AM
 -- Server version: 9.1.0
 -- PHP Version: 8.2.25
 
@@ -81,10 +81,13 @@ INSERT INTO `account_invitation_tokens` (`owner_account_id`, `invited_account_id
 
 CREATE TABLE `account_punishments` (
                                        `punishment_id` int UNSIGNED NOT NULL,
+                                       `punishment_type` enum('BAN','TEMPBAN') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                                        `punished_account_id` int UNSIGNED NOT NULL,
-                                       `moderator_account_id` int UNSIGNED NOT NULL,
-                                       `punishment_type` enum('BAN','TEMPBAN') NOT NULL,
-                                       `reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                                       `punisher_account_id` int UNSIGNED NOT NULL,
+                                       `pardoner_account_id` int UNSIGNED DEFAULT NULL,
+                                       `punished_reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                                       `pardoned_reason` text,
+                                       `disable_account_while_punisment` bit(1) NOT NULL DEFAULT b'1',
                                        `starts_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                        `ends_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -93,8 +96,8 @@ CREATE TABLE `account_punishments` (
 -- Dumping data for table `account_punishments`
 --
 
-INSERT INTO `account_punishments` (`punishment_id`, `punished_account_id`, `moderator_account_id`, `punishment_type`, `reason`, `starts_at`, `ends_at`) VALUES
-    (1, 3, 1, 'BAN', 'Just for Existence', '2024-11-07 08:13:47', NULL);
+INSERT INTO `account_punishments` (`punishment_id`, `punishment_type`, `punished_account_id`, `punisher_account_id`, `pardoner_account_id`, `punished_reason`, `pardoned_reason`, `disable_account_while_punisment`, `starts_at`, `ends_at`) VALUES
+    (1, 'BAN', 3, 1, NULL, 'Just for Existence', NULL, b'1', '2024-11-07 08:13:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -375,11 +378,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description`, `created_at`, `updated_at`) VALUES
-                                                                                                                                               (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'S61WXXWZU5J6QT0H4CX4B02X2HET0LYW', 'Is the default test User', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
-                                                                                                                                               (2, 'Tester', 'tester@nebalus.dev', '', '5BO8E403VD95MT6XCHWFXOKP8LZCGRKY', 'Password = Tester42', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
-                                                                                                                                               (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'DXUZV74K66YCFV4E9WD9T9G4TYO6SWH7', 'Password = BAnnedTester11', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
-                                                                                                                                               (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '', '5VX7YY1UH0U4DECIJHB1AY6PHL6IGHKP', 'Password = TEST1234!', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description`, `disabled`, `created_at`, `updated_at`) VALUES
+                                                                                                                                               (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'S61WXXWZU5J6QT0H4CX4B02X2HET0LYW', 'Is the default test User', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
+                                                                                                                                               (2, 'Tester', 'tester@nebalus.dev', '', '5BO8E403VD95MT6XCHWFXOKP8LZCGRKY', 'Password = Tester42', b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
+                                                                                                                                               (3, 'BannedTester', 'bannedtester@nebalus.dev', '', 'DXUZV74K66YCFV4E9WD9T9G4TYO6SWH7', 'Password = BAnnedTester11', b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
+                                                                                                                                               (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '', '5VX7YY1UH0U4DECIJHB1AY6PHL6IGHKP', 'Password = TEST1234!', b'0', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
 
 -- --------------------------------------------------------
 
@@ -443,7 +446,8 @@ ALTER TABLE `account_invitation_tokens`
 ALTER TABLE `account_punishments`
     ADD PRIMARY KEY (`punishment_id`),
     ADD KEY `punished_user_id` (`punished_account_id`),
-    ADD KEY `moderator_user_id` (`moderator_account_id`);
+    ADD KEY `moderator_user_id` (`punisher_account_id`),
+    ADD KEY `account_punishments_ibfk_3` (`pardoner_account_id`);
 
 --
 -- Indexes for table `linktrees`
@@ -582,7 +586,8 @@ ALTER TABLE `account_invitation_tokens`
 --
 ALTER TABLE `account_punishments`
     ADD CONSTRAINT `account_punishments_ibfk_1` FOREIGN KEY (`punished_account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    ADD CONSTRAINT `account_punishments_ibfk_2` FOREIGN KEY (`moderator_account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    ADD CONSTRAINT `account_punishments_ibfk_2` FOREIGN KEY (`punisher_account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    ADD CONSTRAINT `account_punishments_ibfk_3` FOREIGN KEY (`pardoner_account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `linktrees`
