@@ -69,7 +69,7 @@ readonly class MySqlUserRepository
             $userToArray = $user->asArray();
             $userToArray["user_id"] = ID::fromString($this->pdo->lastInsertId())->asInt();
 
-            return User::fromArray($userToArray);
+            return User::fromDatabase($userToArray);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
                 "Failed to insert a new user",
@@ -96,7 +96,7 @@ readonly class MySqlUserRepository
                 return null;
             }
 
-            return User::fromArray($data);
+            return User::fromDatabase($data);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
                 "Failed to retrieve user data from userid",
@@ -123,7 +123,7 @@ readonly class MySqlUserRepository
                 return null;
             }
 
-            return User::fromArray($data);
+            return User::fromDatabase($data);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
                 "Failed to retrieve user data from email",
@@ -150,7 +150,7 @@ readonly class MySqlUserRepository
                 return null;
             }
 
-            return User::fromArray($data);
+            return User::fromDatabase($data);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
                 "Failed to retrieve user data from username",
@@ -212,7 +212,7 @@ readonly class MySqlUserRepository
                 return null;
             }
 
-            return InvitationToken::fromArray($data);
+            return InvitationToken::fromDatabase($data);
         } catch (PDOException $e) {
             throw new ApiDatabaseException(
                 "Failed to edit the Invitation Token",

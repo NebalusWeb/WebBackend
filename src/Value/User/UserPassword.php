@@ -39,13 +39,13 @@ readonly class UserPassword
         return new self($hashedPassword);
     }
 
-    public function verify(string $plainPassword): bool
-    {
-        return password_verify($plainPassword, $this->passwordHash);
-    }
-
     public function asString(): string
     {
         return $this->passwordHash;
+    }
+
+    public function verify(string $plainPassword): bool
+    {
+        return password_verify($plainPassword, $this->passwordHash);
     }
 }

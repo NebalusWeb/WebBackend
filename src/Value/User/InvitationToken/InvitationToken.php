@@ -51,21 +51,15 @@ readonly class InvitationToken
 
         $ownerUserId = ID::from($data['owner_user_id']);
         $invitedUserId = empty($data['invited_user_id']) ? null : ID::from($data['invited_user_id']);
-        $pureInvitationToken = PureInvitationToken::fromArray([
-            "token_field_1" => $data['token_field_1'],
-            "token_field_2" => $data['token_field_2'],
-            "token_field_3" => $data['token_field_3'],
-            "token_field_4" => $data['token_field_4'],
-            "token_checksum" => $data['token_checksum'],
-        ]);
-
-        return new self(
-            $ownerUserId,
-            $invitedUserId,
-            $pureInvitationToken,
-            $createdAtDate,
-            $usedAtDate
+        $pureInvitationToken = PureInvitationToken::from(
+            InvitationTokenField::from($data['token_field_1']),
+            InvitationTokenField::from($data['token_field_2']),
+            InvitationTokenField::from($data['token_field_3']),
+            InvitationTokenField::from($data['token_field_4']),
+            InvitationTokenField::from($data['token_checksum']),
         );
+
+        return new self($ownerUserId, $invitedUserId, $pureInvitationToken, $createdAtDate, $usedAtDate);
     }
 
     /**
@@ -84,13 +78,7 @@ readonly class InvitationToken
         $invitedUserId = empty($data['invited_user_id']) ? null : ID::from($data['invited_user_id']);
         $pureInvitationToken = PureInvitationToken::fromArray($data['pure_invitation_token']);
 
-        return new self(
-            $ownerUserId,
-            $invitedUserId,
-            $pureInvitationToken,
-            $createdAtDate,
-            $usedAtDate
-        );
+        return new self($ownerUserId, $invitedUserId, $pureInvitationToken, $createdAtDate, $usedAtDate);
     }
 
     public function asArray(): array

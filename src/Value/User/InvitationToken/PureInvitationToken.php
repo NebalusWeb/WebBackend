@@ -19,29 +19,6 @@ readonly class PureInvitationToken
     /**
      * @throws ApiException
      */
-    public static function from(
-        int $value1,
-        int $value2,
-        int $value3,
-        int $value4,
-        int $checksumValue
-    ): self {
-        $field1 = InvitationTokenField::from($value1);
-        $field2 = InvitationTokenField::from($value2);
-        $field3 = InvitationTokenField::from($value3);
-        $field4 = InvitationTokenField::from($value4);
-        $checksum = InvitationTokenField::from($checksumValue);
-
-        if (self::calculateChecksum($field1, $field2, $field3, $field4) !== $checksum->asInt()) {
-            throw new ApiInvalidArgumentException('Invalid Token: Checksum does not match');
-        }
-
-        return new self($field1, $field2, $field3, $field4, $checksum);
-    }
-
-    /**
-     * @throws ApiException
-     */
     public static function create(): self
     {
         $field1 = InvitationTokenField::create();
@@ -49,6 +26,23 @@ readonly class PureInvitationToken
         $field3 = InvitationTokenField::create();
         $field4 = InvitationTokenField::create();
         $checksum = InvitationTokenField::from(self::calculateChecksum($field1, $field2, $field3, $field4));
+
+        return new self($field1, $field2, $field3, $field4, $checksum);
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public static function from(
+        InvitationTokenField $field1,
+        InvitationTokenField $field2,
+        InvitationTokenField $field3,
+        InvitationTokenField $field4,
+        InvitationTokenField $checksum
+    ): self {
+        if (self::calculateChecksum($field1, $field2, $field3, $field4) !== $checksum->asInt()) {
+            throw new ApiInvalidArgumentException('Invalid Token: Checksum does not match');
+        }
 
         return new self($field1, $field2, $field3, $field4, $checksum);
     }

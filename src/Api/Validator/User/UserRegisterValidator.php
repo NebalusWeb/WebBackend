@@ -4,6 +4,7 @@ namespace Nebalus\Webapi\Api\Validator\User;
 
 use Nebalus\Webapi\Api\Validator\AbstractValidator;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\User\InvitationToken\InvitationTokenField;
 use Nebalus\Webapi\Value\User\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\User\UserEmail;
 use Nebalus\Webapi\Value\User\Username;
@@ -44,11 +45,11 @@ class UserRegisterValidator extends AbstractValidator
     protected function onValidate(array $filteredData): void
     {
         $this->pureInvitationToken = PureInvitationToken::from(
-            $filteredData["invitation_token"]["field_1"],
-            $filteredData["invitation_token"]["field_2"],
-            $filteredData["invitation_token"]["field_3"],
-            $filteredData["invitation_token"]["field_4"],
-            $filteredData["invitation_token"]["checksum"]
+            InvitationTokenField::from($filteredData["invitation_token"]["field_1"]),
+            InvitationTokenField::from($filteredData["invitation_token"]["field_2"]),
+            InvitationTokenField::from($filteredData["invitation_token"]["field_3"]),
+            InvitationTokenField::from($filteredData["invitation_token"]["field_4"]),
+            InvitationTokenField::from($filteredData["invitation_token"]["checksum"])
         );
         $this->userEmail = UserEmail::from($filteredData["email"]);
         $this->username = UserName::from($filteredData["username"]);

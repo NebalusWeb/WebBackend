@@ -16,6 +16,14 @@ readonly class InvitationTokenField
     /**
      * @throws ApiException
      */
+    public static function create(): self
+    {
+        return self::from(rand(0, 9999));
+    }
+
+    /**
+     * @throws ApiException
+     */
     public static function from(int $value): self
     {
         if ($value < 0 || $value > 9999) {
@@ -25,12 +33,14 @@ readonly class InvitationTokenField
         return new self(self::stringifyValue($value), $value);
     }
 
-    /**
-     * @throws ApiException
-     */
-    public static function create(): self
+    public function asString(): string
     {
-        return self::from(rand(0, 9999));
+        return $this->valueAsString;
+    }
+
+    public function asInt(): int
+    {
+        return $this->valueAsInt;
     }
 
     private static function stringifyValue(string $value): string
@@ -47,15 +57,5 @@ readonly class InvitationTokenField
             $value = "0" . $value;
         }
         return $value;
-    }
-
-    public function asString(): string
-    {
-        return $this->valueAsString;
-    }
-
-    public function asInt(): int
-    {
-        return $this->valueAsInt;
     }
 }

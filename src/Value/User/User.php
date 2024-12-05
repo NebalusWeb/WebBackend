@@ -31,15 +31,17 @@ readonly class User
     /**
      * @throws ApiException
      */
-    public static function create(Username $username, UserEmail $email, UserPassword $password): self
-    {
+    public static function create(
+        Username $username,
+        UserEmail $email,
+        UserPassword $password
+    ): self {
         $totpSecretKey = TOTPSecretKey::create();
         $description = UserDescription::from(null);
         $createdAtDate = new DateTimeImmutable();
         $updatedAtDate = new DateTimeImmutable();
         return self::from(null, $username, $email, $password, $totpSecretKey, $description, false, false, $createdAtDate, $updatedAtDate);
     }
-
 
     public static function from(
         ?ID $userId,
@@ -53,18 +55,7 @@ readonly class User
         DateTimeImmutable $createdAtDate,
         DateTimeImmutable $updatedAtDate
     ): self {
-        return new self(
-            $userId,
-            $username,
-            $email,
-            $password,
-            $totpSecretKey,
-            $description,
-            $isAdmin,
-            $disabled,
-            $createdAtDate,
-            $updatedAtDate
-        );
+        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $isAdmin, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     /**
@@ -88,18 +79,7 @@ readonly class User
         $isAdmin = (bool) $data['is_admin'];
         $disabled = (bool) $data['disabled'];
 
-        return new self(
-            $userId,
-            $username,
-            $email,
-            $password,
-            $totpSecretKey,
-            $description,
-            $isAdmin,
-            $disabled,
-            $createdAtDate,
-            $updatedAtDate
-        );
+        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $isAdmin, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     /**
@@ -123,18 +103,7 @@ readonly class User
         $isAdmin = (bool) $data['is_admin'];
         $disabled = (bool) $data['disabled'];
 
-        return new self(
-            $userId,
-            $username,
-            $email,
-            $password,
-            $totpSecretKey,
-            $description,
-            $isAdmin,
-            $disabled,
-            $createdAtDate,
-            $updatedAtDate
-        );
+        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $isAdmin, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     public function asArray(): array
