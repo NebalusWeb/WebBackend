@@ -14,7 +14,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use ReallySimpleJWT\Token;
 use Slim\App;
 
-readonly class AuthMiddleware implements MiddlewareInterface
+readonly class AuthenticationMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private App $app,

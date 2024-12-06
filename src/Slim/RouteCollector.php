@@ -19,7 +19,7 @@ use Nebalus\Webapi\Api\Action\Referral\ReferralGetAction;
 use Nebalus\Webapi\Api\Action\User\UserAuthAction;
 use Nebalus\Webapi\Api\Action\User\UserRegisterAction;
 use Nebalus\Webapi\Option\EnvData;
-use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
+use Nebalus\Webapi\Slim\Middleware\AuthenticationMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
@@ -54,8 +54,9 @@ readonly class RouteCollector
             $group->group("/admin", function (RouteCollectorProxy $group) {
                 $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 });
-            });
+            })->add(AuthenticationMiddleware::class);
             $group->group("/user/{username}", function (RouteCollectorProxy $group) {
+                //$group->map(["GET"], "/permissions", PermissionsGetAction::class);
                 $group->group("/services", function (RouteCollectorProxy $group) {
                     $group->group("/invitationtoken", function (RouteCollectorProxy $group) {
                     });
@@ -75,7 +76,7 @@ readonly class RouteCollector
                         });
                     });
                 });
-            })->add(AuthMiddleware::class);
+            })->add(AuthenticationMiddleware::class);
         });
 
         $this->app->map(["GET"], "/metrics", MetricsAction::class);
