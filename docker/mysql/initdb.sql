@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Dec 05, 2024 at 11:15 AM
+-- Generation Time: Dec 06, 2024 at 03:58 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.2.25
 
@@ -98,6 +98,19 @@ CREATE TABLE `account_punishments` (
 
 INSERT INTO `account_punishments` (`punishment_id`, `punishment_type`, `punished_account_id`, `punisher_account_id`, `pardoner_account_id`, `punished_reason`, `pardoned_reason`, `disable_account_while_punisment`, `starts_at`, `ends_at`) VALUES
     (1, 'BAN', 3, 1, NULL, 'Just for Existence', NULL, b'1', '2024-11-07 08:13:47', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groups`
+--
+
+CREATE TABLE `groups` (
+                          `group_id` int UNSIGNED NOT NULL,
+                          `group_name` varchar(30) NOT NULL,
+                          `permissions` json NOT NULL,
+                          `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -387,6 +400,17 @@ INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_ke
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user_groups_connector`
+--
+
+CREATE TABLE `user_groups_connector` (
+                                         `user_id` int UNSIGNED NOT NULL,
+                                         `group_id` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_login_history`
 --
 
@@ -408,18 +432,6 @@ INSERT INTO `user_login_history` (`login_history_id`, `user_id`, `ip_address`, `
                                                                                                                           (3, 2, 0x31383737343331383433, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0', '2024-11-07 08:17:36'),
                                                                                                                           (4, 1, 0x30, b'0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-11-12 08:17:37'),
                                                                                                                           (5, 1, 0x33323332323336303037, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-10-08 08:17:37');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_permissions`
---
-
-CREATE TABLE `user_permissions` (
-                                    `user_id` int UNSIGNED NOT NULL,
-                                    `access_level` enum('ADMINISTRATOR','USER') NOT NULL DEFAULT 'USER',
-                                    `permissions` json NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
@@ -448,6 +460,12 @@ ALTER TABLE `account_punishments`
     ADD KEY `punished_user_id` (`punished_account_id`),
     ADD KEY `moderator_user_id` (`punisher_account_id`),
     ADD KEY `account_punishments_ibfk_3` (`pardoner_account_id`);
+
+--
+-- Indexes for table `groups`
+--
+ALTER TABLE `groups`
+    ADD PRIMARY KEY (`group_id`);
 
 --
 -- Indexes for table `linktrees`
@@ -494,17 +512,18 @@ ALTER TABLE `users`
     ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `user_groups_connector`
+--
+ALTER TABLE `user_groups_connector`
+    ADD UNIQUE KEY `user_id` (`user_id`),
+    ADD KEY `user_groups_connector_ibfk_2` (`group_id`);
+
+--
 -- Indexes for table `user_login_history`
 --
 ALTER TABLE `user_login_history`
     ADD PRIMARY KEY (`login_history_id`),
     ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `user_permissions`
---
-ALTER TABLE `user_permissions`
-    ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -521,6 +540,12 @@ ALTER TABLE `accounts`
 --
 ALTER TABLE `account_punishments`
     MODIFY `punishment_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `groups`
+--
+ALTER TABLE `groups`
+    MODIFY `group_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `linktrees`
@@ -620,16 +645,17 @@ ALTER TABLE `referral_clicks`
     ADD CONSTRAINT `referral_clicks_ibfk_1` FOREIGN KEY (`referral_id`) REFERENCES `referrals` (`referral_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
+-- Constraints for table `user_groups_connector`
+--
+ALTER TABLE `user_groups_connector`
+    ADD CONSTRAINT `user_groups_connector_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `user_groups_connector_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `user_login_history`
 --
 ALTER TABLE `user_login_history`
     ADD CONSTRAINT `user_login_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
-
---
--- Constraints for table `user_permissions`
---
-ALTER TABLE `user_permissions`
-    ADD CONSTRAINT `user_permissions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
