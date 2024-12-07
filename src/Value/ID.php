@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Value;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class ID
+trait ID
 {
     private function __construct(
         private readonly int $id

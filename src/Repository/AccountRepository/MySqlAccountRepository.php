@@ -4,10 +4,10 @@ namespace Nebalus\Webapi\Repository\AccountRepository;
 
 use Nebalus\Webapi\Exception\ApiDatabaseException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\ID;
-use Nebalus\Webapi\Value\User\InvitationToken\InvitationToken;
-use Nebalus\Webapi\Value\User\InvitationToken\InvitationTokens;
-use Nebalus\Webapi\Value\User\InvitationToken\PureInvitationToken;
+use Nebalus\Webapi\Value\Account\AccountId;
+use Nebalus\Webapi\Value\Account\InvitationToken\InvitationToken;
+use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokens;
+use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
 use PDO;
 use PDOException;
 
@@ -31,7 +31,7 @@ class MySqlAccountRepository
                 ";
 
             $stmt = $this->pdo->prepare($sql);
-            $stmt->bindValue(':invited_account_id', $invitationToken->getInvitedUserId()->asInt());
+            $stmt->bindValue(':invited_account_id', $invitationToken->getInvitedAccountId()->asInt());
             $stmt->bindValue(':used_at', $invitationToken->getUsedAtDate()->format('Y-m-d H:i:s'));
             $stmt->bindValue(':token_field_1', $invitationToken->getField1()->asInt());
             $stmt->bindValue(':token_field_2', $invitationToken->getField2()->asInt());
@@ -80,14 +80,14 @@ class MySqlAccountRepository
         }
     }
 
-    public function getInvitationTokensFromOwnerUserId(ID $ownerUserId): InvitationTokens
+    public function getInvitationTokensFromOwnerAccountId(AccountId $ownerAccountId): InvitationTokens
     {
         $data = [];
         try {
             $sql = "SELECT * FROM `account_invitation_tokens` WHERE `owner_account_id` = :owner_account_id";
 
             $stmt = $this->pdo->prepare($sql);
-            $stmt->bindValue(':owner_account_id', $ownerUserId->asInt());
+            $stmt->bindValue(':owner_account_id', $ownerAccountId->asInt());
             $stmt->execute();
 
             while ($row = $stmt->fetch()) {

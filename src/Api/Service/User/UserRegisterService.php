@@ -2,20 +2,20 @@
 
 namespace Nebalus\Webapi\Api\Service\User;
 
-use DateTimeImmutable;
 use Nebalus\Webapi\Api\Validator\User\UserRegisterValidator;
 use Nebalus\Webapi\Api\View\User\UserRegisterView;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Repository\AccountRepository\MySqlAccountRepository;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
-use Nebalus\Webapi\Value\User\InvitationToken\InvitationToken;
 use Nebalus\Webapi\Value\User\User;
 
 readonly class UserRegisterService
 {
     public function __construct(
         private MySqlUserRepository $mySqlUserRepository,
+        private MySqlAccountRepository $mySqlAccountRepository,
     ) {
     }
 
@@ -24,7 +24,7 @@ readonly class UserRegisterService
      */
     public function execute(UserRegisterValidator $validator): ResultInterface
     {
-        $invitationToken = $this->mySqlUserRepository->findInvitationTokenByFields($validator->getPureInvitationToken());
+        $invitationToken = $this->mySqlAccountRepository->findInvitationTokenByFields($validator->getPureInvitationToken());
 
         if ($invitationToken === null) {
             return Result::createError('Registration failed: The Invitation Token you provided does not exist', 403);

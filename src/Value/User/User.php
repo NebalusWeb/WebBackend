@@ -10,18 +10,16 @@ use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\Totp\TOTPSecretKey;
-use Override;
 
 readonly class User
 {
     private function __construct(
-        private ?ID $userId,
+        private ?UserId $userId,
         private Username $username,
         private UserEmail $email,
         private UserPassword $password,
         private TOTPSecretKey $totpSecretKey,
         private UserDescription $description,
-        private bool $isAdmin,
         private bool $disabled,
         private DateTimeImmutable $createdAtDate,
         private DateTimeImmutable $updatedAtDate,
@@ -40,22 +38,21 @@ readonly class User
         $description = UserDescription::from(null);
         $createdAtDate = new DateTimeImmutable();
         $updatedAtDate = new DateTimeImmutable();
-        return self::from(null, $username, $email, $password, $totpSecretKey, $description, false, false, $createdAtDate, $updatedAtDate);
+        return self::from(null, $username, $email, $password, $totpSecretKey, $description, false, $createdAtDate, $updatedAtDate);
     }
 
     public static function from(
-        ?ID $userId,
+        ?UserId $userId,
         Username $username,
         UserEmail $email,
         UserPassword $password,
         TOTPSecretKey $totpSecretKey,
         UserDescription $description,
-        bool $isAdmin,
         bool $disabled,
         DateTimeImmutable $createdAtDate,
         DateTimeImmutable $updatedAtDate
     ): self {
-        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $isAdmin, $disabled, $createdAtDate, $updatedAtDate);
+        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     /**
@@ -70,16 +67,15 @@ readonly class User
             throw new ApiDateMalformedStringException($exception);
         }
 
-        $userId = empty($data['user_id']) ? null : ID::from($data['user_id']);
+        $userId = empty($data['user_id']) ? null : UserId::from($data['user_id']);
         $username = Username::from($data['username']);
         $email = UserEmail::from($data['email']);
         $password = UserPassword::fromHash($data['password']);
         $totpSecretKey = TOTPSecretKey::from($data['totp_secret_key']);
         $description = UserDescription::from($data['description']);
-        $isAdmin = (bool) $data['is_admin'];
         $disabled = (bool) $data['disabled'];
 
-        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $isAdmin, $disabled, $createdAtDate, $updatedAtDate);
+        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     /**
@@ -100,10 +96,9 @@ readonly class User
         $password = UserPassword::fromHash($data['password']);
         $totpSecretKey = TOTPSecretKey::from($data['totp_secret_key']);
         $description = UserDescription::from($data['description']);
-        $isAdmin = (bool) $data['is_admin'];
         $disabled = (bool) $data['disabled'];
 
-        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $isAdmin, $disabled, $createdAtDate, $updatedAtDate);
+        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     public function asArray(): array
@@ -115,7 +110,6 @@ readonly class User
             'password' => $this->password->asString(),
             'totp_secret_key' => $this->totpSecretKey->asString(),
             'description' => $this->description->asString(),
-            'is_admin' => $this->isAdmin,
             'disabled' => $this->disabled,
             'created_at' => $this->createdAtDate->format(DATE_ATOM),
             'updated_at' => $this->updatedAtDate->format(DATE_ATOM),
@@ -145,11 +139,6 @@ readonly class User
     public function getTotpSecretKey(): TOTPSecretKey
     {
         return $this->totpSecretKey;
-    }
-
-    public function isAdmin(): bool
-    {
-        return $this->isAdmin;
     }
 
     public function isDisabled(): bool

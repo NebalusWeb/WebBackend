@@ -4,8 +4,8 @@ namespace Nebalus\Webapi\Api\Validator\User;
 
 use Nebalus\Webapi\Api\Validator\AbstractValidator;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\User\InvitationToken\InvitationTokenField;
-use Nebalus\Webapi\Value\User\InvitationToken\PureInvitationToken;
+use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokenField;
+use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\User\UserEmail;
 use Nebalus\Webapi\Value\User\Username;
 use Nebalus\Webapi\Value\User\UserPassword;

@@ -6,12 +6,12 @@ namespace Nebalus\Webapi\Repository\UserRepository;
 
 use Nebalus\Webapi\Exception\ApiDatabaseException;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Repository\AccountRepository\MySqlAccountRepository;
+use Nebalus\Webapi\Value\Account\InvitationToken\InvitationToken;
 use Nebalus\Webapi\Value\ID;
-use Nebalus\Webapi\Value\User\InvitationToken\InvitationToken;
-use Nebalus\Webapi\Value\User\InvitationToken\InvitationTokens;
-use Nebalus\Webapi\Value\User\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\User\User;
 use Nebalus\Webapi\Value\User\UserEmail;
+use Nebalus\Webapi\Value\User\UserId;
 use Nebalus\Webapi\Value\User\Username;
 use PDO;
 use PDOException;
@@ -19,7 +19,8 @@ use PDOException;
 readonly class MySqlUserRepository
 {
     public function __construct(
-        private PDO $pdo
+        private PDO $pdo,
+        private MySqlAccountRepository $accountRepository
     ) {
     }
 
@@ -31,8 +32,8 @@ readonly class MySqlUserRepository
         $this->pdo->beginTransaction();
         try {
             $newUser = $this->insertUser($user);
-            $preInvitationToken = $invitationToken->setInvitedUserId($newUser->getUserId());
-            $this->updateInvitationToken($preInvitationToken);
+            $preInvitationToken = $invitationToken->setInvitedAccountId($newUser->getUserId());
+            $this->accountRepository->updateInvitationToken($preInvitationToken);
             $this->pdo->commit();
             return $newUser;
         } catch (PDOException | ApiException $e) {
@@ -67,7 +68,7 @@ readonly class MySqlUserRepository
             $stmt->execute();
 
             $userToArray = $user->asArray();
-            $userToArray["user_id"] = ID::fromString($this->pdo->lastInsertId())->asInt();
+            $userToArray["user_id"] = UserId::fromString($this->pdo->lastInsertId())->asInt();
 
             return User::fromDatabase($userToArray);
         } catch (PDOException $e) {
@@ -82,7 +83,7 @@ readonly class MySqlUserRepository
     /**
      * @throws ApiException
      */
-    public function findUserFromId(ID $userId): ?User
+    public function findUserFromId(UserId $userId): ?User
     {
         try {
             $sql = "SELECT * FROM `users` WHERE `user_id` = :user_id";

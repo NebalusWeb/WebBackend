@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\InvitationToken;
+namespace Nebalus\Webapi\Value\Account\InvitationToken;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;

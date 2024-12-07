@@ -2,19 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Value\User\InvitationToken;
+namespace Nebalus\Webapi\Value\Account\InvitationToken;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\Account\AccountId;
 use Nebalus\Webapi\Value\ID;
 
 readonly class InvitationToken
 {
     private function __construct(
-        private ID $ownerUserId,
-        private ?ID $invitedUserId,
+        private AccountId $ownerAccountId,
+        private ?AccountId $invitedAccountId,
         private PureInvitationToken $pureInvitationToken,
         private DateTimeImmutable $createdAtDate,
         private ?DateTimeImmutable $usedAtDate
@@ -22,15 +23,15 @@ readonly class InvitationToken
     }
 
     public static function from(
-        ID $ownerUserId,
-        ?ID $invitedUserId,
+        AccountId $ownerAccountId,
+        ?AccountId $invitedAccountId,
         PureInvitationToken $pureInvitationToken,
         DateTimeImmutable $creationTimestamp,
         ?DateTimeImmutable $usedTimestamp
     ): self {
         return new self(
-            $ownerUserId,
-            $invitedUserId,
+            $ownerAccountId,
+            $invitedAccountId,
             $pureInvitationToken,
             $creationTimestamp,
             $usedTimestamp
@@ -49,8 +50,8 @@ readonly class InvitationToken
             throw new ApiDateMalformedStringException($exception);
         }
 
-        $ownerUserId = ID::from($data['owner_user_id']);
-        $invitedUserId = empty($data['invited_user_id']) ? null : ID::from($data['invited_user_id']);
+        $ownerAccountId = AccountId::from($data['owner_account_id']);
+        $invitedAccountId = empty($data['invited_account_id']) ? null : AccountId::from($data['invited_account_id']);
         $pureInvitationToken = PureInvitationToken::from(
             InvitationTokenField::from($data['token_field_1']),
             InvitationTokenField::from($data['token_field_2']),
@@ -59,7 +60,7 @@ readonly class InvitationToken
             InvitationTokenField::from($data['token_checksum']),
         );
 
-        return new self($ownerUserId, $invitedUserId, $pureInvitationToken, $createdAtDate, $usedAtDate);
+        return new self($ownerAccountId, $invitedAccountId, $pureInvitationToken, $createdAtDate, $usedAtDate);
     }
 
     /**
@@ -74,32 +75,32 @@ readonly class InvitationToken
             throw new ApiDateMalformedStringException($exception);
         }
 
-        $ownerUserId = ID::from($data['owner_user_id']);
-        $invitedUserId = empty($data['invited_user_id']) ? null : ID::from($data['invited_user_id']);
+        $ownerAccountId = AccountId::from($data['owner_account_id']);
+        $invitedAccountId = empty($data['invited_account_id']) ? null : AccountId::from($data['invited_account_id']);
         $pureInvitationToken = PureInvitationToken::fromArray($data['pure_invitation_token']);
 
-        return new self($ownerUserId, $invitedUserId, $pureInvitationToken, $createdAtDate, $usedAtDate);
+        return new self($ownerAccountId, $invitedAccountId, $pureInvitationToken, $createdAtDate, $usedAtDate);
     }
 
     public function asArray(): array
     {
         return [
-            'owner_user_id' => $this->ownerUserId->asInt(),
-            'invited_user_id' => $this->invitedUserId->asString(),
+            'owner_account_id' => $this->ownerAccountId->asInt(),
+            'invited_account_id' => $this->invitedAccountId->asInt(),
             'pure_invitation_token' => $this->pureInvitationToken->asArray(),
             "created_at" => $this->createdAtDate->format(DATE_ATOM),
             "used_at" => $this->usedAtDate->format(DATE_ATOM),
         ];
     }
 
-    public function getOwnerUserId(): ID
+    public function getOwnerAccountId(): AccountId
     {
-        return $this->ownerUserId;
+        return $this->ownerAccountId;
     }
 
-    public function getInvitedUserId(): ?ID
+    public function getInvitedAccountId(): ?AccountId
     {
-        return $this->invitedUserId;
+        return $this->invitedAccountId;
     }
 
     public function getPureInvitationToken(): PureInvitationToken
@@ -142,13 +143,13 @@ readonly class InvitationToken
         return $this->pureInvitationToken->getChecksumField();
     }
 
-    public function setInvitedUserId(ID $newId): self
+    public function setInvitedAccountId(AccountId $newInvitedAccountId): self
     {
-        return new self($this->ownerUserId, $newId, $this->pureInvitationToken, $this->createdAtDate, new DateTimeImmutable());
+        return new self($this->ownerAccountId, $newInvitedAccountId, $this->pureInvitationToken, $this->createdAtDate, new DateTimeImmutable());
     }
 
     public function isExpired(): bool
     {
-        return $this->invitedUserId !== null || $this->usedAtDate !== null;
+        return $this->invitedAccountId !== null || $this->usedAtDate !== null;
     }
 }

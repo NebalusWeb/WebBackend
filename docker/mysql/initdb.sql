@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 06. Dez 2024 um 22:39
+-- Erstellungszeit: 07. Dez 2024 um 00:44
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 

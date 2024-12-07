@@ -9,12 +9,13 @@ use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\ID;
+use Nebalus\Webapi\Value\User\UserId;
 
 readonly class Referral
 {
     private function __construct(
-        private ID $referralId,
-        private ID $userId,
+        private ReferralId $referralId,
+        private UserId $userId,
         private ReferralCode $code,
         private string $pointer,
         private bool $disabled,
@@ -35,8 +36,8 @@ readonly class Referral
             throw new ApiDateMalformedStringException($exception);
         }
 
-        $referralId = ID::from($data["referral_id"]);
-        $userId = ID::from($data["user_id"]);
+        $referralId = ReferralId::from($data["referral_id"]);
+        $userId = UserId::from($data["user_id"]);
         $code = ReferralCode::from($data["code"]);
         $pointer = $data["pointer"];
         $disabled = (bool) $data["disabled"];
@@ -64,11 +65,11 @@ readonly class Referral
         ];
     }
 
-    public function getReferralId(): ID
+    public function getReferralId(): ReferralId
     {
         return $this->referralId;
     }
-    public function getUserId(): ID
+    public function getUserId(): UserId
     {
         return $this->userId;
     }
