@@ -9,7 +9,6 @@ use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Account\AccountId;
-use Nebalus\Webapi\Value\ID;
 
 readonly class InvitationToken
 {

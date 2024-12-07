@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 07. Dez 2024 um 00:44
+-- Erstellungszeit: 07. Dez 2024 um 22:19
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -107,7 +107,7 @@ INSERT INTO `account_punishments` (`punishment_id`, `punishment_type`, `punished
 
 CREATE TABLE `groups` (
                           `group_id` int UNSIGNED NOT NULL,
-                          `group_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                          `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                           `permissions` json NOT NULL,
                           `apply_on_user_creation` bit(1) NOT NULL DEFAULT b'0',
                           `deletable` bit(1) NOT NULL DEFAULT b'1',
@@ -119,9 +119,9 @@ CREATE TABLE `groups` (
 -- Daten für Tabelle `groups`
 --
 
-INSERT INTO `groups` (`group_id`, `group_name`, `permissions`, `apply_on_user_creation`, `deletable`, `created_at`, `updated_at`) VALUES
-                                                                                                                                      (1, 'ADMINISTRATOR', '{}', b'0', b'0', '2024-12-06 19:39:38', '2024-12-06 19:44:34'),
-                                                                                                                                      (2, 'DEFAULT_GROUP', '{}', b'1', b'0', '2024-12-06 19:40:22', '2024-12-06 19:44:34');
+INSERT INTO `groups` (`group_id`, `name`, `permissions`, `apply_on_user_creation`, `deletable`, `created_at`, `updated_at`) VALUES
+                                                                                                                                (1, 'ADMINISTRATOR', '{}', b'0', b'0', '2024-12-06 19:39:38', '2024-12-06 19:44:34'),
+                                                                                                                                (2, 'DEFAULT_GROUP', '{}', b'1', b'0', '2024-12-06 19:40:22', '2024-12-06 19:44:34');
 
 -- --------------------------------------------------------
 
@@ -177,7 +177,7 @@ INSERT INTO `linktree_clicks` (`click_id`, `linktree_id`, `clicked_at`) VALUES
 CREATE TABLE `linktree_entrys` (
                                    `linktree_entry_id` int UNSIGNED NOT NULL,
                                    `linktree_id` int UNSIGNED NOT NULL,
-                                   `label` varchar(84) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                                    `url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                                    `description` text,
                                    `display_order` int UNSIGNED NOT NULL,
@@ -189,11 +189,11 @@ CREATE TABLE `linktree_entrys` (
 -- Daten für Tabelle `linktree_entrys`
 --
 
-INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `label`, `url`, `description`, `display_order`, `created_at`, `updated_at`) VALUES
-                                                                                                                                                   (1, 1, 'Youtube', 'https://youtube.com', NULL, 1, '2024-11-12 19:20:35', '2024-11-12 19:20:35'),
-                                                                                                                                                   (2, 1, 'Github', 'https://github.com/Nebalus', NULL, 2, '2024-11-12 19:21:38', '2024-11-12 19:21:38'),
-                                                                                                                                                   (3, 1, 'Crunchyroll', 'https://www.crunchyroll.com/', NULL, 3, '2024-11-12 19:22:36', '2024-11-12 19:22:36'),
-                                                                                                                                                   (4, 3, 'ChatGPT', 'https://chatgpt.com/', NULL, 1, '2024-11-12 19:26:10', '2024-11-12 19:26:10');
+INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `name`, `url`, `description`, `display_order`, `created_at`, `updated_at`) VALUES
+                                                                                                                                                  (1, 1, 'Youtube', 'https://youtube.com', NULL, 1, '2024-11-12 19:20:35', '2024-11-12 19:20:35'),
+                                                                                                                                                  (2, 1, 'Github', 'https://github.com/Nebalus', NULL, 2, '2024-11-12 19:21:38', '2024-11-12 19:21:38'),
+                                                                                                                                                  (3, 1, 'Crunchyroll', 'https://www.crunchyroll.com/', NULL, 3, '2024-11-12 19:22:36', '2024-11-12 19:22:36'),
+                                                                                                                                                  (4, 3, 'ChatGPT', 'https://chatgpt.com/', NULL, 1, '2024-11-12 19:26:10', '2024-11-12 19:26:10');
 
 -- --------------------------------------------------------
 
@@ -204,9 +204,9 @@ INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `label`, `url
 CREATE TABLE `referrals` (
                              `referral_id` int UNSIGNED NOT NULL,
                              `user_id` int UNSIGNED NOT NULL,
-                             `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                             `pointer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '/',
-                             `name` varchar(32) DEFAULT NULL,
+                             `code` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                             `pointer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                             `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
                              `disabled` bit(1) NOT NULL DEFAULT b'0',
                              `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                              `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -217,11 +217,11 @@ CREATE TABLE `referrals` (
 --
 
 INSERT INTO `referrals` (`referral_id`, `user_id`, `code`, `pointer`, `name`, `disabled`, `created_at`, `updated_at`) VALUES
-                                                                                                                          (1, 1, 'TEST', '/', 'TEST Referral', b'0', '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
+                                                                                                                          (1, 1, 'TEST', 'https://nebalus.dev', 'TEST Referral', b'0', '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
                                                                                                                           (3, 1, 'sdfsdOPs', 'https://google.com', 'Hier zu google lol', b'0', '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
-                                                                                                                          (5, 1, 'TEST42', '/', '42!', b'0', '2024-02-27 11:04:20', '2024-09-28 15:35:26'),
-                                                                                                                          (6, 1, '42', '/42', '42!1!!1!', b'0', '2024-02-28 21:30:24', '2024-09-28 15:35:26'),
-                                                                                                                          (7, 1, 'dfghdfgh', '/', 'Random shit', b'1', '2024-08-03 23:20:58', '2024-09-28 15:35:26'),
+                                                                                                                          (5, 1, 'TEST42', 'https://nebalus.dev', '42!', b'0', '2024-02-27 11:04:20', '2024-09-28 15:35:26'),
+                                                                                                                          (6, 1, '42', 'https://nebalus.dev', '42!1!!1!', b'0', '2024-02-28 21:30:24', '2024-09-28 15:35:26'),
+                                                                                                                          (7, 1, 'dfghdfgh', 'https://nebalus.dev', 'Random shit', b'1', '2024-08-03 23:20:58', '2024-09-28 15:35:26'),
                                                                                                                           (11, 2, 'youtube', 'https://youtube.com', 'youtube hehe', b'0', '2024-11-07 08:19:50', '2024-11-07 08:19:50'),
                                                                                                                           (12, 1, 'ysxfdh', 'https://status.nebalus.dev', NULL, b'0', '2024-12-06 22:38:13', '2024-12-06 22:38:13');
 
@@ -390,7 +390,7 @@ INSERT INTO `referral_clicks` (`click_id`, `referral_id`, `clicked_at`) VALUES
 
 CREATE TABLE `users` (
                          `user_id` int UNSIGNED NOT NULL,
-                         `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                         `username` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `totp_secret_key` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -491,7 +491,7 @@ ALTER TABLE `account_punishments`
 --
 ALTER TABLE `groups`
     ADD PRIMARY KEY (`group_id`),
-    ADD UNIQUE KEY `group_name` (`group_name`);
+    ADD UNIQUE KEY `group_name` (`name`);
 
 --
 -- Indizes für die Tabelle `linktrees`

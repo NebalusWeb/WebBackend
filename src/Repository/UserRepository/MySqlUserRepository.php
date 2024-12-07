@@ -8,7 +8,6 @@ use Nebalus\Webapi\Exception\ApiDatabaseException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\AccountRepository\MySqlAccountRepository;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationToken;
-use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\User;
 use Nebalus\Webapi\Value\User\UserEmail;
 use Nebalus\Webapi\Value\User\UserId;

@@ -7,6 +7,8 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 readonly class UserEmail
 {
+    private const string REGEX = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
+
     private function __construct(
         private string $email,
     ) {
@@ -17,8 +19,7 @@ readonly class UserEmail
      */
     public static function from(string $email): self
     {
-        $emailRegEx = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
-        if (preg_match($emailRegEx, $email) === false) {
+        if (preg_match(self::REGEX, $email) === false) {
             throw new ApiInvalidArgumentException('Invalid email');
         }
 

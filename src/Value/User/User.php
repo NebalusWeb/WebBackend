@@ -116,7 +116,7 @@ readonly class User
         ];
     }
 
-    public function getUserId(): ?ID
+    public function getUserId(): ?UserId
     {
         return $this->userId;
     }

@@ -8,9 +8,7 @@ use Nebalus\Webapi\Api\Validator\User\UserAuthValidator;
 use Nebalus\Webapi\Api\View\User\UserAuthView;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Option\EnvData;
-use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
-use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 use ReallySimpleJWT\Exception\BuildException;
@@ -20,7 +18,6 @@ readonly class UserAuthService
 {
     public function __construct(
         private MySqlUserRepository $mySqlUserRepository,
-        private MySqlReferralRepository $mySqlReferralRepository,
         private EnvData $envData
     ) {
     }
@@ -31,8 +28,6 @@ readonly class UserAuthService
     public function execute(UserAuthValidator $validator): ResultInterface
     {
         $user = $this->mySqlUserRepository->findUserFromUsername($validator->getUsername());
-
-        $this->mySqlReferralRepository->deleteReferralById(ID::from(123));
 
         if ($user === null || $user->isDisabled() || $user->getPassword()->verify($validator->getPassword()) === false) {
             return Result::createError('Authentication failed: Wrong credentials', 401);

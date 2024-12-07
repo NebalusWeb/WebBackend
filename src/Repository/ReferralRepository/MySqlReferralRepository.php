@@ -8,6 +8,7 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Referral\ReferralId;
 use Nebalus\Webapi\Value\Referral\ReferralPointer;
 use Nebalus\Webapi\Value\Referral\Referrals;
 use PDO;
@@ -20,7 +21,7 @@ readonly class MySqlReferralRepository
     ) {
     }
 
-    public function insertReferral(ID $userId, ReferralCode $code, ReferralPointer $pointer, bool $disabled = true): bool
+    public function insertReferral(ReferralId $userId, ReferralCode $code, ReferralPointer $pointer, bool $disabled = true): bool
     {
         $sql = "INSERT INTO referrals(user_id, code, pointer, disabled) VALUES (:user_id, :code, :pointer, :disabled)";
 
@@ -32,7 +33,7 @@ readonly class MySqlReferralRepository
         return $stmt->execute();
     }
 
-    public function insertReferralClickEntry(ID $referralId): bool
+    public function insertReferralClickEntry(ReferralId $referralId): bool
     {
         $sql = "INSERT INTO referral_clicks(referral_id) VALUES (:referral_id)";
 
@@ -41,7 +42,7 @@ readonly class MySqlReferralRepository
         return $stmt->execute();
     }
 
-    public function deleteReferralById(ID $referralId): bool
+    public function deleteReferralById(ReferralId $referralId): bool
     {
         $sql = "DELETE FROM referrals WHERE referral_id = :referral_id";
 

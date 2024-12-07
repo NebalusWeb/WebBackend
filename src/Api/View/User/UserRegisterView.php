@@ -14,7 +14,6 @@ class UserRegisterView
             "user_id" => $user->getUserId()?->asInt(),
             "username" => $user->getUsername()->asString(),
             "email" => $user->getEmail()->asString(),
-            "is_admin" => $user->isAdmin(),
             "disabled" => $user->isDisabled(),
             "created_at_timestamp" => $user->getCreatedAtDate()->getTimestamp(),
         ];
