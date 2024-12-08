@@ -29,20 +29,11 @@ readonly class MySqlUserRepository
     public function registerUser(User $user, InvitationToken $invitationToken): User
     {
         $this->pdo->beginTransaction();
-        try {
-            $newUser = $this->insertUser($user);
-            $preInvitationToken = $invitationToken->setInvitedAccountId($newUser->getUserId());
-            $this->accountRepository->updateInvitationToken($preInvitationToken);
-            $this->pdo->commit();
-            return $newUser;
-        } catch (PDOException | ApiException $e) {
-            $this->pdo->rollBack();
-            throw new ApiDatabaseException(
-                "Failed to register a new user",
-                500,
-                $e
-            );
-        }
+        $newUser = $this->insertUser($user);
+        $preInvitationToken = $invitationToken->setInvitedAccountId($newUser->getUserId());
+        $this->accountRepository->updateInvitationToken($preInvitationToken);
+        $this->pdo->commit();
+        return $newUser;
     }
 
     /**
@@ -50,33 +41,24 @@ readonly class MySqlUserRepository
      */
     private function insertUser(User $user): User
     {
-        try {
-            $sql = "INSERT INTO `users`(`username`, `email`, `password`, `totp_secret_key`, `description`, `is_admin`, `disabled`, `created_at`, `updated_at`) 
-                                VALUES (:username,:email,:password,:totp_secret_key,:description,:is_admin,:disabled,:created_at,:updated_at)";
+        $sql = "INSERT INTO users(username, email, password, totp_secret_key, description, disabled, created_at, updated_at) 
+                            VALUES (:username,:email,:password,:totp_secret_key,:description,:disabled,:created_at,:updated_at)";
 
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindValue(':username', $user->getUsername()->asString());
-            $stmt->bindValue(':email', $user->getEmail()->asString());
-            $stmt->bindValue(':password', $user->getPassword()->asString());
-            $stmt->bindValue(':totp_secret_key', $user->getTotpSecretKey()->asString());
-            $stmt->bindValue(':description', $user->getDescription()->asString());
-            $stmt->bindValue(':is_admin', $user->isAdmin());
-            $stmt->bindValue(':disabled', $user->isDisabled());
-            $stmt->bindValue(':created_at', $user->getCreatedAtDate()->format("Y-m-d H:i:s"));
-            $stmt->bindValue(':updated_at', $user->getUpdatedAtDate()->format("Y-m-d H:i:s"));
-            $stmt->execute();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':username', $user->getUsername()->asString());
+        $stmt->bindValue(':email', $user->getEmail()->asString());
+        $stmt->bindValue(':password', $user->getPassword()->asString());
+        $stmt->bindValue(':totp_secret_key', $user->getTotpSecretKey()->asString());
+        $stmt->bindValue(':description', $user->getDescription()->asString());
+        $stmt->bindValue(':disabled', $user->isDisabled());
+        $stmt->bindValue(':created_at', $user->getCreatedAtDate()->format("Y-m-d H:i:s"));
+        $stmt->bindValue(':updated_at', $user->getUpdatedAtDate()->format("Y-m-d H:i:s"));
+        $stmt->execute();
 
-            $userToArray = $user->asArray();
-            $userToArray["user_id"] = UserId::fromString($this->pdo->lastInsertId())->asInt();
+        $userToArray = $user->asArray();
+        $userToArray["user_id"] = UserId::fromString($this->pdo->lastInsertId())->asInt();
 
-            return User::fromDatabase($userToArray);
-        } catch (PDOException $e) {
-            throw new ApiDatabaseException(
-                "Failed to insert a new user",
-                500,
-                $e
-            );
-        }
+        return User::fromDatabase($userToArray);
     }
 
     /**
@@ -84,26 +66,18 @@ readonly class MySqlUserRepository
      */
     public function findUserFromId(UserId $userId): ?User
     {
-        try {
-            $sql = "SELECT * FROM `users` WHERE `user_id` = :user_id";
+        $sql = "SELECT * FROM users WHERE user_id = :user_id INNER JOIN accounts ON accounts.user_id = users.user_id";
 
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindValue(':user_id', $userId->asInt());
-            $stmt->execute();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':user_id', $userId->asInt());
+        $stmt->execute();
 
-            $data = $stmt->fetch();
-            if (!$data) {
-                return null;
-            }
-
-            return User::fromDatabase($data);
-        } catch (PDOException $e) {
-            throw new ApiDatabaseException(
-                "Failed to retrieve user data from userid",
-                500,
-                $e
-            );
+        $data = $stmt->fetch();
+        if (!$data) {
+            return null;
         }
+
+        return User::fromDatabase($data);
     }
 
     /**
@@ -111,26 +85,18 @@ readonly class MySqlUserRepository
      */
     public function findUserFromEmail(UserEmail $email): ?User
     {
-        try {
-            $sql = "SELECT * FROM `users` WHERE `email` = :email";
+        $sql = "SELECT * FROM users WHERE email = :email INNER JOIN accounts ON accounts.user_id = users.user_id";
 
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindValue(':email', $email->asString());
-            $stmt->execute();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':email', $email->asString());
+        $stmt->execute();
 
-            $data = $stmt->fetch();
-            if (!$data) {
-                return null;
-            }
-
-            return User::fromDatabase($data);
-        } catch (PDOException $e) {
-            throw new ApiDatabaseException(
-                "Failed to retrieve user data from email",
-                500,
-                $e
-            );
+        $data = $stmt->fetch();
+        if (!$data) {
+            return null;
         }
+
+        return User::fromDatabase($data);
     }
 
     /**
@@ -138,25 +104,17 @@ readonly class MySqlUserRepository
      */
     public function findUserFromUsername(Username $username): ?User
     {
-        try {
-            $sql = "SELECT * FROM `users` WHERE `username` = :username";
+        $sql = "SELECT * FROM users WHERE username = :username INNER JOIN accounts ON accounts.user_id = users.user_id";
 
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindValue(':username', $username->asString());
-            $stmt->execute();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':username', $username->asString());
+        $stmt->execute();
 
-            $data = $stmt->fetch();
-            if (!$data) {
-                return null;
-            }
-
-            return User::fromDatabase($data);
-        } catch (PDOException $e) {
-            throw new ApiDatabaseException(
-                "Failed to retrieve user data from username",
-                500,
-                $e
-            );
+        $data = $stmt->fetch();
+        if (!$data) {
+            return null;
         }
+
+        return User::fromDatabase($data);
     }
 }

@@ -9,8 +9,10 @@ use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Referral\ReferralId;
+use Nebalus\Webapi\Value\Referral\ReferralName;
 use Nebalus\Webapi\Value\Referral\ReferralPointer;
 use Nebalus\Webapi\Value\Referral\Referrals;
+use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
 readonly class MySqlReferralRepository
@@ -21,14 +23,15 @@ readonly class MySqlReferralRepository
     ) {
     }
 
-    public function insertReferral(ReferralId $userId, ReferralCode $code, ReferralPointer $pointer, bool $disabled = true): bool
+    public function insertReferral(ReferralId $userId, ReferralCode $code, ReferralPointer $pointer, ReferralName $name, bool $disabled = true): bool
     {
-        $sql = "INSERT INTO referrals(user_id, code, pointer, disabled) VALUES (:user_id, :code, :pointer, :disabled)";
+        $sql = "INSERT INTO referrals(user_id, code, pointer, name, disabled) VALUES (:user_id, :code, :pointer, :name, :disabled)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':user_id', $userId->asInt());
         $stmt->bindValue(':code', $code->asString());
         $stmt->bindValue(':pointer', $pointer->asString());
+        $stmt->bindValue(':name', $name->asString());
         $stmt->bindValue(':disabled', $disabled);
         return $stmt->execute();
     }
@@ -71,7 +74,7 @@ readonly class MySqlReferralRepository
     /**
      * @throws ApiException
      */
-    public function getReferralsFromUserId(ID $userId): Referrals
+    public function getReferralsFromUserId(UserId $userId): Referrals
     {
         $sql = "SELECT * FROM referrals WHERE user_id = :user_id";
 
@@ -91,7 +94,7 @@ readonly class MySqlReferralRepository
     /**
      * @throws ApiException
      */
-    public function findReferralById(ID $id): ?Referral
+    public function findReferralById(ReferralId $id): ?Referral
     {
         $sql = "SELECT * FROM referrals WHERE referral_id = :referral_id";
 

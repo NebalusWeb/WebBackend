@@ -7,7 +7,6 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class ReferralName
 {
-
     private const int MAX_LENGTH = 32;
     private const string REGEX = '/^[a-zA-Z\w]+$/';
 
@@ -26,7 +25,7 @@ class ReferralName
             );
         }
 
-        if (preg_match(self::REGEX, $referralName) < 1) {
+        if (preg_match(self::REGEX, $referralName) === false) {
             throw new ApiInvalidArgumentException(
                 'Invalid referral name: can only contain letters'
             );
