@@ -64,7 +64,7 @@ readonly class RouteCollector
                         $group->map(["GET"], "", LinktreeGetAction::class);
                         $group->map(["PATCH"], "", LinktreeEditAction::class);
                         $group->map(["DELETE"], "", LinktreeDeleteAction::class);
-                        $group->map(["GET"], "/history", LinktreeClickHistoryAction::class);
+                        $group->map(["GET"], "/click_history", LinktreeClickHistoryAction::class);
                     });
                     $group->group("/referrals", function (RouteCollectorProxy $group) {
                         $group->map(["POST"], "", ReferralCreateAction::class);
@@ -72,7 +72,7 @@ readonly class RouteCollector
                             $group->map(["GET"], "", ReferralGetAction::class);
                             $group->map(["PATCH"], "", ReferralEditAction::class);
                             $group->map(["DELETE"], "", ReferralDeleteAction::class);
-                            $group->map(["GET"], "/history", ReferralClickHistoryAction::class);
+                            $group->map(["GET"], "/click_history", ReferralClickHistoryAction::class);
                         });
                     });
                 });
