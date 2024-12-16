@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Dec 11, 2024 at 11:58 AM
+-- Generation Time: Dec 16, 2024 at 12:30 PM
 -- Server version: 9.1.0
--- PHP Version: 8.2.23
+-- PHP Version: 8.2.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -102,12 +102,66 @@ INSERT INTO `account_punishments` (`punishment_id`, `punishment_type`, `punished
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `apod`
+--
+
+CREATE TABLE `apod` (
+                        `apod_id` int UNSIGNED NOT NULL,
+                        `explanation` text NOT NULL,
+                        `released_at` date NOT NULL,
+                        `fetched_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `apod_likes`
+--
+
+CREATE TABLE `apod_likes` (
+                              `user_id` int UNSIGNED NOT NULL,
+                              `apod_id` int UNSIGNED NOT NULL,
+                              `liked_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `forms`
 --
 
 CREATE TABLE `forms` (
                          `form_id` int UNSIGNED NOT NULL,
-                         `owner_user_id` int UNSIGNED NOT NULL
+                         `owner_user_id` int UNSIGNED NOT NULL,
+                         `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                         `closed_manually` bit(1) NOT NULL DEFAULT b'0',
+                         `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                         `closes_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `form_entrys`
+--
+
+CREATE TABLE `form_entrys` (
+                               `form_entry_id` int UNSIGNED NOT NULL,
+                               `form_id` int UNSIGNED NOT NULL,
+                               `type` enum('timepicker','textinput','checkbox') NOT NULL,
+                               `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `form_submits`
+--
+
+CREATE TABLE `form_submits` (
+                                `form_submit_id` int UNSIGNED NOT NULL,
+                                `form_entry_id` int UNSIGNED NOT NULL,
+                                `value` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -238,6 +292,13 @@ CREATE TABLE `project_clients` (
                                    `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                    `last_time_seen_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `project_clients`
+--
+
+INSERT INTO `project_clients` (`project_client_id`, `client_uuid`, `created_at`, `last_time_seen_at`) VALUES
+    (1, 'b5fa96ea-6349-4c94-b2f5-1f1a2351216c', '2024-12-16 12:24:50', '2024-12-16 12:24:50');
 
 -- --------------------------------------------------------
 
@@ -531,11 +592,38 @@ ALTER TABLE `account_punishments`
     ADD KEY `account_punishments_ibfk_3` (`pardoner_account_id`);
 
 --
+-- Indexes for table `apod`
+--
+ALTER TABLE `apod`
+    ADD PRIMARY KEY (`apod_id`);
+
+--
+-- Indexes for table `apod_likes`
+--
+ALTER TABLE `apod_likes`
+    ADD KEY `apod_likes_ibfk_1` (`apod_id`),
+    ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `forms`
 --
 ALTER TABLE `forms`
     ADD PRIMARY KEY (`form_id`),
     ADD KEY `owner_user_id` (`owner_user_id`);
+
+--
+-- Indexes for table `form_entrys`
+--
+ALTER TABLE `form_entrys`
+    ADD PRIMARY KEY (`form_entry_id`),
+    ADD KEY `form_entrys_ibfk_1` (`form_id`);
+
+--
+-- Indexes for table `form_submits`
+--
+ALTER TABLE `form_submits`
+    ADD PRIMARY KEY (`form_submit_id`),
+    ADD KEY `form_submits_ibfk_1` (`form_entry_id`);
 
 --
 -- Indexes for table `groups`
@@ -633,10 +721,28 @@ ALTER TABLE `account_punishments`
     MODIFY `punishment_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `apod`
+--
+ALTER TABLE `apod`
+    MODIFY `apod_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
     MODIFY `form_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `form_entrys`
+--
+ALTER TABLE `form_entrys`
+    MODIFY `form_entry_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `form_submits`
+--
+ALTER TABLE `form_submits`
+    MODIFY `form_submit_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `groups`
@@ -672,7 +778,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `project_clients`
 --
 ALTER TABLE `project_clients`
-    MODIFY `project_client_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+    MODIFY `project_client_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `referrals`
@@ -724,10 +830,29 @@ ALTER TABLE `account_punishments`
     ADD CONSTRAINT `account_punishments_ibfk_3` FOREIGN KEY (`pardoner_account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
+-- Constraints for table `apod_likes`
+--
+ALTER TABLE `apod_likes`
+    ADD CONSTRAINT `apod_likes_ibfk_1` FOREIGN KEY (`apod_id`) REFERENCES `apod` (`apod_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+    ADD CONSTRAINT `apod_likes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+--
 -- Constraints for table `forms`
 --
 ALTER TABLE `forms`
     ADD CONSTRAINT `forms_ibfk_1` FOREIGN KEY (`owner_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `form_entrys`
+--
+ALTER TABLE `form_entrys`
+    ADD CONSTRAINT `form_entrys_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `forms` (`form_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `form_submits`
+--
+ALTER TABLE `form_submits`
+    ADD CONSTRAINT `form_submits_ibfk_1` FOREIGN KEY (`form_entry_id`) REFERENCES `form_entrys` (`form_entry_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `linktrees`
