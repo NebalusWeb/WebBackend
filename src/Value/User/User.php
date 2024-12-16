@@ -90,7 +90,7 @@ readonly class User
             throw new ApiDateMalformedStringException($exception);
         }
 
-        $userId = empty($data['user_id']) ? null : ID::from($data['user_id']);
+        $userId = empty($data['user_id']) ? null : UserId::from($data['user_id']);
         $username = Username::from($data['username']);
         $email = UserEmail::from($data['email']);
         $password = UserPassword::fromHash($data['password']);
