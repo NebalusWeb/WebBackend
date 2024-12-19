@@ -11,7 +11,7 @@ use Slim\Http\ServerRequest as Request;
 class DeleteReferralAction extends AbstractAction
 {
     public function __construct(
-        private readonly DeleteReferralService   $service,
+        private readonly DeleteReferralService $service,
         private readonly DeleteReferralValidator $validator
     ) {
     }

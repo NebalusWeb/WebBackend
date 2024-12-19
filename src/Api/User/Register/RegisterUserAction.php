@@ -11,7 +11,7 @@ class RegisterUserAction extends AbstractAction
 {
     public function __construct(
         private readonly RegisterUserValidator $validator,
-        private readonly RegisterUserService   $service,
+        private readonly RegisterUserService $service,
     ) {
     }
 

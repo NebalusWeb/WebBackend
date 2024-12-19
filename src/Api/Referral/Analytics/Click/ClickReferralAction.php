@@ -12,7 +12,7 @@ class ClickReferralAction extends AbstractAction
 {
     public function __construct(
         private readonly ClickReferralValidator $validator,
-        private readonly ClickReferralService   $service,
+        private readonly ClickReferralService $service,
     ) {
     }
 

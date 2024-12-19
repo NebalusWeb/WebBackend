@@ -11,7 +11,7 @@ use Slim\Http\ServerRequest as Request;
 class EditReferralAction extends AbstractAction
 {
     public function __construct(
-        private readonly EditReferralService   $service,
+        private readonly EditReferralService $service,
         private readonly EditReferralValidator $validator,
     ) {
     }

@@ -4,14 +4,14 @@ namespace Nebalus\Webapi\Api\Referral\Analytics\ClickHistory;
 
 use DateMalformedStringException;
 use Nebalus\Webapi\Api\AbstractAction;
-use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClick;
+use Nebalus\Webapi\Api\Referral\Analytics\Click\ClickReferralService;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 
 class ClickHistoryReferralAction extends AbstractAction
 {
     public function __construct(
-        private readonly ReferralClick $referralClickService,
+        private readonly ClickReferralService $referralClickService,
     ) {
     }
 
