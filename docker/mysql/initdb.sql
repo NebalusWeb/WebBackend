@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Dec 16, 2024 at 12:30 PM
+-- Generation Time: Dec 19, 2024 at 06:28 PM
 -- Server version: 9.1.0
--- PHP Version: 8.2.25
+-- PHP Version: 8.2.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -127,30 +127,30 @@ CREATE TABLE `apod_likes` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `blogs`
+--
+
+CREATE TABLE `blogs` (
+                         `blog_id` int NOT NULL,
+                         `blog_owner_id` int UNSIGNED NOT NULL,
+                         `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                         `edited_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                         `content` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `forms`
 --
 
 CREATE TABLE `forms` (
                          `form_id` int UNSIGNED NOT NULL,
                          `owner_user_id` int UNSIGNED NOT NULL,
-                         `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                         `configuration` json NOT NULL,
                          `closed_manually` bit(1) NOT NULL DEFAULT b'0',
                          `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                          `closes_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `form_entrys`
---
-
-CREATE TABLE `form_entrys` (
-                               `form_entry_id` int UNSIGNED NOT NULL,
-                               `form_id` int UNSIGNED NOT NULL,
-                               `type` enum('timepicker','textinput','checkbox') NOT NULL,
-                               `name` varchar(64) NOT NULL,
-                               `required` bit(1) NOT NULL DEFAULT b'0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -161,33 +161,9 @@ CREATE TABLE `form_entrys` (
 
 CREATE TABLE `form_submits` (
                                 `form_submit_id` int UNSIGNED NOT NULL,
-                                `form_entry_id` int UNSIGNED NOT NULL,
-                                `value` blob
+                                `form_id` int UNSIGNED NOT NULL,
+                                `submit_content` json NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `groups`
---
-
-CREATE TABLE `groups` (
-                          `group_id` int UNSIGNED NOT NULL,
-                          `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                          `permissions` json NOT NULL,
-                          `apply_on_user_creation` bit(1) NOT NULL DEFAULT b'0',
-                          `deletable` bit(1) NOT NULL DEFAULT b'1',
-                          `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                          `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `groups`
---
-
-INSERT INTO `groups` (`group_id`, `name`, `permissions`, `apply_on_user_creation`, `deletable`, `created_at`, `updated_at`) VALUES
-                                                                                                                                (1, 'ADMINISTRATOR', '{}', b'0', b'0', '2024-12-06 19:39:38', '2024-12-06 19:44:34'),
-                                                                                                                                (2, 'DEFAULT_GROUP', '{}', b'1', b'0', '2024-12-06 19:40:22', '2024-12-06 19:44:34');
 
 -- --------------------------------------------------------
 
@@ -299,7 +275,10 @@ CREATE TABLE `project_clients` (
 --
 
 INSERT INTO `project_clients` (`project_client_id`, `client_uuid`, `created_at`, `last_time_seen_at`) VALUES
-    (1, 'b5fa96ea-6349-4c94-b2f5-1f1a2351216c', '2024-12-16 12:24:50', '2024-12-16 12:24:50');
+                                                                                                          (1, 'b5fa96ea-6349-4c94-b2f5-1f1a2351216c', '2024-12-16 12:24:50', '2024-12-19 12:24:50'),
+                                                                                                          (2, '0860c048-cab4-432b-9766-e55647514140', '2024-12-19 15:47:12', '2024-12-20 15:47:12'),
+                                                                                                          (4, 'cc047536-bbc5-4920-bc5e-11292437617b', '2024-12-19 15:56:36', '2024-12-19 15:56:36'),
+                                                                                                          (5, '8c5bf729-b02e-4bc2-aed7-cf6ae238ae7f', '2024-12-19 15:56:36', '2024-12-19 15:56:36');
 
 -- --------------------------------------------------------
 
@@ -323,13 +302,13 @@ CREATE TABLE `referrals` (
 --
 
 INSERT INTO `referrals` (`referral_id`, `owner_user_id`, `code`, `pointer`, `name`, `disabled`, `created_at`, `updated_at`) VALUES
-                                                                                                                                (1, 1, 'TEST', 'https://nebalus.dev', 'TEST Referral', b'0', '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
-                                                                                                                                (3, 1, 'sdfsdOPs', 'https://google.com', 'Hier zu google lol', b'0', '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
-                                                                                                                                (5, 1, 'TEST42', 'https://nebalus.dev', '42!', b'0', '2024-02-27 11:04:20', '2024-09-28 15:35:26'),
-                                                                                                                                (6, 1, '42', 'https://nebalus.dev', '42!1!!1!', b'0', '2024-02-28 21:30:24', '2024-09-28 15:35:26'),
-                                                                                                                                (7, 1, 'dfghdfgh', 'https://nebalus.dev', 'Random shit', b'1', '2024-08-03 23:20:58', '2024-09-28 15:35:26'),
-                                                                                                                                (11, 2, 'youtube', 'https://youtube.com', 'youtube hehe', b'0', '2024-11-07 08:19:50', '2024-11-07 08:19:50'),
-                                                                                                                                (12, 1, 'ysxfdh', 'https://status.nebalus.dev', NULL, b'0', '2024-12-06 22:38:13', '2024-12-06 22:38:13');
+                                                                                                                                (1, 1, '04bbH3G9', 'https://nebalus.dev', 'TEST Referral', b'0', '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
+                                                                                                                                (3, 1, '3S5D6UmE', 'https://google.com', 'Hier zu google lol', b'0', '2024-02-25 00:00:00', '2024-09-28 15:35:26'),
+                                                                                                                                (5, 1, '6I6vP9ou', 'https://nebalus.dev', '42!', b'0', '2024-02-27 11:04:20', '2024-09-28 15:35:26'),
+                                                                                                                                (6, 1, 'b2bXghSd', 'https://nebalus.dev', '42!1!!1!', b'0', '2024-02-28 21:30:24', '2024-09-28 15:35:26'),
+                                                                                                                                (7, 1, 'JXEYHjxk', 'https://nebalus.dev', 'Random shit', b'1', '2024-08-03 23:20:58', '2024-09-28 15:35:26'),
+                                                                                                                                (11, 2, 'J09g8VqT', 'https://youtube.com', 'youtube hehe', b'0', '2024-11-07 08:19:50', '2024-11-07 08:19:50'),
+                                                                                                                                (12, 1, 'r5HkrOkZ', 'https://status.nebalus.dev', NULL, b'0', '2024-12-06 22:38:13', '2024-12-06 22:38:13');
 
 -- --------------------------------------------------------
 
@@ -491,6 +470,30 @@ INSERT INTO `referral_click_metric` (`click_id`, `referral_id`, `clicked_at`) VA
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+                         `role_id` int UNSIGNED NOT NULL,
+                         `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                         `privileges` json NOT NULL,
+                         `apply_on_user_creation` bit(1) NOT NULL DEFAULT b'0',
+                         `deletable` bit(1) NOT NULL DEFAULT b'1',
+                         `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                         `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`role_id`, `name`, `privileges`, `apply_on_user_creation`, `deletable`, `created_at`, `updated_at`) VALUES
+                                                                                                                             (1, 'administrator', '{}', b'0', b'0', '2024-12-06 19:39:38', '2024-12-06 19:44:34'),
+                                                                                                                             (2, 'user', '{}', b'1', b'0', '2024-12-06 19:40:22', '2024-12-06 19:44:34');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -500,7 +503,6 @@ CREATE TABLE `users` (
                          `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                          `totp_secret_key` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                         `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
                          `disabled` bit(1) NOT NULL DEFAULT b'0',
                          `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                          `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -510,11 +512,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `description`, `disabled`, `created_at`, `updated_at`) VALUES
-                                                                                                                                               (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'S61WXXWZU5J6QT0H4CX4B02X2HET0LYW', 'Is the default test User', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
-                                                                                                                                               (2, 'Tester', 'tester@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', '5BO8E403VD95MT6XCHWFXOKP8LZCGRKY', NULL, b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
-                                                                                                                                               (3, 'BannedTester', 'bannedtester@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'DXUZV74K66YCFV4E9WD9T9G4TYO6SWH7', NULL, b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
-                                                                                                                                               (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', '5VX7YY1UH0U4DECIJHB1AY6PHL6IGHKP', NULL, b'0', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `disabled`, `created_at`, `updated_at`) VALUES
+                                                                                                                                (1, 'Nebalus', 'contact@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'S61WXXWZU5J6QT0H4CX4B02X2HET0LYW', b'0', '2024-02-28 21:28:40', '2024-08-03 23:07:10'),
+                                                                                                                                (2, 'Tester', 'tester@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', '5BO8E403VD95MT6XCHWFXOKP8LZCGRKY', b'0', '2024-11-07 07:56:33', '2024-11-07 07:56:33'),
+                                                                                                                                (3, 'BannedTester', 'bannedtester@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', 'DXUZV74K66YCFV4E9WD9T9G4TYO6SWH7', b'0', '2024-11-07 08:07:04', '2024-11-07 08:07:04'),
+                                                                                                                                (4, 'disabledbitch', 'disabledbitch@nebalus.dev', '$2y$10$9xaR/88aZteW49ExqqveWe6O./RkNfrAj3tSNGPCc/keJsT95EcEu', '5VX7YY1UH0U4DECIJHB1AY6PHL6IGHKP', b'0', '2024-11-11 18:31:01', '2024-11-11 18:31:01');
 
 -- --------------------------------------------------------
 
@@ -544,25 +546,25 @@ INSERT INTO `user_access_history` (`access_history_id`, `user_id`, `ip_address`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_group_map`
+-- Table structure for table `user_role_map`
 --
 
-CREATE TABLE `user_group_map` (
-                                  `user_id` int UNSIGNED NOT NULL,
-                                  `group_id` int UNSIGNED NOT NULL,
-                                  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `user_role_map` (
+                                 `user_id` int UNSIGNED NOT NULL,
+                                 `role_id` int UNSIGNED NOT NULL,
+                                 `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `user_group_map`
+-- Dumping data for table `user_role_map`
 --
 
-INSERT INTO `user_group_map` (`user_id`, `group_id`, `created_at`) VALUES
-                                                                       (1, 1, '2024-12-06 19:46:53'),
-                                                                       (1, 2, '2024-12-06 19:51:08'),
-                                                                       (2, 2, '2024-12-06 19:46:53'),
-                                                                       (3, 2, '2024-12-06 19:46:53'),
-                                                                       (4, 2, '2024-12-06 19:46:53');
+INSERT INTO `user_role_map` (`user_id`, `role_id`, `created_at`) VALUES
+                                                                     (1, 1, '2024-12-06 19:46:53'),
+                                                                     (1, 2, '2024-12-06 19:51:08'),
+                                                                     (2, 2, '2024-12-06 19:46:53'),
+                                                                     (3, 2, '2024-12-06 19:46:53'),
+                                                                     (4, 2, '2024-12-06 19:46:53');
 
 --
 -- Indexes for dumped tables
@@ -606,6 +608,13 @@ ALTER TABLE `apod_likes`
     ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `blogs`
+--
+ALTER TABLE `blogs`
+    ADD PRIMARY KEY (`blog_id`),
+    ADD KEY `blog_owner_id` (`blog_owner_id`);
+
+--
 -- Indexes for table `forms`
 --
 ALTER TABLE `forms`
@@ -613,25 +622,11 @@ ALTER TABLE `forms`
     ADD KEY `owner_user_id` (`owner_user_id`);
 
 --
--- Indexes for table `form_entrys`
---
-ALTER TABLE `form_entrys`
-    ADD PRIMARY KEY (`form_entry_id`),
-    ADD KEY `form_entrys_ibfk_1` (`form_id`);
-
---
 -- Indexes for table `form_submits`
 --
 ALTER TABLE `form_submits`
     ADD PRIMARY KEY (`form_submit_id`),
-    ADD KEY `form_submits_ibfk_1` (`form_entry_id`);
-
---
--- Indexes for table `groups`
---
-ALTER TABLE `groups`
-    ADD PRIMARY KEY (`group_id`),
-    ADD UNIQUE KEY `group_name` (`name`);
+    ADD KEY `form_id` (`form_id`);
 
 --
 -- Indexes for table `linktrees`
@@ -666,7 +661,8 @@ ALTER TABLE `projects`
 -- Indexes for table `project_clients`
 --
 ALTER TABLE `project_clients`
-    ADD PRIMARY KEY (`project_client_id`);
+    ADD PRIMARY KEY (`project_client_id`),
+    ADD UNIQUE KEY `client_uuid` (`client_uuid`);
 
 --
 -- Indexes for table `referrals`
@@ -684,6 +680,13 @@ ALTER TABLE `referral_click_metric`
     ADD KEY `referral_id` (`referral_id`);
 
 --
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+    ADD PRIMARY KEY (`role_id`),
+    ADD UNIQUE KEY `group_name` (`name`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -699,11 +702,11 @@ ALTER TABLE `user_access_history`
     ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `user_group_map`
+-- Indexes for table `user_role_map`
 --
-ALTER TABLE `user_group_map`
-    ADD PRIMARY KEY (`user_id`,`group_id`),
-    ADD KEY `group_id` (`group_id`);
+ALTER TABLE `user_role_map`
+    ADD PRIMARY KEY (`user_id`,`role_id`),
+    ADD KEY `group_id` (`role_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -728,28 +731,22 @@ ALTER TABLE `apod`
     MODIFY `apod_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `blogs`
+--
+ALTER TABLE `blogs`
+    MODIFY `blog_id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
     MODIFY `form_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `form_entrys`
---
-ALTER TABLE `form_entrys`
-    MODIFY `form_entry_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `form_submits`
 --
 ALTER TABLE `form_submits`
     MODIFY `form_submit_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `groups`
---
-ALTER TABLE `groups`
-    MODIFY `group_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `linktrees`
@@ -779,7 +776,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `project_clients`
 --
 ALTER TABLE `project_clients`
-    MODIFY `project_client_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+    MODIFY `project_client_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `referrals`
@@ -792,6 +789,12 @@ ALTER TABLE `referrals`
 --
 ALTER TABLE `referral_click_metric`
     MODIFY `click_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+    MODIFY `role_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -838,22 +841,22 @@ ALTER TABLE `apod_likes`
     ADD CONSTRAINT `apod_likes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
+-- Constraints for table `blogs`
+--
+ALTER TABLE `blogs`
+    ADD CONSTRAINT `blogs_ibfk_1` FOREIGN KEY (`blog_owner_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+--
 -- Constraints for table `forms`
 --
 ALTER TABLE `forms`
     ADD CONSTRAINT `forms_ibfk_1` FOREIGN KEY (`owner_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `form_entrys`
---
-ALTER TABLE `form_entrys`
-    ADD CONSTRAINT `form_entrys_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `forms` (`form_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
-
---
 -- Constraints for table `form_submits`
 --
 ALTER TABLE `form_submits`
-    ADD CONSTRAINT `form_submits_ibfk_1` FOREIGN KEY (`form_entry_id`) REFERENCES `form_entrys` (`form_entry_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+    ADD CONSTRAINT `form_submits_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `forms` (`form_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `linktrees`
@@ -898,11 +901,11 @@ ALTER TABLE `user_access_history`
     ADD CONSTRAINT `user_access_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `user_group_map`
+-- Constraints for table `user_role_map`
 --
-ALTER TABLE `user_group_map`
-    ADD CONSTRAINT `user_group_map_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `user_group_map_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `user_role_map`
+    ADD CONSTRAINT `user_role_map_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `user_role_map_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
