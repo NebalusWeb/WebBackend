@@ -16,7 +16,9 @@ use Nebalus\Webapi\Api\Referral\Create\CreateReferralAction;
 use Nebalus\Webapi\Api\Referral\Delete\DeleteReferralAction;
 use Nebalus\Webapi\Api\Referral\Edit\EditReferralAction;
 use Nebalus\Webapi\Api\Referral\Get\GetReferralAction;
+use Nebalus\Webapi\Api\Referral\GetAll\GetAllReferralAction;
 use Nebalus\Webapi\Api\User\Auth\AuthUserAction;
+use Nebalus\Webapi\Api\User\GetPrivileges\GetPrivilegesUserAction;
 use Nebalus\Webapi\Api\User\Register\RegisterUserAction;
 use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Slim\Middleware\AuthenticationMiddleware;
@@ -56,9 +58,11 @@ readonly class RouteCollector
                 });
             })->add(AuthenticationMiddleware::class);
             $group->group("/user/{username}", function (RouteCollectorProxy $group) {
-                //$group->map(["GET"], "/permissions", PermissionsGetAction::class);
+                $group->map(["GET"], "/privileges", GetPrivilegesUserAction::class);
                 $group->group("/services", function (RouteCollectorProxy $group) {
-                    $group->group("/invitationtoken", function (RouteCollectorProxy $group) {
+                    $group->group("/invitation_tokens", function (RouteCollectorProxy $group) {
+                    });
+                    $group->group("/forms", function (RouteCollectorProxy $group) {
                     });
                     $group->group("/linktree", function (RouteCollectorProxy $group) {
                         $group->map(["GET"], "", GetLinktreeAction::class);
@@ -68,6 +72,7 @@ readonly class RouteCollector
                     });
                     $group->group("/referrals", function (RouteCollectorProxy $group) {
                         $group->map(["POST"], "", CreateReferralAction::class);
+                        $group->map(["GET"], "/all", GetAllReferralAction::class);
                         $group->group("/{code}", function (RouteCollectorProxy $group) {
                             $group->map(["GET"], "", GetReferralAction::class);
                             $group->map(["PATCH"], "", EditReferralAction::class);

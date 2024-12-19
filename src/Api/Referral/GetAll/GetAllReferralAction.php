@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Api\Referral\ListAll;
+namespace Nebalus\Webapi\Api\Referral\GetAll;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 
-class ListAllReferralAction extends AbstractAction
+class GetAllReferralAction extends AbstractAction
 {
     public function __construct(
-        private readonly ListAllReferralService $service,
-        private readonly ListAllReferralValidator $validator
+        private readonly GetAllReferralService    $service,
+        private readonly GetAllReferralValidator $validator
     ) {
     }
 

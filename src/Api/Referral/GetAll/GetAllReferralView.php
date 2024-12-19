@@ -1,12 +1,12 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Referral\ListAll;
+namespace Nebalus\Webapi\Api\Referral\GetAll;
 
 use Nebalus\Webapi\Value\Referral\Referrals;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
 
-class ListAllReferralView
+class GetAllReferralView
 {
     public static function render(Referrals $referrals): ResultInterface
     {

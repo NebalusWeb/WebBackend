@@ -1,10 +1,10 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Referral\ListAll;
+namespace Nebalus\Webapi\Api\Referral\GetAll;
 
 use Nebalus\Webapi\Api\AbstractValidator;
 
-class ListAllReferralValidator extends AbstractValidator
+class GetAllReferralValidator extends AbstractValidator
 {
     protected function onValidate(array $filteredData): void
     {
