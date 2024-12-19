@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim;
 
-use Nebalus\Webapi\Api\Linktree\Action\Analytics\LinktreeClickAction;
-use Nebalus\Webapi\Api\Linktree\Action\Analytics\LinktreeClickHistoryAction;
-use Nebalus\Webapi\Api\Linktree\Action\LinktreeDeleteAction;
-use Nebalus\Webapi\Api\Linktree\Action\LinktreeEditAction;
-use Nebalus\Webapi\Api\Linktree\Action\LinktreeGetAction;
+use Nebalus\Webapi\Api\Linktree\Analytics\Click\ClickLinktreeAction;
+use Nebalus\Webapi\Api\Linktree\Analytics\ClickHistory\ClickHistoryLinktreeAction;
+use Nebalus\Webapi\Api\Linktree\Delete\DeleteLinktreeAction;
+use Nebalus\Webapi\Api\Linktree\Edit\EditLinktreeAction;
+use Nebalus\Webapi\Api\Linktree\Get\GetLinktreeAction;
 use Nebalus\Webapi\Api\Metrics\MetricsAction;
-use Nebalus\Webapi\Api\Referral\Action\Analytics\ReferralClickAction;
-use Nebalus\Webapi\Api\Referral\Action\Analytics\ReferralClickHistoryAction;
-use Nebalus\Webapi\Api\Referral\Action\ReferralCreateAction;
-use Nebalus\Webapi\Api\Referral\Action\ReferralDeleteAction;
-use Nebalus\Webapi\Api\Referral\Action\ReferralEditAction;
-use Nebalus\Webapi\Api\Referral\Action\ReferralGetAction;
-use Nebalus\Webapi\Api\User\Action\UserAuthAction;
-use Nebalus\Webapi\Api\User\Action\UserRegisterAction;
+use Nebalus\Webapi\Api\Referral\Analytics\Click\ClickReferralAction;
+use Nebalus\Webapi\Api\Referral\Analytics\ClickHistory\ClickHistoryReferralAction;
+use Nebalus\Webapi\Api\Referral\Create\CreateReferralAction;
+use Nebalus\Webapi\Api\Referral\Delete\DeleteReferralAction;
+use Nebalus\Webapi\Api\Referral\Edit\EditReferralAction;
+use Nebalus\Webapi\Api\Referral\Get\GetReferralAction;
+use Nebalus\Webapi\Api\User\Auth\AuthUserAction;
+use Nebalus\Webapi\Api\User\Register\RegisterUserAction;
 use Nebalus\Webapi\Option\EnvData;
 use Nebalus\Webapi\Slim\Middleware\AuthenticationMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
@@ -49,8 +49,8 @@ readonly class RouteCollector
     private function initRoutes(): void
     {
         $this->app->group("/ui", function (RouteCollectorProxy $group) {
-            $group->map(["POST"], "/auth", UserAuthAction::class);
-            $group->map(["POST"], "/register", UserRegisterAction::class);
+            $group->map(["POST"], "/auth", AuthUserAction::class);
+            $group->map(["POST"], "/register", RegisterUserAction::class);
             $group->group("/admin", function (RouteCollectorProxy $group) {
                 $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 });
@@ -61,18 +61,18 @@ readonly class RouteCollector
                     $group->group("/invitationtoken", function (RouteCollectorProxy $group) {
                     });
                     $group->group("/linktree", function (RouteCollectorProxy $group) {
-                        $group->map(["GET"], "", LinktreeGetAction::class);
-                        $group->map(["PATCH"], "", LinktreeEditAction::class);
-                        $group->map(["DELETE"], "", LinktreeDeleteAction::class);
-                        $group->map(["GET"], "/click_history", LinktreeClickHistoryAction::class);
+                        $group->map(["GET"], "", GetLinktreeAction::class);
+                        $group->map(["PATCH"], "", EditLinktreeAction::class);
+                        $group->map(["DELETE"], "", DeleteLinktreeAction::class);
+                        $group->map(["GET"], "/click_history", ClickHistoryLinktreeAction::class);
                     });
                     $group->group("/referrals", function (RouteCollectorProxy $group) {
-                        $group->map(["POST"], "", ReferralCreateAction::class);
+                        $group->map(["POST"], "", CreateReferralAction::class);
                         $group->group("/{code}", function (RouteCollectorProxy $group) {
-                            $group->map(["GET"], "", ReferralGetAction::class);
-                            $group->map(["PATCH"], "", ReferralEditAction::class);
-                            $group->map(["DELETE"], "", ReferralDeleteAction::class);
-                            $group->map(["GET"], "/click_history", ReferralClickHistoryAction::class);
+                            $group->map(["GET"], "", GetReferralAction::class);
+                            $group->map(["PATCH"], "", EditReferralAction::class);
+                            $group->map(["DELETE"], "", DeleteReferralAction::class);
+                            $group->map(["GET"], "/click_history", ClickHistoryReferralAction::class);
                         });
                     });
                 });
@@ -82,8 +82,8 @@ readonly class RouteCollector
         $this->app->map(["GET"], "/metrics", MetricsAction::class);
 
         $this->app->group("/services", function (RouteCollectorProxy $group) {
-            $group->map(["GET"], "/referral", ReferralClickAction::class);
-            $group->map(["GET"], "/linktree", LinktreeClickAction::class);
+            $group->map(["GET"], "/referral", ClickReferralAction::class);
+            $group->map(["GET"], "/linktree", ClickLinktreeAction::class);
         });
     }
 }
