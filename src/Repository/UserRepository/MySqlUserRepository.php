@@ -6,6 +6,7 @@ namespace Nebalus\Webapi\Repository\UserRepository;
 
 use Nebalus\Webapi\Exception\ApiDatabaseException;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Repository\AbstractRepository;
 use Nebalus\Webapi\Repository\AccountRepository\MySqlAccountRepository;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationToken;
 use Nebalus\Webapi\Value\User\User;
@@ -15,12 +16,13 @@ use Nebalus\Webapi\Value\User\Username;
 use PDO;
 use PDOException;
 
-readonly class MySqlUserRepository
+class MySqlUserRepository extends AbstractRepository
 {
     public function __construct(
         private PDO $pdo,
         private MySqlAccountRepository $accountRepository
     ) {
+        parent::__construct($pdo);
     }
 
     /**
@@ -41,15 +43,14 @@ readonly class MySqlUserRepository
      */
     private function insertUser(User $user): User
     {
-        $sql = "INSERT INTO users(username, email, password, totp_secret_key, description, disabled, created_at, updated_at) 
-                            VALUES (:username,:email,:password,:totp_secret_key,:description,:disabled,:created_at,:updated_at)";
+        $sql = "INSERT INTO users(username, email, password, totp_secret_key, disabled, created_at, updated_at) 
+                            VALUES (:username,:email,:password,:totp_secret_key,:disabled,:created_at,:updated_at)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':username', $user->getUsername()->asString());
         $stmt->bindValue(':email', $user->getEmail()->asString());
         $stmt->bindValue(':password', $user->getPassword()->asString());
         $stmt->bindValue(':totp_secret_key', $user->getTotpSecretKey()->asString());
-        $stmt->bindValue(':description', $user->getDescription()->asString());
         $stmt->bindValue(':disabled', $user->isDisabled());
         $stmt->bindValue(':created_at', $user->getCreatedAtDate()->format("Y-m-d H:i:s"));
         $stmt->bindValue(':updated_at', $user->getUpdatedAtDate()->format("Y-m-d H:i:s"));

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository\ReferralRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Repository\AbstractRepository;
 use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
@@ -15,15 +16,16 @@ use Nebalus\Webapi\Value\Referral\Referrals;
 use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
-readonly class MySqlReferralRepository
+class MySqlReferralRepository extends AbstractRepository
 {
     public function __construct(
         private PDO $pdo,
         private RedisReferralCachingRepository $redis
     ) {
+        parent::__construct($pdo);
     }
 
-    public function insertReferral(ReferralId $userId, ReferralCode $code, ReferralPointer $pointer, ReferralName $name, bool $disabled = true): bool
+    public function insertReferral(UserId $userId, ReferralCode $code, ReferralPointer $pointer, ReferralName $name, bool $disabled = true): bool
     {
         $sql = "INSERT INTO referrals(user_id, code, pointer, name, disabled) VALUES (:user_id, :code, :pointer, :name, :disabled)";
 
@@ -116,7 +118,7 @@ readonly class MySqlReferralRepository
      */
     public function findReferralByCode(ReferralCode $code): ?Referral
     {
-        $sql = "SELECT * FROM referrals WHERE BINARY code = :code";
+        $sql = "SELECT * FROM referrals WHERE code = :code";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':code', $code->asString());

@@ -4,6 +4,7 @@ namespace Nebalus\Webapi\Repository\AccountRepository;
 
 use Nebalus\Webapi\Exception\ApiDatabaseException;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Repository\AbstractRepository;
 use Nebalus\Webapi\Value\Account\AccountId;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationToken;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokens;
@@ -11,11 +12,12 @@ use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
 use PDO;
 use PDOException;
 
-class MySqlAccountRepository
+class MySqlAccountRepository extends AbstractRepository
 {
     public function __construct(
-        private PDO $pdo
+        private readonly PDO $pdo
     ) {
+        parent::__construct($pdo);
     }
 
     /**

@@ -10,6 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractValidator
 {
+    private const int MAX_RECURSION = 5;
     private array $rules;
 
     protected function __construct(array $rules = [])
@@ -23,7 +24,7 @@ abstract class AbstractValidator
     public function validate(ServerRequestInterface $request): void
     {
         try {
-            $data = json_decode($request->getBody()->getContents(), true, 5, JSON_THROW_ON_ERROR);
+            $data = json_decode($request->getBody()->getContents(), true, self::MAX_RECURSION, JSON_THROW_ON_ERROR);
         } catch (JsonException) {
             throw new ApiValidationException(
                 'Invalid JSON request',
@@ -31,7 +32,7 @@ abstract class AbstractValidator
             );
         }
 
-        $filteredData = $this->processRecursiveRules($data, $this->rules, 5);
+        $filteredData = $this->processRecursiveRules($data, $this->rules, self::MAX_RECURSION);
 //        echo json_encode($filteredData, JSON_PRETTY_PRINT, 5) . "\n\n";
         $this->onValidate($filteredData);
     }
@@ -39,6 +40,7 @@ abstract class AbstractValidator
     /**
      * @throws ApiException
      */
+
     private function processRecursiveRules(array $dataLayer, array $ruleLayer, int $maxRecursion, int $layerId = 0, string $path = ''): array
     {
         $processedData = [];

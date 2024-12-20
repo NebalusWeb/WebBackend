@@ -19,7 +19,6 @@ readonly class User
         private UserEmail $email,
         private UserPassword $password,
         private TOTPSecretKey $totpSecretKey,
-        private UserDescription $description,
         private bool $disabled,
         private DateTimeImmutable $createdAtDate,
         private DateTimeImmutable $updatedAtDate,
@@ -35,10 +34,9 @@ readonly class User
         UserPassword $password
     ): self {
         $totpSecretKey = TOTPSecretKey::create();
-        $description = UserDescription::from(null);
         $createdAtDate = new DateTimeImmutable();
         $updatedAtDate = new DateTimeImmutable();
-        return self::from(null, $username, $email, $password, $totpSecretKey, $description, false, $createdAtDate, $updatedAtDate);
+        return self::from(null, $username, $email, $password, $totpSecretKey, false, $createdAtDate, $updatedAtDate);
     }
 
     public static function from(
@@ -47,12 +45,11 @@ readonly class User
         UserEmail $email,
         UserPassword $password,
         TOTPSecretKey $totpSecretKey,
-        UserDescription $description,
         bool $disabled,
         DateTimeImmutable $createdAtDate,
         DateTimeImmutable $updatedAtDate
     ): self {
-        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $disabled, $createdAtDate, $updatedAtDate);
+        return new self($userId, $username, $email, $password, $totpSecretKey, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     /**
@@ -72,10 +69,9 @@ readonly class User
         $email = UserEmail::from($data['email']);
         $password = UserPassword::fromHash($data['password']);
         $totpSecretKey = TOTPSecretKey::from($data['totp_secret_key']);
-        $description = UserDescription::from($data['description']);
         $disabled = (bool) $data['disabled'];
 
-        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $disabled, $createdAtDate, $updatedAtDate);
+        return new self($userId, $username, $email, $password, $totpSecretKey, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     /**
@@ -95,10 +91,9 @@ readonly class User
         $email = UserEmail::from($data['email']);
         $password = UserPassword::fromHash($data['password']);
         $totpSecretKey = TOTPSecretKey::from($data['totp_secret_key']);
-        $description = UserDescription::from($data['description']);
         $disabled = (bool) $data['disabled'];
 
-        return new self($userId, $username, $email, $password, $totpSecretKey, $description, $disabled, $createdAtDate, $updatedAtDate);
+        return new self($userId, $username, $email, $password, $totpSecretKey, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     public function asArray(): array
@@ -109,7 +104,6 @@ readonly class User
             'email' => $this->email->asString(),
             'password' => $this->password->asString(),
             'totp_secret_key' => $this->totpSecretKey->asString(),
-            'description' => $this->description->asString(),
             'disabled' => $this->disabled,
             'created_at' => $this->createdAtDate->format(DATE_ATOM),
             'updated_at' => $this->updatedAtDate->format(DATE_ATOM),
@@ -144,11 +138,6 @@ readonly class User
     public function isDisabled(): bool
     {
         return $this->disabled;
-    }
-
-    public function getDescription(): UserDescription
-    {
-        return $this->description;
     }
 
     public function getCreatedAtDate(): DateTimeImmutable
