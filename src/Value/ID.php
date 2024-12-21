@@ -37,7 +37,7 @@ trait ID
             );
         }
 
-        return new self($id);
+        return self::from($id);
     }
 
     public function asInt(): int

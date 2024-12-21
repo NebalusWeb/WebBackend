@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Dec 19, 2024 at 06:28 PM
--- Server version: 9.1.0
--- PHP Version: 8.2.23
+-- Erstellungszeit: 21. Dez 2024 um 01:14
+-- Server-Version: 9.1.0
+-- PHP-Version: 8.2.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `main`
+-- Datenbank: `main`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accounts`
+-- Tabellenstruktur für Tabelle `accounts`
 --
 
 CREATE TABLE `accounts` (
@@ -35,7 +35,7 @@ CREATE TABLE `accounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `accounts`
+-- Daten für Tabelle `accounts`
 --
 
 INSERT INTO `accounts` (`account_id`, `user_id`, `admin_note`, `created_at`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `accounts` (`account_id`, `user_id`, `admin_note`, `created_at`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account_invitation_tokens`
+-- Tabellenstruktur für Tabelle `account_invitation_tokens`
 --
 
 CREATE TABLE `account_invitation_tokens` (
@@ -63,7 +63,7 @@ CREATE TABLE `account_invitation_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `account_invitation_tokens`
+-- Daten für Tabelle `account_invitation_tokens`
 --
 
 INSERT INTO `account_invitation_tokens` (`owner_account_id`, `invited_account_id`, `token_field_1`, `token_field_2`, `token_field_3`, `token_field_4`, `token_checksum`, `created_at`, `used_at`) VALUES
@@ -76,7 +76,7 @@ INSERT INTO `account_invitation_tokens` (`owner_account_id`, `invited_account_id
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account_punishments`
+-- Tabellenstruktur für Tabelle `account_punishments`
 --
 
 CREATE TABLE `account_punishments` (
@@ -93,7 +93,7 @@ CREATE TABLE `account_punishments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `account_punishments`
+-- Daten für Tabelle `account_punishments`
 --
 
 INSERT INTO `account_punishments` (`punishment_id`, `punishment_type`, `punished_account_id`, `punisher_account_id`, `pardoner_account_id`, `punished_reason`, `pardoned_reason`, `disable_account_while_punisment`, `starts_at`, `ends_at`) VALUES
@@ -102,7 +102,7 @@ INSERT INTO `account_punishments` (`punishment_id`, `punishment_type`, `punished
 -- --------------------------------------------------------
 
 --
--- Table structure for table `apod`
+-- Tabellenstruktur für Tabelle `apod`
 --
 
 CREATE TABLE `apod` (
@@ -115,7 +115,7 @@ CREATE TABLE `apod` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `apod_likes`
+-- Tabellenstruktur für Tabelle `apod_likes`
 --
 
 CREATE TABLE `apod_likes` (
@@ -127,7 +127,7 @@ CREATE TABLE `apod_likes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `blogs`
+-- Tabellenstruktur für Tabelle `blogs`
 --
 
 CREATE TABLE `blogs` (
@@ -141,7 +141,7 @@ CREATE TABLE `blogs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `forms`
+-- Tabellenstruktur für Tabelle `forms`
 --
 
 CREATE TABLE `forms` (
@@ -156,7 +156,7 @@ CREATE TABLE `forms` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `form_submits`
+-- Tabellenstruktur für Tabelle `form_submits`
 --
 
 CREATE TABLE `form_submits` (
@@ -168,7 +168,7 @@ CREATE TABLE `form_submits` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `linktrees`
+-- Tabellenstruktur für Tabelle `linktrees`
 --
 
 CREATE TABLE `linktrees` (
@@ -180,7 +180,7 @@ CREATE TABLE `linktrees` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `linktrees`
+-- Daten für Tabelle `linktrees`
 --
 
 INSERT INTO `linktrees` (`linktree_id`, `owner_user_id`, `description`, `created_at`, `updated_at`) VALUES
@@ -190,7 +190,7 @@ INSERT INTO `linktrees` (`linktree_id`, `owner_user_id`, `description`, `created
 -- --------------------------------------------------------
 
 --
--- Table structure for table `linktree_click_metric`
+-- Tabellenstruktur für Tabelle `linktree_click_metric`
 --
 
 CREATE TABLE `linktree_click_metric` (
@@ -200,7 +200,7 @@ CREATE TABLE `linktree_click_metric` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `linktree_click_metric`
+-- Daten für Tabelle `linktree_click_metric`
 --
 
 INSERT INTO `linktree_click_metric` (`click_id`, `linktree_id`, `clicked_at`) VALUES
@@ -213,7 +213,7 @@ INSERT INTO `linktree_click_metric` (`click_id`, `linktree_id`, `clicked_at`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `linktree_entrys`
+-- Tabellenstruktur für Tabelle `linktree_entrys`
 --
 
 CREATE TABLE `linktree_entrys` (
@@ -228,7 +228,7 @@ CREATE TABLE `linktree_entrys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `linktree_entrys`
+-- Daten für Tabelle `linktree_entrys`
 --
 
 INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `name`, `url`, `description`, `display_order`, `created_at`, `updated_at`) VALUES
@@ -240,7 +240,7 @@ INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `name`, `url`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `projects`
+-- Tabellenstruktur für Tabelle `projects`
 --
 
 CREATE TABLE `projects` (
@@ -251,7 +251,7 @@ CREATE TABLE `projects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `projects`
+-- Daten für Tabelle `projects`
 --
 
 INSERT INTO `projects` (`project_id`, `project_uuid`, `owner_user_id`, `project_name`) VALUES
@@ -260,7 +260,7 @@ INSERT INTO `projects` (`project_id`, `project_uuid`, `owner_user_id`, `project_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `project_clients`
+-- Tabellenstruktur für Tabelle `project_clients`
 --
 
 CREATE TABLE `project_clients` (
@@ -271,7 +271,7 @@ CREATE TABLE `project_clients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `project_clients`
+-- Daten für Tabelle `project_clients`
 --
 
 INSERT INTO `project_clients` (`project_client_id`, `client_uuid`, `created_at`, `last_time_seen_at`) VALUES
@@ -283,7 +283,7 @@ INSERT INTO `project_clients` (`project_client_id`, `client_uuid`, `created_at`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `referrals`
+-- Tabellenstruktur für Tabelle `referrals`
 --
 
 CREATE TABLE `referrals` (
@@ -298,7 +298,7 @@ CREATE TABLE `referrals` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `referrals`
+-- Daten für Tabelle `referrals`
 --
 
 INSERT INTO `referrals` (`referral_id`, `owner_user_id`, `code`, `pointer`, `name`, `disabled`, `created_at`, `updated_at`) VALUES
@@ -313,7 +313,7 @@ INSERT INTO `referrals` (`referral_id`, `owner_user_id`, `code`, `pointer`, `nam
 -- --------------------------------------------------------
 
 --
--- Table structure for table `referral_click_metric`
+-- Tabellenstruktur für Tabelle `referral_click_metric`
 --
 
 CREATE TABLE `referral_click_metric` (
@@ -323,7 +323,7 @@ CREATE TABLE `referral_click_metric` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `referral_click_metric`
+-- Daten für Tabelle `referral_click_metric`
 --
 
 INSERT INTO `referral_click_metric` (`click_id`, `referral_id`, `clicked_at`) VALUES
@@ -465,12 +465,44 @@ INSERT INTO `referral_click_metric` (`click_id`, `referral_id`, `clicked_at`) VA
                                                                                   (136, 11, '2024-11-26 23:23:27'),
                                                                                   (137, 11, '2024-11-26 23:23:28'),
                                                                                   (138, 11, '2024-11-26 23:23:28'),
-                                                                                  (139, 11, '2024-11-26 23:23:28');
+                                                                                  (139, 11, '2024-11-26 23:23:28'),
+                                                                                  (140, 1, '2024-12-21 01:12:42'),
+                                                                                  (141, 1, '2024-12-21 01:12:53'),
+                                                                                  (142, 1, '2024-12-21 01:12:53'),
+                                                                                  (143, 6, '2024-12-21 01:13:06'),
+                                                                                  (144, 6, '2024-12-21 01:13:06'),
+                                                                                  (145, 6, '2024-12-21 01:13:06'),
+                                                                                  (146, 6, '2024-12-21 01:13:07'),
+                                                                                  (147, 6, '2024-12-21 01:13:08'),
+                                                                                  (148, 12, '2024-12-21 01:13:16'),
+                                                                                  (149, 12, '2024-12-21 01:13:17'),
+                                                                                  (150, 12, '2024-12-21 01:13:17'),
+                                                                                  (151, 12, '2024-12-21 01:13:18'),
+                                                                                  (152, 12, '2024-12-21 01:13:18'),
+                                                                                  (153, 12, '2024-12-21 01:13:19'),
+                                                                                  (154, 3, '2024-12-21 01:13:28'),
+                                                                                  (155, 3, '2024-12-21 01:13:28'),
+                                                                                  (156, 3, '2024-12-21 01:13:29'),
+                                                                                  (157, 3, '2024-12-21 01:13:30'),
+                                                                                  (158, 3, '2024-12-21 01:13:30'),
+                                                                                  (159, 3, '2024-12-21 01:13:31'),
+                                                                                  (160, 3, '2024-12-21 01:13:32'),
+                                                                                  (161, 3, '2024-12-21 01:13:33'),
+                                                                                  (162, 3, '2024-12-21 01:13:34'),
+                                                                                  (163, 3, '2024-12-21 01:13:36'),
+                                                                                  (164, 3, '2024-12-21 01:13:38'),
+                                                                                  (165, 3, '2024-12-21 01:14:07'),
+                                                                                  (166, 3, '2024-12-21 01:14:07'),
+                                                                                  (167, 3, '2024-12-21 01:14:08'),
+                                                                                  (168, 3, '2024-12-21 01:14:09'),
+                                                                                  (169, 3, '2024-12-21 01:14:09'),
+                                                                                  (170, 3, '2024-12-21 01:14:09'),
+                                                                                  (171, 3, '2024-12-21 01:14:10');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Tabellenstruktur für Tabelle `roles`
 --
 
 CREATE TABLE `roles` (
@@ -484,7 +516,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `roles`
+-- Daten für Tabelle `roles`
 --
 
 INSERT INTO `roles` (`role_id`, `name`, `privileges`, `apply_on_user_creation`, `deletable`, `created_at`, `updated_at`) VALUES
@@ -494,7 +526,7 @@ INSERT INTO `roles` (`role_id`, `name`, `privileges`, `apply_on_user_creation`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Tabellenstruktur für Tabelle `users`
 --
 
 CREATE TABLE `users` (
@@ -509,7 +541,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `users`
+-- Daten für Tabelle `users`
 --
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_key`, `disabled`, `created_at`, `updated_at`) VALUES
@@ -521,7 +553,7 @@ INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_ke
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_access_history`
+-- Tabellenstruktur für Tabelle `user_access_history`
 --
 
 CREATE TABLE `user_access_history` (
@@ -534,7 +566,7 @@ CREATE TABLE `user_access_history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `user_access_history`
+-- Daten für Tabelle `user_access_history`
 --
 
 INSERT INTO `user_access_history` (`access_history_id`, `user_id`, `ip_address`, `success`, `user_agent`, `happend_at`) VALUES
@@ -546,7 +578,7 @@ INSERT INTO `user_access_history` (`access_history_id`, `user_id`, `ip_address`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_role_map`
+-- Tabellenstruktur für Tabelle `user_role_map`
 --
 
 CREATE TABLE `user_role_map` (
@@ -556,7 +588,7 @@ CREATE TABLE `user_role_map` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `user_role_map`
+-- Daten für Tabelle `user_role_map`
 --
 
 INSERT INTO `user_role_map` (`user_id`, `role_id`, `created_at`) VALUES
@@ -567,18 +599,18 @@ INSERT INTO `user_role_map` (`user_id`, `role_id`, `created_at`) VALUES
                                                                      (4, 2, '2024-12-06 19:46:53');
 
 --
--- Indexes for dumped tables
+-- Indizes der exportierten Tabellen
 --
 
 --
--- Indexes for table `accounts`
+-- Indizes für die Tabelle `accounts`
 --
 ALTER TABLE `accounts`
     ADD PRIMARY KEY (`account_id`),
     ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `account_invitation_tokens`
+-- Indizes für die Tabelle `account_invitation_tokens`
 --
 ALTER TABLE `account_invitation_tokens`
     ADD PRIMARY KEY (`token_field_1`,`token_field_2`,`token_field_3`,`token_field_4`,`token_checksum`) USING BTREE,
@@ -586,7 +618,7 @@ ALTER TABLE `account_invitation_tokens`
     ADD KEY `owner_user_id` (`owner_account_id`);
 
 --
--- Indexes for table `account_punishments`
+-- Indizes für die Tabelle `account_punishments`
 --
 ALTER TABLE `account_punishments`
     ADD PRIMARY KEY (`punishment_id`),
@@ -595,62 +627,62 @@ ALTER TABLE `account_punishments`
     ADD KEY `account_punishments_ibfk_3` (`pardoner_account_id`);
 
 --
--- Indexes for table `apod`
+-- Indizes für die Tabelle `apod`
 --
 ALTER TABLE `apod`
     ADD PRIMARY KEY (`apod_id`);
 
 --
--- Indexes for table `apod_likes`
+-- Indizes für die Tabelle `apod_likes`
 --
 ALTER TABLE `apod_likes`
     ADD KEY `apod_likes_ibfk_1` (`apod_id`),
     ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `blogs`
+-- Indizes für die Tabelle `blogs`
 --
 ALTER TABLE `blogs`
     ADD PRIMARY KEY (`blog_id`),
     ADD KEY `blog_owner_id` (`blog_owner_id`);
 
 --
--- Indexes for table `forms`
+-- Indizes für die Tabelle `forms`
 --
 ALTER TABLE `forms`
     ADD PRIMARY KEY (`form_id`),
     ADD KEY `owner_user_id` (`owner_user_id`);
 
 --
--- Indexes for table `form_submits`
+-- Indizes für die Tabelle `form_submits`
 --
 ALTER TABLE `form_submits`
     ADD PRIMARY KEY (`form_submit_id`),
     ADD KEY `form_id` (`form_id`);
 
 --
--- Indexes for table `linktrees`
+-- Indizes für die Tabelle `linktrees`
 --
 ALTER TABLE `linktrees`
     ADD PRIMARY KEY (`linktree_id`),
     ADD UNIQUE KEY `account` (`owner_user_id`);
 
 --
--- Indexes for table `linktree_click_metric`
+-- Indizes für die Tabelle `linktree_click_metric`
 --
 ALTER TABLE `linktree_click_metric`
     ADD PRIMARY KEY (`click_id`),
     ADD KEY `analytics_linktree_clicks_ibfk_1` (`linktree_id`);
 
 --
--- Indexes for table `linktree_entrys`
+-- Indizes für die Tabelle `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     ADD PRIMARY KEY (`linktree_entry_id`),
     ADD UNIQUE KEY `linktree_id` (`linktree_id`,`display_order`);
 
 --
--- Indexes for table `projects`
+-- Indizes für die Tabelle `projects`
 --
 ALTER TABLE `projects`
     ADD PRIMARY KEY (`project_id`),
@@ -658,14 +690,14 @@ ALTER TABLE `projects`
     ADD KEY `owner_id` (`owner_user_id`);
 
 --
--- Indexes for table `project_clients`
+-- Indizes für die Tabelle `project_clients`
 --
 ALTER TABLE `project_clients`
     ADD PRIMARY KEY (`project_client_id`),
     ADD UNIQUE KEY `client_uuid` (`client_uuid`);
 
 --
--- Indexes for table `referrals`
+-- Indizes für die Tabelle `referrals`
 --
 ALTER TABLE `referrals`
     ADD PRIMARY KEY (`referral_id`),
@@ -673,21 +705,21 @@ ALTER TABLE `referrals`
     ADD KEY `user_id` (`owner_user_id`);
 
 --
--- Indexes for table `referral_click_metric`
+-- Indizes für die Tabelle `referral_click_metric`
 --
 ALTER TABLE `referral_click_metric`
     ADD PRIMARY KEY (`click_id`),
     ADD KEY `referral_id` (`referral_id`);
 
 --
--- Indexes for table `roles`
+-- Indizes für die Tabelle `roles`
 --
 ALTER TABLE `roles`
     ADD PRIMARY KEY (`role_id`),
     ADD UNIQUE KEY `group_name` (`name`);
 
 --
--- Indexes for table `users`
+-- Indizes für die Tabelle `users`
 --
 ALTER TABLE `users`
     ADD PRIMARY KEY (`user_id`),
@@ -695,138 +727,138 @@ ALTER TABLE `users`
     ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `user_access_history`
+-- Indizes für die Tabelle `user_access_history`
 --
 ALTER TABLE `user_access_history`
     ADD PRIMARY KEY (`access_history_id`),
     ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `user_role_map`
+-- Indizes für die Tabelle `user_role_map`
 --
 ALTER TABLE `user_role_map`
     ADD PRIMARY KEY (`user_id`,`role_id`),
     ADD KEY `group_id` (`role_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT for table `accounts`
+-- AUTO_INCREMENT für Tabelle `accounts`
 --
 ALTER TABLE `accounts`
     MODIFY `account_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `account_punishments`
+-- AUTO_INCREMENT für Tabelle `account_punishments`
 --
 ALTER TABLE `account_punishments`
     MODIFY `punishment_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `apod`
+-- AUTO_INCREMENT für Tabelle `apod`
 --
 ALTER TABLE `apod`
     MODIFY `apod_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `blogs`
+-- AUTO_INCREMENT für Tabelle `blogs`
 --
 ALTER TABLE `blogs`
     MODIFY `blog_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `forms`
+-- AUTO_INCREMENT für Tabelle `forms`
 --
 ALTER TABLE `forms`
     MODIFY `form_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `form_submits`
+-- AUTO_INCREMENT für Tabelle `form_submits`
 --
 ALTER TABLE `form_submits`
     MODIFY `form_submit_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `linktrees`
+-- AUTO_INCREMENT für Tabelle `linktrees`
 --
 ALTER TABLE `linktrees`
     MODIFY `linktree_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `linktree_click_metric`
+-- AUTO_INCREMENT für Tabelle `linktree_click_metric`
 --
 ALTER TABLE `linktree_click_metric`
     MODIFY `click_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `linktree_entrys`
+-- AUTO_INCREMENT für Tabelle `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     MODIFY `linktree_entry_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `projects`
+-- AUTO_INCREMENT für Tabelle `projects`
 --
 ALTER TABLE `projects`
     MODIFY `project_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `project_clients`
+-- AUTO_INCREMENT für Tabelle `project_clients`
 --
 ALTER TABLE `project_clients`
     MODIFY `project_client_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `referrals`
+-- AUTO_INCREMENT für Tabelle `referrals`
 --
 ALTER TABLE `referrals`
     MODIFY `referral_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `referral_click_metric`
+-- AUTO_INCREMENT für Tabelle `referral_click_metric`
 --
 ALTER TABLE `referral_click_metric`
-    MODIFY `click_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+    MODIFY `click_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT für Tabelle `roles`
 --
 ALTER TABLE `roles`
     MODIFY `role_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
     MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `user_access_history`
+-- AUTO_INCREMENT für Tabelle `user_access_history`
 --
 ALTER TABLE `user_access_history`
     MODIFY `access_history_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Constraints for dumped tables
+-- Constraints der exportierten Tabellen
 --
 
 --
--- Constraints for table `accounts`
+-- Constraints der Tabelle `accounts`
 --
 ALTER TABLE `accounts`
     ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE RESTRICT;
 
 --
--- Constraints for table `account_invitation_tokens`
+-- Constraints der Tabelle `account_invitation_tokens`
 --
 ALTER TABLE `account_invitation_tokens`
     ADD CONSTRAINT `account_invitation_tokens_ibfk_2` FOREIGN KEY (`invited_account_id`) REFERENCES `accounts` (`account_id`) ON UPDATE RESTRICT,
     ADD CONSTRAINT `account_invitation_tokens_ibfk_3` FOREIGN KEY (`owner_account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
--- Constraints for table `account_punishments`
+-- Constraints der Tabelle `account_punishments`
 --
 ALTER TABLE `account_punishments`
     ADD CONSTRAINT `account_punishments_ibfk_1` FOREIGN KEY (`punished_account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
@@ -834,74 +866,74 @@ ALTER TABLE `account_punishments`
     ADD CONSTRAINT `account_punishments_ibfk_3` FOREIGN KEY (`pardoner_account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
--- Constraints for table `apod_likes`
+-- Constraints der Tabelle `apod_likes`
 --
 ALTER TABLE `apod_likes`
     ADD CONSTRAINT `apod_likes_ibfk_1` FOREIGN KEY (`apod_id`) REFERENCES `apod` (`apod_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
     ADD CONSTRAINT `apod_likes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `blogs`
+-- Constraints der Tabelle `blogs`
 --
 ALTER TABLE `blogs`
     ADD CONSTRAINT `blogs_ibfk_1` FOREIGN KEY (`blog_owner_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `forms`
+-- Constraints der Tabelle `forms`
 --
 ALTER TABLE `forms`
     ADD CONSTRAINT `forms_ibfk_1` FOREIGN KEY (`owner_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `form_submits`
+-- Constraints der Tabelle `form_submits`
 --
 ALTER TABLE `form_submits`
     ADD CONSTRAINT `form_submits_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `forms` (`form_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `linktrees`
+-- Constraints der Tabelle `linktrees`
 --
 ALTER TABLE `linktrees`
     ADD CONSTRAINT `linktrees_ibfk_1` FOREIGN KEY (`owner_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `linktree_click_metric`
+-- Constraints der Tabelle `linktree_click_metric`
 --
 ALTER TABLE `linktree_click_metric`
     ADD CONSTRAINT `linktree_click_metric_ibfk_1` FOREIGN KEY (`linktree_id`) REFERENCES `linktrees` (`linktree_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `linktree_entrys`
+-- Constraints der Tabelle `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
     ADD CONSTRAINT `linktree_entrys_ibfk_1` FOREIGN KEY (`linktree_id`) REFERENCES `linktrees` (`linktree_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `projects`
+-- Constraints der Tabelle `projects`
 --
 ALTER TABLE `projects`
     ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`owner_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `referrals`
+-- Constraints der Tabelle `referrals`
 --
 ALTER TABLE `referrals`
     ADD CONSTRAINT `referrals_ibfk_1` FOREIGN KEY (`owner_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `referral_click_metric`
+-- Constraints der Tabelle `referral_click_metric`
 --
 ALTER TABLE `referral_click_metric`
     ADD CONSTRAINT `referral_click_metric_ibfk_1` FOREIGN KEY (`referral_id`) REFERENCES `referrals` (`referral_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `user_access_history`
+-- Constraints der Tabelle `user_access_history`
 --
 ALTER TABLE `user_access_history`
     ADD CONSTRAINT `user_access_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints for table `user_role_map`
+-- Constraints der Tabelle `user_role_map`
 --
 ALTER TABLE `user_role_map`
     ADD CONSTRAINT `user_role_map_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,

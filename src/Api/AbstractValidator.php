@@ -6,42 +6,52 @@ use JsonException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Exception\ApiValidationException;
+use Nebalus\Webapi\Value\ValidatedData;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractValidator
 {
     private const int MAX_RECURSION = 5;
-    private array $rules;
 
-    protected function __construct(array $rules = [])
+    protected function __construct(private readonly array $rules = [])
     {
-        $this->rules = $rules;
     }
 
     /**
      * @throws ApiException
      */
-    public function validate(ServerRequestInterface $request): void
+    public function validate(ServerRequestInterface $request, array $pathArgs): void
     {
-        try {
-            $data = json_decode($request->getBody()->getContents(), true, self::MAX_RECURSION, JSON_THROW_ON_ERROR);
-        } catch (JsonException) {
-            throw new ApiValidationException(
-                'Invalid JSON request',
-                400
-            );
+        $validData = ValidatedData::create();
+
+        if (isset($this->rules['body'])) {
+            try {
+                $bodyData = json_decode($request->getBody()->getContents(), true, self::MAX_RECURSION, JSON_THROW_ON_ERROR);
+                $validData = $validData->setBodyData($this->validateJsonSchema($bodyData, $this->rules['body'], self::MAX_RECURSION));
+            } catch (JsonException) {
+                throw new ApiValidationException(
+                    'Invalid JSON request',
+                    400
+                );
+            }
         }
 
-        $filteredData = $this->processRecursiveRules($data, $this->rules, self::MAX_RECURSION);
-//        echo json_encode($filteredData, JSON_PRETTY_PRINT, 5) . "\n\n";
-        $this->onValidate($filteredData);
+        if (isset($this->rules['query_param'])) {
+            $queryParamData = $request->getQueryParams() ?? [];
+            $validData = $validData->setQueryParamsData($this->validateJsonSchema($queryParamData, $this->rules['query_param'], self::MAX_RECURSION));
+        }
+
+        if (isset($this->rules['path_args'])) {
+            $validData = $validData->setPathArgsData($this->validateJsonSchema($pathArgs, $this->rules['path_args'], self::MAX_RECURSION));
+        }
+
+        $this->onValidate($validData);
     }
 
     /**
      * @throws ApiException
      */
-
-    private function processRecursiveRules(array $dataLayer, array $ruleLayer, int $maxRecursion, int $layerId = 0, string $path = ''): array
+    private function validateJsonSchema(array $dataLayer, array $ruleLayer, int $maxRecursion, int $layerId = 0, string $path = ''): array
     {
         $processedData = [];
         $layerId++;
@@ -121,7 +131,7 @@ abstract class AbstractValidator
                     continue;
                 } elseif ($type === 'object' && is_array($value) && empty($value) === false) {
                     if ($childrenRules !== []) {
-                        $processedData[$param] = $this->processRecursiveRules($value, $childrenRules, $maxRecursion, $layerId, $currentPath . ".");
+                        $processedData[$param] = $this->validateJsonSchema($value, $childrenRules, $maxRecursion, $layerId, $currentPath . ".");
                     }
                     continue;
                 }
@@ -139,5 +149,5 @@ abstract class AbstractValidator
     /**
      * @throws ApiException
      */
-    abstract protected function onValidate(array $filteredData): void;
+    abstract protected function onValidate(ValidatedData $validatedData): void;
 }

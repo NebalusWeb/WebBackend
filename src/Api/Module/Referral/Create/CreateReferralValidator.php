@@ -6,6 +6,7 @@ use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Referral\ReferralName;
 use Nebalus\Webapi\Value\Referral\ReferralPointer;
+use Nebalus\Webapi\Value\ValidatedData;
 
 class CreateReferralValidator extends AbstractValidator
 {
@@ -25,11 +26,11 @@ class CreateReferralValidator extends AbstractValidator
         parent::__construct($rules);
     }
 
-    protected function onValidate(array $filteredData): void
+    protected function onValidate(ValidatedData $validatedData): void
     {
-        $this->referralName = ReferralName::from($filteredData['name']);
-        $this->referralPointer = ReferralPointer::from($filteredData['pointer']);
-        $this->disabled = $filteredData['disabled'];
+        $this->referralName = ReferralName::from($validatedData->getBodyData()['name']);
+        $this->referralPointer = ReferralPointer::from($validatedData->getBodyData()['pointer']);
+        $this->disabled = $validatedData->getBodyData()['disabled'];
     }
 
     public function getReferralName(): ReferralName

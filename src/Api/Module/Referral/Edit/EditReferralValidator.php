@@ -4,18 +4,22 @@ namespace Nebalus\Webapi\Api\Module\Referral\Edit;
 
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Referral\ReferralPointer;
+use Nebalus\Webapi\Value\ValidatedData;
 
 class EditReferralValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
-    private ?string $pointer;
+    private ReferralPointer $pointer;
     private bool $disabled;
 
     public function __construct()
     {
         $rules = [
-            "body" => [
+            "path_args" => [
                 'code' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
+            ],
+            "body" => [
                 'pointer' => [ 'required' => false, 'nullable' => true, 'type' => "string" ],
                 'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => "boolean" ],
             ]
@@ -23,11 +27,11 @@ class EditReferralValidator extends AbstractValidator
         parent::__construct($rules);
     }
 
-    protected function onValidate(array $filteredData): void
+    protected function onValidate(ValidatedData $validatedData): void
     {
-        $this->referralCode = ReferralCode::from($filteredData['code']);
-        $this->pointer = $filteredData['pointer'];
-        $this->disabled = $filteredData['disabled'];
+        $this->referralCode = ReferralCode::from($validatedData->getBodyData()['code']);
+        $this->pointer = ReferralPointer::from($validatedData->getBodyData()['pointer']);
+        $this->disabled = $validatedData->getBodyData()['disabled'];
     }
 
     public function getReferralCode(): ReferralCode
@@ -35,7 +39,7 @@ class EditReferralValidator extends AbstractValidator
         return $this->referralCode;
     }
 
-    public function getPointer(): ?string
+    public function getPointer(): ReferralPointer
     {
         return $this->pointer;
     }

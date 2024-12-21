@@ -9,6 +9,7 @@ use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\User\UserEmail;
 use Nebalus\Webapi\Value\User\Username;
 use Nebalus\Webapi\Value\User\UserPassword;
+use Nebalus\Webapi\Value\ValidatedData;
 
 class RegisterUserValidator extends AbstractValidator
 {
@@ -44,18 +45,18 @@ class RegisterUserValidator extends AbstractValidator
     /**
      * @throws ApiException
      */
-    protected function onValidate(array $filteredData): void
+    protected function onValidate(ValidatedData $validatedData): void
     {
         $this->pureInvitationToken = PureInvitationToken::from(
-            InvitationTokenField::from($filteredData["invitation_token"]["field_1"]),
-            InvitationTokenField::from($filteredData["invitation_token"]["field_2"]),
-            InvitationTokenField::from($filteredData["invitation_token"]["field_3"]),
-            InvitationTokenField::from($filteredData["invitation_token"]["field_4"]),
-            InvitationTokenField::from($filteredData["invitation_token"]["checksum"])
+            InvitationTokenField::from($validatedData->getBodyData()["invitation_token"]["field_1"]),
+            InvitationTokenField::from($validatedData->getBodyData()["invitation_token"]["field_2"]),
+            InvitationTokenField::from($validatedData->getBodyData()["invitation_token"]["field_3"]),
+            InvitationTokenField::from($validatedData->getBodyData()["invitation_token"]["field_4"]),
+            InvitationTokenField::from($validatedData->getBodyData()["invitation_token"]["checksum"])
         );
-        $this->userEmail = UserEmail::from($filteredData["email"]);
-        $this->username = UserName::from($filteredData["username"]);
-        $this->userPassword = UserPassword::fromPlain($filteredData["password"]);
+        $this->userEmail = UserEmail::from($validatedData->getBodyData()["email"]);
+        $this->username = UserName::from($validatedData->getBodyData()["username"]);
+        $this->userPassword = UserPassword::fromPlain($validatedData->getBodyData()["password"]);
     }
 
     public function getPureInvitationToken(): PureInvitationToken

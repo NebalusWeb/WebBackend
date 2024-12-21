@@ -12,9 +12,9 @@ class GetReferralView
     {
         $fields = [
             "referral_id" => $referral->getReferralId()->asInt(),
-            "user_id" => $referral->getUserId()->asInt(),
-            "code" => $referral->getCode(),
-            "pointer" => $referral->getPointer(),
+            "user_id" => $referral->getOwnerUserId()->asInt(),
+            "code" => $referral->getCode()->asString(),
+            "pointer" => $referral->getPointer()->asString(),
             "disabled" => $referral->isDisabled(),
             "created_at_timestamp" => $referral->getCreatedAtDate()->getTimestamp(),
             "updated_at_timestamp" => $referral->getUpdatedAtDate()->getTimestamp(),

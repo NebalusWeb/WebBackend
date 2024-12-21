@@ -11,14 +11,14 @@ use Slim\Http\ServerRequest as Request;
 class DeleteLinktreeAction extends AbstractAction
 {
     public function __construct(
-        private readonly DeleteLinktreeService $linktreeDeleteService,
+        private readonly DeleteLinktreeService $service,
     ) {
     }
 
     protected function execute(Request $request, Response $response, array $args): Response
     {
         $params = $request->getParams() ?? [];
-        $result = $this->linktreeDeleteService->execute($params);
+        $result = $this->service->execute($params);
 
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }

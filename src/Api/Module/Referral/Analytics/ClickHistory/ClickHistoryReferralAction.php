@@ -11,17 +11,16 @@ use Slim\Http\ServerRequest as Request;
 class ClickHistoryReferralAction extends AbstractAction
 {
     public function __construct(
-        private readonly ClickReferralService $referralClickService,
+        private readonly ClickHistoryReferralService $service,
+        private readonly ClickHistoryReferralValidator $validator
     ) {
     }
 
-    /**
-     * @throws DateMalformedStringException
-     */
     protected function execute(Request $request, Response $response, array $args): Response
     {
-        $params = $request->getParams() ?? [];
-        $result = $this->referralClickService->execute($params);
+        $this->validator->validate($request, $args);
+
+        $result = $this->service->execute($this->validator);
 
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }

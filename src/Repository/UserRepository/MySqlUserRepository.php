@@ -43,8 +43,7 @@ class MySqlUserRepository extends AbstractRepository
      */
     private function insertUser(User $user): User
     {
-        $sql = "INSERT INTO users(username, email, password, totp_secret_key, disabled, created_at, updated_at) 
-                            VALUES (:username,:email,:password,:totp_secret_key,:disabled,:created_at,:updated_at)";
+        $sql = "INSERT INTO users(username, email, password, totp_secret_key, disabled, created_at, updated_at) VALUES (:username,:email,:password,:totp_secret_key,:disabled,:created_at,:updated_at)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':username', $user->getUsername()->asString());
@@ -67,7 +66,7 @@ class MySqlUserRepository extends AbstractRepository
      */
     public function findUserFromId(UserId $userId): ?User
     {
-        $sql = "SELECT * FROM users WHERE user_id = :user_id INNER JOIN accounts ON accounts.user_id = users.user_id";
+        $sql = "SELECT * FROM users INNER JOIN accounts ON accounts.user_id = users.user_id WHERE users.user_id = :user_id";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':user_id', $userId->asInt());
@@ -86,7 +85,7 @@ class MySqlUserRepository extends AbstractRepository
      */
     public function findUserFromEmail(UserEmail $email): ?User
     {
-        $sql = "SELECT * FROM users WHERE email = :email INNER JOIN accounts ON accounts.user_id = users.user_id";
+        $sql = "SELECT * FROM users INNER JOIN accounts ON accounts.user_id = users.user_id WHERE users.email = :email";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':email', $email->asString());
@@ -105,7 +104,7 @@ class MySqlUserRepository extends AbstractRepository
      */
     public function findUserFromUsername(Username $username): ?User
     {
-        $sql = "SELECT * FROM users WHERE username = :username INNER JOIN accounts ON accounts.user_id = users.user_id";
+        $sql = "SELECT * FROM users INNER JOIN accounts ON accounts.user_id = users.user_id WHERE users.username = :username";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':username', $username->asString());

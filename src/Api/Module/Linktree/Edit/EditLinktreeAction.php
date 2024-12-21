@@ -11,14 +11,15 @@ use Slim\Http\ServerRequest as Request;
 class EditLinktreeAction extends AbstractAction
 {
     public function __construct(
-        private readonly EditLinktreeService $linktreeEditService,
+        private readonly EditLinktreeService $service,
     ) {
     }
 
     protected function execute(Request $request, Response $response, array $args): Response
     {
         $params = $request->getParams() ?? [];
-        $result = $this->linktreeEditService->execute($params);
+
+        $result = $this->service->execute($params);
 
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }

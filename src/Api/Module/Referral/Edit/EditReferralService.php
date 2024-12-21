@@ -14,6 +14,8 @@ readonly class EditReferralService
 
     public function execute(EditReferralValidator $validator): ResultInterface
     {
+        $this->referralRepository->updateReferral();
+
         return EditReferralView::render();
     }
 }

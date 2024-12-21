@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim\Middleware;
 
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Option\EnvData;
+use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
+use Nebalus\Webapi\Value\User\UserId;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -18,10 +21,14 @@ readonly class AuthenticationMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private App $app,
+        private MySqlUserRepository $userRepository,
         private EnvData $env
     ) {
     }
 
+    /**
+     * @throws ApiException
+     */
     #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
         if ($request->hasHeader("Authorization") === false) {
@@ -44,8 +51,8 @@ readonly class AuthenticationMiddleware implements MiddlewareInterface
 
         $payload = Token::getPayload($jwt);
 
-        if (empty($payload["is_admin"]) === false) {
-            $request = $request->withAttribute("is_admin", $payload["is_admin"]);
+        if (empty($payload["sub"]) === false && ($user = $this->userRepository->findUserFromId(UserId::from($payload["sub"]))) !== null) {
+            $request = $request->withAttribute("user", $user);
         }
 
         return $handler->handle($request);

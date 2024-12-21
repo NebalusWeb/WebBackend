@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Api\User\Auth;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Value\User\Totp\TOTPCode;
 use Nebalus\Webapi\Value\User\Username;
+use Nebalus\Webapi\Value\ValidatedData;
 
 class AuthUserValidator extends AbstractValidator
 {
@@ -26,12 +27,12 @@ class AuthUserValidator extends AbstractValidator
         parent::__construct($rules);
     }
 
-    protected function onValidate(array $filteredData): void
+    protected function onValidate(ValidatedData $validatedData): void
     {
-        $this->username = Username::from($filteredData['username']);
-        $this->password = $filteredData['password'];
-        $this->rememberMe = $filteredData['remember_me'];
-        $this->TOTPCode = is_null($filteredData['totp']) ? null : TOTPCode::from($filteredData['totp']);
+        $this->username = Username::from($validatedData->getBodyData()['username']);
+        $this->password = $validatedData->getBodyData()['password'];
+        $this->rememberMe = $validatedData->getBodyData()['remember_me'];
+        $this->TOTPCode = is_null($validatedData->getBodyData()['totp']) ? null : TOTPCode::from($validatedData->getBodyData()['totp']);
     }
 
     public function getUsername(): Username

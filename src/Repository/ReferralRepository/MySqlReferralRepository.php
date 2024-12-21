@@ -40,7 +40,7 @@ class MySqlReferralRepository extends AbstractRepository
 
     public function insertReferralClickEntry(ReferralId $referralId): bool
     {
-        $sql = "INSERT INTO referral_clicks(referral_id) VALUES (:referral_id)";
+        $sql = "INSERT INTO referral_click_metric(referral_id) VALUES (:referral_id)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':referral_id', $referralId->asInt());
@@ -58,12 +58,13 @@ class MySqlReferralRepository extends AbstractRepository
         return $stmt->rowCount() === 1;
     }
 
-    public function deleteReferralByCode(ReferralCode $code): bool
+    public function deleteReferralByCodeAndOwnerId(ReferralCode $code, UserId $ownerUserId): bool
     {
-        $sql = "DELETE FROM referrals WHERE code = :code";
+        $sql = "DELETE FROM referrals WHERE code = :code AND owner_user_id = :owner_user_id";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':code', $code->asString());
+        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
         $stmt->execute();
 
         return $stmt->rowCount() === 1;

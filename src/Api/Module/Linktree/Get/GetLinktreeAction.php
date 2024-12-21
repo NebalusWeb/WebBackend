@@ -11,7 +11,7 @@ use Slim\Http\ServerRequest as Request;
 class GetLinktreeAction extends AbstractAction
 {
     public function __construct(
-        private readonly GetLinktreeService $linktreeGetService,
+        private readonly GetLinktreeService $service,
     ) {
     }
 
@@ -19,7 +19,8 @@ class GetLinktreeAction extends AbstractAction
     protected function execute(Request $request, Response $response, array $args): Response
     {
         $params = $request->getParams() ?? [];
-        $result = $this->linktreeGetService->execute($params);
+
+        $result = $this->service->execute($params);
 
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }

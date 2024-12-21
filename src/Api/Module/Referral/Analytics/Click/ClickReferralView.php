@@ -11,7 +11,7 @@ class ClickReferralView
     public static function render(Referral $referral): ResultInterface
     {
         $fields = [
-            "pointer" => $referral->getPointer()
+            "pointer" => $referral->getPointer()->asString()
         ];
 
         return Result::createSuccess("Referral found", 200, $fields);

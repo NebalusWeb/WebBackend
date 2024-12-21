@@ -4,6 +4,7 @@ namespace Nebalus\Webapi\Api\Module\Referral\Get;
 
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
+use Nebalus\Webapi\Value\ValidatedData;
 
 class GetReferralValidator extends AbstractValidator
 {
@@ -12,16 +13,16 @@ class GetReferralValidator extends AbstractValidator
     public function __construct()
     {
         $rules = [
-            "body" => [
+            "path_args" => [
                 'code' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
             ]
         ];
         parent::__construct($rules);
     }
 
-    protected function onValidate(array $filteredData): void
+    protected function onValidate(ValidatedData $validatedData): void
     {
-        $this->referralCode = ReferralCode::from($filteredData['code']);
+        $this->referralCode = ReferralCode::from($validatedData->getPathArgsData()['code']);
     }
 
     public function getReferralCode(): ReferralCode

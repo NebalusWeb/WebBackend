@@ -14,9 +14,9 @@ readonly class Referral
 {
     private function __construct(
         private ReferralId $referralId,
-        private UserId $userId,
+        private UserId $ownerUserId,
         private ReferralCode $code,
-        private string $pointer,
+        private ReferralPointer $pointer,
         private bool $disabled,
         private DateTimeImmutable $createdAtDate,
         private DateTimeImmutable $updatedAtDate,
@@ -36,14 +36,14 @@ readonly class Referral
         }
 
         $referralId = ReferralId::from($data["referral_id"]);
-        $userId = UserId::from($data["user_id"]);
+        $ownerUserId = UserId::from($data["owner_user_id"]);
         $code = ReferralCode::from($data["code"]);
-        $pointer = $data["pointer"];
+        $pointer = ReferralPointer::from($data["pointer"]);
         $disabled = (bool) $data["disabled"];
 
         return new self(
             $referralId,
-            $userId,
+            $ownerUserId,
             $code,
             $pointer,
             $disabled,
@@ -55,7 +55,7 @@ readonly class Referral
     {
         return [
             "referral_id" => $this->referralId->asInt(),
-            "user_id" => $this->userId->asInt(),
+            "owner_user_id" => $this->ownerUserId->asInt(),
             "code" => $this->code->asString(),
             "pointer" => $this->pointer,
             "disabled" => $this->disabled,
@@ -68,15 +68,15 @@ readonly class Referral
     {
         return $this->referralId;
     }
-    public function getUserId(): UserId
+    public function getOwnerUserId(): UserId
     {
-        return $this->userId;
+        return $this->ownerUserId;
     }
     public function getCode(): ReferralCode
     {
         return $this->code;
     }
-    public function getPointer(): string
+    public function getPointer(): ReferralPointer
     {
         return $this->pointer;
     }

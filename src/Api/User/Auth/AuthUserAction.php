@@ -23,8 +23,10 @@ class AuthUserAction extends AbstractAction
      */
     protected function execute(Request $request, Response $response, array $args): Response
     {
-        $this->validator->validate($request);
+        $this->validator->validate($request, $args);
+
         $result = $this->service->execute($this->validator);
+
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }
