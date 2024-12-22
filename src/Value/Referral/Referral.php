@@ -17,6 +17,7 @@ readonly class Referral
         private UserId $ownerUserId,
         private ReferralCode $code,
         private ReferralPointer $pointer,
+        private ReferralName $name,
         private bool $disabled,
         private DateTimeImmutable $createdAtDate,
         private DateTimeImmutable $updatedAtDate,
@@ -39,6 +40,7 @@ readonly class Referral
         $ownerUserId = UserId::from($data["owner_user_id"]);
         $code = ReferralCode::from($data["code"]);
         $pointer = ReferralPointer::from($data["pointer"]);
+        $name = ReferralName::from($data["name"]);
         $disabled = (bool) $data["disabled"];
 
         return new self(
@@ -46,6 +48,7 @@ readonly class Referral
             $ownerUserId,
             $code,
             $pointer,
+            $name,
             $disabled,
             $createdAtDate,
             $updatedAtDate
@@ -57,7 +60,8 @@ readonly class Referral
             "referral_id" => $this->referralId->asInt(),
             "owner_user_id" => $this->ownerUserId->asInt(),
             "code" => $this->code->asString(),
-            "pointer" => $this->pointer,
+            "pointer" => $this->pointer->asString(),
+            "name" => $this->name->asString(),
             "disabled" => $this->disabled,
             "created_at" => $this->createdAtDate->format(DATE_ATOM),
             "updated_at" => $this->updatedAtDate->format(DATE_ATOM),
@@ -79,6 +83,10 @@ readonly class Referral
     public function getPointer(): ReferralPointer
     {
         return $this->pointer;
+    }
+    public function getName(): ReferralName
+    {
+        return $this->name;
     }
     public function isDisabled(): bool
     {

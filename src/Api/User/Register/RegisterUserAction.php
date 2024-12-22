@@ -18,9 +18,9 @@ class RegisterUserAction extends AbstractAction
     /**
      * @throws ApiException
      */
-    protected function execute(Request $request, Response $response, array $args): Response
+    protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
-        $this->validator->validate($request, $args);
+        $this->validator->validate($request, $pathArgs);
 
         $result = $this->service->execute($this->validator);
 

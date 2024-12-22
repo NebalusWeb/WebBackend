@@ -6,6 +6,8 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Result\ResultInterface;
+use Nebalus\Webapi\Value\User\User;
+use Nebalus\Webapi\Value\User\UserId;
 
 readonly class GetReferralService
 {
@@ -17,9 +19,9 @@ readonly class GetReferralService
     /**
      * @throws ApiException
      */
-    public function execute(GetReferralValidator $validator): ResultInterface
+    public function execute(GetReferralValidator $validator, User $user): ResultInterface
     {
-        $referral = $this->referralRepository->findReferralByCode($validator->getReferralCode());
+        $referral = $this->referralRepository->findReferralByCodeAndOwnerId($validator->getReferralCode(), $user->getUserId());
 
         if ($referral === null) {
             return Result::createError('Referral does not exist', 404);

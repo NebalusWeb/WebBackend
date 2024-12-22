@@ -12,7 +12,7 @@ class GetPrivilegesUserAction extends AbstractAction
     /**
      * @inheritDoc
      */
-    protected function execute(Request $request, Response $response, array $args): Response
+    protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         // TODO: Implement execute() method.
     }

@@ -25,12 +25,12 @@ class MySqlReferralRepository extends AbstractRepository
         parent::__construct($pdo);
     }
 
-    public function insertReferral(UserId $userId, ReferralCode $code, ReferralPointer $pointer, ReferralName $name, bool $disabled = true): bool
+    public function insertReferral(UserId $ownerUserId, ReferralCode $code, ReferralPointer $pointer, ReferralName $name, bool $disabled = true): bool
     {
-        $sql = "INSERT INTO referrals(user_id, code, pointer, name, disabled) VALUES (:user_id, :code, :pointer, :name, :disabled)";
+        $sql = "INSERT INTO referrals(owner_user_id, code, pointer, name, disabled) VALUES (:owner_user_id, :code, :pointer, :name, :disabled)";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':user_id', $userId->asInt());
+        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
         $stmt->bindValue(':code', $code->asString());
         $stmt->bindValue(':pointer', $pointer->asString());
         $stmt->bindValue(':name', $name->asString());
@@ -47,17 +47,6 @@ class MySqlReferralRepository extends AbstractRepository
         return $stmt->execute();
     }
 
-    public function deleteReferralById(ReferralId $referralId): bool
-    {
-        $sql = "DELETE FROM referrals WHERE referral_id = :referral_id";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':referral_id', $referralId->asInt());
-        $stmt->execute();
-
-        return $stmt->rowCount() === 1;
-    }
-
     public function deleteReferralByCodeAndOwnerId(ReferralCode $code, UserId $ownerUserId): bool
     {
         $sql = "DELETE FROM referrals WHERE code = :code AND owner_user_id = :owner_user_id";
@@ -70,19 +59,27 @@ class MySqlReferralRepository extends AbstractRepository
         return $stmt->rowCount() === 1;
     }
 
-    public function updateReferral()
+    public function updateReferral(Referral $referral, UserId $ownerUserId): bool
     {
+        $sql = "UPDATE `referrals` SET `pointer`=:pointer,`name`=:name,`disabled`=:disabled WHERE `owner_user_id`=:owner_user_id AND `code`=:code";
+
+//        $stmt = $this->pdo->prepare($sql);
+//        $stmt->bindValue(':pointer', $referral->asString());
+//        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
+//        $stmt->execute();
+
+        return false;
     }
 
     /**
      * @throws ApiException
      */
-    public function getReferralsFromUserId(UserId $userId): Referrals
+    public function getReferralsFromOwnerId(UserId $ownerUserId): Referrals
     {
-        $sql = "SELECT * FROM referrals WHERE user_id = :user_id";
+        $sql = "SELECT * FROM referrals WHERE owner_user_id = :owner_user_id";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':user_id', $userId->asInt());
+        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
         $stmt->execute();
 
         $data = [];
@@ -97,12 +94,12 @@ class MySqlReferralRepository extends AbstractRepository
     /**
      * @throws ApiException
      */
-    public function findReferralById(ReferralId $id): ?Referral
+    public function findReferralByCode(ReferralCode $code): ?Referral
     {
-        $sql = "SELECT * FROM referrals WHERE referral_id = :referral_id";
+        $sql = "SELECT * FROM referrals WHERE code = :code";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':referral_id', $id->asInt());
+        $stmt->bindValue(':code', $code->asString());
         $stmt->execute();
 
         $data = $stmt->fetch();
@@ -117,12 +114,13 @@ class MySqlReferralRepository extends AbstractRepository
     /**
      * @throws ApiException
      */
-    public function findReferralByCode(ReferralCode $code): ?Referral
+    public function findReferralByCodeAndOwnerId(ReferralCode $code, UserId $ownerUserId): ?Referral
     {
-        $sql = "SELECT * FROM referrals WHERE code = :code";
+        $sql = "SELECT * FROM referrals WHERE code = :code AND owner_user_id = :owner_user_id";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':code', $code->asString());
+        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
         $stmt->execute();
 
         $data = $stmt->fetch();

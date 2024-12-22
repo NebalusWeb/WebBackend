@@ -41,6 +41,6 @@ abstract class AbstractAction
     abstract protected function execute(
         Request $request,
         Response $response,
-        array $args
+        array $pathArgs
     ): Response;
 }

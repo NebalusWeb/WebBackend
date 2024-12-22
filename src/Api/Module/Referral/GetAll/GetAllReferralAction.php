@@ -11,15 +11,14 @@ use Slim\Http\ServerRequest as Request;
 class GetAllReferralAction extends AbstractAction
 {
     public function __construct(
-        private readonly GetAllReferralService $service,
-        private readonly GetAllReferralValidator $validator
+        private readonly GetAllReferralService $service
     ) {
     }
 
-    protected function execute(Request $request, Response $response, array $args): Response
+    protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
-        $this->validator->validate($request, $args);
-        $result = $this->service->execute($this->validator);
+        $result = $this->service->execute($request->getAttribute('user'));
+
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

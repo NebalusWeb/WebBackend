@@ -19,6 +19,10 @@ class ReferralName
      */
     public static function from(?string $referralName): self
     {
+        if ($referralName === null) {
+            return new self(null);
+        }
+
         if (strlen($referralName) > self::MAX_LENGTH) {
             throw new ApiInvalidArgumentException(
                 'Invalid referral name: cannot be longer than ' . self::MAX_LENGTH . ' characters'

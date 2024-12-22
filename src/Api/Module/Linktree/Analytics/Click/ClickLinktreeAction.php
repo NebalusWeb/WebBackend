@@ -15,7 +15,7 @@ class ClickLinktreeAction extends AbstractAction
     ) {
     }
 
-    protected function execute(Request $request, Response $response, array $args): Response
+    protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $params = $request->getParams() ?? [];
 

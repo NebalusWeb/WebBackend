@@ -19,7 +19,7 @@ class MetricsAction extends AbstractAction
     /**
      * @throws Throwable
      */
-    protected function execute(Request $request, Response $response, array $args): Response
+    protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $registry = CollectorRegistry::getDefault();
         $result = $this->renderTextFormat->render($registry->getMetricFamilySamples());

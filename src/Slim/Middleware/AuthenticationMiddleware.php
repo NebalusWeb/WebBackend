@@ -35,25 +35,28 @@ readonly class AuthenticationMiddleware implements MiddlewareInterface
             return $this->abort("The Authorization header is not provided", 401);
         }
 
-        $jwt = $request->getHeader("Authorization")[0];
+        $jwtParser = Token::parser($request->getHeader("Authorization")[0]);
+        $jwt = $jwtParser->parse();
+        $token = $jwt->getJwt()->getToken();
+        $payload = $jwt->getPayload();
 
-        if (empty($jwt)) {
-            return $this->abort("The 'Authorization' header is empty", 401);
-        }
-
-        if (!Token::validate($jwt, $this->env->getJwtSecret())) {
+        if (!Token::validate($token, $this->env->getJwtSecret())) {
             return $this->abort("The JWT is not valid", 401);
         }
 
-        if (!Token::validateExpiration($jwt)) {
+        $userId = UserId::from($payload["sub"]);
+        $user = $this->userRepository->findUserFromId(($userId));
+
+        if (
+            $user === null ||
+            $user->isDisabled() ||
+            $jwt->getIssuedAt() < $user->getUpdatedAtDate()->getTimestamp() ||
+            Token::validateExpiration($token) === false
+        ) {
             return $this->abort("The JWT has expired", 401);
         }
 
-        $payload = Token::getPayload($jwt);
-
-        if (empty($payload["sub"]) === false && ($user = $this->userRepository->findUserFromId(UserId::from($payload["sub"]))) !== null) {
-            $request = $request->withAttribute("user", $user);
-        }
+        $request = $request->withAttribute("user", $user);
 
         return $handler->handle($request);
     }

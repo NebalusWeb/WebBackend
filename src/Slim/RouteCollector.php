@@ -66,7 +66,7 @@ readonly class RouteCollector
                     });
                     $group->group("/linktree", function (RouteCollectorProxy $group) {
                         $group->map(["GET"], "", GetLinktreeAction::class);
-                        $group->map(["PATCH"], "", EditLinktreeAction::class);
+                        $group->map(["PUT"], "", EditLinktreeAction::class);
                         $group->map(["DELETE"], "", DeleteLinktreeAction::class);
                         $group->map(["GET"], "/click_history", ClickHistoryLinktreeAction::class);
                     });
@@ -75,7 +75,7 @@ readonly class RouteCollector
                         $group->map(["GET"], "/all", GetAllReferralAction::class);
                         $group->group("/{code}", function (RouteCollectorProxy $group) {
                             $group->map(["GET"], "", GetReferralAction::class);
-                            $group->map(["PATCH"], "", EditReferralAction::class);
+                            $group->map(["PUT"], "", EditReferralAction::class);
                             $group->map(["DELETE"], "", DeleteReferralAction::class);
                             $group->map(["GET"], "/click_history", ClickHistoryReferralAction::class);
                         });
@@ -87,8 +87,8 @@ readonly class RouteCollector
         $this->app->map(["GET"], "/metrics", MetricsAction::class);
 
         $this->app->group("/services", function (RouteCollectorProxy $group) {
-            $group->map(["GET"], "/referral", ClickReferralAction::class);
-            $group->map(["GET"], "/linktree", ClickLinktreeAction::class);
+            $group->map(["GET"], "/referral/{code}", ClickReferralAction::class);
+            $group->map(["GET"], "/linktree/{username}", ClickLinktreeAction::class);
         });
     }
 }

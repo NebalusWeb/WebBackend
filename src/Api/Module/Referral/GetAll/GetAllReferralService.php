@@ -6,6 +6,7 @@ use Nebalus\Webapi\Api\Module\Referral\Edit\EditReferralView;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Value\Result\ResultInterface;
+use Nebalus\Webapi\Value\User\User;
 use Nebalus\Webapi\Value\User\UserId;
 
 readonly class GetAllReferralService
@@ -18,9 +19,9 @@ readonly class GetAllReferralService
     /**
      * @throws ApiException
      */
-    public function execute(GetAllReferralValidator $validator): ResultInterface
+    public function execute(User $user): ResultInterface
     {
-        $referrals = $this->referralRepository->getReferralsFromUserId(UserId::from(1));
+        $referrals = $this->referralRepository->getReferralsFromOwnerId($user->getUserId());
         return GetAllReferralView::render($referrals);
     }
 }

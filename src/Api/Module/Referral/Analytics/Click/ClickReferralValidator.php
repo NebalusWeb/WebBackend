@@ -13,7 +13,7 @@ class ClickReferralValidator extends AbstractValidator
     public function __construct()
     {
         $rules = [
-            "body" => [
+            "path_args" => [
                 'code' => [ 'required' => true, 'nullable' => false, 'type' => "string" ]
             ],
         ];
@@ -22,7 +22,7 @@ class ClickReferralValidator extends AbstractValidator
 
     protected function onValidate(ValidatedData $validatedData): void
     {
-        $this->referralCode = ReferralCode::from($validatedData->getBodyData()['code']);
+        $this->referralCode = ReferralCode::from($validatedData->getPathArgsData()['code']);
     }
 
     public function getReferralCode(): ReferralCode

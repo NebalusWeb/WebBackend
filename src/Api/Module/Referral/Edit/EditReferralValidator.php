@@ -29,7 +29,7 @@ class EditReferralValidator extends AbstractValidator
 
     protected function onValidate(ValidatedData $validatedData): void
     {
-        $this->referralCode = ReferralCode::from($validatedData->getBodyData()['code']);
+        $this->referralCode = ReferralCode::from($validatedData->getPathArgsData()['code']);
         $this->pointer = ReferralPointer::from($validatedData->getBodyData()['pointer']);
         $this->disabled = $validatedData->getBodyData()['disabled'];
     }
