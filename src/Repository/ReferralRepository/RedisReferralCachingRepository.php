@@ -24,7 +24,7 @@ class RedisReferralCachingRepository
             $this->redis->hset(
                 self::HASH_KEY,
                 $referral->getReferralId()->asString(),
-                json_encode($referral->toArray())
+                json_encode($referral->asArray())
             );
         } catch (RedisException) {
         }

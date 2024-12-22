@@ -4,31 +4,33 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim;
 
-use Nebalus\Webapi\Api\Action\Linktree\Analytics\LinktreeClickAction;
-use Nebalus\Webapi\Api\Action\Linktree\Analytics\LinktreeClickHistoryAction;
-use Nebalus\Webapi\Api\Action\Linktree\LinktreeDeleteAction;
-use Nebalus\Webapi\Api\Action\Linktree\LinktreeEditAction;
-use Nebalus\Webapi\Api\Action\Linktree\LinktreeGetAction;
-use Nebalus\Webapi\Api\Action\MetricsAction;
-use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClickAction;
-use Nebalus\Webapi\Api\Action\Referral\Analytics\ReferralClickHistoryAction;
-use Nebalus\Webapi\Api\Action\Referral\ReferralCreateAction;
-use Nebalus\Webapi\Api\Action\Referral\ReferralDeleteAction;
-use Nebalus\Webapi\Api\Action\Referral\ReferralEditAction;
-use Nebalus\Webapi\Api\Action\Referral\ReferralGetAction;
-use Nebalus\Webapi\Api\Action\User\UserAuthAction;
-use Nebalus\Webapi\Api\Action\User\UserRegisterAction;
+use Nebalus\Webapi\Api\Metrics\MetricsAction;
+use Nebalus\Webapi\Api\Module\Linktree\Analytics\Click\ClickLinktreeAction;
+use Nebalus\Webapi\Api\Module\Linktree\Analytics\ClickHistory\ClickHistoryLinktreeAction;
+use Nebalus\Webapi\Api\Module\Linktree\Delete\DeleteLinktreeAction;
+use Nebalus\Webapi\Api\Module\Linktree\Edit\EditLinktreeAction;
+use Nebalus\Webapi\Api\Module\Linktree\Get\GetLinktreeAction;
+use Nebalus\Webapi\Api\Module\Referral\Analytics\Click\ClickReferralAction;
+use Nebalus\Webapi\Api\Module\Referral\Analytics\ClickHistory\ClickHistoryReferralAction;
+use Nebalus\Webapi\Api\Module\Referral\Create\CreateReferralAction;
+use Nebalus\Webapi\Api\Module\Referral\Delete\DeleteReferralAction;
+use Nebalus\Webapi\Api\Module\Referral\Edit\EditReferralAction;
+use Nebalus\Webapi\Api\Module\Referral\Get\GetReferralAction;
+use Nebalus\Webapi\Api\Module\Referral\GetAll\GetAllReferralAction;
+use Nebalus\Webapi\Api\User\Auth\AuthUserAction;
+use Nebalus\Webapi\Api\User\GetPrivileges\GetPrivilegesUserAction;
+use Nebalus\Webapi\Api\User\Register\RegisterUserAction;
 use Nebalus\Webapi\Option\EnvData;
-use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
+use Nebalus\Webapi\Slim\Middleware\AuthenticationMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
-class RouteCollector
+readonly class RouteCollector
 {
     public function __construct(
-        private readonly App $app,
-        private readonly EnvData $env
+        private App $app,
+        private EnvData $env
     ) {
     }
 
@@ -49,36 +51,44 @@ class RouteCollector
     private function initRoutes(): void
     {
         $this->app->group("/ui", function (RouteCollectorProxy $group) {
-            $group->map(["POST"], "/auth", UserAuthAction::class);
-            $group->map(["POST"], "/register", UserRegisterAction::class);
+            $group->map(["POST"], "/auth", AuthUserAction::class);
+            $group->map(["POST"], "/register", RegisterUserAction::class);
+            $group->group("/admin", function (RouteCollectorProxy $group) {
+                $group->group("/user/{username}", function (RouteCollectorProxy $group) {
+                });
+            })->add(AuthenticationMiddleware::class);
             $group->group("/user/{username}", function (RouteCollectorProxy $group) {
+                $group->map(["GET"], "/privileges", GetPrivilegesUserAction::class);
                 $group->group("/services", function (RouteCollectorProxy $group) {
-                    $group->group("/invitationtoken", function (RouteCollectorProxy $group) {
+                    $group->group("/invitation_tokens", function (RouteCollectorProxy $group) {
+                    });
+                    $group->group("/forms", function (RouteCollectorProxy $group) {
                     });
                     $group->group("/linktree", function (RouteCollectorProxy $group) {
-                        $group->map(["GET"], "", LinktreeGetAction::class);
-                        $group->map(["PATCH"], "", LinktreeEditAction::class);
-                        $group->map(["DELETE"], "", LinktreeDeleteAction::class);
-                        $group->map(["GET"], "/history", LinktreeClickHistoryAction::class);
+                        $group->map(["GET"], "", GetLinktreeAction::class);
+                        $group->map(["PUT"], "", EditLinktreeAction::class);
+                        $group->map(["DELETE"], "", DeleteLinktreeAction::class);
+                        $group->map(["GET"], "/click_history", ClickHistoryLinktreeAction::class);
                     });
                     $group->group("/referrals", function (RouteCollectorProxy $group) {
-                        $group->map(["POST"], "", ReferralCreateAction::class);
+                        $group->map(["POST"], "", CreateReferralAction::class);
+                        $group->map(["GET"], "/all", GetAllReferralAction::class);
                         $group->group("/{code}", function (RouteCollectorProxy $group) {
-                            $group->map(["GET"], "", ReferralGetAction::class);
-                            $group->map(["PATCH"], "", ReferralEditAction::class);
-                            $group->map(["DELETE"], "", ReferralDeleteAction::class);
-                            $group->map(["GET"], "/history", ReferralClickHistoryAction::class);
+                            $group->map(["GET"], "", GetReferralAction::class);
+                            $group->map(["PUT"], "", EditReferralAction::class);
+                            $group->map(["DELETE"], "", DeleteReferralAction::class);
+                            $group->map(["GET"], "/click_history", ClickHistoryReferralAction::class);
                         });
                     });
                 });
-            })->add(AuthMiddleware::class);
+            })->add(AuthenticationMiddleware::class);
         });
 
         $this->app->map(["GET"], "/metrics", MetricsAction::class);
 
         $this->app->group("/services", function (RouteCollectorProxy $group) {
-            $group->map(["GET"], "/referral", ReferralClickAction::class);
-            $group->map(["GET"], "/linktree", LinktreeClickAction::class);
+            $group->map(["GET"], "/referral/{code}", ClickReferralAction::class);
+            $group->map(["GET"], "/linktree/{username}", ClickLinktreeAction::class);
         });
     }
 }

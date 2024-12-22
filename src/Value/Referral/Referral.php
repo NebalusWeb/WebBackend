@@ -8,18 +8,19 @@ use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\ID;
+use Nebalus\Webapi\Value\User\UserId;
 
-class Referral
+readonly class Referral
 {
     private function __construct(
-        private readonly ID $referralId,
-        private readonly ID $userId,
-        private readonly ReferralCode $code,
-        private readonly string $pointer,
-        private readonly bool $disabled,
-        private readonly DateTimeImmutable $createdAtDate,
-        private readonly DateTimeImmutable $updatedAtDate,
+        private ReferralId $referralId,
+        private UserId $ownerUserId,
+        private ReferralCode $code,
+        private ReferralPointer $pointer,
+        private ReferralName $name,
+        private bool $disabled,
+        private DateTimeImmutable $createdAtDate,
+        private DateTimeImmutable $updatedAtDate,
     ) {
     }
 
@@ -35,50 +36,57 @@ class Referral
             throw new ApiDateMalformedStringException($exception);
         }
 
-        $referralId = ID::from($data["referral_id"]);
-        $userId = ID::from($data["user_id"]);
+        $referralId = ReferralId::from($data["referral_id"]);
+        $ownerUserId = UserId::from($data["owner_user_id"]);
         $code = ReferralCode::from($data["code"]);
-        $pointer = $data["pointer"];
+        $pointer = ReferralPointer::from($data["pointer"]);
+        $name = ReferralName::from($data["name"]);
         $disabled = (bool) $data["disabled"];
 
         return new self(
             $referralId,
-            $userId,
+            $ownerUserId,
             $code,
             $pointer,
+            $name,
             $disabled,
             $createdAtDate,
             $updatedAtDate
         );
     }
-    public function toArray(): array
+    public function asArray(): array
     {
         return [
             "referral_id" => $this->referralId->asInt(),
-            "user_id" => $this->userId->asInt(),
+            "owner_user_id" => $this->ownerUserId->asInt(),
             "code" => $this->code->asString(),
-            "pointer" => $this->pointer,
+            "pointer" => $this->pointer->asString(),
+            "name" => $this->name->asString(),
             "disabled" => $this->disabled,
             "created_at" => $this->createdAtDate->format(DATE_ATOM),
             "updated_at" => $this->updatedAtDate->format(DATE_ATOM),
         ];
     }
 
-    public function getReferralId(): ID
+    public function getReferralId(): ReferralId
     {
         return $this->referralId;
     }
-    public function getUserId(): ID
+    public function getOwnerUserId(): UserId
     {
-        return $this->userId;
+        return $this->ownerUserId;
     }
     public function getCode(): ReferralCode
     {
         return $this->code;
     }
-    public function getPointer(): string
+    public function getPointer(): ReferralPointer
     {
         return $this->pointer;
+    }
+    public function getName(): ReferralName
+    {
+        return $this->name;
     }
     public function isDisabled(): bool
     {

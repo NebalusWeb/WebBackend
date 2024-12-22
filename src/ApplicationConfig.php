@@ -10,6 +10,7 @@ use Nebalus\Webapi\Factory\PdoFactory;
 use Nebalus\Webapi\Factory\RedisFactory;
 use PDO;
 use Redis;
+
 use function DI\factory;
 
 class ApplicationConfig extends DefinitionArray
