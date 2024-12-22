@@ -6,10 +6,11 @@ use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokenField;
 use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
+use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
+use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Nebalus\Webapi\Value\User\UserEmail;
 use Nebalus\Webapi\Value\User\Username;
 use Nebalus\Webapi\Value\User\UserPassword;
-use Nebalus\Webapi\Value\ValidatedData;
 
 class RegisterUserValidator extends AbstractValidator
 {
@@ -25,18 +26,18 @@ class RegisterUserValidator extends AbstractValidator
                 'invitation_token' => [
                     'required' => true,
                     'nullable' => false,
-                    'type' => "object",
+                    'type' => ValidType::OBJECT,
                     'children' => [
-                        "field_1" => [ 'required' => true, 'nullable' => false, 'type' => "integer" ],
-                        "field_2" => [ 'required' => true, 'nullable' => false, 'type' => "integer" ],
-                        "field_3" => [ 'required' => true, 'nullable' => false, 'type' => "integer" ],
-                        "field_4" => [ 'required' => true, 'nullable' => false, 'type' => "integer" ],
-                        "checksum" => [ 'required' => true, 'nullable' => false, 'type' => "integer" ],
+                        "field_1" => [ 'required' => true, 'nullable' => false, 'type' => ValidType::INTEGER ],
+                        "field_2" => [ 'required' => true, 'nullable' => false, 'type' => ValidType::INTEGER ],
+                        "field_3" => [ 'required' => true, 'nullable' => false, 'type' => ValidType::INTEGER ],
+                        "field_4" => [ 'required' => true, 'nullable' => false, 'type' => ValidType::INTEGER ],
+                        "checksum" => [ 'required' => true, 'nullable' => false, 'type' => ValidType::INTEGER ],
                     ]
                 ],
-                'email' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
-                'username' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
-                'password' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
+                'email' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
+                'username' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
+                'password' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
             ]
         ];
         parent::__construct($rules);

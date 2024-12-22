@@ -3,9 +3,10 @@
 namespace Nebalus\Webapi\Api\User\Auth;
 
 use Nebalus\Webapi\Api\AbstractValidator;
+use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
+use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Nebalus\Webapi\Value\User\Totp\TOTPCode;
 use Nebalus\Webapi\Value\User\Username;
-use Nebalus\Webapi\Value\ValidatedData;
 
 class AuthUserValidator extends AbstractValidator
 {
@@ -18,10 +19,10 @@ class AuthUserValidator extends AbstractValidator
     {
         $rules = [
             'body' => [
-                'username' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
-                'password' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
-                'remember_me' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => "boolean" ],
-                'totp' => [ 'required' => false, 'nullable' => true, 'type' => "integer" ],
+                'username' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
+                'password' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
+                'remember_me' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => ValidType::BOOLEAN ],
+                'totp' => [ 'required' => false, 'nullable' => true, 'type' => ValidType::INTEGER ],
             ]
         ];
         parent::__construct($rules);

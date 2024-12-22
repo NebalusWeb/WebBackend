@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value;
+namespace Nebalus\Webapi\Value\Internal\Validation;
 
 readonly class ValidatedData
 {

@@ -3,10 +3,10 @@
 namespace Nebalus\Webapi\Api\Module\Referral\Create;
 
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Value\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
+use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Nebalus\Webapi\Value\Referral\ReferralName;
 use Nebalus\Webapi\Value\Referral\ReferralPointer;
-use Nebalus\Webapi\Value\ValidatedData;
 
 class CreateReferralValidator extends AbstractValidator
 {
@@ -18,9 +18,9 @@ class CreateReferralValidator extends AbstractValidator
     {
         $rules = [
             "body" => [
-                'name' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
-                'pointer' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
-                'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => "boolean" ],
+                'name' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
+                'pointer' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
+                'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => ValidType::BOOLEAN ],
             ]
         ];
         parent::__construct($rules);

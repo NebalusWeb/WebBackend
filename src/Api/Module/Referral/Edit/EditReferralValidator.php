@@ -3,9 +3,10 @@
 namespace Nebalus\Webapi\Api\Module\Referral\Edit;
 
 use Nebalus\Webapi\Api\AbstractValidator;
+use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
+use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Referral\ReferralPointer;
-use Nebalus\Webapi\Value\ValidatedData;
 
 class EditReferralValidator extends AbstractValidator
 {
@@ -17,11 +18,11 @@ class EditReferralValidator extends AbstractValidator
     {
         $rules = [
             "path_args" => [
-                'code' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
+                'code' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
             ],
             "body" => [
-                'pointer' => [ 'required' => false, 'nullable' => true, 'type' => "string" ],
-                'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => "boolean" ],
+                'pointer' => [ 'required' => false, 'nullable' => true, 'type' => ValidType::STRING ],
+                'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => ValidType::BOOLEAN ],
             ]
         ];
         parent::__construct($rules);

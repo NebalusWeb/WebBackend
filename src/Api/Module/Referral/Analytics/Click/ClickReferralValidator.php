@@ -3,8 +3,9 @@
 namespace Nebalus\Webapi\Api\Module\Referral\Analytics\Click;
 
 use Nebalus\Webapi\Api\AbstractValidator;
+use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
+use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
-use Nebalus\Webapi\Value\ValidatedData;
 
 class ClickReferralValidator extends AbstractValidator
 {
@@ -14,7 +15,7 @@ class ClickReferralValidator extends AbstractValidator
     {
         $rules = [
             "path_args" => [
-                'code' => [ 'required' => true, 'nullable' => false, 'type' => "string" ]
+                'code' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ]
             ],
         ];
         parent::__construct($rules);

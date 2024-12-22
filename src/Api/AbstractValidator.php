@@ -6,7 +6,8 @@ use JsonException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Exception\ApiValidationException;
-use Nebalus\Webapi\Value\ValidatedData;
+use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
+use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractValidator
@@ -65,7 +66,7 @@ abstract class AbstractValidator
             $isRequired = $rule['required'] ?? false;
             $isNullable = $rule['nullable'] ?? false;
             $defaultValue = $rule['default'] ?? null;
-            $type = strtolower($rule['type'] ?? "string"); // Todo: String entfernen
+            $type = $rule['type'] ?? ValidType::STRING; // Todo: String entfernen
             $childrenRules = $rule['children'] ?? [];
 //            echo("----------------------------------- \n");
 //            echo("LayerID: \n");
@@ -117,19 +118,19 @@ abstract class AbstractValidator
             }
 
             if ($value !== null) {
-                if ($type === 'string' && is_string($value) === true) {
+                if ($type == ValidType::STRING && is_string($value) === true) {
                     $processedData[$param] = $value;
                     continue;
-                } elseif ($type === 'integer' && is_int($value) === true) {
+                } elseif ($type == ValidType::INTEGER && is_int($value) === true) {
                     $processedData[$param] = $value;
                     continue;
-                } elseif ($type === 'float' && is_float($value) === true) {
+                } elseif ($type == ValidType::FLOAT && is_float($value) === true) {
                     $processedData[$param] = $value;
                     continue;
-                } elseif ($type === 'boolean' && is_bool($value) === true) {
+                } elseif ($type == ValidType::BOOLEAN && is_bool($value) === true) {
                     $processedData[$param] = $value;
                     continue;
-                } elseif ($type === 'object' && is_array($value) && empty($value) === false) {
+                } elseif ($type == ValidType::OBJECT && is_array($value) && empty($value) === false) {
                     if ($childrenRules !== []) {
                         $processedData[$param] = $this->validateJsonSchema($value, $childrenRules, $maxRecursion, $layerId, $currentPath . ".");
                     }

@@ -3,8 +3,9 @@
 namespace Nebalus\Webapi\Api\Module\Referral\Get;
 
 use Nebalus\Webapi\Api\AbstractValidator;
+use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
+use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
-use Nebalus\Webapi\Value\ValidatedData;
 
 class GetReferralValidator extends AbstractValidator
 {
@@ -14,7 +15,7 @@ class GetReferralValidator extends AbstractValidator
     {
         $rules = [
             "path_args" => [
-                'code' => [ 'required' => true, 'nullable' => false, 'type' => "string" ],
+                'code' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
             ]
         ];
         parent::__construct($rules);
