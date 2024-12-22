@@ -2,10 +2,10 @@
 
 namespace Nebalus\Webapi\Value\Referral;
 
-class ReferralPointer
+readonly class ReferralPointer
 {
     private function __construct(
-        private readonly string $pointer
+        private string $pointer
     ) {
     }
 

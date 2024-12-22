@@ -5,10 +5,10 @@ namespace Nebalus\Webapi\Value\User\Totp;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class TOTPCode
+readonly class TOTPCode
 {
     private function __construct(
-        private readonly string $code,
+        private string $code,
     ) {
     }
 

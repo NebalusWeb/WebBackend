@@ -5,10 +5,14 @@ namespace Nebalus\Webapi\Value\User;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class Username
+readonly class Username
 {
+    private const int MIN_LENGTH = 4;
+    private const int MAX_LENGTH = 25;
+    private const string REGEX = '/^[a-zA-Z]+$/';
+
     private function __construct(
-        private readonly string $username
+        private string $username
     ) {
     }
 
@@ -17,20 +21,19 @@ class Username
      */
     public static function from(string $username): self
     {
-        if (strlen($username) < 4) {
+        if (strlen($username) < self::MIN_LENGTH) {
             throw new ApiInvalidArgumentException(
-                'Invalid username: must be at least 4 characters long'
+                'Invalid username: must be at least ' . self::MIN_LENGTH . ' characters long'
             );
         }
 
-        if (strlen($username) > 25) {
+        if (strlen($username) > self::MAX_LENGTH) {
             throw new ApiInvalidArgumentException(
-                'Invalid username: cannot be longer than 25 characters'
+                'Invalid username: cannot be longer than ' . self::MAX_LENGTH . ' characters'
             );
         }
 
-        $usernamePattern = '/^[a-zA-Z]+$/';
-        if (preg_match($usernamePattern, $username) < 1) {
+        if (preg_match(self::REGEX, $username) === false) {
             throw new ApiInvalidArgumentException(
                 'Invalid username: can only contain letters'
             );

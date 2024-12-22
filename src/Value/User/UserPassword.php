@@ -9,10 +9,13 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 use function strlen;
 
-class UserPassword
+readonly class UserPassword
 {
+    private const int MIN_LENGTH = 8;
+    private const int MAX_LENGTH = 64;
+
     private function __construct(
-        private readonly string $passwordHash
+        private string $passwordHash
     ) {
     }
 
@@ -21,12 +24,12 @@ class UserPassword
      */
     public static function fromPlain(string $plainPassword, int $cost = 10): self
     {
-        if (strlen($plainPassword) < 8) {
-            throw new ApiInvalidArgumentException('Invalid password: must be longer than 8 characters');
+        if (strlen($plainPassword) < self::MIN_LENGTH) {
+            throw new ApiInvalidArgumentException('Invalid password: must be longer than ' . self::MIN_LENGTH . ' characters');
         }
 
-        if (strlen($plainPassword) > 20) {
-            throw new ApiInvalidArgumentException('Invalid password: cannot be longer than 20 characters');
+        if (strlen($plainPassword) > self::MAX_LENGTH) {
+            throw new ApiInvalidArgumentException('Invalid password: cannot be longer than ' . self::MAX_LENGTH . ' characters');
         }
 
         $passwordHash = password_hash($plainPassword, PASSWORD_BCRYPT, ['cost' => $cost]);
@@ -39,13 +42,13 @@ class UserPassword
         return new self($hashedPassword);
     }
 
-    public function verify(string $plainPassword): bool
-    {
-        return password_verify($plainPassword, $this->passwordHash);
-    }
-
     public function asString(): string
     {
         return $this->passwordHash;
+    }
+
+    public function verify(string $plainPassword): bool
+    {
+        return password_verify($plainPassword, $this->passwordHash);
     }
 }
