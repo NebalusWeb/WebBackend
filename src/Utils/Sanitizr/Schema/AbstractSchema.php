@@ -6,16 +6,18 @@ use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
 abstract class AbstractSchema
 {
-    private bool $nullable = false;
-
-    public function nullable(): self
+    private $isOptional = false;
+    public function optional()
     {
-        $this->nullable = true;
-        return $this;
+        $this->isOptional = true;
     }
 
-    public function parse($value): array
+    public function parse($value)
     {
+        if ($this->isOptional && is_null($value)) {
+            return null;
+        }
+
         return $this->parseValue($value);
     }
 
