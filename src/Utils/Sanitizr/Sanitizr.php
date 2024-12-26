@@ -11,28 +11,28 @@ use Nebalus\Webapi\Utils\Sanitizr\Schema\StringSchema;
 
 class Sanitizr
 {
-    public static function boolean()
+    public static function boolean(): BooleanSchema
     {
         return new BooleanSchema();
     }
-    public static function integer()
+    public static function integer(): IntegerSchema
     {
         return new IntegerSchema();
     }
-    public static function float()
+    public static function float(): FloatSchema
     {
         return new FloatSchema();
     }
-    public static function string()
+    public static function string(): StringSchema
     {
         return new StringSchema();
     }
-    public static function array()
+    public static function array(): ArraySchema
     {
         return new ArraySchema();
     }
-    public static function object()
+    public static function object(array $schema): ObjectSchema
     {
-        return new ObjectSchema();
+        return new ObjectSchema($schema);
     }
 }
