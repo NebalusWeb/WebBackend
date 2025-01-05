@@ -15,7 +15,7 @@ class ClickReferralValidator extends AbstractValidator
     {
         $rules = [
             "path_args" => S::object([
-                'code' => S::string()->required()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
+                'code' => S::string()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
             ]),
         ];
         parent::__construct($rules);

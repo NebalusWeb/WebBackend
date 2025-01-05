@@ -22,16 +22,6 @@ class IntegerSchema extends AbstractSchema
         return $this;
     }
 
-    public function positive(): static
-    {
-        return $this->min(1);
-    }
-
-    public function negative(): static
-    {
-        return $this->max(-1);
-    }
-
     /**
      * @throws SanitizValidationException
      */

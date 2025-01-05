@@ -7,11 +7,18 @@ use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 class StringSchema extends AbstractSchema
 {
     // Validations
+    private bool $isEmail = false;
     private int $min;
     private int $max;
     private string $regex;
     private string $startsWith;
     private string $endsWith;
+
+    public function email(): static
+    {
+        $this->isEmail = true;
+        return $this;
+    }
 
     public function min(int $min): static
     {
@@ -56,6 +63,10 @@ class StringSchema extends AbstractSchema
         // Validations
         if (! is_string($value)) {
             throw new SanitizValidationException('Not a string value');
+        }
+
+        if ($this->isEmail && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            throw new SanitizValidationException('Not a valid email');
         }
 
         if (isset($this->min) && strlen($value) < $this->min) {

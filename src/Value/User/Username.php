@@ -4,6 +4,7 @@ namespace Nebalus\Webapi\Value\User;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
 
 readonly class Username
 {
@@ -21,22 +22,11 @@ readonly class Username
      */
     public static function from(string $username): self
     {
-        if (strlen($username) < self::MIN_LENGTH) {
-            throw new ApiInvalidArgumentException(
-                'Invalid username: must be at least ' . self::MIN_LENGTH . ' characters long'
-            );
-        }
+        $schema = Sanitizr::string()->min(self::MIN_LENGTH)->max(self::MAX_LENGTH)->regex(self::REGEX);
+        $validData = $schema->safeParse($username);
 
-        if (strlen($username) > self::MAX_LENGTH) {
-            throw new ApiInvalidArgumentException(
-                'Invalid username: cannot be longer than ' . self::MAX_LENGTH . ' characters'
-            );
-        }
-
-        if (preg_match(self::REGEX, $username) === false) {
-            throw new ApiInvalidArgumentException(
-                'Invalid username: can only contain letters'
-            );
+        if ($validData->isError()) {
+            throw new ApiInvalidArgumentException('Invalid username: ' . $validData->getErrorMessage());
         }
 
         return new self($username);
