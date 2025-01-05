@@ -43,9 +43,7 @@ abstract class AbstractValidator
      */
     private function validateJsonSchema(AbstractSchema $schema, array $data): array
     {
-        $parsed = $schema->safeParse($data);
-        var_dump($parsed);
-        return $parsed['data'] ?? [];
+        return $schema->parse($data) ?? [];
     }
 
     /**

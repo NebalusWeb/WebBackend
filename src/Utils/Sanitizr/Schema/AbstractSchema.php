@@ -23,8 +23,6 @@ abstract class AbstractSchema
 
     public function parse(mixed $value): mixed
     {
-
-
         if ($this->isNullable && is_null($value)) {
             return null;
         }
