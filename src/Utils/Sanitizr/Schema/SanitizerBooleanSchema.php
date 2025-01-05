@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
-class BooleanSchema extends AbstractSchema
+class SanitizerBooleanSchema extends AbstractSanitizerSchema
 {
     /**
      * @throws SanitizValidationException

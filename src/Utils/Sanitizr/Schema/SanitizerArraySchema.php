@@ -2,10 +2,10 @@
 
 namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
-class ArraySchema extends AbstractSchema
+class SanitizerArraySchema extends AbstractSanitizerSchema
 {
     public function __construct(
-        private readonly AbstractSchema $schema
+        private readonly AbstractSanitizerSchema $schema
     ) {
     }
 

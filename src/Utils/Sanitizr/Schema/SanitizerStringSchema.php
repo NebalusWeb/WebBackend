@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
-class StringSchema extends AbstractSchema
+class SanitizerStringSchema extends AbstractSanitizerSchema
 {
     // Validations
     private bool $isEmail = false;
@@ -69,11 +69,11 @@ class StringSchema extends AbstractSchema
             throw new SanitizValidationException('Not a valid email');
         }
 
-        if (isset($this->min) && strlen($value) < $this->min) {
+        if (isset($this->min) && strlen($value) <= $this->min) {
             throw new SanitizValidationException('String is too short');
         }
 
-        if (isset($this->max) && $this->max < strlen($value)) {
+        if (isset($this->max) && $this->max <= strlen($value)) {
             throw new SanitizValidationException('String is too long');
         }
 

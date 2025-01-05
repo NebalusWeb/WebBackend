@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
-class ObjectSchema extends AbstractSchema
+class SanitizerObjectSchema extends AbstractSanitizerSchema
 {
     public function __construct(
         private readonly array $schemas

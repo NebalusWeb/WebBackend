@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 use Nebalus\Webapi\Utils\Sanitizr\SafeParsedData;
 
-abstract class AbstractSchema
+abstract class AbstractSanitizerSchema
 {
     private mixed $defaultValue;
     private bool $isNullable = false;
@@ -31,8 +31,8 @@ abstract class AbstractSchema
             return null;
         }
 
-        if (isset($defaultValue) && $this->isNullable === false && $value === null) {
-            return $this->parseValue($defaultValue);
+        if (isset($this->defaultValue) && $this->isNullable === false && $value === null) {
+            return $this->parseValue($this->defaultValue);
         }
 
         return $this->parseValue($value);

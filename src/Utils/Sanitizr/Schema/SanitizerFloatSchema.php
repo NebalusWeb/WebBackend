@@ -2,9 +2,9 @@
 
 namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
-use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizerSchema;
 
-class FloatSchema extends AbstractSchema
+class SanitizerFloatSchema extends AbstractSanitizerSchema
 {
     private float $min;
     private float $max;

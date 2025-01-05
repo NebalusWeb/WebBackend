@@ -3,9 +3,9 @@
 namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizerSchema;
 
-class IntegerSchema extends AbstractSchema
+class SanitizerIntegerSchema extends AbstractSanitizerSchema
 {
     private int $min;
     private int $max;

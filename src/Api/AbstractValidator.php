@@ -3,7 +3,7 @@
 namespace Nebalus\Webapi\Api;
 
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizerSchema;
 use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -41,7 +41,7 @@ abstract class AbstractValidator
     /**
      * @throws ApiException
      */
-    private function validateJsonSchema(AbstractSchema $schema, array $data): array
+    private function validateJsonSchema(AbstractSanitizerSchema $schema, array $data): array
     {
         return $schema->parse($data) ?? [];
     }

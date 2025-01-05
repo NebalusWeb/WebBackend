@@ -2,43 +2,48 @@
 
 namespace Nebalus\Webapi\Utils\Sanitizr;
 
-use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSchema;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\ArraySchema;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\BooleanSchema;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\FloatSchema;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\IntegerSchema;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\ObjectSchema;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\StringSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizerSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerArraySchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerBooleanSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerFloatSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerIntegerSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerObjectSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerStringSchema;
 
 class Sanitizr
 {
-    public static function boolean(): BooleanSchema
+    public static function boolean(): SanitizerBooleanSchema
     {
-        return new BooleanSchema();
+        return new SanitizerBooleanSchema();
     }
 
-    public static function integer(): IntegerSchema
+    public static function integer(): SanitizerIntegerSchema
     {
-        return new IntegerSchema();
+        return new SanitizerIntegerSchema();
     }
 
-    public static function float(): FloatSchema
+    public static function float(): SanitizerFloatSchema
     {
-        return new FloatSchema();
+        return new SanitizerFloatSchema();
     }
 
-    public static function string(): StringSchema
+    public static function string(): SanitizerStringSchema
     {
-        return new StringSchema();
+        return new SanitizerStringSchema();
     }
 
-    public static function array(AbstractSchema $schema): ArraySchema
+    public static function array(AbstractSanitizerSchema $schema): SanitizerArraySchema
     {
-        return new ArraySchema($schema);
+        return new SanitizerArraySchema($schema);
     }
 
-    public static function object(array $schemas): ObjectSchema
+    public static function object(array $schemas): SanitizerObjectSchema
     {
-        return new ObjectSchema($schemas);
+        return new SanitizerObjectSchema($schemas);
     }
+
+//    public static function null()
+//    {
+//
+//    }
 }
