@@ -5,7 +5,6 @@ namespace Nebalus\Webapi\Api\User\Auth;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Utils\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
-use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Nebalus\Webapi\Value\User\Totp\TOTPCode;
 use Nebalus\Webapi\Value\User\Username;
 
@@ -18,21 +17,13 @@ class AuthUserValidator extends AbstractValidator
 
     public function __construct()
     {
-        $schema = S::object([
-            "body" => S::object([
-                'username' => S::string()->required()->nullable(false),
-                'password' => S::string()->required()->nullable(false),
-                'remember_me' => S::boolean()->required(false)->nullable(false)->default(false),
-                'totp' => S::integer()->required(false)->nullable(true),
-            ])
-        ]);
         $rules = [
-            'body' => [
-                'username' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
-                'password' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
+            'body' => S::object([
+                'username' => S::string()->required(),
+                'password' => S::string()->required(),
                 'remember_me' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => ValidType::BOOLEAN ],
-                'totp' => [ 'required' => false, 'nullable' => true, 'type' => ValidType::INTEGER ],
-            ]
+                'totp' => S::string()->nullable(),
+            ])
         ];
         parent::__construct($rules);
     }

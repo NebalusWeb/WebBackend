@@ -6,8 +6,7 @@ use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSchema;
 
 class FloatSchema extends AbstractSchema
 {
-
-    protected function parseValue($value): mixed
+    protected function parseValue(mixed $value): mixed
     {
         // TODO: Implement parseValue() method.
     }

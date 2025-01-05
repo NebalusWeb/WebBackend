@@ -6,36 +6,47 @@ use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
 abstract class AbstractSchema
 {
-    private $isOptional = false;
-    public function optional()
+    private bool $isRequired = false;
+    private bool $isNullable = false;
+
+    public function required(): static
     {
-        $this->isOptional = true;
+        $this->isRequired = true;
+        return $this;
     }
 
-    public function parse($value)
+    public function nullable(): static
     {
-        if ($this->isOptional && is_null($value)) {
+        $this->isNullable = true;
+        return $this;
+    }
+
+    public function parse(mixed $value): mixed
+    {
+
+
+        if ($this->isNullable && is_null($value)) {
             return null;
         }
 
         return $this->parseValue($value);
     }
 
-    public function safeParse($value): array
+    public function safeParse(mixed $value): array
     {
         try {
             $result = $this->parse($value);
-            return array(
+            return [
                 'success' => true,
                 'data'    => $result,
-            );
+            ];
         } catch (SanitizValidationException $e) {
-            return array(
+            return [
                 'success' => false,
                 'error'   => $e->getMessage(),
-            );
+            ];
         }
     }
 
-    abstract protected function parseValue($value): mixed;
+    abstract protected function parseValue(mixed $value): mixed;
 }

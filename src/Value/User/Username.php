@@ -7,9 +7,9 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 readonly class Username
 {
-    private const int MIN_LENGTH = 4;
-    private const int MAX_LENGTH = 25;
-    private const string REGEX = '/^[a-zA-Z]+$/';
+    public const int MIN_LENGTH = 4;
+    public const int MAX_LENGTH = 25;
+    public const string REGEX = '/^[a-zA-Z]+$/';
 
     private function __construct(
         private string $username

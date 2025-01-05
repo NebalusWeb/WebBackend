@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Utils\Sanitizr;
 
+use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSchema;
 use Nebalus\Webapi\Utils\Sanitizr\Schema\ArraySchema;
 use Nebalus\Webapi\Utils\Sanitizr\Schema\BooleanSchema;
 use Nebalus\Webapi\Utils\Sanitizr\Schema\FloatSchema;
@@ -15,24 +16,29 @@ class Sanitizr
     {
         return new BooleanSchema();
     }
+
     public static function integer(): IntegerSchema
     {
         return new IntegerSchema();
     }
+
     public static function float(): FloatSchema
     {
         return new FloatSchema();
     }
+
     public static function string(): StringSchema
     {
         return new StringSchema();
     }
-    public static function array(): ArraySchema
+
+    public static function array(AbstractSchema $schema): ArraySchema
     {
-        return new ArraySchema();
+        return new ArraySchema($schema);
     }
-    public static function object(array $schema): ObjectSchema
+
+    public static function object(array $schemas): ObjectSchema
     {
-        return new ObjectSchema($schema);
+        return new ObjectSchema($schemas);
     }
 }

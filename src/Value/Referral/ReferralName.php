@@ -7,8 +7,8 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class ReferralName
 {
-    private const int MAX_LENGTH = 32;
-    private const string REGEX = '/^[a-zA-Z\w]+$/';
+    public const int MAX_LENGTH = 32;
+    public const string REGEX = '/^[a-zA-Z\w]+$/';
 
     private function __construct(
         private readonly ?string $referralName,

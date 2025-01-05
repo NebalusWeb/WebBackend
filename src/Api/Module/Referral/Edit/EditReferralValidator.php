@@ -3,8 +3,8 @@
 namespace Nebalus\Webapi\Api\Module\Referral\Edit;
 
 use Nebalus\Webapi\Api\AbstractValidator;
+use Nebalus\Webapi\Utils\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
-use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Referral\ReferralPointer;
 
@@ -18,10 +18,10 @@ class EditReferralValidator extends AbstractValidator
     {
         $rules = [
             "path_args" => [
-                'code' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
+                'code' => S::string()->required(),
             ],
             "body" => [
-                'pointer' => [ 'required' => false, 'nullable' => true, 'type' => ValidType::STRING ],
+                'pointer' => S::string()->nullable(),
                 'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => ValidType::BOOLEAN ],
             ]
         ];

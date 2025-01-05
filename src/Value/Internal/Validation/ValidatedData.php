@@ -11,11 +11,6 @@ readonly class ValidatedData
     ) {
     }
 
-    public static function create(): self
-    {
-        return new self([], [], []);
-    }
-
     public static function from(
         array $bodyData = [],
         array $queryParamsData = [],
@@ -37,20 +32,5 @@ readonly class ValidatedData
     public function getPathArgsData(): array
     {
         return $this->pathArgsData;
-    }
-
-    public function setBodyData(array $bodyData): self
-    {
-        return new self($bodyData, $this->queryParamsData, $this->pathArgsData);
-    }
-
-    public function setQueryParamsData(array $queryParamsData): self
-    {
-        return new self($this->bodyData, $queryParamsData, $this->pathArgsData);
-    }
-
-    public function setPathArgsData(array $pathArgsData): self
-    {
-        return new self($this->bodyData, $this->queryParamsData, $pathArgsData);
     }
 }

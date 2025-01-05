@@ -2,20 +2,21 @@
 
 namespace Nebalus\Webapi\Api\Module\Referral\Analytics\ClickHistory;
 
+use Nebalus\Webapi\Utils\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
-use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
 
 class ClickHistoryReferralValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
+
     public function __construct()
     {
         $rules = [
-            "path_args" => [
-                'code' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ]
-            ],
+            "path_args" => S::object([
+                'code' => S::string()->required()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
+            ]),
         ];
         parent::__construct($rules);
     }

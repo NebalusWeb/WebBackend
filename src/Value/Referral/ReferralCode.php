@@ -7,8 +7,8 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class ReferralCode
 {
-    private const int CODE_LENGTH = 8;
-    private const string REGEX = '/^[0-9A-Za-z]+$/';
+    public const int CODE_LENGTH = 8;
+    public const string REGEX = '/^[0-9A-Za-z]+$/';
 
     private function __construct(
         private readonly string $code

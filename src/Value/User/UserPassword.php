@@ -11,8 +11,8 @@ use function strlen;
 
 readonly class UserPassword
 {
-    private const int MIN_LENGTH = 8;
-    private const int MAX_LENGTH = 64;
+    public const int MIN_LENGTH = 8;
+    public const int MAX_LENGTH = 64;
 
     private function __construct(
         private string $passwordHash

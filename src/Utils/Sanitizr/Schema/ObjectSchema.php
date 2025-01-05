@@ -2,17 +2,36 @@
 
 namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
+use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
+
 class ObjectSchema extends AbstractSchema
 {
-
-    public function __construct(private array $schema)
-    {
+    public function __construct(
+        private readonly array $schemas
+    ) {
     }
 
-    private Sche $schemas;
-
-    protected function parseValue($value): mixed
+    /**
+     * @throws SanitizValidationException
+     */
+    protected function parseValue(mixed $value): array
     {
-        // TODO: Implement parseValue() method.
+        if (is_object($value)) {
+            $value = get_object_vars($value);
+        }
+
+        if (!is_array($value)) {
+            throw new SanitizValidationException('Not an object');
+        }
+
+        $result = [];
+
+        foreach ($this->schemas as $prop => $schema) {
+            $result[$prop] = $schema->parse(
+                $value[$prop] ?? null
+            );
+        }
+
+        return array_filter($result, fn($p) => !is_null($p));
     }
 }

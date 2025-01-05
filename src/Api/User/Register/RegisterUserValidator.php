@@ -4,10 +4,10 @@ namespace Nebalus\Webapi\Api\User\Register;
 
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Utils\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokenField;
 use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
-use Nebalus\Webapi\Value\Internal\Validation\ValidType;
 use Nebalus\Webapi\Value\User\UserEmail;
 use Nebalus\Webapi\Value\User\Username;
 use Nebalus\Webapi\Value\User\UserPassword;
@@ -22,23 +22,18 @@ class RegisterUserValidator extends AbstractValidator
     public function __construct()
     {
         $rules = [
-            'body' => [
-                'invitation_token' => [
-                    'required' => true,
-                    'nullable' => false,
-                    'type' => ValidType::OBJECT,
-                    'children' => [
-                        "field_1" => [ 'required' => true, 'nullable' => false, 'type' => ValidType::INTEGER ],
-                        "field_2" => [ 'required' => true, 'nullable' => false, 'type' => ValidType::INTEGER ],
-                        "field_3" => [ 'required' => true, 'nullable' => false, 'type' => ValidType::INTEGER ],
-                        "field_4" => [ 'required' => true, 'nullable' => false, 'type' => ValidType::INTEGER ],
-                        "checksum" => [ 'required' => true, 'nullable' => false, 'type' => ValidType::INTEGER ],
-                    ]
-                ],
-                'email' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
-                'username' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
-                'password' => [ 'required' => true, 'nullable' => false, 'type' => ValidType::STRING ],
-            ]
+            'body' => S::object([
+                'invitation_token' => S::object([
+                    "field_1" => S::integer()->required(),
+                    "field_2" => S::integer()->required(),
+                    "field_3" => S::integer()->required(),
+                    "field_4" => S::integer()->required(),
+                    "checksum" => S::integer()->required(),
+                ])->required(),
+                'email' => S::string()->required(),
+                'username' => S::string()->required(),
+                'password' => S::string()->required(),
+            ])
         ];
         parent::__construct($rules);
     }

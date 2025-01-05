@@ -2,13 +2,19 @@
 
 namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
-use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
 class BooleanSchema extends AbstractSchema
 {
-
-    protected function parseValue($value): mixed
+    /**
+     * @throws SanitizValidationException
+     */
+    protected function parseValue($value): bool
     {
-        // TODO: Implement parseValue() method.
+        if (! is_bool($value)) {
+            throw new SanitizValidationException('Not a boolean value');
+        }
+
+        return $value;
     }
 }
