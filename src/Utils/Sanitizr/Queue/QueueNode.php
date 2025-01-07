@@ -4,16 +4,16 @@ namespace Nebalus\Webapi\Utils\Sanitizr\Queue;
 
 class QueueNode
 {
-    private mixed $value;
+    private $value;
     private null|QueueNode $nextNode;
 
-    public function __construct(mixed $value)
+    public function __construct($value)
     {
         $this->value = $value;
         $this->nextNode = null;
     }
 
-    public function getValue(): mixed
+    public function getValue()
     {
         return $this->value;
     }
