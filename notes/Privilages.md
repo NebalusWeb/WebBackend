@@ -10,7 +10,7 @@ admin.ban.changeReason - Can change the ban reason of an banned user
 admin.ban.undo - Can Unban a user
 
 feature.referral.show_interface - Is Required show it in the interface
-feature.referral.create
+feature.referral.create - Is allowed to create a referral
 
 feature.linktree.show_interface - Is Required show it in the interface
 feature.linktree.create

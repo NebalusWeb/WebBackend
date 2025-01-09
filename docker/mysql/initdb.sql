@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 07. Jan 2025 um 16:12
+-- Erstellungszeit: 09. Jan 2025 um 04:50
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -87,7 +87,7 @@ CREATE TABLE `account_punishments` (
                                        `pardoner_account_id` int UNSIGNED DEFAULT NULL,
                                        `punished_reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
                                        `pardoned_reason` text,
-                                       `disable_account_while_punisment` bit(1) NOT NULL DEFAULT b'1',
+                                       `disable_account_while_punishment` bit(1) NOT NULL DEFAULT b'1',
                                        `starts_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                        `ends_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -96,7 +96,7 @@ CREATE TABLE `account_punishments` (
 -- Daten für Tabelle `account_punishments`
 --
 
-INSERT INTO `account_punishments` (`punishment_id`, `punishment_type`, `punished_account_id`, `punisher_account_id`, `pardoner_account_id`, `punished_reason`, `pardoned_reason`, `disable_account_while_punisment`, `starts_at`, `ends_at`) VALUES
+INSERT INTO `account_punishments` (`punishment_id`, `punishment_type`, `punished_account_id`, `punisher_account_id`, `pardoner_account_id`, `punished_reason`, `pardoned_reason`, `disable_account_while_punishment`, `starts_at`, `ends_at`) VALUES
     (1, 'PERMABAN', 3, 1, NULL, 'Just for Existence', NULL, b'1', '2024-11-07 08:13:47', NULL);
 
 -- --------------------------------------------------------
@@ -168,13 +168,36 @@ CREATE TABLE `form_submits` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `girl_games`
+-- Tabellenstruktur für Tabelle `girl_game_instances`
 --
 
-CREATE TABLE `girl_games` (
-                              `account_id` int UNSIGNED NOT NULL,
-                              `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+CREATE TABLE `girl_game_instances` (
+                                       `girl_game_id` int UNSIGNED NOT NULL,
+                                       `account_id` int UNSIGNED NOT NULL,
+                                       `girl_game_type` varchar(32) NOT NULL,
+                                       `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `girl_game_types`
+--
+
+CREATE TABLE `girl_game_types` (
+                                   `girl_game_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                   `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Daten für Tabelle `girl_game_types`
+--
+
+INSERT INTO `girl_game_types` (`girl_game_type`, `description`) VALUES
+                                                                    ('CAPTURE_THE_FLAG', ''),
+                                                                    ('HIDE_AND_SEEK', ''),
+                                                                    ('TAG', ''),
+                                                                    ('ZOMBIE', '');
 
 -- --------------------------------------------------------
 
@@ -255,8 +278,7 @@ INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `name`, `url`
 --
 
 CREATE TABLE `privileges` (
-                              `privilege_id` int UNSIGNED NOT NULL,
-                              `name` varchar(255) NOT NULL,
+                              `privilege_node` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                               `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -592,7 +614,7 @@ INSERT INTO `roles` (`role_id`, `name`, `apply_on_user_creation`, `deletable`, `
 
 CREATE TABLE `role_privilege_map` (
                                       `role_id` int UNSIGNED NOT NULL,
-                                      `privilege_id` int UNSIGNED NOT NULL
+                                      `privilege_node` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -625,27 +647,27 @@ INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_ke
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_access_history`
+-- Tabellenstruktur für Tabelle `user_access_log`
 --
 
-CREATE TABLE `user_access_history` (
-                                       `access_history_id` int UNSIGNED NOT NULL,
-                                       `user_id` int UNSIGNED NOT NULL,
-                                       `ip_address` tinyblob NOT NULL,
-                                       `success` bit(1) NOT NULL DEFAULT b'0',
-                                       `user_agent` text NOT NULL,
-                                       `happend_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `user_access_log` (
+                                   `access_log_id` int UNSIGNED NOT NULL,
+                                   `user_id` int UNSIGNED NOT NULL,
+                                   `ip_address` tinyblob NOT NULL,
+                                   `success` bit(1) NOT NULL DEFAULT b'0',
+                                   `user_agent` text NOT NULL,
+                                   `happend_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Daten für Tabelle `user_access_history`
+-- Daten für Tabelle `user_access_log`
 --
 
-INSERT INTO `user_access_history` (`access_history_id`, `user_id`, `ip_address`, `success`, `user_agent`, `happend_at`) VALUES
-                                                                                                                            (2, 1, 0x32313330373036343333, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-11-07 08:02:42'),
-                                                                                                                            (3, 2, 0x31383737343331383433, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0', '2024-11-07 08:17:36'),
-                                                                                                                            (4, 1, 0x30, b'0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-11-12 08:17:37'),
-                                                                                                                            (5, 1, 0x33323332323336303037, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-10-08 08:17:37');
+INSERT INTO `user_access_log` (`access_log_id`, `user_id`, `ip_address`, `success`, `user_agent`, `happend_at`) VALUES
+                                                                                                                    (2, 1, 0x32313330373036343333, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-11-07 08:02:42'),
+                                                                                                                    (3, 2, 0x31383737343331383433, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0', '2024-11-07 08:17:36'),
+                                                                                                                    (4, 1, 0x30, b'0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-11-12 08:17:37'),
+                                                                                                                    (5, 1, 0x33323332323336303037, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-10-08 08:17:37');
 
 -- --------------------------------------------------------
 
@@ -732,10 +754,18 @@ ALTER TABLE `form_submits`
     ADD KEY `form_id` (`form_id`);
 
 --
--- Indizes für die Tabelle `girl_games`
+-- Indizes für die Tabelle `girl_game_instances`
 --
-ALTER TABLE `girl_games`
-    ADD KEY `account_id` (`account_id`);
+ALTER TABLE `girl_game_instances`
+    ADD PRIMARY KEY (`girl_game_id`),
+    ADD KEY `account_id` (`account_id`),
+    ADD KEY `girl_game_type` (`girl_game_type`);
+
+--
+-- Indizes für die Tabelle `girl_game_types`
+--
+ALTER TABLE `girl_game_types`
+    ADD PRIMARY KEY (`girl_game_type`);
 
 --
 -- Indizes für die Tabelle `linktrees`
@@ -762,7 +792,7 @@ ALTER TABLE `linktree_entrys`
 -- Indizes für die Tabelle `privileges`
 --
 ALTER TABLE `privileges`
-    ADD PRIMARY KEY (`privilege_id`);
+    ADD UNIQUE KEY `privilege_node` (`privilege_node`);
 
 --
 -- Indizes für die Tabelle `projects`
@@ -805,7 +835,7 @@ ALTER TABLE `roles`
 -- Indizes für die Tabelle `role_privilege_map`
 --
 ALTER TABLE `role_privilege_map`
-    ADD PRIMARY KEY (`privilege_id`,`role_id`),
+    ADD PRIMARY KEY (`privilege_node`,`role_id`),
     ADD KEY `role_id` (`role_id`);
 
 --
@@ -817,10 +847,10 @@ ALTER TABLE `users`
     ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indizes für die Tabelle `user_access_history`
+-- Indizes für die Tabelle `user_access_log`
 --
-ALTER TABLE `user_access_history`
-    ADD PRIMARY KEY (`access_history_id`),
+ALTER TABLE `user_access_log`
+    ADD PRIMARY KEY (`access_log_id`),
     ADD KEY `user_id` (`user_id`);
 
 --
@@ -871,6 +901,12 @@ ALTER TABLE `form_submits`
     MODIFY `form_submit_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT für Tabelle `girl_game_instances`
+--
+ALTER TABLE `girl_game_instances`
+    MODIFY `girl_game_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `linktrees`
 --
 ALTER TABLE `linktrees`
@@ -887,12 +923,6 @@ ALTER TABLE `linktree_click_metric`
 --
 ALTER TABLE `linktree_entrys`
     MODIFY `linktree_entry_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT für Tabelle `privileges`
---
-ALTER TABLE `privileges`
-    MODIFY `privilege_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `projects`
@@ -931,10 +961,10 @@ ALTER TABLE `users`
     MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT für Tabelle `user_access_history`
+-- AUTO_INCREMENT für Tabelle `user_access_log`
 --
-ALTER TABLE `user_access_history`
-    MODIFY `access_history_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `user_access_log`
+    MODIFY `access_log_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints der exportierten Tabellen
@@ -987,10 +1017,11 @@ ALTER TABLE `form_submits`
     ADD CONSTRAINT `form_submits_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `forms` (`form_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
--- Constraints der Tabelle `girl_games`
+-- Constraints der Tabelle `girl_game_instances`
 --
-ALTER TABLE `girl_games`
-    ADD CONSTRAINT `girl_games_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `girl_game_instances`
+    ADD CONSTRAINT `girl_game_instances_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    ADD CONSTRAINT `girl_game_instances_ibfk_2` FOREIGN KEY (`girl_game_type`) REFERENCES `girl_game_types` (`girl_game_type`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints der Tabelle `linktrees`
@@ -1032,14 +1063,14 @@ ALTER TABLE `referral_click_metric`
 -- Constraints der Tabelle `role_privilege_map`
 --
 ALTER TABLE `role_privilege_map`
-    ADD CONSTRAINT `role_privilege_map_ibfk_1` FOREIGN KEY (`privilege_id`) REFERENCES `privileges` (`privilege_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-    ADD CONSTRAINT `role_privilege_map_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+    ADD CONSTRAINT `role_privilege_map_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+    ADD CONSTRAINT `role_privilege_map_ibfk_3` FOREIGN KEY (`privilege_node`) REFERENCES `privileges` (`privilege_node`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `user_access_history`
+-- Constraints der Tabelle `user_access_log`
 --
-ALTER TABLE `user_access_history`
-    ADD CONSTRAINT `user_access_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE `user_access_log`
+    ADD CONSTRAINT `user_access_log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Constraints der Tabelle `user_role_map`
