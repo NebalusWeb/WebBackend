@@ -16,7 +16,7 @@ class SanitizerStringSchema extends AbstractSanitizerSchema
 
     public function email(): static
     {
-        $this->isEmail = true;
+        $this->
         return $this;
     }
 
