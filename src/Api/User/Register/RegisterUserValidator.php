@@ -30,7 +30,7 @@ class RegisterUserValidator extends AbstractValidator
                     "field_4" => S::integer(),
                     "checksum" => S::integer(),
                 ]),
-                'email' => S::string(),
+                'email' => S::string()->email(),
                 'username' => S::string(),
                 'password' => S::string(),
             ])

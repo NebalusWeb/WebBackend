@@ -15,7 +15,7 @@ class GetReferralValidator extends AbstractValidator
     {
         $rules = [
             "path_args" => [
-                'code' => S::string(),
+                'code' => S::string()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
             ]
         ];
         parent::__construct($rules);

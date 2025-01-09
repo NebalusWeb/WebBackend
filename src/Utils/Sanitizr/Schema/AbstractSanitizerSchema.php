@@ -3,12 +3,19 @@
 namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
+use Nebalus\Webapi\Utils\Sanitizr\Queue\Queue;
 use Nebalus\Webapi\Utils\Sanitizr\SafeParsedData;
 
 abstract class AbstractSanitizerSchema
 {
+    private Queue $queue;
     private mixed $defaultValue;
     private bool $isNullable = false;
+
+    public function __construct()
+    {
+        $this->queue = new Queue();
+    }
 
     public function default(mixed $value): static
     {

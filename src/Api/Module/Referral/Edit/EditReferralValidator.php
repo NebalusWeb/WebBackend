@@ -18,11 +18,11 @@ class EditReferralValidator extends AbstractValidator
     {
         $rules = [
             "path_args" => [
-                'code' => S::string()->required(),
+                'code' => S::string()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
             ],
             "body" => [
                 'pointer' => S::string()->nullable(),
-                'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => ValidType::BOOLEAN ],
+                'disabled' => S::boolean()->default(false),
             ]
         ];
         parent::__construct($rules);

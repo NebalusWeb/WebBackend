@@ -18,9 +18,9 @@ class CreateReferralValidator extends AbstractValidator
     {
         $rules = [
             "body" => S::object([
-                'name' => S::string()->required(),
-                'pointer' => S::string()->required(),
-                'disabled' => [ 'required' => false, 'nullable' => false, 'default' => false, 'type' => ValidType::BOOLEAN ],
+                'name' => S::string(),
+                'pointer' => S::string(),
+                'disabled' => S::boolean()->default(false),
             ])
         ];
         parent::__construct($rules);
