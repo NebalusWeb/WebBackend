@@ -4,6 +4,7 @@ namespace Nebalus\Webapi\Value\Referral;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
 
 class ReferralName
 {
@@ -19,20 +20,11 @@ class ReferralName
      */
     public static function from(?string $referralName): self
     {
-        if ($referralName === null) {
-            return new self(null);
-        }
+        $schema = Sanitizr::string()->nullable()->max(self::MAX_LENGTH)->regex(self::REGEX);
+        $validData = $schema->safeParse($referralName);
 
-        if (strlen($referralName) > self::MAX_LENGTH) {
-            throw new ApiInvalidArgumentException(
-                'Invalid referral name: cannot be longer than ' . self::MAX_LENGTH . ' characters'
-            );
-        }
-
-        if (preg_match(self::REGEX, $referralName) === false) {
-            throw new ApiInvalidArgumentException(
-                'Invalid referral name: can only contain letters'
-            );
+        if ($validData->isError()) {
+            throw new ApiInvalidArgumentException("Invalid referral name: " . $validData->getErrorMessage());
         }
 
         return new self($referralName);

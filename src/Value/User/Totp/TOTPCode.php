@@ -17,8 +17,8 @@ readonly class TOTPCode
      */
     public static function from(string $code): self
     {
-        $usernamePattern = '/^[\d]{6}$/';
-        if (preg_match($usernamePattern, $code) < 1) {
+        $totpCodePattern = '/^[\d]{6}$/';
+        if (preg_match($totpCodePattern, $code) < 1) {
             throw new ApiInvalidArgumentException(
                 'Invalid totp code'
             );
