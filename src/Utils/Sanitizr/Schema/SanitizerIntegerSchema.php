@@ -7,18 +7,14 @@ use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizerSchema;
 
 class SanitizerIntegerSchema extends AbstractSanitizerSchema
 {
-    private int $min;
-    private int $max;
-
-    public function min(int $min): static
+    public function positive(string $message = 'Must be a positive number'): static
     {
-        $this->min = $min;
-        return $this;
-    }
+        $this->addEffect(function (int $value) use ($message) {
+            if ($value <= 0) {
+                throw new SanitizValidationException($message);
+            }
+        });
 
-    public function max(int $max): static
-    {
-        $this->max = $max;
         return $this;
     }
 
@@ -31,16 +27,8 @@ class SanitizerIntegerSchema extends AbstractSanitizerSchema
             throw new SanitizValidationException('Not a numeric value');
         }
 
-        if (is_string($value)) {
-            throw new SanitizValidationException('Numeric value is a string');
-        }
-
-        if (isset($this->min) && $value < $this->min) {
-            throw new SanitizValidationException('Value is too small');
-        }
-
-        if (isset($this->max) && $this->max < $value) {
-            throw new SanitizValidationException('Value is too big');
+        if (! is_int($value)) {
+            throw new SanitizValidationException('Not an integer value');
         }
 
         return $value;

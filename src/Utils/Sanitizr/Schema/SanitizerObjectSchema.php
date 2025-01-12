@@ -32,6 +32,7 @@ class SanitizerObjectSchema extends AbstractSanitizerSchema
             );
         }
 
-        return array_filter($result, fn($p) => !is_null($p));
+        //return array_filter($result, fn($p) => !is_null($p));
+        return $result;
     }
 }

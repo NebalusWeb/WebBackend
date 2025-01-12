@@ -3,29 +3,28 @@
 namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
-use Nebalus\Webapi\Utils\Sanitizr\SafeParsedData;
+use Nebalus\Webapi\Utils\Sanitizr\Value\SafeParsedData;
 
 abstract class AbstractSanitizerSchema
 {
     private array $effectQueue = [];
-//    private mixed $defaultValue;
-//    private bool $isNullable = false;
-//
-//    public function default(mixed $value): static
-//    {
-//        $this->defaultValue = $value;
-//        return $this;
-//    }
-//
-//    public function nullable(): static
-//    {
-//        $this->isNullable = true;
-//        return $this;
-//    }
+    private bool $isNullable = false;
+    private mixed $defaultValue;
 
-    protected function addEffect(callable $callable): static
+    protected function addEffect(callable $callable): void
     {
         $this->effectQueue[] = [$callable];
+    }
+
+    public function nullable(): static
+    {
+        $this->isNullable = true;
+        return $this;
+    }
+
+    public function default(mixed $value): static
+    {
+        $this->defaultValue = $value;
         return $this;
     }
 
@@ -34,15 +33,21 @@ abstract class AbstractSanitizerSchema
      */
     public function parse(mixed $value): mixed
     {
-//        if ($this->isNullable && is_null($value)) {
-//            return null;
-//        }
-//
-//        if (isset($this->defaultValue) && $this->isNullable === false && $value === null) {
-//            return $this->parseValue($this->defaultValue);
-//        }
+        if ($this->isNullable && is_null($value)) {
+            return null;
+        }
 
-        return $this->parseValue($value);
+        if (is_null($value) && isset($this->defaultValue)) {
+            return $this->defaultValue;
+        }
+
+        $parsedValue = $this->parseValue($value);
+
+        foreach ($this->effectQueue as $effect) {
+            $effect[0]($parsedValue);
+        }
+
+        return $parsedValue;
     }
 
     public function safeParse(mixed $value): SafeParsedData

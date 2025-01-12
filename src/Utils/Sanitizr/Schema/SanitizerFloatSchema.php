@@ -2,27 +2,21 @@
 
 namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
+use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizerSchema;
 
 class SanitizerFloatSchema extends AbstractSanitizerSchema
 {
-    private float $min;
-    private float $max;
-
-    public function min(float $min): static
+    protected function parseValue(mixed $value): float
     {
-        $this->min = $min;
-        return $this;
-    }
+        if (! is_numeric($value)) {
+            throw new SanitizValidationException('Not a numeric value');
+        }
 
-    public function max(float $max): static
-    {
-        $this->max = $max;
-        return $this;
-    }
+        if (! is_float($value)) {
+            throw new SanitizValidationException('Not a float value');
+        }
 
-    protected function parseValue(mixed $value): mixed
-    {
-        // TODO: Implement parseValue() method.
+        return $value;
     }
 }

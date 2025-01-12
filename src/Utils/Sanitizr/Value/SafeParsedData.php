@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Utils\Sanitizr;
+namespace Nebalus\Webapi\Utils\Sanitizr\Value;
 
 readonly class SafeParsedData
 {

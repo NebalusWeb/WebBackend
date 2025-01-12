@@ -14,9 +14,9 @@ class DeleteReferralValidator extends AbstractValidator
     public function __construct()
     {
         $rules = [
-            "path_args" => [
+            "path_args" => S::object([
                 'code' => S::string()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
-            ],
+            ]),
         ];
         parent::__construct($rules);
     }

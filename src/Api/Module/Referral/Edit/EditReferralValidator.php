@@ -17,13 +17,13 @@ class EditReferralValidator extends AbstractValidator
     public function __construct()
     {
         $rules = [
-            "path_args" => [
+            "path_args" => S::object([
                 'code' => S::string()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
-            ],
-            "body" => [
+            ]),
+            "body" => S::object([
                 'pointer' => S::string()->nullable(),
                 'disabled' => S::boolean()->default(false),
-            ]
+            ])
         ];
         parent::__construct($rules);
     }

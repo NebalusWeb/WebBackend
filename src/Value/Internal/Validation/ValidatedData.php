@@ -12,9 +12,9 @@ readonly class ValidatedData
     }
 
     public static function from(
-        array $bodyData = [],
-        array $queryParamsData = [],
-        array $pathArgsData = []
+        array $bodyData,
+        array $queryParamsData,
+        array $pathArgsData
     ): self {
         return new self($bodyData, $queryParamsData, $pathArgsData);
     }

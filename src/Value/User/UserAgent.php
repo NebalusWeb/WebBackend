@@ -6,7 +6,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 readonly class UserAgent
 {
-    public const string REGEX = "/\((?<info>.*?)\)(\s|$)|(?<name>.*?)\/(?<version>.*?)(\s|$)/gm";
+    public const string REGEX = "/\((?<info>.*?)\)(\s|$)|(?<name>.*?)\/(?<version>.*?)(\s|$)/";
 
     private function __construct(
         private string $userAgent

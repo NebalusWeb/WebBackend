@@ -56,7 +56,7 @@ class MySqlUserRepository extends AbstractRepository
         $stmt->execute();
 
         $userToArray = $user->asArray();
-        $userToArray["user_id"] = UserId::fromString($this->pdo->lastInsertId())->asInt();
+        $userToArray["user_id"] = UserId::from($this->pdo->lastInsertId())->asInt();
 
         return User::fromDatabase($userToArray);
     }

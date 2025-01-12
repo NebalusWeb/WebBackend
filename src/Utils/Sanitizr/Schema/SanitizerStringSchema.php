@@ -6,52 +6,97 @@ use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
 class SanitizerStringSchema extends AbstractSanitizerSchema
 {
-    // Validations
-    private bool $isEmail = false;
-    private int $min;
-    private int $max;
-    private string $regex;
-    private string $startsWith;
-    private string $endsWith;
-
-    public function email(): static
+    public function length(int $length, string $message = 'Must be exact %s characters long'): static
     {
-        $this->
+        $this->addEffect(function (string $value) use ($length, $message) {
+            $valueLength = strlen($value);
+
+            if ($valueLength !== $length) {
+                throw new SanitizValidationException(sprintf($message, $length));
+            }
+        });
+
         return $this;
     }
 
-    public function min(int $min): static
+    public function min(int $min, string $message = 'Must be %s or more characters long'): static
     {
-        $this->min = $min;
+        $this->addEffect(function (string $value) use ($min, $message) {
+            $valueLength = strlen($value);
+
+            if ($valueLength < $min) {
+                throw new SanitizValidationException(sprintf($message, $min));
+            }
+        });
+
         return $this;
     }
 
-    public function max(int $max): static
+    public function max(int $max, string $message = 'Must be %s or fewer characters long'): static
     {
-        $this->max = $max;
+        $this->addEffect(function (string $value) use ($max, $message) {
+            $valueLength = strlen($value);
+
+            if ($valueLength > $max) {
+                throw new SanitizValidationException(sprintf($message, $max));
+            }
+        });
+
         return $this;
     }
 
-    public function length(int $length): static
+    public function regex(string $pattern, string $message = 'Does not match the pattern'): static
     {
-        return $this->min($length)->max($length);
-    }
+        $this->addEffect(function (string $value) use ($pattern, $message) {
+            if (! preg_match($pattern, $value)) {
+                throw new SanitizValidationException($message);
+            }
+        });
 
-    public function regex(string $regex): static
-    {
-        $this->regex = $regex;
         return $this;
     }
 
-    public function startsWith(string $startsWith): static
+    public function email(string $message = 'Not a valid email address'): static
     {
-        $this->startsWith = $startsWith;
+        $this->addEffect(function (string $value) use ($message) {
+            if (! filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                throw new SanitizValidationException($message);
+            }
+        });
+
         return $this;
     }
 
-    public function endsWith(string $endsWith): static
+    public function url(string $message = 'Not a valid URL'): static
     {
-        $this->endsWith = $endsWith;
+        $this->addEffect(function (string $value) use ($message) {
+            if (! filter_var($value, FILTER_VALIDATE_URL)) {
+                throw new SanitizValidationException($message);
+            }
+        });
+
+        return $this;
+    }
+
+    public function startsWith(string $prefix, string $message = 'Does not start with required string'): static
+    {
+        $this->addEffect(function (string $value) use ($prefix, $message) {
+            if (str_starts_with($value, $prefix) === false) {
+                throw new SanitizValidationException(sprintf($message, $prefix));
+            }
+        });
+
+        return $this;
+    }
+
+    public function endsWith(string $suffix, string $message = 'Does not end with required string'): static
+    {
+        $this->addEffect(function (string $value) use ($suffix, $message) {
+            if (str_ends_with($value, $suffix) === false) {
+                throw new SanitizValidationException(sprintf($message, $suffix));
+            }
+        });
+
         return $this;
     }
 
@@ -60,33 +105,8 @@ class SanitizerStringSchema extends AbstractSanitizerSchema
      */
     protected function parseValue(mixed $value): string
     {
-        // Validations
         if (! is_string($value)) {
             throw new SanitizValidationException('Not a string value');
-        }
-
-        if ($this->isEmail && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
-            throw new SanitizValidationException('Not a valid email');
-        }
-
-        if (isset($this->min) && strlen($value) <= $this->min) {
-            throw new SanitizValidationException('String is too short');
-        }
-
-        if (isset($this->max) && $this->max <= strlen($value)) {
-            throw new SanitizValidationException('String is too long');
-        }
-
-        if (isset($this->regex) && ! preg_match($this->regex, $value)) {
-            throw new SanitizValidationException('String does not match regex');
-        }
-
-        if (isset($this->startsWith) && str_starts_with($value, $this->startsWith)) {
-            throw new SanitizValidationException('String does not start with required string');
-        }
-
-        if (isset($this->endsWith) && str_ends_with($value, $this->endsWith)) {
-            throw new SanitizValidationException('String does not end with required string');
         }
 
         return $value;
