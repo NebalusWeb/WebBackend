@@ -39,7 +39,7 @@ class SanitizerObjectSchema extends AbstractSanitizerSchema
                     continue;
                 }
 
-                $result[$prop] = $schema->parseValue(
+                $result[$prop] = $schema->parse(
                     $input[$prop] ?? null
                 );
             }
