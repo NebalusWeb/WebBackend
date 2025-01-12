@@ -18,7 +18,7 @@ trait ID
      */
     public static function from(mixed $id): self
     {
-        $schema = Sanitizr::integer()->positive();
+        $schema = Sanitizr::number()->integer()->positive();
         $validData = $schema->safeParse($id);
 
         if ($validData->isError()) {

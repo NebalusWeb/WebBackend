@@ -29,7 +29,7 @@ readonly class RegisterUserService
         }
 
         if ($invitationToken->isExpired()) {
-            return Result::createError('Registration failed: The Invitation Token you provided is already expired', 403);
+            return Result::createError('Registration failed: The Invitation Token you provided is expired', 403);
         }
 
         $userFoundByUsername = $this->mySqlUserRepository->findUserFromUsername($validator->getUsername());

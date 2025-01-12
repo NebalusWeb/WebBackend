@@ -21,7 +21,7 @@ class EditReferralValidator extends AbstractValidator
                 'code' => S::string()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
             ]),
             "body" => S::object([
-                'pointer' => S::string()->nullable(),
+                'pointer' => S::string()->nullable()->url(),
                 'disabled' => S::boolean()->default(false),
             ])
         ];

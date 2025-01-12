@@ -24,7 +24,7 @@ readonly class TOTPCode
         $validData = $schema->safeParse($code);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid referral code: ' . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException('Invalid totp code: ' . $validData->getErrorMessage());
         }
 
         return new self($code);

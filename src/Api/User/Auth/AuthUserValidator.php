@@ -19,8 +19,8 @@ class AuthUserValidator extends AbstractValidator
     {
         $rules = [
             'body' => S::object([
-                'username' => S::string(),
-                'password' => S::string(),
+                'username' => S::string()->required(),
+                'password' => S::string()->required(),
                 'remember_me' => S::boolean()->default(false),
                 'totp' => S::string()->nullable(),
             ])
