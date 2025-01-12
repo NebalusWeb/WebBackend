@@ -5,8 +5,8 @@ namespace Nebalus\Webapi\Utils\Sanitizr;
 use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizerSchema;
 use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerArraySchema;
 use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerBooleanSchema;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerFloatSchema;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerIntegerSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerNullSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerNumberSchema;
 use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerObjectSchema;
 use Nebalus\Webapi\Utils\Sanitizr\Schema\SanitizerStringSchema;
 
@@ -17,14 +17,9 @@ class Sanitizr
         return new SanitizerBooleanSchema();
     }
 
-    public static function integer(): SanitizerIntegerSchema
+    public static function number(): SanitizerNumberSchema
     {
-        return new SanitizerIntegerSchema();
-    }
-
-    public static function float(): SanitizerFloatSchema
-    {
-        return new SanitizerFloatSchema();
+        return new SanitizerNumberSchema();
     }
 
     public static function string(): SanitizerStringSchema
@@ -42,8 +37,8 @@ class Sanitizr
         return new SanitizerObjectSchema($schemas);
     }
 
-//    public static function null()
-//    {
-//
-//    }
+    public static function null(): SanitizerNullSchema
+    {
+        return new SanitizerNullSchema();
+    }
 }

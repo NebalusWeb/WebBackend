@@ -14,25 +14,37 @@ class SanitizerObjectSchema extends AbstractSanitizerSchema
     /**
      * @throws SanitizValidationException
      */
-    protected function parseValue(mixed $value): array
+    protected function parseValue(mixed $input): array
     {
-        if (is_object($value)) {
-            $value = get_object_vars($value);
+        if (is_object($input)) {
+            $input = get_object_vars($input);
         }
 
-        if (!is_array($value)) {
+        if (!is_array($input)) {
             throw new SanitizValidationException('Not an object');
         }
 
         $result = [];
 
         foreach ($this->schemas as $prop => $schema) {
-            $result[$prop] = $schema->parse(
-                $value[$prop] ?? null
-            );
+            if ($schema instanceof AbstractSanitizerSchema) {
+                if ($schema->isRequired() && isset($input[$prop]) === false) {
+                    throw new SanitizValidationException($prop . " is required");
+                }
+
+                if ($schema instanceof SanitizerObjectSchema) {
+                    if (isset($input[$prop]) && is_array($input[$prop])) {
+                        $result[$prop] = $schema->parseValue($input[$prop]);
+                    }
+                    continue;
+                }
+
+                $result[$prop] = $schema->parseValue(
+                    $input[$prop] ?? null
+                );
+            }
         }
 
-        //return array_filter($result, fn($p) => !is_null($p));
         return $result;
     }
 }

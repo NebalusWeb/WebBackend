@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Api;
 
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Exception\ApiValidationException;
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
@@ -31,7 +32,7 @@ abstract class AbstractValidator
         ]);
 
         if ($validData->isError()) {
-            throw new ApiValidationException($validData->getErrorMessage());
+            throw new ApiInvalidArgumentException($validData->getErrorMessage());
         }
 
         $validatedData = ValidatedData::from($validData->getValue()["body"] ?? [], $validData->getValue()["query_param"] ?? [], $validData->getValue()["path_args"] ?? []);

@@ -24,15 +24,15 @@ class RegisterUserValidator extends AbstractValidator
         $rules = [
             'body' => S::object([
                 'invitation_token' => S::object([
-                    "field_1" => S::integer(),
-                    "field_2" => S::integer(),
-                    "field_3" => S::integer(),
-                    "field_4" => S::integer(),
-                    "checksum" => S::integer(),
-                ]),
-                'email' => S::string()->email(),
-                'username' => S::string(),
-                'password' => S::string(),
+                    "field_1" => S::number()->integer()->required(),
+                    "field_2" => S::number()->integer()->required(),
+                    "field_3" => S::number()->integer()->required(),
+                    "field_4" => S::number()->integer()->required(),
+                    "checksum" => S::number()->integer()->required(),
+                ])->required(),
+                'email' => S::string()->email()->required(),
+                'username' => S::string()->required(),
+                'password' => S::string()->required(),
             ])
         ];
         parent::__construct($rules);

@@ -8,12 +8,19 @@ use Nebalus\Webapi\Utils\Sanitizr\Value\SafeParsedData;
 abstract class AbstractSanitizerSchema
 {
     private array $effectQueue = [];
+    private bool $isRequired = false;
     private bool $isNullable = false;
     private mixed $defaultValue;
 
     protected function addEffect(callable $callable): void
     {
         $this->effectQueue[] = [$callable];
+    }
+
+    public function required(): static
+    {
+        $this->isRequired = true;
+        return $this;
     }
 
     public function nullable(): static
@@ -28,20 +35,25 @@ abstract class AbstractSanitizerSchema
         return $this;
     }
 
+    public function isRequired(): bool
+    {
+        return $this->isRequired;
+    }
+
     /**
      * @throws SanitizValidationException
      */
-    public function parse(mixed $value): mixed
+    public function parse(mixed $input): mixed
     {
-        if ($this->isNullable && is_null($value)) {
+        if ($this->isNullable && is_null($input)) {
             return null;
         }
 
-        if (is_null($value) && isset($this->defaultValue)) {
+        if (is_null($input) && isset($this->defaultValue)) {
             return $this->defaultValue;
         }
 
-        $parsedValue = $this->parseValue($value);
+        $parsedValue = $this->parseValue($input);
 
         foreach ($this->effectQueue as $effect) {
             $effect[0]($parsedValue);
@@ -50,10 +62,10 @@ abstract class AbstractSanitizerSchema
         return $parsedValue;
     }
 
-    public function safeParse(mixed $value): SafeParsedData
+    public function safeParse(mixed $input): SafeParsedData
     {
         try {
-            $result = $this->parse($value);
+            $result = $this->parse($input);
             return SafeParsedData::from(true, $result, null);
         } catch (SanitizValidationException $e) {
             return SafeParsedData::from(false, null, $e->getMessage());
@@ -63,5 +75,5 @@ abstract class AbstractSanitizerSchema
     /**
      * @throws SanitizValidationException
      */
-    abstract protected function parseValue(mixed $value): mixed;
+    abstract protected function parseValue(mixed $input): mixed;
 }

@@ -6,9 +6,9 @@ use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
 class SanitizerNullSchema extends AbstractSanitizerSchema
 {
-    protected function parseValue(mixed $value): null
+    protected function parseValue(mixed $input): null
     {
-        if (! is_null($value)) {
+        if (! is_null($input)) {
             throw new SanitizValidationException('Not a null value');
         }
 
