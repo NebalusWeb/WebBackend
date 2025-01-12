@@ -1,7 +1,16 @@
 {
     "name": "nebalus/webapi",
     "description": "The web api for 'https://api.nebalus.dev'",
-    
+    "keywords": [
+        "web",
+        "api",
+        "rest-api",
+        "mysql",
+        "redis",
+        "rest",
+        "slim"
+    ],
+
     "authors": [
         {
             "name": "Nebalus"
