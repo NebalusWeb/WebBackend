@@ -18,7 +18,7 @@ class EditReferralValidator extends AbstractValidator
     {
         $rules = [
             "path_args" => S::object([
-                'code' => S::string()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
+                'code' => S::string()->required()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
             ]),
             "body" => S::object([
                 'pointer' => S::string()->nullable()->url(),
