@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 13. Jan 2025 um 19:55
+-- Erstellungszeit: 13. Jan 2025 um 20:35
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -220,29 +220,6 @@ CREATE TABLE `linktrees` (
 INSERT INTO `linktrees` (`linktree_id`, `owner_user_id`, `description`, `created_at`, `updated_at`) VALUES
                                                                                                         (1, 1, 'The Description from Nebalus', '2024-11-12 19:19:41', '2024-11-12 19:19:41'),
                                                                                                         (3, 2, 'Testers Account', '2024-11-12 19:25:09', '2024-11-12 19:25:09');
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `linktree_click_metric`
---
-
-CREATE TABLE `linktree_click_metric` (
-                                         `click_id` int UNSIGNED NOT NULL,
-                                         `linktree_id` int UNSIGNED NOT NULL,
-                                         `clicked_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Daten für Tabelle `linktree_click_metric`
---
-
-INSERT INTO `linktree_click_metric` (`click_id`, `linktree_id`, `clicked_at`) VALUES
-                                                                                  (1, 1, '2024-11-12 19:23:40'),
-                                                                                  (2, 1, '2024-11-12 19:23:43'),
-                                                                                  (3, 1, '2024-11-12 19:23:46'),
-                                                                                  (4, 1, '2024-11-12 19:24:15'),
-                                                                                  (5, 1, '2024-11-12 19:24:15');
 
 -- --------------------------------------------------------
 
@@ -872,13 +849,6 @@ ALTER TABLE `linktrees`
     ADD UNIQUE KEY `account` (`owner_user_id`);
 
 --
--- Indizes für die Tabelle `linktree_click_metric`
---
-ALTER TABLE `linktree_click_metric`
-    ADD PRIMARY KEY (`click_id`),
-    ADD KEY `analytics_linktree_clicks_ibfk_1` (`linktree_id`);
-
---
 -- Indizes für die Tabelle `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
@@ -1011,12 +981,6 @@ ALTER TABLE `linktrees`
     MODIFY `linktree_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT für Tabelle `linktree_click_metric`
---
-ALTER TABLE `linktree_click_metric`
-    MODIFY `click_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT für Tabelle `linktree_entrys`
 --
 ALTER TABLE `linktree_entrys`
@@ -1138,12 +1102,6 @@ ALTER TABLE `girl_game_instances`
 --
 ALTER TABLE `linktrees`
     ADD CONSTRAINT `linktrees_ibfk_1` FOREIGN KEY (`owner_user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
-
---
--- Constraints der Tabelle `linktree_click_metric`
---
-ALTER TABLE `linktree_click_metric`
-    ADD CONSTRAINT `linktree_click_metric_ibfk_1` FOREIGN KEY (`linktree_id`) REFERENCES `linktrees` (`linktree_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Constraints der Tabelle `linktree_entrys`

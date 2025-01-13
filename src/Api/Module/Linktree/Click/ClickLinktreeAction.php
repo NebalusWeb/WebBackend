@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Api\Module\Linktree\Analytics\Click;
+namespace Nebalus\Webapi\Api\Module\Linktree\Click;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Slim\Http\Response as Response;
