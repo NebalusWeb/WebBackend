@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Value\User;
 
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
 
 readonly class UserAgent
 {
@@ -18,10 +19,11 @@ readonly class UserAgent
      */
     public static function from(string $userAgent): self
     {
-        if (preg_match(self::REGEX, $userAgent)) {
-            throw new ApiInvalidArgumentException(
-                'Invalid useragent'
-            );
+        $schema = Sanitizr::string()->regex(self::REGEX);
+        $validData = $schema->safeParse($userAgent);
+
+        if ($validData->isError()) {
+            throw new ApiInvalidArgumentException('Invalid useragent: ' . $validData->getErrorMessage());
         }
 
         return new self($userAgent);
