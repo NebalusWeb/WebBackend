@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Erstellungszeit: 13. Jan 2025 um 18:44
+-- Erstellungszeit: 13. Jan 2025 um 19:55
 -- Server-Version: 9.1.0
 -- PHP-Version: 8.2.23
 
@@ -278,6 +278,7 @@ INSERT INTO `linktree_entrys` (`linktree_entry_id`, `linktree_id`, `name`, `url`
 --
 
 CREATE TABLE `privileges` (
+                              `privilege_id` int UNSIGNED NOT NULL,
                               `privilege_node` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                               `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -353,7 +354,8 @@ INSERT INTO `referrals` (`referral_id`, `owner_user_id`, `code`, `pointer`, `nam
                                                                                                                                 (6, 1, 'b2bXghSd', 'https://nebalus.dev', '42!1!!1!', b'0', '2024-02-28 21:30:24', '2024-09-28 15:35:26'),
                                                                                                                                 (7, 1, 'JXEYHjxk', 'https://nebalus.dev', 'Random shit', b'1', '2024-08-03 23:20:58', '2024-09-28 15:35:26'),
                                                                                                                                 (11, 2, 'J09g8VqT', 'https://youtube.com', 'youtube hehe', b'0', '2024-11-07 08:19:50', '2024-11-07 08:19:50'),
-                                                                                                                                (12, 1, 'r5HkrOkZ', 'https://status.nebalus.dev', NULL, b'0', '2024-12-06 22:38:13', '2024-12-06 22:38:13');
+                                                                                                                                (12, 1, 'r5HkrOkZ', 'https://status.nebalus.dev', NULL, b'0', '2024-12-06 22:38:13', '2024-12-06 22:38:13'),
+                                                                                                                                (13, 1, 'KfJpciqx', 'https://luka-lta.dev', 'lukalta', b'0', '2025-01-13 19:47:26', '2025-01-13 19:47:26');
 
 -- --------------------------------------------------------
 
@@ -710,7 +712,7 @@ INSERT INTO `roles` (`role_id`, `name`, `apply_on_user_creation`, `deletable`, `
 
 CREATE TABLE `role_privilege_map` (
                                       `role_id` int UNSIGNED NOT NULL,
-                                      `privilege_node` varchar(255) NOT NULL
+                                      `privilege_id` int UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -743,27 +745,26 @@ INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `totp_secret_ke
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_access_log`
+-- Tabellenstruktur für Tabelle `user_login_log`
 --
 
-CREATE TABLE `user_access_log` (
-                                   `access_log_id` int UNSIGNED NOT NULL,
-                                   `user_id` int UNSIGNED NOT NULL,
-                                   `ip_address` tinyblob NOT NULL,
-                                   `success` bit(1) NOT NULL DEFAULT b'0',
-                                   `user_agent` text NOT NULL,
-                                   `happend_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `user_login_log` (
+                                  `access_log_id` int UNSIGNED NOT NULL,
+                                  `user_id` int UNSIGNED NOT NULL,
+                                  `ip_address` tinyblob NOT NULL,
+                                  `user_agent` text NOT NULL,
+                                  `happend_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Daten für Tabelle `user_access_log`
+-- Daten für Tabelle `user_login_log`
 --
 
-INSERT INTO `user_access_log` (`access_log_id`, `user_id`, `ip_address`, `success`, `user_agent`, `happend_at`) VALUES
-                                                                                                                    (2, 1, 0x32313330373036343333, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-11-07 08:02:42'),
-                                                                                                                    (3, 2, 0x31383737343331383433, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0', '2024-11-07 08:17:36'),
-                                                                                                                    (4, 1, 0x30, b'0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-11-12 08:17:37'),
-                                                                                                                    (5, 1, 0x33323332323336303037, b'1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-10-08 08:17:37');
+INSERT INTO `user_login_log` (`access_log_id`, `user_id`, `ip_address`, `user_agent`, `happend_at`) VALUES
+                                                                                                        (2, 1, 0x32313330373036343333, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-11-07 08:02:42'),
+                                                                                                        (3, 2, 0x31383737343331383433, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0', '2024-11-07 08:17:36'),
+                                                                                                        (4, 1, 0x30, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-11-12 08:17:37'),
+                                                                                                        (5, 1, 0x33323332323336303037, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36', '2024-10-08 08:17:37');
 
 -- --------------------------------------------------------
 
@@ -888,6 +889,7 @@ ALTER TABLE `linktree_entrys`
 -- Indizes für die Tabelle `privileges`
 --
 ALTER TABLE `privileges`
+    ADD PRIMARY KEY (`privilege_id`),
     ADD UNIQUE KEY `privilege_node` (`privilege_node`);
 
 --
@@ -931,7 +933,7 @@ ALTER TABLE `roles`
 -- Indizes für die Tabelle `role_privilege_map`
 --
 ALTER TABLE `role_privilege_map`
-    ADD PRIMARY KEY (`privilege_node`,`role_id`),
+    ADD PRIMARY KEY (`privilege_id`,`role_id`),
     ADD KEY `role_id` (`role_id`);
 
 --
@@ -943,9 +945,9 @@ ALTER TABLE `users`
     ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indizes für die Tabelle `user_access_log`
+-- Indizes für die Tabelle `user_login_log`
 --
-ALTER TABLE `user_access_log`
+ALTER TABLE `user_login_log`
     ADD PRIMARY KEY (`access_log_id`),
     ADD KEY `user_id` (`user_id`);
 
@@ -1021,6 +1023,12 @@ ALTER TABLE `linktree_entrys`
     MODIFY `linktree_entry_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT für Tabelle `privileges`
+--
+ALTER TABLE `privileges`
+    MODIFY `privilege_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `projects`
 --
 ALTER TABLE `projects`
@@ -1036,7 +1044,7 @@ ALTER TABLE `project_clients`
 -- AUTO_INCREMENT für Tabelle `referrals`
 --
 ALTER TABLE `referrals`
-    MODIFY `referral_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+    MODIFY `referral_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT für Tabelle `referral_click_metric`
@@ -1051,15 +1059,21 @@ ALTER TABLE `roles`
     MODIFY `role_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT für Tabelle `role_privilege_map`
+--
+ALTER TABLE `role_privilege_map`
+    MODIFY `privilege_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
     MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT für Tabelle `user_access_log`
+-- AUTO_INCREMENT für Tabelle `user_login_log`
 --
-ALTER TABLE `user_access_log`
+ALTER TABLE `user_login_log`
     MODIFY `access_log_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
@@ -1160,13 +1174,13 @@ ALTER TABLE `referral_click_metric`
 --
 ALTER TABLE `role_privilege_map`
     ADD CONSTRAINT `role_privilege_map_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-    ADD CONSTRAINT `role_privilege_map_ibfk_3` FOREIGN KEY (`privilege_node`) REFERENCES `privileges` (`privilege_node`) ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD CONSTRAINT `role_privilege_map_ibfk_3` FOREIGN KEY (`privilege_id`) REFERENCES `privileges` (`privilege_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `user_access_log`
+-- Constraints der Tabelle `user_login_log`
 --
-ALTER TABLE `user_access_log`
-    ADD CONSTRAINT `user_access_log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE `user_login_log`
+    ADD CONSTRAINT `user_login_log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Constraints der Tabelle `user_role_map`
