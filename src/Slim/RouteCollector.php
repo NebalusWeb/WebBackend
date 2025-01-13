@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Slim;
 
 use Nebalus\Webapi\Api\Metrics\MetricsAction;
-use Nebalus\Webapi\Api\Module\Linktree\Analytics\Click\ClickLinktreeAction;
 use Nebalus\Webapi\Api\Module\Linktree\Analytics\ClickHistory\ClickHistoryLinktreeAction;
+use Nebalus\Webapi\Api\Module\Linktree\Click\ClickLinktreeAction;
 use Nebalus\Webapi\Api\Module\Linktree\Delete\DeleteLinktreeAction;
 use Nebalus\Webapi\Api\Module\Linktree\Edit\EditLinktreeAction;
 use Nebalus\Webapi\Api\Module\Linktree\Get\GetLinktreeAction;
@@ -70,7 +70,6 @@ readonly class RouteCollector
                         $group->map(["GET"], "", GetLinktreeAction::class);
                         $group->map(["PUT"], "", EditLinktreeAction::class);
                         $group->map(["DELETE"], "", DeleteLinktreeAction::class);
-                        $group->map(["GET"], "/click_history", ClickHistoryLinktreeAction::class);
                     });
                     $group->group("/referrals", function (RouteCollectorProxy $group) {
                         $group->map(["POST"], "", CreateReferralAction::class);

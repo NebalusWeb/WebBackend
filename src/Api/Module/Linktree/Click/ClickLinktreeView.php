@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Module\Linktree\Analytics\Click;
+namespace Nebalus\Webapi\Api\Module\Linktree\Click;
 
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
@@ -11,7 +11,6 @@ class ClickLinktreeView
     {
         $fields = [
             "description" => "Test",
-            "visit_count" => 0,
             "entrys" => [
                 [
                     "position" => 1,
