@@ -8,7 +8,7 @@ use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
 
 class ReferralName
 {
-    public const int MAX_LENGTH = 32;
+    public const int MAX_LENGTH = 64;
     public const string REGEX = '/^[a-zA-Z0-9 !@#$%^&*]*$/';
 
     private function __construct(

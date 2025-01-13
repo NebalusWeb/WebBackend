@@ -9,7 +9,8 @@ use Random\RandomException;
 
 readonly class TOTPSecretKey
 {
-    public const string REGEX = '/^[\d\w]{32}$/';
+    public const string REGEX = '/^[\d\w]*$/';
+    public const int LENGTH = 32; // Must be divisible by 2
 
     private function __construct(
         private string $secret
@@ -22,7 +23,7 @@ readonly class TOTPSecretKey
     public static function create(): self
     {
         try {
-            return self::from(strtoupper(bin2hex(random_bytes(16))));
+            return self::from(strtoupper(bin2hex(random_bytes(self::LENGTH / 2))));
         } catch (RandomException $e) {
             throw new ApiInvalidArgumentException($e->getMessage(), $e->getCode(), $e);
         }
@@ -33,7 +34,7 @@ readonly class TOTPSecretKey
      */
     public static function from(string $secret): self
     {
-        $schema = Sanitizr::string()->regex(self::REGEX);
+        $schema = Sanitizr::string()->length(self::LENGTH)->regex(self::REGEX);
         $validData = $schema->safeParse($secret);
 
         if ($validData->isError()) {

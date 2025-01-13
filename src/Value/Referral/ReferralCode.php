@@ -8,7 +8,7 @@ use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
 
 class ReferralCode
 {
-    public const int CODE_LENGTH = 8;
+    public const int LENGTH = 8;
     public const string REGEX = '/^[0-9A-Za-z]+$/';
 
     private function __construct(
@@ -19,7 +19,7 @@ class ReferralCode
     public static function create(): self
     {
         $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        return new self(substr(str_shuffle($str_result), 0, self::CODE_LENGTH));
+        return new self(substr(str_shuffle($str_result), 0, self::LENGTH));
     }
 
     /**
@@ -27,7 +27,7 @@ class ReferralCode
      */
     public static function from(string $code): self
     {
-        $schema = Sanitizr::string()->length(self::CODE_LENGTH)->regex(self::REGEX);
+        $schema = Sanitizr::string()->length(self::LENGTH)->regex(self::REGEX);
         $validData = $schema->safeParse($code);
 
         if ($validData->isError()) {
