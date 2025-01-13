@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
-class SanitizerObjectSchema extends AbstractSanitizerSchema
+class SanitizrObjectSchema extends AbstractSanitizrSchema
 {
     public function __construct(
         private readonly array $schemas
@@ -27,12 +27,12 @@ class SanitizerObjectSchema extends AbstractSanitizerSchema
         $result = [];
 
         foreach ($this->schemas as $prop => $schema) {
-            if ($schema instanceof AbstractSanitizerSchema) {
+            if ($schema instanceof AbstractSanitizrSchema) {
                 if ($schema->isRequired() && isset($input[$prop]) === false) {
                     throw new SanitizValidationException($prop . " is required");
                 }
 
-                if ($schema instanceof SanitizerObjectSchema) {
+                if ($schema instanceof SanitizrObjectSchema) {
                     if (isset($input[$prop]) && is_array($input[$prop])) {
                         $result[$prop] = $schema->parseValue($input[$prop]);
                     }

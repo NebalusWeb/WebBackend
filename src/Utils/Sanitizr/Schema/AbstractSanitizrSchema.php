@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 use Nebalus\Webapi\Utils\Sanitizr\Value\SafeParsedData;
 
-abstract class AbstractSanitizerSchema
+abstract class AbstractSanitizrSchema
 {
     private array $effectQueue = [];
     private bool $isRequired = false;

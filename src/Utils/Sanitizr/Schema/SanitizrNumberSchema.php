@@ -3,9 +3,9 @@
 namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizerSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizrSchema;
 
-class SanitizerNumberSchema extends AbstractSanitizerSchema
+class SanitizrNumberSchema extends AbstractSanitizrSchema
 {
     public function gt(int|float $value, string $message = 'Must be greater than %s'): static
     {
