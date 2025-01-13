@@ -4,10 +4,10 @@ namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
-class SanitizerArraySchema extends AbstractSanitizerSchema
+class SanitizrArraySchema extends AbstractSanitizrSchema
 {
     public function __construct(
-        private readonly AbstractSanitizerSchema $schema
+        private readonly AbstractSanitizrSchema $schema
     ) {
     }
 

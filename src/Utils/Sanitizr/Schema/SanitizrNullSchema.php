@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
-class SanitizerNullSchema extends AbstractSanitizerSchema
+class SanitizrNullSchema extends AbstractSanitizrSchema
 {
     protected function parseValue(mixed $input): null
     {

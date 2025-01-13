@@ -7,7 +7,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Exception\ApiValidationException;
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
-use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizerSchema;
+use Nebalus\Webapi\Utils\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
 use Psr\Http\Message\ServerRequestInterface;
 

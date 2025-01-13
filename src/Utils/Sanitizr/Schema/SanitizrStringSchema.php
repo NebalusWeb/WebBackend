@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Utils\Sanitizr\Schema;
 
 use Nebalus\Webapi\Utils\Sanitizr\Exception\SanitizValidationException;
 
-class SanitizerStringSchema extends AbstractSanitizerSchema
+class SanitizrStringSchema extends AbstractSanitizrSchema
 {
     public function length(int $length, string $message = 'Must be exact %s characters long'): static
     {
