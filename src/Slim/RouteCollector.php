@@ -54,6 +54,8 @@ readonly class RouteCollector
             $group->map(["POST"], "/auth", AuthUserAction::class);
             $group->map(["POST"], "/register", RegisterUserAction::class);
             $group->group("/admin", function (RouteCollectorProxy $group) {
+                $group->group("/role/{roleName}", function (RouteCollectorProxy $group) {
+                });
                 $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 });
             })->add(AuthenticationMiddleware::class);
