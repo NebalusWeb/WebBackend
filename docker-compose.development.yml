@@ -1,4 +1,4 @@
-name: "testapi-development"
+name: "web-backend-development"
 services:
 
   nginx:
