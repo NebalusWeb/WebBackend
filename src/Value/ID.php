@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Value;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Sanitizr;
 
 trait ID
 {
