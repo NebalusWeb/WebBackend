@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a1ae3629abae03e670772927fd5a21f",
+    "content-hash": "59b6cc6ab0fba30ed184e6206015ff12",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -550,6 +550,45 @@
                 }
             ],
             "time": "2024-12-05T17:15:07+00:00"
+        },
+        {
+            "name": "nebalus/sanitizr",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nebalus/Sanitizr.git",
+                "reference": "7a89fbecb082e8595043745be1a7c45be9dbd78c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nebalus/Sanitizr/zipball/7a89fbecb082e8595043745be1a7c45be9dbd78c",
+                "reference": "7a89fbecb082e8595043745be1a7c45be9dbd78c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3"
+            },
+            "type": "libary",
+            "autoload": {
+                "psr-4": {
+                    "Nebalus\\Sanitizr\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nebalus",
+                    "email": "coding@nebalus.dev"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/Nebalus/Sanitizr/issues",
+                "source": "https://github.com/Nebalus/Sanitizr/tree/v1.0.1"
+            },
+            "time": "2025-01-15T12:00:04+00:00"
         },
         {
             "name": "nikic/fast-route",
