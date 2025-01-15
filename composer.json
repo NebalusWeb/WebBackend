@@ -13,7 +13,8 @@
 
     "authors": [
         {
-            "name": "Nebalus"
+            "name": "Nebalus",
+            "email": "coding@nebalus.dev"
         }
     ],
     
@@ -36,7 +37,7 @@
         "rbdwllr/reallysimplejwt": "^5.0",
         "spomky-labs/otphp": "^11.3.0",
         "promphp/prometheus_client_php": "^2.12",
-        "nebalus/sanitizr": "^1.0"
+        "nebalus/sanitizr": "dev-master"
     },
     
     "autoload-dev": {

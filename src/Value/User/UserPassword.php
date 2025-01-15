@@ -6,7 +6,7 @@ namespace Nebalus\Webapi\Value\User;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Sanitizr;
 
 use function strlen;
 
