@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: docker/nginx/Dockerfile
       target: development
-    container_name: nginx-nebalus-api
+    container_name: nebalus-web-api-nginx
     ports:
       - "80:80"
     volumes:
@@ -14,7 +14,7 @@ services:
     depends_on:
       - php-fpm
     networks:
-      - public-net
+      - backend-net
 
   # INTERN PORT: 9000
   php-fpm:
@@ -22,7 +22,7 @@ services:
       context: .
       dockerfile: docker/php-fpm/Dockerfile
       target: development
-    container_name: nebalus-api
+    container_name: nebalus-web-api
     user: '1001:1001' # Default User ID
     volumes:
       - ./:/var/www:rw
@@ -33,41 +33,20 @@ services:
       JWT_NORMAL_EXPIRATION_TIME: 86400
       JWT_EXTENDED_EXPIRATION_TIME: 604800
       ACCESS_CONTROL_ALLOW_ORIGIN: "*"
-      MYSQL_HOST: "mysql"
+      MYSQL_HOST: "nebalus-web-storage-mysql"
       MYSQL_PORT: "3306"
       MYSQL_DATABASE: "main"
       MYSQL_USER: "admin"
-      MYSQL_PASSWORD: "12345"
+      MYSQL_PASSWORD: "123456"
       REDIS_HOST: "redis"
       REDIS_PORT: "6379"
     networks:
-      - public-net
-      - private-net
-
-  prometheus:
-    build:
-      context: .
-      dockerfile: docker/prometheus/Dockerfile
-      target: base
-    container_name: prometheus-nebalus-api
-    ports:
-      - '9393:9090'
-    networks:
-      - private-net
-
-  grafana:
-    build:
-      context: .
-      dockerfile: docker/grafana/Dockerfile
-      target: base
-    container_name: grafana-nebalus-api
-    ports:
-      - '3031:3000'
-    networks:
-      - public-net
+      - backend-net
+      - storage-net
 
 networks:
-  public-net:
-    name: public-net
-  private-net:
-    name: private-net
+  backend-net:
+    name: nebalus-web-backend-development-net
+  storage-net:
+    name: nebalus-web-storage-development-net
+    external: true
