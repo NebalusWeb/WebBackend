@@ -5,7 +5,6 @@ namespace Nebalus\Webapi\Value\Referral\Click;
 use DateTimeImmutable;
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Value\Referral\ReferralId;
 
 readonly class ReferralClick
 {
