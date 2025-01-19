@@ -53,13 +53,39 @@ readonly class MySqlReferralRepository
         return $stmt->execute();
     }
 
+    public function getReferralClicksFromRange(UserId $ownerUserId, ReferralCode $referralCode, int $range)
+    {
+        $sql = <<<SQL
+            SELECT
+                DATE(referral_click_metric.clicked_at) AS clicked_at, COUNT(*) AS click_count
+            FROM referral_click_metric
+            INNER JOIN referrals 
+                ON referrals.referral_id = referral_click_metric.referral_id
+            WHERE 
+                referrals.code = :referralCode 
+                AND referrals.owner_user_id = :ownerUserId
+            GROUP BY 
+                DATE(referral_click_metric.clicked_at)
+            HAVING
+                clicked_at >= DATE(NOW() - INTERVAL :range DAY)
+        SQL;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":referralCode", $referralCode->asString());
+        $stmt->bindValue(":ownerUserId", $ownerUserId->asInt());
+        $stmt->bindValue(":range", $range);
+        $stmt->execute();
+
+        var_dump($stmt->fetchAll());
+    }
+
     public function deleteReferralByCodeAndOwner(UserId $ownerUserId, ReferralCode $code): bool
     {
         $sql = <<<SQL
             DELETE FROM referrals 
             WHERE 
-                owner_user_id = :owner_user_id AND
-                code = :code
+                owner_user_id = :owner_user_id 
+                AND code = :code
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
@@ -79,8 +105,8 @@ readonly class MySqlReferralRepository
                 name = :name, 
                 disabled = :disabled 
             WHERE 
-                owner_user_id = :owner_user_id AND 
-                code = :code
+                owner_user_id = :owner_user_id 
+                AND code = :code
         SQL;
 
 //        $stmt = $this->pdo->prepare($sql);
@@ -99,7 +125,9 @@ readonly class MySqlReferralRepository
     public function getReferralsFromOwner(UserId $ownerUserId): Referrals
     {
         $sql = <<<SQL
-            SELECT * FROM referrals
+            SELECT 
+                * 
+            FROM referrals
             WHERE
                 owner_user_id = :owner_user_id
         SQL;
@@ -123,7 +151,9 @@ readonly class MySqlReferralRepository
     public function findReferralByCode(ReferralCode $code): ?Referral
     {
         $sql = <<<SQL
-            SELECT * FROM referrals 
+            SELECT 
+                * 
+            FROM referrals 
             WHERE 
                 code = :code
         SQL;
@@ -147,10 +177,12 @@ readonly class MySqlReferralRepository
     public function findReferralByCodeAndOwner(UserId $ownerUserId, ReferralCode $code): ?Referral
     {
         $sql = <<<SQL
-            SELECT * FROM referrals
+            SELECT 
+                * 
+            FROM referrals
             WHERE 
-                owner_user_id = :owner_user_id AND
-                code = :code
+                owner_user_id = :owner_user_id
+                AND code = :code
         SQL;
 
         $stmt = $this->pdo->prepare($sql);

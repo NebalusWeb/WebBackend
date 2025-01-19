@@ -69,10 +69,13 @@ readonly class MySqlUserRepository
     public function findUserFromId(UserId $userId): ?User
     {
         $sql = <<<SQL
-            SELECT * FROM users
-                INNER JOIN accounts ON accounts.user_id = users.user_id 
-                    WHERE 
-                        users.user_id = :user_id
+            SELECT 
+                * 
+            FROM users
+            INNER JOIN 
+                accounts ON accounts.user_id = users.user_id 
+            WHERE 
+                users.user_id = :user_id
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
@@ -93,10 +96,13 @@ readonly class MySqlUserRepository
     public function findUserFromEmail(UserEmail $email): ?User
     {
         $sql = <<<SQL
-            SELECT * FROM users 
-                INNER JOIN accounts ON accounts.user_id = users.user_id
-                     WHERE
-                         users.email = :email
+            SELECT 
+                * 
+            FROM users 
+            INNER JOIN 
+                accounts ON accounts.user_id = users.user_id
+            WHERE
+                users.email = :email
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
@@ -117,10 +123,13 @@ readonly class MySqlUserRepository
     public function findUserFromUsername(Username $username): ?User
     {
         $sql = <<<SQL
-            SELECT * FROM users
-                INNER JOIN accounts ON accounts.user_id = users.user_id 
-                     WHERE 
-                         users.username = :username
+            SELECT
+                * 
+            FROM users
+            INNER JOIN 
+                accounts ON accounts.user_id = users.user_id 
+            WHERE 
+                users.username = :username
         SQL;
 
         $stmt = $this->pdo->prepare($sql);

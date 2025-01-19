@@ -8,7 +8,7 @@ use Nebalus\Webapi\Value\Referral\Click\ReferralClicks;
 
 class ClickHistoryReferralView
 {
-    public static function render(ReferralClicks $referralClicks): ResultInterface
+    public static function render(): ResultInterface
     {
         $fields = [];
 
