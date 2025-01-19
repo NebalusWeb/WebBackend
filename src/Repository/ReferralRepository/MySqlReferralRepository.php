@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Repository\ReferralRepository;
 
+use DateMalformedStringException;
+use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+use Nebalus\Webapi\Value\Referral\Click\ReferralClick;
+use Nebalus\Webapi\Value\Referral\Click\ReferralClicks;
 use Nebalus\Webapi\Value\Referral\Referral;
 use Nebalus\Webapi\Value\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Referral\ReferralId;
@@ -53,11 +58,16 @@ readonly class MySqlReferralRepository
         return $stmt->execute();
     }
 
-    public function getReferralClicksFromRange(UserId $ownerUserId, ReferralCode $referralCode, int $range)
+    /**
+     * @throws DateMalformedStringException
+     * @throws ApiInvalidArgumentException
+     */
+    public function getReferralClicksFromRange(UserId $ownerUserId, ReferralCode $referralCode, int $range): ReferralClicks
     {
+        $data = [];
         $sql = <<<SQL
             SELECT
-                DATE(referral_click_metric.clicked_at) AS clicked_at, COUNT(*) AS click_count
+                DATE(referral_click_metric.clicked_at) AS clicked_at, COUNT(clicked_at) AS click_count
             FROM referral_click_metric
             INNER JOIN referrals 
                 ON referrals.referral_id = referral_click_metric.referral_id
@@ -76,7 +86,11 @@ readonly class MySqlReferralRepository
         $stmt->bindValue(":range", $range);
         $stmt->execute();
 
-        var_dump($stmt->fetchAll());
+        while ($row = $stmt->fetch()) {
+            $data[] = ReferralClick::from(new DateTimeImmutable($row["clicked_at"]), $row["click_count"]);
+        }
+
+        return ReferralClicks::fromArray(...$data);
     }
 
     public function deleteReferralByCodeAndOwner(UserId $ownerUserId, ReferralCode $code): bool
