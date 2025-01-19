@@ -2,8 +2,8 @@
 
 namespace Nebalus\Webapi\Value\Referral\Click;
 
-use Nebalus\Webapi\Value\Referral\ReferralId;
 use DateTimeImmutable;
+use Nebalus\Webapi\Value\Referral\ReferralId;
 
 readonly class ReferralClick
 {

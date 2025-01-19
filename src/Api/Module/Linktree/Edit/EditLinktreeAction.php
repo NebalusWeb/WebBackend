@@ -21,6 +21,6 @@ class EditLinktreeAction extends AbstractAction
 
         $result = $this->service->execute($params);
 
-        return $response->withJson($result->getPayload(), $result->getStatusCode());
+        return $response->withJson($result->getPayload(), $result->getStatus());
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Nebalus\Webapi\Api\User\Auth;
 
-use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Sanitizr\Sanitizr as S;
+use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
 use Nebalus\Webapi\Value\User\Totp\TOTPCode;
 use Nebalus\Webapi\Value\User\Username;

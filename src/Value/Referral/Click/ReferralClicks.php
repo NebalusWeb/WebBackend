@@ -1,6 +1,9 @@
 <?php
 
-use Nebalus\Webapi\Value\Referral\Click\ReferralClick;
+namespace Nebalus\Webapi\Value\Referral\Click;
+
+use IteratorAggregate;
+use Traversable;
 
 class ReferralClicks implements IteratorAggregate
 {

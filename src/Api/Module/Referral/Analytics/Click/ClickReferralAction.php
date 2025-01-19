@@ -22,6 +22,6 @@ class ClickReferralAction extends AbstractAction
 
         $result = $this->service->execute($this->validator);
 
-        return $response->withJson($result->getPayload(), $result->getStatusCode());
+        return $response->withJson($result->getPayload(), $result->getStatus());
     }
 }

@@ -13,38 +13,38 @@ readonly class Result implements ResultInterface
     private function __construct(
         private bool $success,
         private ?string $message,
-        private int $statusCode,
+        private int $status,
         private array $payload
     ) {
     }
 
-    protected static function from(bool $success, ?string $message, int $statusCode, array $fields): static
+    protected static function from(bool $success, ?string $message, int $status, array $fields): static
     {
-        if ($statusCode < 100 || $statusCode > 599) {
-            throw new InvalidArgumentException("Code '$statusCode' is not a valid http status code!", 500);
+        if ($status < 100 || $status > 599) {
+            throw new InvalidArgumentException("Code '$status' is not a valid http status code!", 500);
         }
 
         $payload = [
             'success' => $success,
             'message' => $message,
-            'status_code' => $statusCode,
+            'status' => $status,
             'payload' => $fields,
         ];
 
-        return new static($success, $message, $statusCode, $payload);
+        return new static($success, $message, $status, $payload);
     }
 
-    public static function createSuccess(?string $message, int $statusCode = 200, array $fields = []): static
+    public static function createSuccess(?string $message, int $status = 200, array $fields = []): static
     {
-        return static::from(true, $message, $statusCode, $fields);
+        return static::from(true, $message, $status, $fields);
     }
 
-    public static function createError(?string $message, int $statusCode = 500, array $fields = []): static
+    public static function createError(?string $message, int $status = 500, array $fields = []): static
     {
-        return static::from(false, $message, $statusCode, $fields);
+        return static::from(false, $message, $status, $fields);
     }
 
-    public static function createFromException(Throwable $throwable, int $statusCode = 500): static
+    public static function createFromException(Throwable $throwable, int $status = 500): static
     {
         $isProduction = getenv('APP_ENV') === 'production';
 
@@ -57,10 +57,10 @@ readonly class Result implements ResultInterface
             $throwableAsArray['file'] = $throwable->getFile();
             $throwableAsArray['line'] = $throwable->getLine();
             $throwableAsArray['trace'] = $throwable->getTrace();
-            return static::from(false, $throwableAsArray['error'], $statusCode, $throwableAsArray);
+            return static::from(false, $throwableAsArray['error'], $status, $throwableAsArray);
         }
 
-        return static::from(false, $throwable->getMessage(), $statusCode, $throwableAsArray);
+        return static::from(false, $throwable->getMessage(), $status, $throwableAsArray);
     }
 
     public function getPayload(): array
@@ -78,9 +78,9 @@ readonly class Result implements ResultInterface
         return $this->message;
     }
 
-    public function getStatusCode(): int
+    public function getStatus(): int
     {
-        return $this->statusCode;
+        return $this->status;
     }
 
     public function isSuccessful(): bool

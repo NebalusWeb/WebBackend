@@ -10,6 +10,7 @@ use Nebalus\Webapi\Value\Referral\ReferralCode;
 class ClickHistoryReferralValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
+    private int $range;
 
     public function __construct()
     {
@@ -17,7 +18,7 @@ class ClickHistoryReferralValidator extends AbstractValidator
             "path_args" => S::object([
                 'code' => S::string()->required()->length(ReferralCode::LENGTH)->regex(ReferralCode::REGEX)
             ]),
-            "query_param" => S::object([
+            "query_params" => S::object([
                 'range' => S::number()->required()->integer()->positive()
             ])
         ];
@@ -27,10 +28,16 @@ class ClickHistoryReferralValidator extends AbstractValidator
     protected function onValidate(ValidatedData $validatedData): void
     {
         $this->referralCode = ReferralCode::from($validatedData->getPathArgsData()['code']);
+        $this->range = $validatedData->getQueryParamsData()['range'];
     }
 
     public function getReferralCode(): ReferralCode
     {
         return $this->referralCode;
+    }
+
+    public function getRange(): int
+    {
+        return $this->range;
     }
 }
