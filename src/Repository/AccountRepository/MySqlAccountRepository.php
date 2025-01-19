@@ -23,7 +23,10 @@ readonly class MySqlAccountRepository
     public function insertAccount(UserId $userId): AccountId
     {
         $sql = <<<SQL
-            INSERT INTO accounts(user_id) VALUES (:user_id)
+            INSERT INTO 
+                accounts(user_id) 
+            VALUES
+                (:user_id)
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
@@ -44,11 +47,11 @@ readonly class MySqlAccountRepository
                 invited_account_id = :invited_account_id,
                 used_at = :used_at 
             WHERE 
-                token_field_1 = :token_field_1 AND
-                token_field_2 = :token_field_2 AND
-                token_field_3 = :token_field_3 AND
-                token_field_4 = :token_field_4 AND
-                token_checksum = :token_checksum
+                token_field_1 = :token_field_1
+                AND token_field_2 = :token_field_2
+                AND token_field_3 = :token_field_3
+                AND token_field_4 = :token_field_4
+                AND token_checksum = :token_checksum
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
@@ -68,13 +71,15 @@ readonly class MySqlAccountRepository
     public function findInvitationTokenByFields(PureInvitationToken $token): ?InvitationToken
     {
         $sql = <<<SQL
-            SELECT * FROM account_invitation_tokens 
+            SELECT 
+                * 
+            FROM account_invitation_tokens 
             WHERE 
-                token_field_1 = :token_field_1 AND 
-                token_field_2 = :token_field_2 AND 
-                token_field_3 = :token_field_3 AND 
-                token_field_4 = :token_field_4 AND 
-                token_checksum = :token_checksum
+                token_field_1 = :token_field_1 
+                AND token_field_2 = :token_field_2 
+                AND token_field_3 = :token_field_3 
+                AND token_field_4 = :token_field_4 
+                AND token_checksum = :token_checksum
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
@@ -101,8 +106,11 @@ readonly class MySqlAccountRepository
     {
         $data = [];
         $sql = <<<SQL
-            SELECT * FROM account_invitation_tokens 
-            WHERE owner_account_id = :owner_account_id
+            SELECT
+                * 
+            FROM account_invitation_tokens 
+            WHERE 
+                owner_account_id = :owner_account_id
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
