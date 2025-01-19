@@ -16,8 +16,8 @@ readonly class ClickHistoryReferralService
 
     public function execute(ClickHistoryReferralValidator $validator, User $user): ResultInterface
     {
-        $this->referralRepository->getReferralClicksFromRange($user->getUserId(), $validator->getReferralCode(), $validator->getRange());
+        $data = $this->referralRepository->getReferralClicksFromRange($user->getUserId(), $validator->getReferralCode(), $validator->getRange());
 
-        return ClickHistoryReferralView::render();
+        return ClickHistoryReferralView::render($data);
     }
 }
