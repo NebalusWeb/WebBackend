@@ -2,8 +2,8 @@
 
 namespace Nebalus\Webapi\Value\User;
 
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 readonly class UserAgent
 {

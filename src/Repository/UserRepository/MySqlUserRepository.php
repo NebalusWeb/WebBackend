@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Repository\UserRepository;
 
-use Nebalus\Webapi\Exception\ApiDatabaseException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Repository\AbstractRepository;
 use Nebalus\Webapi\Repository\AccountRepository\MySqlAccountRepository;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationToken;
 use Nebalus\Webapi\Value\User\User;
@@ -14,15 +12,13 @@ use Nebalus\Webapi\Value\User\UserEmail;
 use Nebalus\Webapi\Value\User\UserId;
 use Nebalus\Webapi\Value\User\Username;
 use PDO;
-use PDOException;
 
-class MySqlUserRepository extends AbstractRepository
+readonly class MySqlUserRepository
 {
     public function __construct(
         private PDO $pdo,
         private MySqlAccountRepository $accountRepository
     ) {
-        parent::__construct($pdo);
     }
 
     /**
@@ -44,7 +40,12 @@ class MySqlUserRepository extends AbstractRepository
      */
     private function insertUser(User $user): User
     {
-        $sql = "INSERT INTO users(username, email, password, totp_secret_key, disabled, created_at, updated_at) VALUES (:username,:email,:password,:totp_secret_key,:disabled,:created_at,:updated_at)";
+        $sql = <<<SQL
+            INSERT INTO users
+                (username, email, password, totp_secret_key, disabled, created_at, updated_at) 
+            VALUES 
+                (:username,:email,:password,:totp_secret_key,:disabled,:created_at,:updated_at)
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':username', $user->getUsername()->asString());
@@ -67,7 +68,12 @@ class MySqlUserRepository extends AbstractRepository
      */
     public function findUserFromId(UserId $userId): ?User
     {
-        $sql = "SELECT * FROM users INNER JOIN accounts ON accounts.user_id = users.user_id WHERE users.user_id = :user_id";
+        $sql = <<<SQL
+            SELECT * FROM users
+                INNER JOIN accounts ON accounts.user_id = users.user_id 
+                    WHERE 
+                        users.user_id = :user_id
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':user_id', $userId->asInt());
@@ -86,7 +92,12 @@ class MySqlUserRepository extends AbstractRepository
      */
     public function findUserFromEmail(UserEmail $email): ?User
     {
-        $sql = "SELECT * FROM users INNER JOIN accounts ON accounts.user_id = users.user_id WHERE users.email = :email";
+        $sql = <<<SQL
+            SELECT * FROM users 
+                INNER JOIN accounts ON accounts.user_id = users.user_id
+                     WHERE
+                         users.email = :email
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':email', $email->asString());
@@ -105,7 +116,12 @@ class MySqlUserRepository extends AbstractRepository
      */
     public function findUserFromUsername(Username $username): ?User
     {
-        $sql = "SELECT * FROM users INNER JOIN accounts ON accounts.user_id = users.user_id WHERE users.username = :username";
+        $sql = <<<SQL
+            SELECT * FROM users
+                INNER JOIN accounts ON accounts.user_id = users.user_id 
+                     WHERE 
+                         users.username = :username
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':username', $username->asString());

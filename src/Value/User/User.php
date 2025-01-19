@@ -8,7 +8,6 @@ use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\ID;
 use Nebalus\Webapi\Value\User\Totp\TOTPSecretKey;
 
 readonly class User

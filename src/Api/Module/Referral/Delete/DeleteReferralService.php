@@ -16,7 +16,7 @@ readonly class DeleteReferralService
 
     public function execute(DeleteReferralValidator $validator, User $user): ResultInterface
     {
-        if ($this->referralRepository->deleteReferralByCodeAndOwnerId($validator->getReferralCode(), $user->getUserId())) {
+        if ($this->referralRepository->deleteReferralByCodeAndOwner($user->getUserId(), $validator->getReferralCode())) {
             return DeleteReferralView::render();
         }
 

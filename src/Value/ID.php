@@ -2,9 +2,9 @@
 
 namespace Nebalus\Webapi\Value;
 
+use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Sanitizr\Sanitizr;
 
 trait ID
 {

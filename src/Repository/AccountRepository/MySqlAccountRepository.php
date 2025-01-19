@@ -2,24 +2,19 @@
 
 namespace Nebalus\Webapi\Repository\AccountRepository;
 
-use Nebalus\Webapi\Exception\ApiDatabaseException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Repository\AbstractRepository;
 use Nebalus\Webapi\Value\Account\AccountId;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationToken;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokens;
 use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
-use Nebalus\Webapi\Value\User\User;
 use Nebalus\Webapi\Value\User\UserId;
 use PDO;
-use PDOException;
 
-class MySqlAccountRepository extends AbstractRepository
+readonly class MySqlAccountRepository
 {
     public function __construct(
-        private readonly PDO $pdo
+        private PDO $pdo
     ) {
-        parent::__construct($pdo);
     }
 
     /**
@@ -27,7 +22,9 @@ class MySqlAccountRepository extends AbstractRepository
      */
     public function insertAccount(UserId $userId): AccountId
     {
-        $sql = "INSERT INTO accounts(user_id) VALUES (:user_id)";
+        $sql = <<<SQL
+            INSERT INTO accounts(user_id) VALUES (:user_id)
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':user_id', $userId->asInt());
@@ -41,11 +38,18 @@ class MySqlAccountRepository extends AbstractRepository
      */
     public function updateInvitationToken(InvitationToken $invitationToken): void
     {
-        $sql = "
+        $sql = <<<SQL
             UPDATE account_invitation_tokens
-            SET invited_account_id=:invited_account_id,used_at=:used_at 
-            WHERE token_field_1 = :token_field_1 AND token_field_2 = :token_field_2 AND token_field_3 = :token_field_3 AND token_field_4 = :token_field_4 AND token_checksum = :token_checksum
-            ";
+            SET 
+                invited_account_id = :invited_account_id,
+                used_at = :used_at 
+            WHERE 
+                token_field_1 = :token_field_1 AND
+                token_field_2 = :token_field_2 AND
+                token_field_3 = :token_field_3 AND
+                token_field_4 = :token_field_4 AND
+                token_checksum = :token_checksum
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':invited_account_id', $invitationToken->getInvitedAccountId()->asInt());
@@ -63,7 +67,15 @@ class MySqlAccountRepository extends AbstractRepository
      */
     public function findInvitationTokenByFields(PureInvitationToken $token): ?InvitationToken
     {
-        $sql = "SELECT * FROM account_invitation_tokens WHERE token_field_1 = :token_field_1 AND token_field_2 = :token_field_2 AND token_field_3 = :token_field_3 AND token_field_4 = :token_field_4 AND token_checksum = :token_checksum";
+        $sql = <<<SQL
+            SELECT * FROM account_invitation_tokens 
+            WHERE 
+                token_field_1 = :token_field_1 AND 
+                token_field_2 = :token_field_2 AND 
+                token_field_3 = :token_field_3 AND 
+                token_field_4 = :token_field_4 AND 
+                token_checksum = :token_checksum
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':token_field_1', $token->getField1()->asInt());
@@ -88,7 +100,10 @@ class MySqlAccountRepository extends AbstractRepository
     public function getInvitationTokensFromOwnerAccountId(AccountId $ownerAccountId): InvitationTokens
     {
         $data = [];
-        $sql = "SELECT * FROM account_invitation_tokens WHERE owner_account_id = :owner_account_id";
+        $sql = <<<SQL
+            SELECT * FROM account_invitation_tokens 
+            WHERE owner_account_id = :owner_account_id
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':owner_account_id', $ownerAccountId->asInt());

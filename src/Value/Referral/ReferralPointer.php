@@ -2,8 +2,8 @@
 
 namespace Nebalus\Webapi\Value\Referral;
 
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 readonly class ReferralPointer
 {
