@@ -2,9 +2,9 @@
 
 namespace Nebalus\Webapi\Api\User\Register;
 
-use Nebalus\Webapi\Value\Account\User\User;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Value\User\User;
 
 class RegisterUserView
 {

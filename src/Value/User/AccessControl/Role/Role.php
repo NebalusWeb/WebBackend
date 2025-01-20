@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\Account\User\AccessControl\Role;
+namespace Nebalus\Webapi\Value\User\AccessControl\Role;
 
 use DateTimeImmutable;
 

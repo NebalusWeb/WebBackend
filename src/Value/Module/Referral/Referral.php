@@ -8,8 +8,8 @@ use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\Account\User\UserId;
 use Nebalus\Webapi\Value\Pointer;
+use Nebalus\Webapi\Value\User\UserId;
 
 readonly class Referral
 {

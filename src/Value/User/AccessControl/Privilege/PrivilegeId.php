@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\Account\User\AccessControl\Privilege;
+namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 
 use Nebalus\Webapi\Value\ID;
 
