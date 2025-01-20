@@ -18,7 +18,7 @@ readonly class ReferralClick
     /**
      * @throws ApiException
      */
-    public static function fromDatabase(array $data): self
+    public static function fromArray(array $data): self
     {
         try {
             $clickedAtDate = new DateTimeImmutable($data["created_at"]);

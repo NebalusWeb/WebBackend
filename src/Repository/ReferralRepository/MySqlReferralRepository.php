@@ -83,7 +83,7 @@ readonly class MySqlReferralRepository
         $stmt->execute();
 
         while ($row = $stmt->fetch()) {
-            $data[] = ReferralClick::fromDatabase($row);
+            $data[] = ReferralClick::fromArray($row);
         }
 
         return ReferralClicks::fromArray(...$data);

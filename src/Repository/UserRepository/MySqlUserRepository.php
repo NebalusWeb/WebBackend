@@ -60,7 +60,7 @@ readonly class MySqlUserRepository
         $userToArray = $user->asArray();
         $userToArray["user_id"] = UserId::from($this->pdo->lastInsertId())->asInt();
 
-        return User::fromDatabase($userToArray);
+        return User::fromArray($userToArray);
     }
 
     /**
@@ -87,7 +87,7 @@ readonly class MySqlUserRepository
             return null;
         }
 
-        return User::fromDatabase($data);
+        return User::fromArray($data);
     }
 
     /**
@@ -114,7 +114,7 @@ readonly class MySqlUserRepository
             return null;
         }
 
-        return User::fromDatabase($data);
+        return User::fromArray($data);
     }
 
     /**
@@ -141,6 +141,6 @@ readonly class MySqlUserRepository
             return null;
         }
 
-        return User::fromDatabase($data);
+        return User::fromArray($data);
     }
 }
