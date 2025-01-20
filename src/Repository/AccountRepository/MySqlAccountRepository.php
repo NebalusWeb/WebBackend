@@ -7,7 +7,7 @@ use Nebalus\Webapi\Value\Account\AccountId;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationToken;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokens;
 use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
-use Nebalus\Webapi\Value\User\UserId;
+use Nebalus\Webapi\Value\Account\User\UserId;
 use PDO;
 
 readonly class MySqlAccountRepository
