@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\Account\User\Totp;
+namespace Nebalus\Webapi\Value\User\Totp;
 
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;

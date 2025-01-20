@@ -4,8 +4,8 @@ namespace Nebalus\Webapi\Api\Module\Referral\GetAll;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
-use Nebalus\Webapi\Value\Account\User\User;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Value\User\User;
 
 readonly class GetAllReferralService
 {

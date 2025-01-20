@@ -7,10 +7,10 @@ namespace Nebalus\Webapi\Repository\UserRepository;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\AccountRepository\MySqlAccountRepository;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationToken;
-use Nebalus\Webapi\Value\Account\User\User;
-use Nebalus\Webapi\Value\Account\User\UserEmail;
-use Nebalus\Webapi\Value\Account\User\UserId;
-use Nebalus\Webapi\Value\Account\User\Username;
+use Nebalus\Webapi\Value\User\User;
+use Nebalus\Webapi\Value\User\UserEmail;
+use Nebalus\Webapi\Value\User\UserId;
+use Nebalus\Webapi\Value\User\Username;
 use PDO;
 
 readonly class MySqlUserRepository

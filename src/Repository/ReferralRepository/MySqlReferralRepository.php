@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository\ReferralRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\Account\User\UserId;
 use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClick;
 use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClicks;
 use Nebalus\Webapi\Value\Module\Referral\Referral;
@@ -14,6 +13,7 @@ use Nebalus\Webapi\Value\Module\Referral\ReferralId;
 use Nebalus\Webapi\Value\Module\Referral\ReferralName;
 use Nebalus\Webapi\Value\Module\Referral\Referrals;
 use Nebalus\Webapi\Value\Pointer;
+use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
 readonly class MySqlReferralRepository

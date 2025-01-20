@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Value\Account\User;
+namespace Nebalus\Webapi\Value\User;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\Account\User\Totp\TOTPSecretKey;
+use Nebalus\Webapi\Value\User\Totp\TOTPSecretKey;
 
 readonly class User
 {

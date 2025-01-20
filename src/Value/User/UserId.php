@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\Account\User;
+namespace Nebalus\Webapi\Value\User;
 
 use Nebalus\Webapi\Value\ID;
 
