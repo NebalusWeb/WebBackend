@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\Module\Referral\Create;
 
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
-use Nebalus\Webapi\Value\Referral\Referral;
+use Nebalus\Webapi\Value\Module\Referral\Referral;
 
 class CreateReferralView
 {

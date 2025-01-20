@@ -4,9 +4,9 @@ namespace Nebalus\Webapi\Api\Module\Referral\Create;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
+use Nebalus\Webapi\Value\Account\User\User;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
-use Nebalus\Webapi\Value\Referral\ReferralCode;
-use Nebalus\Webapi\Value\User\User;
+use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 
 readonly class CreateReferralService
 {
@@ -22,7 +22,7 @@ readonly class CreateReferralService
     {
         $referralCode = ReferralCode::create();
 
-        $this->referralRepository->insertReferral($user->getUserId(), $referralCode, $validator->getReferralPointer(), $validator->getReferralName(), $validator->isDisabled());
+        $this->referralRepository->insertReferral($user->getUserId(), $referralCode, $validator->getPointer(), $validator->getReferralName(), $validator->isDisabled());
 
         $referral = $this->referralRepository->findReferralByCodeAndOwner($user->getUserId(), $referralCode);
 

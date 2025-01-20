@@ -7,10 +7,10 @@ use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokenField;
 use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
+use Nebalus\Webapi\Value\Account\User\UserEmail;
+use Nebalus\Webapi\Value\Account\User\Username;
+use Nebalus\Webapi\Value\Account\User\UserPassword;
 use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
-use Nebalus\Webapi\Value\User\UserEmail;
-use Nebalus\Webapi\Value\User\Username;
-use Nebalus\Webapi\Value\User\UserPassword;
 
 class RegisterUserValidator extends AbstractValidator
 {
