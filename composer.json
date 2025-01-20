@@ -37,7 +37,8 @@
         "rbdwllr/reallysimplejwt": "^5.0",
         "spomky-labs/otphp": "^11.3.0",
         "promphp/prometheus_client_php": "^2.12",
-        "nebalus/sanitizr": "dev-master"
+        "nebalus/sanitizr": "dev-master",
+        "elasticsearch/elasticsearch": "^8.17"
     },
     
     "autoload-dev": {
@@ -50,5 +51,10 @@
         "phpmd/phpmd": "^2.15",
         "squizlabs/php_codesniffer": "^3.9",
         "phpunit/phpunit": "^11.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }
