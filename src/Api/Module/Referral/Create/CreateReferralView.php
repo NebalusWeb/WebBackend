@@ -16,8 +16,8 @@ class CreateReferralView
             "pointer" => $referral->getPointer()->asString(),
             "name" => $referral->getName()->asString(),
             "disabled" => $referral->isDisabled(),
-            "created_at_timestamp" => $referral->getCreatedAtDate()->getTimestamp(),
-            "updated_at_timestamp" => $referral->getUpdatedAtDate()->getTimestamp(),
+            "created_at" => $referral->getCreatedAtDate()->format(DATE_ATOM),
+            "updated_at" => $referral->getUpdatedAtDate()->format(DATE_ATOM),
         ];
 
         return Result::createSuccess("Referral created", 201, $fields);
