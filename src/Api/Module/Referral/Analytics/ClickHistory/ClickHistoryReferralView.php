@@ -4,9 +4,9 @@ namespace Nebalus\Webapi\Api\Module\Referral\Analytics\ClickHistory;
 
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
-use Nebalus\Webapi\Value\Referral\Click\ReferralClick;
-use Nebalus\Webapi\Value\Referral\Click\ReferralClicks;
-use Nebalus\Webapi\Value\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClick;
+use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClicks;
+use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 
 class ClickHistoryReferralView
 {
@@ -19,7 +19,7 @@ class ClickHistoryReferralView
             }
 
             $history[] = [
-                "date" => $referralClick->getClickedAt()->format("Y-m-d"),
+                "date" => $referralClick->getClickedAtDate()->format("Y-m-d"),
                 "click_amount" => $referralClick->getClickAmount(),
             ];
         }
