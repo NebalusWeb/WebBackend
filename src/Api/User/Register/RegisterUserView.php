@@ -15,7 +15,7 @@ class RegisterUserView
             "username" => $user->getUsername()->asString(),
             "email" => $user->getEmail()->asString(),
             "disabled" => $user->isDisabled(),
-            "created_at_timestamp" => $user->getCreatedAtDate()->getTimestamp(),
+            "created_at" => $user->getCreatedAtDate()->format(DATE_ATOM),
         ];
 
         return Result::createSuccess("User registered", 201, $fields);
