@@ -58,7 +58,7 @@ readonly class RouteCollector
                 $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 });
             })->add(AuthenticationMiddleware::class);
-            $group->group("/user/{username}", function (RouteCollectorProxy $group) {
+            $group->group("/user", function (RouteCollectorProxy $group) {
                 $group->map(["GET"], "/privileges", GetPrivilegesUserAction::class);
                 $group->group("/services", function (RouteCollectorProxy $group) {
                     $group->group("/invitation_tokens", function (RouteCollectorProxy $group) {
