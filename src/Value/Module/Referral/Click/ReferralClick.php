@@ -11,7 +11,7 @@ readonly class ReferralClick
 {
     private function __construct(
         private DateTimeImmutable $clickedAtDate,
-        private ReferralClickAmount $clickAmount
+        private ReferralClickCount $clickCount
     ) {
     }
 
@@ -26,7 +26,7 @@ readonly class ReferralClick
             throw new ApiDateMalformedStringException($exception);
         }
 
-        $clickAmount = ReferralClickAmount::from($data["click_count"]);
+        $clickAmount = ReferralClickCount::from($data["click_count"]);
 
         return new self($clickedAtDate, $clickAmount);
     }
@@ -36,8 +36,8 @@ readonly class ReferralClick
         return $this->clickedAtDate;
     }
 
-    public function getClickAmount(): ReferralClickAmount
+    public function getClickCount(): ReferralClickCount
     {
-        return $this->clickAmount;
+        return $this->clickCount;
     }
 }

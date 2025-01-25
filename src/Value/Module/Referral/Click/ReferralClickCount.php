@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Value\Module\Referral\Click;
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class ReferralClickAmount
+readonly class ReferralClickCount
 {
     private function __construct(
         private int $clickAmount
