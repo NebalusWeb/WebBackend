@@ -10,7 +10,7 @@ use Nebalus\Webapi\Value\Referral\ReferralCode;
 
 class ClickHistoryReferralView
 {
-    public static function render(ReferralClicks $referralClicks, ReferralCode $referralCode): ResultInterface
+    public static function render(ReferralCode $referralCode, ReferralClicks $referralClicks): ResultInterface
     {
         $history = [];
         foreach ($referralClicks as $referralClick) {

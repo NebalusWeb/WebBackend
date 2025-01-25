@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\Module\Referral\Get;
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
-use Nebalus\Webapi\Value\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 
 class GetReferralValidator extends AbstractValidator
 {

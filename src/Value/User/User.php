@@ -54,45 +54,24 @@ readonly class User
     /**
      * @throws ApiException
      */
-    public static function fromDatabase(array $data): self
-    {
-        try {
-            $createdAtDate = new DateTimeImmutable($data['created_at']);
-            $updatedAtDate = new DateTimeImmutable($data['updated_at']);
-        } catch (DateMalformedStringException $exception) {
-            throw new ApiDateMalformedStringException($exception);
-        }
-
-        $userId = empty($data['user_id']) ? null : UserId::from($data['user_id']);
-        $username = Username::from($data['username']);
-        $email = UserEmail::from($data['email']);
-        $password = UserPassword::fromHash($data['password']);
-        $totpSecretKey = TOTPSecretKey::from($data['totp_secret_key']);
-        $disabled = (bool) $data['disabled'];
-
-        return new self($userId, $username, $email, $password, $totpSecretKey, $disabled, $createdAtDate, $updatedAtDate);
-    }
-
-    /**
-     * @throws ApiException
-     */
     public static function fromArray(array $data): self
     {
         try {
             $createdAtDate = new DateTimeImmutable($data['created_at']);
             $updatedAtDate = new DateTimeImmutable($data['updated_at']);
+            return new self(
+                empty($data['user_id']) ? null : UserId::from($data['user_id']),
+                Username::from($data['username']),
+                UserEmail::from($data['email']),
+                UserPassword::fromHash($data['password']),
+                TOTPSecretKey::from($data['totp_secret_key']),
+                (bool) $data['disabled'],
+                $createdAtDate,
+                $updatedAtDate
+            );
         } catch (DateMalformedStringException $exception) {
             throw new ApiDateMalformedStringException($exception);
         }
-
-        $userId = empty($data['user_id']) ? null : UserId::from($data['user_id']);
-        $username = Username::from($data['username']);
-        $email = UserEmail::from($data['email']);
-        $password = UserPassword::fromHash($data['password']);
-        $totpSecretKey = TOTPSecretKey::from($data['totp_secret_key']);
-        $disabled = (bool) $data['disabled'];
-
-        return new self($userId, $username, $email, $password, $totpSecretKey, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     public function asArray(): array

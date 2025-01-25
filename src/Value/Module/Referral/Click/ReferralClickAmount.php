@@ -1,15 +1,13 @@
 <?php
 
-namespace Nebalus\Webapi\Value\Referral\Click;
+namespace Nebalus\Webapi\Value\Module\Referral\Click;
 
-use DateTimeImmutable;
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class ReferralClick
+readonly class ReferralClickAmount
 {
     private function __construct(
-        private DateTimeImmutable $clickedAt,
         private int $clickAmount
     ) {
     }
@@ -17,7 +15,7 @@ readonly class ReferralClick
     /**
      * @throws ApiInvalidArgumentException
      */
-    public static function from(DateTimeImmutable $clickedAt, int $clickAmount): self
+    public static function from(int $clickAmount): self
     {
         $schema = Sanitizr::number()->integer()->positive();
         $validData = $schema->safeParse($clickAmount);
@@ -26,15 +24,10 @@ readonly class ReferralClick
             throw new ApiInvalidArgumentException('Invalid click amount: ' . $validData->getErrorMessage());
         }
 
-        return new self($clickedAt, $clickAmount);
+        return new self($clickAmount);
     }
 
-    public function getClickedAt(): DateTimeImmutable
-    {
-        return $this->clickedAt;
-    }
-
-    public function getClickAmount(): int
+    public function asInt(): int
     {
         return $this->clickAmount;
     }
