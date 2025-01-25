@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\Linktree;
+namespace Nebalus\Webapi\Value\Module\Linktree;
 
 use Nebalus\Webapi\Value\ID;
 

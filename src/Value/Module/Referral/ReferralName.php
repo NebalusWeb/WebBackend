@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\Referral;
+namespace Nebalus\Webapi\Value\Module\Referral;
 
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
@@ -8,7 +8,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class ReferralName
 {
-    public const int MAX_LENGTH = 64;
+    public const int MAX_LENGTH = 32;
     public const string REGEX = '/^[a-zA-Z0-9 !@#$%^&*]*$/';
 
     private function __construct(

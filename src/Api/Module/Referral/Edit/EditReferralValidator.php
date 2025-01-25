@@ -5,13 +5,13 @@ namespace Nebalus\Webapi\Api\Module\Referral\Edit;
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
-use Nebalus\Webapi\Value\Referral\ReferralCode;
-use Nebalus\Webapi\Value\Referral\ReferralPointer;
+use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Pointer;
 
 class EditReferralValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
-    private ReferralPointer $pointer;
+    private Pointer $pointer;
     private bool $disabled;
 
     public function __construct()
@@ -31,7 +31,7 @@ class EditReferralValidator extends AbstractValidator
     protected function onValidate(ValidatedData $validatedData): void
     {
         $this->referralCode = ReferralCode::from($validatedData->getPathArgsData()['code']);
-        $this->pointer = ReferralPointer::from($validatedData->getBodyData()['pointer']);
+        $this->pointer = Pointer::from($validatedData->getBodyData()['pointer']);
         $this->disabled = $validatedData->getBodyData()['disabled'];
     }
 
@@ -40,7 +40,7 @@ class EditReferralValidator extends AbstractValidator
         return $this->referralCode;
     }
 
-    public function getPointer(): ReferralPointer
+    public function getPointer(): Pointer
     {
         return $this->pointer;
     }

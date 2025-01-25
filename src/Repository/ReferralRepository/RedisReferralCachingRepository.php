@@ -3,9 +3,9 @@
 namespace Nebalus\Webapi\Repository\ReferralRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\Referral\Referral;
-use Nebalus\Webapi\Value\Referral\ReferralId;
-use Nebalus\Webapi\Value\Referral\Referrals;
+use Nebalus\Webapi\Value\Module\Referral\Referral;
+use Nebalus\Webapi\Value\Module\Referral\ReferralId;
+use Nebalus\Webapi\Value\Module\Referral\Referrals;
 use Redis;
 use RedisException;
 

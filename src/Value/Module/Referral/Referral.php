@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Value\Referral;
+namespace Nebalus\Webapi\Value\Module\Referral;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\Pointer;
 use Nebalus\Webapi\Value\User\UserId;
 
 readonly class Referral
@@ -16,7 +17,7 @@ readonly class Referral
         private ReferralId $referralId,
         private UserId $ownerUserId,
         private ReferralCode $code,
-        private ReferralPointer $pointer,
+        private Pointer $pointer,
         private ReferralName $name,
         private bool $disabled,
         private DateTimeImmutable $createdAtDate,
@@ -39,7 +40,7 @@ readonly class Referral
         $referralId = ReferralId::from($data["referral_id"]);
         $ownerUserId = UserId::from($data["owner_user_id"]);
         $code = ReferralCode::from($data["code"]);
-        $pointer = ReferralPointer::from($data["pointer"]);
+        $pointer = Pointer::from($data["pointer"]);
         $name = ReferralName::from($data["name"]);
         $disabled = (bool) $data["disabled"];
 
@@ -80,7 +81,7 @@ readonly class Referral
     {
         return $this->code;
     }
-    public function getPointer(): ReferralPointer
+    public function getPointer(): Pointer
     {
         return $this->pointer;
     }

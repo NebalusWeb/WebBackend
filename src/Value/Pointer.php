@@ -1,11 +1,11 @@
 <?php
 
-namespace Nebalus\Webapi\Value\Referral;
+namespace Nebalus\Webapi\Value;
 
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class ReferralPointer
+readonly class Pointer
 {
     private function __construct(
         private string $pointer
@@ -21,7 +21,7 @@ readonly class ReferralPointer
         $validData = $schema->safeParse($pointer);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException("Invalid referral pointer: " . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException("Invalid pointer: " . $validData->getErrorMessage());
         }
 
         return new self($pointer);

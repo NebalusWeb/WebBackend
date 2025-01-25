@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Repository\ReferralRepository;
 
-use DateMalformedStringException;
-use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Value\Referral\Click\ReferralClick;
-use Nebalus\Webapi\Value\Referral\Click\ReferralClicks;
-use Nebalus\Webapi\Value\Referral\Referral;
-use Nebalus\Webapi\Value\Referral\ReferralCode;
-use Nebalus\Webapi\Value\Referral\ReferralId;
-use Nebalus\Webapi\Value\Referral\ReferralName;
-use Nebalus\Webapi\Value\Referral\ReferralPointer;
-use Nebalus\Webapi\Value\Referral\Referrals;
+use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClick;
+use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClicks;
+use Nebalus\Webapi\Value\Module\Referral\Referral;
+use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Module\Referral\ReferralId;
+use Nebalus\Webapi\Value\Module\Referral\ReferralName;
+use Nebalus\Webapi\Value\Module\Referral\Referrals;
+use Nebalus\Webapi\Value\Pointer;
 use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
@@ -26,7 +23,7 @@ readonly class MySqlReferralRepository
     ) {
     }
 
-    public function insertReferral(UserId $ownerUserId, ReferralCode $code, ReferralPointer $pointer, ReferralName $name, bool $disabled = true): bool
+    public function insertReferral(UserId $ownerUserId, ReferralCode $code, Pointer $pointer, ReferralName $name, bool $disabled = true): bool
     {
         $sql = <<<SQL
             INSERT INTO referrals
@@ -59,8 +56,7 @@ readonly class MySqlReferralRepository
     }
 
     /**
-     * @throws DateMalformedStringException
-     * @throws ApiInvalidArgumentException
+     * @throws ApiException
      */
     public function getReferralClicksFromRange(UserId $ownerUserId, ReferralCode $referralCode, int $range): ReferralClicks
     {
@@ -87,7 +83,7 @@ readonly class MySqlReferralRepository
         $stmt->execute();
 
         while ($row = $stmt->fetch()) {
-            $data[] = ReferralClick::from(new DateTimeImmutable($row["clicked_at"]), $row["click_count"]);
+            $data[] = ReferralClick::fromArray($row);
         }
 
         return ReferralClicks::fromArray(...$data);
