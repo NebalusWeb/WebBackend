@@ -14,7 +14,6 @@ class GetAllReferralView
         foreach ($referrals as $referral) {
             $fields[] = [
                 "referral_id" => $referral->getReferralId()->asInt(),
-                "owner_user_id" => $referral->getOwnerUserId()->asInt(),
                 "code" => $referral->getCode()->asString(),
                 "pointer" => $referral->getPointer()->asString(),
                 "name" => $referral->getName()->asString(),
