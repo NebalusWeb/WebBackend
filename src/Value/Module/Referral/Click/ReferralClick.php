@@ -21,7 +21,7 @@ readonly class ReferralClick
     public static function fromArray(array $data): self
     {
         try {
-            $clickedAtDate = new DateTimeImmutable($data["created_at"]);
+            $clickedAtDate = new DateTimeImmutable($data["clicked_at"]);
         } catch (DateMalformedStringException $exception) {
             throw new ApiDateMalformedStringException($exception);
         }

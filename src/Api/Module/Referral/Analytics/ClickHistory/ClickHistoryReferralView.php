@@ -20,12 +20,12 @@ class ClickHistoryReferralView
 
             $history[] = [
                 "date" => $referralClick->getClickedAtDate()->format("Y-m-d"),
-                "click_amount" => $referralClick->getClickAmount(),
+                "click_amount" => $referralClick->getClickAmount()->asInt(),
             ];
         }
 
         $fields = [
-            "referral_code" => $referralCode->asString(),
+            "code" => $referralCode->asString(),
             "history" => $history,
         ];
 
