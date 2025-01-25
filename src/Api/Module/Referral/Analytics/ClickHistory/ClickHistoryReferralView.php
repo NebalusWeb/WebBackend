@@ -6,23 +6,28 @@ use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 use Nebalus\Webapi\Value\Referral\Click\ReferralClick;
 use Nebalus\Webapi\Value\Referral\Click\ReferralClicks;
+use Nebalus\Webapi\Value\Referral\ReferralCode;
 
 class ClickHistoryReferralView
 {
-    public static function render(ReferralClicks $referralClicks): ResultInterface
+    public static function render(ReferralClicks $referralClicks, ReferralCode $referralCode): ResultInterface
     {
-        $fields = [];
+        $history = [];
         foreach ($referralClicks as $referralClick) {
             if ($referralClick instanceof ReferralClick === false) {
                 continue;
             }
 
-            $fields[] = [
+            $history[] = [
                 "date" => $referralClick->getClickedAt()->format("Y-m-d"),
                 "click_amount" => $referralClick->getClickAmount(),
             ];
         }
 
+        $fields = [
+            "referral_code" => $referralCode->asString(),
+            "history" => $history,
+        ];
 
         return Result::createSuccess("Referral history found", 200, $fields);
     }

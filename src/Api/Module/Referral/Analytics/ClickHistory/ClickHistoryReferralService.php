@@ -18,6 +18,6 @@ readonly class ClickHistoryReferralService
     {
         $data = $this->referralRepository->getReferralClicksFromRange($user->getUserId(), $validator->getReferralCode(), $validator->getRange());
 
-        return ClickHistoryReferralView::render($data);
+        return ClickHistoryReferralView::render($data, $validator->getReferralCode());
     }
 }
