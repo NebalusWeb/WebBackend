@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\Internal\Validation;
 
-readonly class ValidatedData
+readonly class ValidRequestData
 {
     private function __construct(
         private array $bodyData,

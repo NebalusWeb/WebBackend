@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api;
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
+use Nebalus\Webapi\Value\Internal\Validation\ValidRequestData;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractValidator
@@ -32,12 +32,12 @@ abstract class AbstractValidator
             throw new ApiInvalidArgumentException($validData->getErrorMessage());
         }
 
-        $validatedData = ValidatedData::from($validData->getValue()["body"] ?? [], $validData->getValue()["query_params"] ?? [], $validData->getValue()["path_args"] ?? []);
+        $validatedData = ValidRequestData::from($validData->getValue()["body"] ?? [], $validData->getValue()["query_params"] ?? [], $validData->getValue()["path_args"] ?? []);
         $this->onValidate($validatedData);
     }
 
     /**
      * @throws ApiException
      */
-    abstract protected function onValidate(ValidatedData $validatedData): void;
+    abstract protected function onValidate(ValidRequestData $request): void;
 }
