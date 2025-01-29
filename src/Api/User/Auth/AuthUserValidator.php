@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\User\Auth;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
+use Nebalus\Webapi\Value\Internal\Validation\ValidRequestData;
 use Nebalus\Webapi\Value\User\Totp\TOTPCode;
 use Nebalus\Webapi\Value\User\Username;
 
@@ -28,12 +28,12 @@ class AuthUserValidator extends AbstractValidator
         parent::__construct($rules);
     }
 
-    protected function onValidate(ValidatedData $validatedData): void
+    protected function onValidate(ValidRequestData $request): void
     {
-        $this->username = Username::from($validatedData->getBodyData()['username']);
-        $this->password = $validatedData->getBodyData()['password'];
-        $this->rememberMe = $validatedData->getBodyData()['remember_me'];
-        $this->TOTPCode = is_null($validatedData->getBodyData()['totp']) ? null : TOTPCode::from($validatedData->getBodyData()['totp']);
+        $this->username = Username::from($request->getBodyData()['username']);
+        $this->password = $request->getBodyData()['password'];
+        $this->rememberMe = $request->getBodyData()['remember_me'];
+        $this->TOTPCode = is_null($request->getBodyData()['totp']) ? null : TOTPCode::from($request->getBodyData()['totp']);
     }
 
     public function getUsername(): Username
