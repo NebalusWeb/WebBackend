@@ -43,15 +43,30 @@ readonly class MySqlReferralRepository
 
     public function insertReferralClickEntry(ReferralId $referralId): bool
     {
+        $ipAddress = "2001:db8:a0b:12f0::1";
+
         $sql = <<<SQL
-            INSERT INTO referral_click_metric
-                (referral_id) 
-            VALUES 
-                (:referral_id)
+            INSERT INTO referral_click_metric (referral_id, ip_address) 
+            VALUES (:referral_id, NULL)
         SQL;
+
+        if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            $sql = <<<SQL
+                INSERT INTO referral_click_metric (referral_id, ip_address) 
+                VALUES (:referral_id, INET_ATON(:ip_address))
+            SQL;
+        }
+
+        if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            $sql = <<<SQL
+                INSERT INTO referral_click_metric (referral_id, ip_address) 
+                VALUES (:referral_id, INET6_ATON(:ip_address))
+            SQL;
+        }
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':referral_id', $referralId->asInt());
+        $stmt->bindValue(':ip_address', $ipAddress);
         return $stmt->execute();
     }
 
