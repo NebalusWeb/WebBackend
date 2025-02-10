@@ -21,6 +21,7 @@ class ClickHistoryReferralView
             $history[] = [
                 "date" => $referralClick->getClickedAtDate()->format("Y-m-d"),
                 "count" => $referralClick->getClickCount()->asInt(),
+                "unique_visitors" => $referralClick->getUniqueVisitorsCount()->asInt(),
             ];
         }
 

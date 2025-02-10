@@ -43,7 +43,8 @@ readonly class MySqlReferralRepository
 
     public function insertReferralClickEntry(ReferralId $referralId): bool
     {
-        $ipAddress = "2001:db8:a0b:12f0::1";
+       // $ipAddress = "2001:db8:a0b:12f0::1";
+        $ipAddress = "211.221.112.211";
 
         $sql = <<<SQL
             INSERT INTO referral_click_metric (referral_id, ip_address) 
@@ -78,7 +79,8 @@ readonly class MySqlReferralRepository
         $data = [];
         $sql = <<<SQL
             SELECT
-                DATE(referral_click_metric.clicked_at) AS clicked_at, COUNT(clicked_at) AS click_count
+                DATE(referral_click_metric.clicked_at) AS clicked_at, COUNT(clicked_at) AS click_count,
+                COUNT(DISTINCT referral_click_metric.ip_address) AS unique_visitors
             FROM referral_click_metric
             INNER JOIN referrals 
                 ON referrals.referral_id = referral_click_metric.referral_id
