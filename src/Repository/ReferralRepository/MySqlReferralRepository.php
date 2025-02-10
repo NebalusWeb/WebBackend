@@ -43,8 +43,7 @@ readonly class MySqlReferralRepository
 
     public function insertReferralClickEntry(ReferralId $referralId): bool
     {
-       // $ipAddress = "2001:db8:a0b:12f0::1";
-        $ipAddress = "211.221.112.211";
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
 
         $sql = <<<SQL
             INSERT INTO referral_click_metric (referral_id, ip_address) 
