@@ -41,7 +41,7 @@ readonly class AuthenticationMiddleware implements MiddlewareInterface
         $payload = $jwt->getPayload();
 
         if (!Token::validate($token, $this->env->getJwtSecret())) {
-            return $this->abort("The JWT is not valid", 401);
+            return $this->abort("Your JWT is not valid", 401);
         }
 
         $userId = UserId::from($payload["sub"]);
@@ -53,7 +53,7 @@ readonly class AuthenticationMiddleware implements MiddlewareInterface
             $jwt->getIssuedAt() < $user->getUpdatedAtDate()->getTimestamp() ||
             Token::validateExpiration($token) === false
         ) {
-            return $this->abort("The JWT has expired", 401);
+            return $this->abort("Your JWT has expired", 401);
         }
 
         $request = $request->withAttribute("user", $user);
