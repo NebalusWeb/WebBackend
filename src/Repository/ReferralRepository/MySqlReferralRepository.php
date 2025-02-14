@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository\ReferralRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Utils\IpUtils;
 use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClick;
 use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClicks;
 use Nebalus\Webapi\Value\Module\Referral\Referral;
@@ -19,7 +20,8 @@ use PDO;
 readonly class MySqlReferralRepository
 {
     public function __construct(
-        private PDO $pdo
+        private PDO $pdo,
+        private IpUtils $ipUtils
     ) {
     }
 
@@ -43,7 +45,7 @@ readonly class MySqlReferralRepository
 
     public function insertReferralClickEntry(ReferralId $referralId): bool
     {
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $ipAddress = $this->ipUtils->getClientIP();
 
         $sql = <<<SQL
             INSERT INTO referral_click_metric (referral_id, ip_address) 
