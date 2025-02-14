@@ -105,7 +105,7 @@ readonly class MySqlReferralRepository
         return ReferralClicks::fromArray(...$data);
     }
 
-    public function deleteReferralByCodeAndOwner(UserId $ownerUserId, ReferralCode $code): bool
+    public function deleteReferralByCodeFromOwner(UserId $ownerUserId, ReferralCode $code): bool
     {
         $sql = <<<SQL
             DELETE FROM referrals 
@@ -122,7 +122,7 @@ readonly class MySqlReferralRepository
         return $stmt->rowCount() === 1;
     }
 
-    public function updateReferralAndOwner(UserId $ownerUserId, Referral $referral): bool
+    public function updateReferralFromOwner(UserId $ownerUserId, Referral $referral): bool
     {
         $sql = <<<SQL
             UPDATE referrals 
@@ -200,7 +200,7 @@ readonly class MySqlReferralRepository
     /**
      * @throws ApiException
      */
-    public function findReferralByCodeAndOwner(UserId $ownerUserId, ReferralCode $code): ?Referral
+    public function findReferralByCodeFromOwner(UserId $ownerUserId, ReferralCode $code): ?Referral
     {
         $sql = <<<SQL
             SELECT 
