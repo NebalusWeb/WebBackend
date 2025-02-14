@@ -37,7 +37,7 @@ readonly class MySqlReferralRepository
         $stmt->bindValue(':code', $code->asString());
         $stmt->bindValue(':pointer', $pointer->asString());
         $stmt->bindValue(':name', $name->asString());
-        $stmt->bindValue(':disabled', $disabled);
+        $stmt->bindValue(':disabled', $disabled, PDO::PARAM_BOOL);
         return $stmt->execute();
     }
 
