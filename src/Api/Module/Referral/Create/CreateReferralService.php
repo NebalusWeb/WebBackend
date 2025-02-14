@@ -24,7 +24,7 @@ readonly class CreateReferralService
 
         $this->referralRepository->insertReferral($user->getUserId(), $referralCode, $validator->getPointer(), $validator->getReferralName(), $validator->isDisabled());
 
-        $referral = $this->referralRepository->findReferralByCodeAndOwner($user->getUserId(), $referralCode);
+        $referral = $this->referralRepository->findReferralByCodeFromOwner($user->getUserId(), $referralCode);
 
         return CreateReferralView::render($referral);
     }

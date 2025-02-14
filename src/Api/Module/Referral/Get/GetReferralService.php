@@ -20,7 +20,7 @@ readonly class GetReferralService
      */
     public function execute(GetReferralValidator $validator, User $user): ResultInterface
     {
-        $referral = $this->referralRepository->findReferralByCodeAndOwner($user->getUserId(), $validator->getReferralCode());
+        $referral = $this->referralRepository->findReferralByCodeFromOwner($user->getUserId(), $validator->getReferralCode());
 
         if ($referral === null) {
             return Result::createError('Referral does not exist', 404);
