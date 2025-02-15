@@ -13,7 +13,7 @@ class CreateReferralView
         $fields = [
             "referral_id" => $referral->getReferralId()->asInt(),
             "code" => $referral->getCode()->asString(),
-            "pointer" => $referral->getPointer()->asString(),
+            "url" => $referral->getUrl()->asString(),
             "name" => $referral->getName()->asString(),
             "disabled" => $referral->isDisabled(),
             "created_at" => $referral->getCreatedAtDate()->format(DATE_ATOM),

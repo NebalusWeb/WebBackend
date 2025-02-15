@@ -6,12 +6,12 @@ use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Value\Internal\Validation\ValidRequestData;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
-use Nebalus\Webapi\Value\Pointer;
+use Nebalus\Webapi\Value\Url;
 
 class EditReferralValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
-    private Pointer $pointer;
+    private Url $url;
     private bool $disabled;
 
     public function __construct()
@@ -21,7 +21,7 @@ class EditReferralValidator extends AbstractValidator
                 'code' => S::string()->length(ReferralCode::LENGTH)->regex(ReferralCode::REGEX)
             ]),
             "body" => S::object([
-                'pointer' => S::string()->optional()->nullable()->url(),
+                'url' => S::string()->optional()->nullable()->url(),
                 'disabled' => S::boolean()->optional()->default(false),
             ])
         ];
@@ -31,7 +31,7 @@ class EditReferralValidator extends AbstractValidator
     protected function onValidate(ValidRequestData $request): void
     {
         $this->referralCode = ReferralCode::from($request->getPathArgsData()['code']);
-        $this->pointer = Pointer::from($request->getBodyData()['pointer']);
+        $this->url = Url::from($request->getBodyData()['url']);
         $this->disabled = $request->getBodyData()['disabled'];
     }
 
@@ -40,9 +40,9 @@ class EditReferralValidator extends AbstractValidator
         return $this->referralCode;
     }
 
-    public function getPointer(): Pointer
+    public function getUrl(): Url
     {
-        return $this->pointer;
+        return $this->url;
     }
 
     public function isDisabled(): bool

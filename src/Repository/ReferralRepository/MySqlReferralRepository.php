@@ -13,7 +13,7 @@ use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Module\Referral\ReferralId;
 use Nebalus\Webapi\Value\Module\Referral\ReferralName;
 use Nebalus\Webapi\Value\Module\Referral\Referrals;
-use Nebalus\Webapi\Value\Pointer;
+use Nebalus\Webapi\Value\Url;
 use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
@@ -25,19 +25,19 @@ readonly class MySqlReferralRepository
     ) {
     }
 
-    public function insertReferral(UserId $ownerUserId, ReferralCode $code, Pointer $pointer, ReferralName $name, bool $disabled = true): bool
+    public function insertReferral(UserId $ownerUserId, ReferralCode $code, Url $url, ReferralName $name, bool $disabled = true): bool
     {
         $sql = <<<SQL
             INSERT INTO referrals
-                (owner_user_id, code, pointer, name, disabled) 
+                (owner_user_id, code, url, name, disabled) 
             VALUES 
-                (:owner_user_id, :code, :pointer, :name, :disabled)
+                (:owner_user_id, :code, :url, :name, :disabled)
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
         $stmt->bindValue(':code', $code->asString());
-        $stmt->bindValue(':pointer', $pointer->asString());
+        $stmt->bindValue(':url', $url->asString());
         $stmt->bindValue(':name', $name->asString());
         $stmt->bindValue(':disabled', $disabled, PDO::PARAM_BOOL);
         return $stmt->execute();
