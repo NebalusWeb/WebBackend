@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api\Module\Referral\Get;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 use Nebalus\Webapi\Value\Module\Referral\Referral;
@@ -20,6 +21,6 @@ class GetReferralView
             "updated_at" => $referral->getUpdatedAtDate()->format(DATE_ATOM),
         ];
 
-        return Result::createSuccess("Referral fetched", 200, $fields);
+        return Result::createSuccess("Referral fetched", StatusCodeInterface::STATUS_OK, $fields);
     }
 }

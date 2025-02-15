@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api\Module\Linktree\Click;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 
@@ -30,6 +31,6 @@ class ClickLinktreeView
             ]
         ];
 
-        return Result::createSuccess("Linktree found", 200, $fields);
+        return Result::createSuccess("Linktree found", StatusCodeInterface::STATUS_OK, $fields);
     }
 }

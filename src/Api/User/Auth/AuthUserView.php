@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api\User\Auth;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 use Nebalus\Webapi\Value\User\User;
@@ -22,6 +23,6 @@ class AuthUserView
             ]
         ];
 
-        return Result::createSuccess("User successfully authenticated", 200, $fields);
+        return Result::createSuccess("User successfully authenticated", StatusCodeInterface::STATUS_OK, $fields);
     }
 }
