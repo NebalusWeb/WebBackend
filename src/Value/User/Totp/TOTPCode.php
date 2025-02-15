@@ -31,7 +31,7 @@ readonly class TOTPCode
         return new self($code);
     }
 
-    private function asString(): string
+    public function asString(): string
     {
         return $this->code;
     }
