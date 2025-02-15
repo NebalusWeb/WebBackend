@@ -8,7 +8,7 @@ use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\Pointer;
+use Nebalus\Webapi\Value\Url;
 use Nebalus\Webapi\Value\User\UserId;
 
 readonly class Referral
@@ -17,7 +17,7 @@ readonly class Referral
         private ReferralId $referralId,
         private UserId $ownerUserId,
         private ReferralCode $code,
-        private Pointer $pointer,
+        private Url $url,
         private ReferralName $name,
         private bool $disabled,
         private DateTimeImmutable $createdAtDate,
@@ -40,7 +40,7 @@ readonly class Referral
         $referralId = ReferralId::from($data["referral_id"]);
         $ownerUserId = UserId::from($data["owner_user_id"]);
         $code = ReferralCode::from($data["code"]);
-        $pointer = Pointer::from($data["pointer"]);
+        $url = Url::from($data["url"]);
         $name = ReferralName::from($data["name"]);
         $disabled = (bool) $data["disabled"];
 
@@ -48,7 +48,7 @@ readonly class Referral
             $referralId,
             $ownerUserId,
             $code,
-            $pointer,
+            $url,
             $name,
             $disabled,
             $createdAtDate,
@@ -61,7 +61,7 @@ readonly class Referral
             "referral_id" => $this->referralId->asInt(),
             "owner_user_id" => $this->ownerUserId->asInt(),
             "code" => $this->code->asString(),
-            "pointer" => $this->pointer->asString(),
+            "url" => $this->url->asString(),
             "name" => $this->name->asString(),
             "disabled" => $this->disabled,
             "created_at" => $this->createdAtDate->format(DATE_ATOM),
@@ -81,9 +81,9 @@ readonly class Referral
     {
         return $this->code;
     }
-    public function getPointer(): Pointer
+    public function getUrl(): Url
     {
-        return $this->pointer;
+        return $this->url;
     }
     public function getName(): ReferralName
     {

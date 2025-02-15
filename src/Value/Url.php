@@ -5,30 +5,30 @@ namespace Nebalus\Webapi\Value;
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class Pointer
+readonly class Url
 {
     private function __construct(
-        private string $pointer
+        private string $url
     ) {
     }
 
     /**
      * @throws ApiInvalidArgumentException
      */
-    public static function from(string $pointer): self
+    public static function from(string $url): self
     {
         $schema = Sanitizr::string()->url();
-        $validData = $schema->safeParse($pointer);
+        $validData = $schema->safeParse($url);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException("Invalid pointer: " . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException("Invalid url: " . $validData->getErrorMessage());
         }
 
-        return new self($pointer);
+        return new self($url);
     }
 
     public function asString(): string
     {
-        return $this->pointer;
+        return $this->url;
     }
 }
