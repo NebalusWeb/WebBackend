@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api\Module\Referral\Analytics\ClickHistory;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClick;
@@ -30,6 +31,6 @@ class ClickHistoryReferralView
             "history" => $history,
         ];
 
-        return Result::createSuccess("Referral history found", 200, $fields);
+        return Result::createSuccess("Referral history found", StatusCodeInterface::STATUS_OK, $fields);
     }
 }
