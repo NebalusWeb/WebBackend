@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Value\Internal\Result;
 
+use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nebalus\Webapi\Exception\ApiException;
 use Throwable;
@@ -21,7 +22,7 @@ readonly class Result implements ResultInterface
     protected static function from(bool $success, ?string $message, int $status, array $fields): static
     {
         if ($status < 100 || $status > 599) {
-            throw new InvalidArgumentException("Code '$status' is not a valid http status code!", 500);
+            throw new InvalidArgumentException("Code '$status' is not a valid http status code!", StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
         }
 
         $payload = [
@@ -34,17 +35,17 @@ readonly class Result implements ResultInterface
         return new static($success, $message, $status, $payload);
     }
 
-    public static function createSuccess(?string $message, int $status = 200, array $fields = []): static
+    public static function createSuccess(?string $message, int $status = StatusCodeInterface::STATUS_OK, array $fields = []): static
     {
         return static::from(true, $message, $status, $fields);
     }
 
-    public static function createError(?string $message, int $status = 500, array $fields = []): static
+    public static function createError(?string $message, int $status = StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR, array $fields = []): static
     {
         return static::from(false, $message, $status, $fields);
     }
 
-    public static function createFromException(Throwable $throwable, int $status = 500): static
+    public static function createFromException(Throwable $throwable, int $status = StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR): static
     {
         $isProduction = getenv('APP_ENV') === 'production';
 
