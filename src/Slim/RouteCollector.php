@@ -38,11 +38,11 @@ readonly class RouteCollector
         $this->app->addRoutingMiddleware();
         $this->app->addBodyParsingMiddleware();
         $this->app->add(CorsMiddleware::class);
-        $this->initErrorMiddleware();
+        $this->registerErrorHandler();
         $this->initRoutes();
     }
 
-    private function initErrorMiddleware(): void
+    private function registerErrorHandler(): void
     {
         $errorMiddleware = $this->app->addErrorMiddleware($this->env->isDevelopment(), true, true);
     }

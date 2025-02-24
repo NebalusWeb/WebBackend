@@ -37,7 +37,7 @@
         "rbdwllr/reallysimplejwt": "^5.0",
         "spomky-labs/otphp": "^11.3.0",
         "promphp/prometheus_client_php": "^2.12",
-        "nebalus/sanitizr": "dev-master",
+        "nebalus/sanitizr": "dev-dev",
         "elasticsearch/elasticsearch": "^8.17"
     },
     

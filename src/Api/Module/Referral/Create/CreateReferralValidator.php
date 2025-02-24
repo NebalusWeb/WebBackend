@@ -16,14 +16,13 @@ class CreateReferralValidator extends AbstractValidator
 
     public function __construct()
     {
-        $rules = [
+        parent::__construct(S::object([
             "body" => S::object([
                 'name' => S::string(),
                 'url' => S::string()->url(),
                 'disabled' => S::boolean()->optional()->default(false),
             ])
-        ];
-        parent::__construct($rules);
+        ]));
     }
 
     protected function onValidate(ValidRequestData $request): void

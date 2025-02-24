@@ -13,12 +13,11 @@ class ClickReferralValidator extends AbstractValidator
 
     public function __construct()
     {
-        $rules = [
+        parent::__construct(S::object([
             "path_args" => S::object([
                 'code' => S::string()->length(ReferralCode::LENGTH)->regex(ReferralCode::REGEX)
             ]),
-        ];
-        parent::__construct($rules);
+        ]));
     }
 
     protected function onValidate(ValidRequestData $request): void
