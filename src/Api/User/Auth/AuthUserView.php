@@ -20,9 +20,10 @@ class AuthUserView
                 "email" => $user->getEmail()->asString(),
                 "disabled" => $user->isDisabled(),
                 "created_at" => $user->getCreatedAtDate()->format(DATE_ATOM),
+                "updated_at" => $user->getUpdatedAtDate()->format(DATE_ATOM),
             ]
         ];
 
-        return Result::createSuccess("User successfully authenticated", StatusCodeInterface::STATUS_OK, $fields);
+        return Result::createSuccess("User authenticated", StatusCodeInterface::STATUS_OK, $fields);
     }
 }

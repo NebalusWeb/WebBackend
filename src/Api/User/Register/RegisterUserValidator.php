@@ -21,7 +21,7 @@ class RegisterUserValidator extends AbstractValidator
 
     public function __construct()
     {
-        $rules = [
+        parent::__construct(S::object([
             'body' => S::object([
                 'invitation_token' => S::object([
                     "field_1" => S::number()->integer(),
@@ -34,8 +34,7 @@ class RegisterUserValidator extends AbstractValidator
                 'username' => S::string(),
                 'password' => S::string(),
             ])
-        ];
-        parent::__construct($rules);
+        ]));
     }
 
     /**

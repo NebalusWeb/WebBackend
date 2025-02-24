@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Api;
 
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Schema\SanitizrObjectSchema;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\Internal\Validation\ValidRequestData;
@@ -12,7 +13,7 @@ abstract class AbstractValidator
 {
     public const int MAX_RECURSION = 100;
 
-    protected function __construct(private readonly array $rules = [])
+    protected function __construct(private readonly SanitizrObjectSchema $schema)
     {
     }
 
@@ -21,8 +22,7 @@ abstract class AbstractValidator
      */
     public function validate(ServerRequestInterface $request, array $rawPathArgs = []): void
     {
-        $schema = Sanitizr::object($this->rules);
-        $validData = $schema->safeParse([
+        $validData = $this->schema->safeParse([
             'body' => json_decode($request->getBody()->getContents(), true, self::MAX_RECURSION) ?? [],
             'query_params' => $request->getQueryParams() ?? [],
             'path_args' => $rawPathArgs,

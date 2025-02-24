@@ -14,15 +14,14 @@ class ClickHistoryReferralValidator extends AbstractValidator
 
     public function __construct()
     {
-        $rules = [
+        parent::__construct(S::object([
             "path_args" => S::object([
                 'code' => S::string()->length(ReferralCode::LENGTH)->regex(ReferralCode::REGEX)
             ]),
             "query_params" => S::object([
                 'range' => S::number()->integer()->positive()
             ])
-        ];
-        parent::__construct($rules);
+        ]));
     }
 
     protected function onValidate(ValidRequestData $request): void

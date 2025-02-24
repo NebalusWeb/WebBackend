@@ -17,15 +17,14 @@ class AuthUserValidator extends AbstractValidator
 
     public function __construct()
     {
-        $rules = [
+        parent::__construct(S::object([
             'body' => S::object([
                 'username' => S::string(),
                 'password' => S::string(),
                 'remember_me' => S::boolean()->optional()->default(false),
                 'totp' => S::string()->optional()->nullable(),
             ])
-        ];
-        parent::__construct($rules);
+        ]));
     }
 
     protected function onValidate(ValidRequestData $request): void
