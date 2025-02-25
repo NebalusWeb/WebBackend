@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\User\Auth;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Value\Internal\Validation\ValidRequestData;
+use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Value\User\Totp\TOTPCode;
 use Nebalus\Webapi\Value\User\Username;
 
@@ -18,7 +18,7 @@ class AuthUserValidator extends AbstractValidator
     public function __construct()
     {
         parent::__construct(S::object([
-            'body' => S::object([
+            RequestParamTypes::BODY => S::object([
                 'username' => S::string(),
                 'password' => S::string(),
                 'remember_me' => S::boolean()->optional()->default(false),
@@ -27,12 +27,12 @@ class AuthUserValidator extends AbstractValidator
         ]));
     }
 
-    protected function onValidate(ValidRequestData $request): void
+    protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->username = Username::from($request->getBodyData()['username']);
-        $this->password = $request->getBodyData()['password'];
-        $this->rememberMe = $request->getBodyData()['remember_me'];
-        $this->TOTPCode = is_null($request->getBodyData()['totp']) ? null : TOTPCode::from($request->getBodyData()['totp']);
+        $this->username = Username::from($bodyData['username']);
+        $this->password = $bodyData['password'];
+        $this->rememberMe = $bodyData['remember_me'];
+        $this->TOTPCode = is_null($bodyData['totp']) ? null : TOTPCode::from($bodyData['totp']);
     }
 
     public function getUsername(): Username

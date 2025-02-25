@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\Module\Referral\Create;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Value\Internal\Validation\ValidRequestData;
+use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Value\Module\Referral\ReferralName;
 use Nebalus\Webapi\Value\Url;
 
@@ -17,7 +17,7 @@ class CreateReferralValidator extends AbstractValidator
     public function __construct()
     {
         parent::__construct(S::object([
-            "body" => S::object([
+            RequestParamTypes::BODY => S::object([
                 'name' => S::string(),
                 'url' => S::string()->url(),
                 'disabled' => S::boolean()->optional()->default(false),
@@ -25,11 +25,11 @@ class CreateReferralValidator extends AbstractValidator
         ]));
     }
 
-    protected function onValidate(ValidRequestData $request): void
+    protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->referralName = ReferralName::from($request->getBodyData()['name']);
-        $this->url = Url::from($request->getBodyData()['url']);
-        $this->disabled = $request->getBodyData()['disabled'];
+        $this->referralName = ReferralName::from($bodyData['name']);
+        $this->url = Url::from($bodyData['url']);
+        $this->disabled = $bodyData['disabled'];
     }
 
     public function getReferralName(): ReferralName

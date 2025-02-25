@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\Module\Referral\Analytics\ClickHistory;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Value\Internal\Validation\ValidRequestData;
+use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 
 class ClickHistoryReferralValidator extends AbstractValidator
@@ -15,19 +15,19 @@ class ClickHistoryReferralValidator extends AbstractValidator
     public function __construct()
     {
         parent::__construct(S::object([
-            "path_args" => S::object([
+            RequestParamTypes::PATH_ARGS => S::object([
                 'code' => S::string()->length(ReferralCode::LENGTH)->regex(ReferralCode::REGEX)
             ]),
-            "query_params" => S::object([
+            RequestParamTypes::QUERY_PARAMS => S::object([
                 'range' => S::number()->integer()->positive()
             ])
         ]));
     }
 
-    protected function onValidate(ValidRequestData $request): void
+    protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->referralCode = ReferralCode::from($request->getPathArgsData()['code']);
-        $this->range = $request->getQueryParamsData()['range'];
+        $this->referralCode = ReferralCode::from($pathArgsData['code']);
+        $this->range = $queryParamsData['range'];
     }
 
     public function getReferralCode(): ReferralCode
