@@ -4,10 +4,10 @@ namespace Nebalus\Webapi\Api\User\Register;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
+use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokenField;
 use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
-use Nebalus\Webapi\Value\Internal\Validation\ValidRequestData;
 use Nebalus\Webapi\Value\User\UserEmail;
 use Nebalus\Webapi\Value\User\Username;
 use Nebalus\Webapi\Value\User\UserPassword;
@@ -22,7 +22,7 @@ class RegisterUserValidator extends AbstractValidator
     public function __construct()
     {
         parent::__construct(S::object([
-            'body' => S::object([
+            RequestParamTypes::BODY => S::object([
                 'invitation_token' => S::object([
                     "field_1" => S::number()->integer(),
                     "field_2" => S::number()->integer(),
@@ -40,18 +40,18 @@ class RegisterUserValidator extends AbstractValidator
     /**
      * @throws ApiException
      */
-    protected function onValidate(ValidRequestData $request): void
+    protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->pureInvitationToken = PureInvitationToken::from(
-            InvitationTokenField::from($request->getBodyData()["invitation_token"]["field_1"]),
-            InvitationTokenField::from($request->getBodyData()["invitation_token"]["field_2"]),
-            InvitationTokenField::from($request->getBodyData()["invitation_token"]["field_3"]),
-            InvitationTokenField::from($request->getBodyData()["invitation_token"]["field_4"]),
-            InvitationTokenField::from($request->getBodyData()["invitation_token"]["checksum"])
+            InvitationTokenField::from($bodyData["invitation_token"]["field_1"]),
+            InvitationTokenField::from($bodyData["invitation_token"]["field_2"]),
+            InvitationTokenField::from($bodyData["invitation_token"]["field_3"]),
+            InvitationTokenField::from($bodyData["invitation_token"]["field_4"]),
+            InvitationTokenField::from($bodyData["invitation_token"]["checksum"])
         );
-        $this->userEmail = UserEmail::from($request->getBodyData()["email"]);
-        $this->username = UserName::from($request->getBodyData()["username"]);
-        $this->userPassword = UserPassword::fromPlain($request->getBodyData()["password"]);
+        $this->userEmail = UserEmail::from($bodyData["email"]);
+        $this->username = UserName::from($bodyData["username"]);
+        $this->userPassword = UserPassword::fromPlain($bodyData["password"]);
     }
 
     public function getPureInvitationToken(): PureInvitationToken
