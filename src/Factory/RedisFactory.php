@@ -14,7 +14,13 @@ readonly class RedisFactory
 
     public function __invoke(): Redis
     {
-        $redis = new Redis();
+        $options = [
+            'readTimeout' => 2.5,
+            'connectTimeout' => 2.5,
+            'persistent' => false,
+            'retryInterval' => 5,
+        ];
+        $redis = new Redis($options);
         $redis->connect($this->envData->getRedisHost(), $this->envData->getRedisPort());
 
         return $redis;
