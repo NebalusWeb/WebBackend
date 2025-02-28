@@ -24,7 +24,7 @@ class RegisterUserValidator extends AbstractValidator
         parent::__construct(S::object([
             RequestParamTypes::BODY => S::object([
                 'invitation_token' => S::object([
-                    "field_1" => S::number()->integer(),
+                    "field_1" => S::number()->integer()->gte(0)->lte(9999),
                     "field_2" => S::number()->integer(),
                     "field_3" => S::number()->integer(),
                     "field_4" => S::number()->integer(),
