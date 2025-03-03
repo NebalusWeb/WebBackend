@@ -15,7 +15,6 @@ class AuthUserView
         $fields = [
             "jwt" => $jwt->getToken(),
             "user" => [
-                "user_id" => $user->getUserId()?->asInt(),
                 "username" => $user->getUsername()->asString(),
                 "email" => $user->getEmail()->asString(),
                 "disabled" => $user->isDisabled(),
