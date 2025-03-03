@@ -14,35 +14,35 @@ readonly class Result implements ResultInterface
     private function __construct(
         private bool $success,
         private ?string $message,
-        private int $status,
+        private int $statusCode,
         private array $payload
     ) {
     }
 
-    protected static function from(bool $success, ?string $message, int $status, array $fields): static
+    protected static function from(bool $success, ?string $message, int $statusCode, array $fields): static
     {
-        if ($status < 100 || $status > 599) {
-            throw new InvalidArgumentException("Code '$status' is not a valid http status code!", StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
+        if ($statusCode < 100 || $statusCode > 599) {
+            throw new InvalidArgumentException("Code '$statusCode' is not a valid http status code!", StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
         }
 
         $payload = [
             'success' => $success,
             'message' => $message,
-            'status' => $status,
+            'status_code' => $statusCode,
             'payload' => $fields,
         ];
 
-        return new static($success, $message, $status, $payload);
+        return new static($success, $message, $statusCode, $payload);
     }
 
-    public static function createSuccess(?string $message, int $status = StatusCodeInterface::STATUS_OK, array $fields = []): static
+    public static function createSuccess(?string $message, int $statusCode = StatusCodeInterface::STATUS_OK, array $fields = []): static
     {
-        return static::from(true, $message, $status, $fields);
+        return static::from(true, $message, $statusCode, $fields);
     }
 
-    public static function createError(?string $message, int $status = StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR, array $fields = []): static
+    public static function createError(?string $message, int $statusCode = StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR, array $fields = []): static
     {
-        return static::from(false, $message, $status, $fields);
+        return static::from(false, $message, $statusCode, $fields);
     }
 
     public static function createFromException(Throwable $throwable, int $status = StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR): static
@@ -79,9 +79,9 @@ readonly class Result implements ResultInterface
         return $this->message;
     }
 
-    public function getStatus(): int
+    public function getStatusCode(): int
     {
-        return $this->status;
+        return $this->statusCode;
     }
 
     public function isSuccessful(): bool

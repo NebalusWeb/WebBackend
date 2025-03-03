@@ -24,13 +24,13 @@ abstract class AbstractAction
                 $exception->getCode()
             );
             $response->getBody()->write($result->getPayloadAsJson());
-            return $response->withStatus($result->getStatus());
+            return $response->withStatus($result->getStatusCode());
         } catch (Throwable $exception) {
             $result = Result::createFromException(
                 $exception
             );
             $response->getBody()->write($result->getPayloadAsJson());
-            return $response->withStatus($result->getStatus());
+            return $response->withStatus($result->getStatusCode());
         }
         return $response;
     }

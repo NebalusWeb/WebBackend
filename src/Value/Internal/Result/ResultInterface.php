@@ -8,6 +8,6 @@ interface ResultInterface
 {
     public function getPayload(): array;
     public function getMessage(): ?string;
-    public function getStatus(): int;
+    public function getStatusCode(): int;
     public function isSuccessful(): bool;
 }

@@ -21,6 +21,6 @@ class ClickLinktreeAction extends AbstractAction
 
         $result = $this->service->execute($params);
 
-        return $response->withJson($result->getPayload(), $result->getStatus());
+        return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }
