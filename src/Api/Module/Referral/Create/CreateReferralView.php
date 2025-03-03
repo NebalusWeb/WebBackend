@@ -12,7 +12,6 @@ class CreateReferralView
     public static function render(Referral $referral): ResultInterface
     {
         $fields = [
-            "referral_id" => $referral->getReferralId()->asInt(),
             "code" => $referral->getCode()->asString(),
             "url" => $referral->getUrl()->asString(),
             "name" => $referral->getName()->asString(),
