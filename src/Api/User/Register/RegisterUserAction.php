@@ -24,6 +24,6 @@ class RegisterUserAction extends AbstractAction
 
         $result = $this->service->execute($this->validator);
 
-        return $response->withJson($result->getPayload(), $result->getStatus());
+        return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

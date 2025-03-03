@@ -22,6 +22,6 @@ class GetReferralAction extends AbstractAction
 
         $result = $this->service->execute($this->validator, $request->getAttribute('user'));
 
-        return $response->withJson($result->getPayload(), $result->getStatus());
+        return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }
