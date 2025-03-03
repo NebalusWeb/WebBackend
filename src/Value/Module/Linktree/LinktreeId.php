@@ -4,7 +4,6 @@ namespace Nebalus\Webapi\Value\Module\Linktree;
 
 use Nebalus\Webapi\Value\ID;
 
-class LinktreeId
+readonly class LinktreeId extends ID
 {
-    use ID;
 }

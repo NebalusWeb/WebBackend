@@ -6,10 +6,10 @@ use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-trait ID
+readonly class ID
 {
     private function __construct(
-        private readonly int $id
+        private int $id
     ) {
     }
 
