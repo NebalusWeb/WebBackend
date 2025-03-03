@@ -25,10 +25,10 @@ class RegisterUserValidator extends AbstractValidator
             RequestParamTypes::BODY => S::object([
                 'invitation_token' => S::object([
                     "field_1" => S::number()->integer()->gte(0)->lte(9999),
-                    "field_2" => S::number()->integer(),
-                    "field_3" => S::number()->integer(),
-                    "field_4" => S::number()->integer(),
-                    "checksum" => S::number()->integer(),
+                    "field_2" => S::number()->integer()->gte(0)->lte(9999),
+                    "field_3" => S::number()->integer()->gte(0)->lte(9999),
+                    "field_4" => S::number()->integer()->gte(0)->lte(9999),
+                    "checksum" => S::number()->integer()->gte(0)->lte(9999),
                 ]),
                 'email' => S::string()->email(),
                 'username' => S::string(),
