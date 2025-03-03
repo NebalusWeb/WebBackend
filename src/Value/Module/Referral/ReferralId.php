@@ -4,7 +4,6 @@ namespace Nebalus\Webapi\Value\Module\Referral;
 
 use Nebalus\Webapi\Value\ID;
 
-class ReferralId
+readonly class ReferralId extends ID
 {
-    use ID;
 }
