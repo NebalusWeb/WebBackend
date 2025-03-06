@@ -2,12 +2,12 @@
 
 namespace Nebalus\Webapi\Api\User\Register;
 
+use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
+use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Utils\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokenField;
 use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
-use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
 use Nebalus\Webapi\Value\User\UserEmail;
 use Nebalus\Webapi\Value\User\Username;
 use Nebalus\Webapi\Value\User\UserPassword;
@@ -21,38 +21,37 @@ class RegisterUserValidator extends AbstractValidator
 
     public function __construct()
     {
-        $rules = [
-            'body' => S::object([
+        parent::__construct(S::object([
+            RequestParamTypes::BODY => S::object([
                 'invitation_token' => S::object([
-                    "field_1" => S::number()->required()->integer(),
-                    "field_2" => S::number()->required()->integer(),
-                    "field_3" => S::number()->required()->integer(),
-                    "field_4" => S::number()->required()->integer(),
-                    "checksum" => S::number()->required()->integer(),
-                ])->required(),
-                'email' => S::string()->required()->email(),
-                'username' => S::string()->required(),
-                'password' => S::string()->required(),
+                    "field_1" => S::number()->integer()->gte(0)->lte(9999),
+                    "field_2" => S::number()->integer()->gte(0)->lte(9999),
+                    "field_3" => S::number()->integer()->gte(0)->lte(9999),
+                    "field_4" => S::number()->integer()->gte(0)->lte(9999),
+                    "checksum" => S::number()->integer()->gte(0)->lte(9999),
+                ]),
+                'email' => S::string()->email(),
+                'username' => S::string(),
+                'password' => S::string(),
             ])
-        ];
-        parent::__construct($rules);
+        ]));
     }
 
     /**
      * @throws ApiException
      */
-    protected function onValidate(ValidatedData $validatedData): void
+    protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->pureInvitationToken = PureInvitationToken::from(
-            InvitationTokenField::from($validatedData->getBodyData()["invitation_token"]["field_1"]),
-            InvitationTokenField::from($validatedData->getBodyData()["invitation_token"]["field_2"]),
-            InvitationTokenField::from($validatedData->getBodyData()["invitation_token"]["field_3"]),
-            InvitationTokenField::from($validatedData->getBodyData()["invitation_token"]["field_4"]),
-            InvitationTokenField::from($validatedData->getBodyData()["invitation_token"]["checksum"])
+            InvitationTokenField::from($bodyData["invitation_token"]["field_1"]),
+            InvitationTokenField::from($bodyData["invitation_token"]["field_2"]),
+            InvitationTokenField::from($bodyData["invitation_token"]["field_3"]),
+            InvitationTokenField::from($bodyData["invitation_token"]["field_4"]),
+            InvitationTokenField::from($bodyData["invitation_token"]["checksum"])
         );
-        $this->userEmail = UserEmail::from($validatedData->getBodyData()["email"]);
-        $this->username = UserName::from($validatedData->getBodyData()["username"]);
-        $this->userPassword = UserPassword::fromPlain($validatedData->getBodyData()["password"]);
+        $this->userEmail = UserEmail::from($bodyData["email"]);
+        $this->username = UserName::from($bodyData["username"]);
+        $this->userPassword = UserPassword::fromPlain($bodyData["password"]);
     }
 
     public function getPureInvitationToken(): PureInvitationToken
