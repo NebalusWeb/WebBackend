@@ -6,12 +6,14 @@ use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Module\Referral\ReferralName;
 use Nebalus\Webapi\Value\Url;
 
 class EditReferralValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
     private Url $url;
+    private ReferralName $name;
     private bool $disabled;
 
     public function __construct()
@@ -21,7 +23,8 @@ class EditReferralValidator extends AbstractValidator
                 'code' => S::string()->length(ReferralCode::LENGTH)->regex(ReferralCode::REGEX)
             ]),
             RequestParamTypes::BODY => S::object([
-                'url' => S::string()->optional()->nullable()->url(),
+                'url' => S::string()->url(),
+                'name' => S::string()->nullable(),
                 'disabled' => S::boolean()->optional()->default(false),
             ])
         ]));
@@ -31,6 +34,7 @@ class EditReferralValidator extends AbstractValidator
     {
         $this->referralCode = ReferralCode::from($pathArgsData['code']);
         $this->url = Url::from($bodyData['url']);
+        $this->name = ReferralName::from($bodyData['name']);
         $this->disabled = $bodyData['disabled'];
     }
 
@@ -42,6 +46,11 @@ class EditReferralValidator extends AbstractValidator
     public function getUrl(): Url
     {
         return $this->url;
+    }
+
+    public function getName(): ReferralName
+    {
+        return $this->name;
     }
 
     public function isDisabled(): bool

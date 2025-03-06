@@ -124,12 +124,15 @@ readonly class MySqlReferralRepository
         return $stmt->rowCount() === 1;
     }
 
-    public function updateReferralFromOwner(UserId $ownerUserId, Referral $referral): bool
+    /**
+     * @throws ApiException
+     */
+    public function updateReferralFromOwner(UserId $ownerUserId, ReferralCode $referralCode, Url $referralUrl, ReferralName $referralName, bool $isDisabled): ?Referral
     {
         $sql = <<<SQL
             UPDATE referrals 
             SET 
-                pointer = :pointer, 
+                url = :url, 
                 name = :name, 
                 disabled = :disabled 
             WHERE 
@@ -137,14 +140,15 @@ readonly class MySqlReferralRepository
                 AND code = :code
         SQL;
 
-//        $stmt = $this->pdo->prepare($sql);
-//        $stmt->bindValue(':pointer', $referral->getPointer()->asString());
-//        $stmt->bindValue(':name', $referral->getName()->asString());
-//        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
-//        $stmt->bindValue("")
-//        $stmt->execute();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':url', $referralUrl->asString());
+        $stmt->bindValue(':name', $referralName->asString());
+        $stmt->bindValue(':disabled', $isDisabled, PDO::PARAM_BOOL);
+        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt(), PDO::PARAM_INT);
+        $stmt->bindValue(':code', $referralCode->asString());
+        $stmt->execute();
 
-        return false;
+        return $this->findReferralByCodeFromOwner($ownerUserId, $referralCode);
     }
 
     /**
