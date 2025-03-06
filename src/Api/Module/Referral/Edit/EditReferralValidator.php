@@ -2,37 +2,40 @@
 
 namespace Nebalus\Webapi\Api\Module\Referral\Edit;
 
+use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Utils\Sanitizr\Sanitizr as S;
-use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
-use Nebalus\Webapi\Value\Referral\ReferralCode;
-use Nebalus\Webapi\Value\Referral\ReferralPointer;
+use Nebalus\Webapi\Api\RequestParamTypes;
+use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Module\Referral\ReferralName;
+use Nebalus\Webapi\Value\Url;
 
 class EditReferralValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
-    private ReferralPointer $pointer;
+    private Url $url;
+    private ReferralName $name;
     private bool $disabled;
 
     public function __construct()
     {
-        $rules = [
-            "path_args" => S::object([
-                'code' => S::string()->required()->length(ReferralCode::CODE_LENGTH)->regex(ReferralCode::REGEX)
+        parent::__construct(S::object([
+            RequestParamTypes::PATH_ARGS => S::object([
+                'code' => S::string()->length(ReferralCode::LENGTH)->regex(ReferralCode::REGEX)
             ]),
-            "body" => S::object([
-                'pointer' => S::string()->nullable()->url(),
-                'disabled' => S::boolean()->default(false),
+            RequestParamTypes::BODY => S::object([
+                'url' => S::string()->url(),
+                'name' => S::string()->nullable(),
+                'disabled' => S::boolean()->optional()->default(false),
             ])
-        ];
-        parent::__construct($rules);
+        ]));
     }
 
-    protected function onValidate(ValidatedData $validatedData): void
+    protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->referralCode = ReferralCode::from($validatedData->getPathArgsData()['code']);
-        $this->pointer = ReferralPointer::from($validatedData->getBodyData()['pointer']);
-        $this->disabled = $validatedData->getBodyData()['disabled'];
+        $this->referralCode = ReferralCode::from($pathArgsData['code']);
+        $this->url = Url::from($bodyData['url']);
+        $this->name = ReferralName::from($bodyData['name']);
+        $this->disabled = $bodyData['disabled'];
     }
 
     public function getReferralCode(): ReferralCode
@@ -40,9 +43,14 @@ class EditReferralValidator extends AbstractValidator
         return $this->referralCode;
     }
 
-    public function getPointer(): ReferralPointer
+    public function getUrl(): Url
     {
-        return $this->pointer;
+        return $this->url;
+    }
+
+    public function getName(): ReferralName
+    {
+        return $this->name;
     }
 
     public function isDisabled(): bool

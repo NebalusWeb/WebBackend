@@ -2,35 +2,34 @@
 
 namespace Nebalus\Webapi\Api\Module\Referral\Create;
 
-use Nebalus\Webapi\Utils\Sanitizr\Sanitizr as S;
+use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Value\Internal\Validation\ValidatedData;
-use Nebalus\Webapi\Value\Referral\ReferralName;
-use Nebalus\Webapi\Value\Referral\ReferralPointer;
+use Nebalus\Webapi\Api\RequestParamTypes;
+use Nebalus\Webapi\Value\Module\Referral\ReferralName;
+use Nebalus\Webapi\Value\Url;
 
 class CreateReferralValidator extends AbstractValidator
 {
     private ReferralName $referralName;
-    private ReferralPointer $referralPointer;
+    private Url $url;
     private bool $disabled;
 
     public function __construct()
     {
-        $rules = [
-            "body" => S::object([
-                'name' => S::string()->required(),
-                'pointer' => S::string()->required()->url(),
-                'disabled' => S::boolean()->default(false),
+        parent::__construct(S::object([
+            RequestParamTypes::BODY => S::object([
+                'name' => S::string(),
+                'url' => S::string()->url(),
+                'disabled' => S::boolean()->optional()->default(false),
             ])
-        ];
-        parent::__construct($rules);
+        ]));
     }
 
-    protected function onValidate(ValidatedData $validatedData): void
+    protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->referralName = ReferralName::from($validatedData->getBodyData()['name']);
-        $this->referralPointer = ReferralPointer::from($validatedData->getBodyData()['pointer']);
-        $this->disabled = $validatedData->getBodyData()['disabled'];
+        $this->referralName = ReferralName::from($bodyData['name']);
+        $this->url = Url::from($bodyData['url']);
+        $this->disabled = $bodyData['disabled'];
     }
 
     public function getReferralName(): ReferralName
@@ -38,9 +37,9 @@ class CreateReferralValidator extends AbstractValidator
         return $this->referralName;
     }
 
-    public function getReferralPointer(): ReferralPointer
+    public function getUrl(): Url
     {
-        return $this->referralPointer;
+        return $this->url;
     }
 
     public function isDisabled(): bool
