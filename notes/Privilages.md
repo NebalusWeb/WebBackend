@@ -1,4 +1,4 @@
-admin.group.manage - Can Manage Groups
+admin.role.manage - Can Manage Roles
 
 admin.user.manage - Can Manage Users
 
@@ -25,6 +25,18 @@ feature.todos.create
 
 feature.timeCapsules.show_interface - Is Required show it in the interface
 feature.timeCapsules.create
+
+feature.forms.show_interface - Is Required show it in the interface
+feature.forms.create
+
+feature.apod.show_interface - Is Required show it in the interface
+feature.apod.create
+
+feature.pasteBin.show_interface - Is Required show it in the interface
+feature.pasteBin.create
+
+feature.blog.show_interface - Is Required show it in the interface
+feature.blog.create
 
 feature.tickets.show_interface - Is Required show it in the interface
 feature.tickets.create
