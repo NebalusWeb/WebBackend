@@ -75,7 +75,7 @@ readonly class MySqlReferralRepository
     /**
      * @throws ApiException
      */
-    public function getReferralClicksFromRange(UserId $ownerUserId, ReferralCode $referralCode, int $range): ReferralClicks
+    public function getReferralClicksFromRange(UserId $ownerUserId, ReferralCode $code, int $range): ReferralClicks
     {
         $data = [];
         $sql = <<<SQL
@@ -95,7 +95,7 @@ readonly class MySqlReferralRepository
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(":referralCode", $referralCode->asString());
+        $stmt->bindValue(":referralCode", $code->asString());
         $stmt->bindValue(":ownerUserId", $ownerUserId->asInt());
         $stmt->bindValue(":range", $range);
         $stmt->execute();
@@ -127,7 +127,7 @@ readonly class MySqlReferralRepository
     /**
      * @throws ApiException
      */
-    public function updateReferralFromOwner(UserId $ownerUserId, ReferralCode $referralCode, Url $referralUrl, ReferralName $referralName, bool $isDisabled): ?Referral
+    public function updateReferralFromOwner(UserId $ownerUserId, ReferralCode $code, Url $url, ReferralName $name, bool $disabled): ?Referral
     {
         $sql = <<<SQL
             UPDATE referrals 
@@ -141,14 +141,14 @@ readonly class MySqlReferralRepository
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':url', $referralUrl->asString());
-        $stmt->bindValue(':name', $referralName->asString());
-        $stmt->bindValue(':disabled', $isDisabled, PDO::PARAM_BOOL);
+        $stmt->bindValue(':url', $url->asString());
+        $stmt->bindValue(':name', $name->asString());
+        $stmt->bindValue(':disabled', $disabled, PDO::PARAM_BOOL);
         $stmt->bindValue(':owner_user_id', $ownerUserId->asInt(), PDO::PARAM_INT);
-        $stmt->bindValue(':code', $referralCode->asString());
+        $stmt->bindValue(':code', $code->asString());
         $stmt->execute();
 
-        return $this->findReferralByCodeFromOwner($ownerUserId, $referralCode);
+        return $this->findReferralByCodeFromOwner($ownerUserId, $code);
     }
 
     /**
