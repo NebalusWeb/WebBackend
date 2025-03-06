@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api\Module\Referral\Delete;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
@@ -20,6 +21,6 @@ readonly class DeleteReferralService
             return DeleteReferralView::render();
         }
 
-        return Result::createError('Referral does not exist', 404);
+        return Result::createError('Referral does not exist', StatusCodeInterface::STATUS_NOT_FOUND);
     }
 }
