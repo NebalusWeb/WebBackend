@@ -9,7 +9,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 trait ID
 {
     private function __construct(
-        private int $id
+        private readonly int $id
     ) {
     }
 
