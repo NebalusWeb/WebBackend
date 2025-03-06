@@ -13,7 +13,8 @@
 
     "authors": [
         {
-            "name": "Nebalus"
+            "name": "Nebalus",
+            "email": "coding@nebalus.dev"
         }
     ],
     
@@ -35,7 +36,10 @@
         "guzzlehttp/guzzle": "^7.8",
         "rbdwllr/reallysimplejwt": "^5.0",
         "spomky-labs/otphp": "^11.3.0",
-        "promphp/prometheus_client_php": "^2.12"
+        "promphp/prometheus_client_php": "^2.12",
+        "nebalus/sanitizr": "dev-dev",
+        "elasticsearch/elasticsearch": "^8.17",
+        "latitude/latitude": "^4.2"
     },
     
     "autoload-dev": {
@@ -48,5 +52,10 @@
         "phpmd/phpmd": "^2.15",
         "squizlabs/php_codesniffer": "^3.9",
         "phpunit/phpunit": "^12.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }

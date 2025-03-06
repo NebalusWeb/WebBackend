@@ -1,4 +1,4 @@
-name: "testapi-production"
+name: "web-backend-production"
 services:
 
   nginx:

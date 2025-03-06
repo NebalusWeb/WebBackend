@@ -2,9 +2,9 @@
 
 namespace Nebalus\Webapi\Value\User;
 
+use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
 
 readonly class UserEmail
 {

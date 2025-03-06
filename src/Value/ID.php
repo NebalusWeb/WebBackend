@@ -2,14 +2,14 @@
 
 namespace Nebalus\Webapi\Value;
 
+use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
 
 trait ID
 {
     private function __construct(
-        private readonly int $id
+        private int $id
     ) {
     }
 

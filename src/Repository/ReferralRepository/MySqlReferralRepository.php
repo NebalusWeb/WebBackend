@@ -5,80 +5,164 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Repository\ReferralRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Repository\AbstractRepository;
-use Nebalus\Webapi\Value\ID;
-use Nebalus\Webapi\Value\Referral\Referral;
-use Nebalus\Webapi\Value\Referral\ReferralCode;
-use Nebalus\Webapi\Value\Referral\ReferralId;
-use Nebalus\Webapi\Value\Referral\ReferralName;
-use Nebalus\Webapi\Value\Referral\ReferralPointer;
-use Nebalus\Webapi\Value\Referral\Referrals;
+use Nebalus\Webapi\Utils\IpUtils;
+use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClick;
+use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClicks;
+use Nebalus\Webapi\Value\Module\Referral\Referral;
+use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Module\Referral\ReferralId;
+use Nebalus\Webapi\Value\Module\Referral\ReferralName;
+use Nebalus\Webapi\Value\Module\Referral\Referrals;
+use Nebalus\Webapi\Value\Url;
 use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
-class MySqlReferralRepository extends AbstractRepository
+readonly class MySqlReferralRepository
 {
     public function __construct(
         private PDO $pdo,
-        private RedisReferralCachingRepository $redis
+        private IpUtils $ipUtils
     ) {
-        parent::__construct($pdo);
     }
 
-    public function insertReferral(UserId $ownerUserId, ReferralCode $code, ReferralPointer $pointer, ReferralName $name, bool $disabled = true): bool
+    public function insertReferral(UserId $ownerUserId, ReferralCode $code, Url $url, ReferralName $name, bool $disabled = true): bool
     {
-        $sql = "INSERT INTO referrals(owner_user_id, code, pointer, name, disabled) VALUES (:owner_user_id, :code, :pointer, :name, :disabled)";
+        $sql = <<<SQL
+            INSERT INTO referrals
+                (owner_user_id, code, url, name, disabled) 
+            VALUES 
+                (:owner_user_id, :code, :url, :name, :disabled)
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
         $stmt->bindValue(':code', $code->asString());
-        $stmt->bindValue(':pointer', $pointer->asString());
+        $stmt->bindValue(':url', $url->asString());
         $stmt->bindValue(':name', $name->asString());
-        $stmt->bindValue(':disabled', $disabled);
+        $stmt->bindValue(':disabled', $disabled, PDO::PARAM_BOOL);
         return $stmt->execute();
     }
 
     public function insertReferralClickEntry(ReferralId $referralId): bool
     {
-        $sql = "INSERT INTO referral_click_metric(referral_id) VALUES (:referral_id)";
+        $ipAddress = $this->ipUtils->getClientIP();
+
+        $sql = <<<SQL
+            INSERT INTO referral_click_metric (referral_id, ip_address) 
+            VALUES (:referral_id, NULL)
+        SQL;
+
+        if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            $sql = <<<SQL
+                INSERT INTO referral_click_metric (referral_id, ip_address) 
+                VALUES (:referral_id, INET_ATON(:ip_address))
+            SQL;
+        }
+
+        if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            $sql = <<<SQL
+                INSERT INTO referral_click_metric (referral_id, ip_address) 
+                VALUES (:referral_id, INET6_ATON(:ip_address))
+            SQL;
+        }
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':referral_id', $referralId->asInt());
+        $stmt->bindValue(':ip_address', $ipAddress);
         return $stmt->execute();
-    }
-
-    public function deleteReferralByCodeAndOwnerId(ReferralCode $code, UserId $ownerUserId): bool
-    {
-        $sql = "DELETE FROM referrals WHERE code = :code AND owner_user_id = :owner_user_id";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':code', $code->asString());
-        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
-        $stmt->execute();
-
-        return $stmt->rowCount() === 1;
-    }
-
-    public function updateReferral(Referral $referral, UserId $ownerUserId): bool
-    {
-        $sql = "UPDATE `referrals` SET `pointer`=:pointer,`name`=:name,`disabled`=:disabled WHERE `owner_user_id`=:owner_user_id AND `code`=:code";
-
-//        $stmt = $this->pdo->prepare($sql);
-//        $stmt->bindValue(':pointer', $referral->getPointer()->asString());
-//        $stmt->bindValue(':name', $referral->getName()->asString());
-//        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
-//        $stmt->bindValue("")
-//        $stmt->execute();
-
-        return false;
     }
 
     /**
      * @throws ApiException
      */
-    public function getReferralsFromOwnerId(UserId $ownerUserId): Referrals
+    public function getReferralClicksFromRange(UserId $ownerUserId, ReferralCode $code, int $range): ReferralClicks
     {
-        $sql = "SELECT * FROM referrals WHERE owner_user_id = :owner_user_id";
+        $data = [];
+        $sql = <<<SQL
+            SELECT
+                DATE(referral_click_metric.clicked_at) AS clicked_at, COUNT(clicked_at) AS click_count,
+                COUNT(DISTINCT referral_click_metric.ip_address) AS unique_visitors
+            FROM referral_click_metric
+            INNER JOIN referrals 
+                ON referrals.referral_id = referral_click_metric.referral_id
+            WHERE 
+                referrals.code = :referralCode 
+                AND referrals.owner_user_id = :ownerUserId
+            GROUP BY 
+                DATE(referral_click_metric.clicked_at)
+            HAVING
+                clicked_at >= DATE(NOW() - INTERVAL :range DAY)
+        SQL;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":referralCode", $code->asString());
+        $stmt->bindValue(":ownerUserId", $ownerUserId->asInt());
+        $stmt->bindValue(":range", $range);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch()) {
+            $data[] = ReferralClick::fromArray($row);
+        }
+
+        return ReferralClicks::fromArray(...$data);
+    }
+
+    public function deleteReferralByCodeFromOwner(UserId $ownerUserId, ReferralCode $code): bool
+    {
+        $sql = <<<SQL
+            DELETE FROM referrals 
+            WHERE 
+                owner_user_id = :owner_user_id 
+                AND code = :code
+        SQL;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
+        $stmt->bindValue(':code', $code->asString());
+        $stmt->execute();
+
+        return $stmt->rowCount() === 1;
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public function updateReferralFromOwner(UserId $ownerUserId, ReferralCode $code, Url $url, ReferralName $name, bool $disabled): ?Referral
+    {
+        $sql = <<<SQL
+            UPDATE referrals 
+            SET 
+                url = :url, 
+                name = :name, 
+                disabled = :disabled 
+            WHERE 
+                owner_user_id = :owner_user_id 
+                AND code = :code
+        SQL;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':url', $url->asString());
+        $stmt->bindValue(':name', $name->asString());
+        $stmt->bindValue(':disabled', $disabled, PDO::PARAM_BOOL);
+        $stmt->bindValue(':owner_user_id', $ownerUserId->asInt(), PDO::PARAM_INT);
+        $stmt->bindValue(':code', $code->asString());
+        $stmt->execute();
+
+        return $this->findReferralByCodeFromOwner($ownerUserId, $code);
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public function getReferralsFromOwner(UserId $ownerUserId): Referrals
+    {
+        $sql = <<<SQL
+            SELECT 
+                * 
+            FROM referrals
+            WHERE
+                owner_user_id = :owner_user_id
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
@@ -98,7 +182,13 @@ class MySqlReferralRepository extends AbstractRepository
      */
     public function findReferralByCode(ReferralCode $code): ?Referral
     {
-        $sql = "SELECT * FROM referrals WHERE code = :code";
+        $sql = <<<SQL
+            SELECT 
+                * 
+            FROM referrals 
+            WHERE 
+                code = :code
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':code', $code->asString());
@@ -116,13 +206,20 @@ class MySqlReferralRepository extends AbstractRepository
     /**
      * @throws ApiException
      */
-    public function findReferralByCodeAndOwnerId(ReferralCode $code, UserId $ownerUserId): ?Referral
+    public function findReferralByCodeFromOwner(UserId $ownerUserId, ReferralCode $code): ?Referral
     {
-        $sql = "SELECT * FROM referrals WHERE code = :code AND owner_user_id = :owner_user_id";
+        $sql = <<<SQL
+            SELECT 
+                * 
+            FROM referrals
+            WHERE 
+                owner_user_id = :owner_user_id
+                AND code = :code
+        SQL;
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':code', $code->asString());
         $stmt->bindValue(':owner_user_id', $ownerUserId->asInt());
+        $stmt->bindValue(':code', $code->asString());
         $stmt->execute();
 
         $data = $stmt->fetch();
