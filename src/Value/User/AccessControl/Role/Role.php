@@ -24,5 +24,13 @@ readonly class Role
         DateTimeImmutable $createdAtDate,
         DateTimeImmutable $updatedAtDate
     ) {
+        return new self(
+            $roleId,
+            $roleName,
+            $applyOnUserCreation,
+            $deletable,
+            $createdAtDate,
+            $updatedAtDate
+        );
     }
 }
