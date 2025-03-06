@@ -4,6 +4,7 @@ namespace Nebalus\Webapi\Value\Account;
 
 use Nebalus\Webapi\Value\ID;
 
-readonly class AccountId extends ID
+class AccountId
 {
+    use ID;
 }

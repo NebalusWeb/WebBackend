@@ -4,6 +4,7 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 
 use Nebalus\Webapi\Value\ID;
 
-readonly class PrivilegeId extends ID
+class PrivilegeId
 {
+    use ID;
 }

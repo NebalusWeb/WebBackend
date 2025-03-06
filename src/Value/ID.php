@@ -6,7 +6,7 @@ use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class ID
+trait ID
 {
     private function __construct(
         private int $id
