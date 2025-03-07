@@ -12,7 +12,7 @@ services:
     volumes:
       - ./public:/var/www/public:ro
     depends_on:
-      - api
+      - php-fpm
     networks:
       - backend-net
 
