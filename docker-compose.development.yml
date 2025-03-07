@@ -12,7 +12,7 @@ services:
     volumes:
       - ./public:/var/www/public:ro
     depends_on:
-      - php-fpm
+      - api
     networks:
       - backend-net
 
@@ -50,7 +50,7 @@ services:
       dockerfile: docker/redis/Dockerfile
       target: base
     container_name: nebalus-web-api-redis
-    command: [ "redis-server", "--appendonly", "no", "--maxmemory", "500mb", "--maxmemory-policy", "allkeys-lru" ]
+    command: [ "redis-server", "--appendonly", "no", "--maxmemory", "500mb", "--maxmemory-policy", "volatile-lru" ]
     networks:
       - storage-net
 
@@ -58,7 +58,9 @@ services:
     image: oliver006/redis_exporter:latest
     container_name: nebalus-web-api-redis-exporter
     environment:
-      REDIS_ADDR: "redis:6379"
+      REDIS_ADDR: "cache:6379"
+    depends_on:
+      - cache
     networks:
       - storage-net
 
