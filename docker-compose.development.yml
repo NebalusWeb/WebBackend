@@ -17,7 +17,7 @@ services:
       - backend-net
 
   # INTERN PORT: 9000
-  php-fpm:
+  api:
     build:
       context: .
       dockerfile: docker/php-fpm/Dockerfile
@@ -42,6 +42,24 @@ services:
       REDIS_PORT: "6379"
     networks:
       - backend-net
+      - storage-net
+
+  cache:
+    build:
+      context: .
+      dockerfile: docker/redis/Dockerfile
+      target: base
+    container_name: nebalus-web-api-redis
+    command: [ "redis-server", "--appendonly", "no", "--maxmemory", "500mb", "--maxmemory-policy", "allkeys-lru" ]
+    networks:
+      - storage-net
+
+  cache-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: nebalus-web-api-redis-exporter
+    environment:
+      REDIS_ADDR: "redis:6379"
+    networks:
       - storage-net
 
 networks:
