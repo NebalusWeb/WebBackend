@@ -44,7 +44,7 @@ services:
       - backend-net
       - storage-net
 
-  cache:
+  redis:
     build:
       context: .
       dockerfile: docker/redis/Dockerfile
@@ -54,13 +54,13 @@ services:
     networks:
       - storage-net
 
-  cache-exporter:
+  redis-exporter:
     image: oliver006/redis_exporter:latest
     container_name: nebalus-web-api-redis-exporter
     environment:
-      REDIS_ADDR: "cache:6379"
+      REDIS_ADDR: "redis:6379"
     depends_on:
-      - cache
+      - redis
     networks:
       - storage-net
 
