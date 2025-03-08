@@ -44,6 +44,26 @@ services:
       - backend-net
       - storage-net
 
+  redis:
+    build:
+      context: .
+      dockerfile: docker/redis/Dockerfile
+      target: base
+    container_name: nebalus-web-api-redis
+    command: [ "redis-server", "--appendonly", "no", "--maxmemory", "500mb", "--maxmemory-policy", "volatile-lru" ]
+    networks:
+      - storage-net
+
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: nebalus-web-api-redis-exporter
+    environment:
+      REDIS_ADDR: "redis:6379"
+    depends_on:
+      - redis
+    networks:
+      - storage-net
+
 networks:
   backend-net:
     name: nebalus-web-backend-development-net

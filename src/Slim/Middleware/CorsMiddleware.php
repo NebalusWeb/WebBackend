@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim\Middleware;
 
-use Nebalus\Webapi\Option\EnvData;
+use Nebalus\Webapi\Option\GeneralEnv;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
@@ -15,7 +15,7 @@ readonly class CorsMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private App $app,
-        private EnvData $env
+        private GeneralEnv $env
     ) {
     }
 

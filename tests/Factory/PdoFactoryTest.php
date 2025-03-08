@@ -3,7 +3,8 @@
 namespace Factory;
 
 use Nebalus\Webapi\Factory\PdoFactory;
-use Nebalus\Webapi\Option\EnvData;
+use Nebalus\Webapi\Option\GeneralEnv;
+use Nebalus\Webapi\Option\MySqlEnv;
 use PDO;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
@@ -15,8 +16,8 @@ class PdoFactoryTest extends TestCase
      */
     public function testCanCreatePdoInstance(): void
     {
-        $envData = new EnvData();
-        $envMock = $this->createMock(EnvData::class);
+        $envData = new MySqlEnv();
+        $envMock = $this->createMock(MySqlEnv::class);
 
         $envMock->expects($this->once())
             ->method('getMySqlHost')

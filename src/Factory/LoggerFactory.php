@@ -8,12 +8,12 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Formatter\NormalizerFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Nebalus\Webapi\Option\EnvData;
+use Nebalus\Webapi\Option\GeneralEnv;
 
 readonly class LoggerFactory
 {
     public function __construct(
-        private EnvData $env
+        private GeneralEnv $env
     ) {
     }
     public function __invoke(): Logger
