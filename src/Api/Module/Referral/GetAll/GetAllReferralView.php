@@ -2,9 +2,10 @@
 
 namespace Nebalus\Webapi\Api\Module\Referral\GetAll;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
-use Nebalus\Webapi\Value\Referral\Referrals;
+use Nebalus\Webapi\Value\Module\Referral\Referrals;
 
 class GetAllReferralView
 {
@@ -13,17 +14,15 @@ class GetAllReferralView
         $fields = [];
         foreach ($referrals as $referral) {
             $fields[] = [
-                "referral_id" => $referral->getReferralId()->asInt(),
-                "owner_user_id" => $referral->getOwnerUserId()->asInt(),
                 "code" => $referral->getCode()->asString(),
-                "pointer" => $referral->getPointer()->asString(),
+                "url" => $referral->getUrl()->asString(),
                 "name" => $referral->getName()->asString(),
                 "disabled" => $referral->isDisabled(),
-                "created_at_timestamp" => $referral->getCreatedAtDate()->getTimestamp(),
-                "updated_at_timestamp" => $referral->getUpdatedAtDate()->getTimestamp(),
+                "created_at" => $referral->getCreatedAtDate()->format(DATE_ATOM),
+                "updated_at" => $referral->getUpdatedAtDate()->format(DATE_ATOM),
             ];
         }
 
-        return Result::createSuccess("List of referrals found", 200, $fields);
+        return Result::createSuccess("List of referrals found", StatusCodeInterface::STATUS_OK, $fields);
     }
 }

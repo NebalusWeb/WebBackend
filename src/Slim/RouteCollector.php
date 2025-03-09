@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Slim;
 
 use Nebalus\Webapi\Api\Metrics\MetricsAction;
-use Nebalus\Webapi\Api\Module\Linktree\Analytics\Click\ClickLinktreeAction;
-use Nebalus\Webapi\Api\Module\Linktree\Analytics\ClickHistory\ClickHistoryLinktreeAction;
+use Nebalus\Webapi\Api\Module\Linktree\Click\ClickLinktreeAction;
 use Nebalus\Webapi\Api\Module\Linktree\Delete\DeleteLinktreeAction;
 use Nebalus\Webapi\Api\Module\Linktree\Edit\EditLinktreeAction;
 use Nebalus\Webapi\Api\Module\Linktree\Get\GetLinktreeAction;
@@ -20,8 +19,8 @@ use Nebalus\Webapi\Api\Module\Referral\GetAll\GetAllReferralAction;
 use Nebalus\Webapi\Api\User\Auth\AuthUserAction;
 use Nebalus\Webapi\Api\User\GetPrivileges\GetPrivilegesUserAction;
 use Nebalus\Webapi\Api\User\Register\RegisterUserAction;
-use Nebalus\Webapi\Option\EnvData;
-use Nebalus\Webapi\Slim\Middleware\AuthenticationMiddleware;
+use Nebalus\Webapi\Option\GeneralEnv;
+use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
@@ -30,7 +29,7 @@ readonly class RouteCollector
 {
     public function __construct(
         private App $app,
-        private EnvData $env
+        private GeneralEnv $env
     ) {
     }
 
@@ -39,11 +38,11 @@ readonly class RouteCollector
         $this->app->addRoutingMiddleware();
         $this->app->addBodyParsingMiddleware();
         $this->app->add(CorsMiddleware::class);
-        $this->initErrorMiddleware();
+        $this->registerErrorHandler();
         $this->initRoutes();
     }
 
-    private function initErrorMiddleware(): void
+    private function registerErrorHandler(): void
     {
         $errorMiddleware = $this->app->addErrorMiddleware($this->env->isDevelopment(), true, true);
     }
@@ -54,10 +53,12 @@ readonly class RouteCollector
             $group->map(["POST"], "/auth", AuthUserAction::class);
             $group->map(["POST"], "/register", RegisterUserAction::class);
             $group->group("/admin", function (RouteCollectorProxy $group) {
+                $group->group("/role/{roleName}", function (RouteCollectorProxy $group) {
+                });
                 $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 });
-            })->add(AuthenticationMiddleware::class);
-            $group->group("/user/{username}", function (RouteCollectorProxy $group) {
+            })->add(AuthMiddleware::class);
+            $group->group("/user", function (RouteCollectorProxy $group) {
                 $group->map(["GET"], "/privileges", GetPrivilegesUserAction::class);
                 $group->group("/services", function (RouteCollectorProxy $group) {
                     $group->group("/invitation_tokens", function (RouteCollectorProxy $group) {
@@ -68,7 +69,6 @@ readonly class RouteCollector
                         $group->map(["GET"], "", GetLinktreeAction::class);
                         $group->map(["PUT"], "", EditLinktreeAction::class);
                         $group->map(["DELETE"], "", DeleteLinktreeAction::class);
-                        $group->map(["GET"], "/click_history", ClickHistoryLinktreeAction::class);
                     });
                     $group->group("/referrals", function (RouteCollectorProxy $group) {
                         $group->map(["POST"], "", CreateReferralAction::class);
@@ -81,7 +81,7 @@ readonly class RouteCollector
                         });
                     });
                 });
-            })->add(AuthenticationMiddleware::class);
+            })->add(AuthMiddleware::class);
         });
 
         $this->app->map(["GET"], "/metrics", MetricsAction::class);

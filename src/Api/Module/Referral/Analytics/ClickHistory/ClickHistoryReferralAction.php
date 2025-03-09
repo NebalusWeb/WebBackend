@@ -2,9 +2,7 @@
 
 namespace Nebalus\Webapi\Api\Module\Referral\Analytics\ClickHistory;
 
-use DateMalformedStringException;
 use Nebalus\Webapi\Api\AbstractAction;
-use Nebalus\Webapi\Api\Module\Referral\Analytics\Click\ClickReferralService;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 

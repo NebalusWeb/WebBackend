@@ -3,18 +3,18 @@
 namespace Nebalus\Webapi\Repository\ReferralRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\ID;
-use Nebalus\Webapi\Value\Referral\Referral;
-use Nebalus\Webapi\Value\Referral\Referrals;
+use Nebalus\Webapi\Value\Module\Referral\Referral;
+use Nebalus\Webapi\Value\Module\Referral\ReferralId;
+use Nebalus\Webapi\Value\Module\Referral\Referrals;
 use Redis;
 use RedisException;
 
-class RedisReferralCachingRepository
+readonly class RedisReferralCachingRepository
 {
-    public const string HASH_KEY = 'referral_items';
+    public const string HASH_KEY = 'referrals';
 
     public function __construct(
-        private readonly Redis $redis,
+        private Redis $redis,
     ) {
     }
 
@@ -30,7 +30,7 @@ class RedisReferralCachingRepository
         }
     }
 
-    public function deleteReferral(ID $referralId): void
+    public function deleteReferral(ReferralId $referralId): void
     {
         try {
             $this->redis->hdel(self::HASH_KEY, $referralId->asString());
@@ -51,7 +51,7 @@ class RedisReferralCachingRepository
         return false;
     }
 
-    public function getReferral(ID $referralId): ?Referral
+    public function getReferral(ReferralId $referralId): ?Referral
     {
         try {
             $itemData = $this->redis->hget(self::HASH_KEY, $referralId->asString());

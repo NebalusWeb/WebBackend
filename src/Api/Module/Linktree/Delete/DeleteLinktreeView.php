@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api\Module\Linktree\Delete;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 
@@ -11,6 +12,6 @@ class DeleteLinktreeView
     {
         $fields = [];
 
-        return Result::createSuccess("PLACEHOLDER", 200, $fields);
+        return Result::createSuccess("PLACEHOLDER", StatusCodeInterface::STATUS_OK, $fields);
     }
 }
