@@ -46,8 +46,8 @@ readonly class RegisterUserService
 
         $preUser = User::create($validator->getUsername(), $validator->getUserEmail(), $validator->getUserPassword());
 
-        $createdUser = $this->mySqlUserRepository->registerUser($preUser, $invitationToken);
+        $this->mySqlUserRepository->registerUser($preUser, $invitationToken);
 
-        return RegisterUserView::render($createdUser);
+        return RegisterUserView::render();
     }
 }

@@ -71,7 +71,7 @@ readonly class Result implements ResultInterface
 
     public function getPayloadAsJson(): string
     {
-        return json_encode($this->payload, JSON_PRETTY_PRINT);
+        return json_encode($this->payload);
     }
 
     public function getMessage(): ?string

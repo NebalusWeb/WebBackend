@@ -2,14 +2,14 @@
 
 namespace Nebalus\Webapi\Value\User;
 
+use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Utils\Sanitizr\Sanitizr;
 
 readonly class Username
 {
     public const int MIN_LENGTH = 4;
-    public const int MAX_LENGTH = 25;
+    public const int MAX_LENGTH = 16;
     public const string REGEX = '/^[a-zA-Z]+$/';
 
     private function __construct(

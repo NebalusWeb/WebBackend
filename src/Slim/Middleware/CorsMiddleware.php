@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim\Middleware;
 
-use Nebalus\Webapi\Option\EnvData;
+use Nebalus\Webapi\Option\GeneralEnv;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
@@ -15,7 +15,7 @@ readonly class CorsMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private App $app,
-        private EnvData $env
+        private GeneralEnv $env
     ) {
     }
 
@@ -33,7 +33,8 @@ readonly class CorsMiddleware implements MiddlewareInterface
         return $response
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('Access-Control-Allow-Origin', $this->env->getAccessControlAllowOrigin())
-            ->withHeader('Access-Control-Allow-Methods', 'Authorization')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+            ->withHeader('Access-Control-Allow-Headers', 'Authorization')
+            ->withHeader('Access-Control-Max-Age', '86400');
     }
 }

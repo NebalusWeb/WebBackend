@@ -19,7 +19,7 @@ readonly class GetAllReferralService
      */
     public function execute(User $user): ResultInterface
     {
-        $referrals = $this->referralRepository->getReferralsFromOwnerId($user->getUserId());
+        $referrals = $this->referralRepository->getReferralsFromOwner($user->getUserId());
         return GetAllReferralView::render($referrals);
     }
 }
