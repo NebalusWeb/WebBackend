@@ -82,7 +82,7 @@ readonly class AuthMiddleware implements MiddlewareInterface
 
     private function denyRequest(string $errorMessage): Response
     {
-        $apiResponse = Result::createError($errorMessage, StatusCodeInterface::STATUS_ACCEPTED);
+        $apiResponse = Result::createError($errorMessage, StatusCodeInterface::STATUS_UNAUTHORIZED);
         $response = $this->app->getResponseFactory()->createResponse();
         $response->getBody()->write($apiResponse->getPayloadAsJson());
         return $response;
