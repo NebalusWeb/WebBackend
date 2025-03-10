@@ -15,7 +15,7 @@ readonly class Referral
 {
     private function __construct(
         private ReferralId $referralId,
-        private UserId $ownerUserId,
+        private UserId $ownerId,
         private ReferralCode $code,
         private Url $url,
         private ReferralName $name,
@@ -38,7 +38,7 @@ readonly class Referral
         }
 
         $referralId = ReferralId::from($data["referral_id"]);
-        $ownerUserId = UserId::from($data["owner_user_id"]);
+        $ownerId = UserId::from($data["owner_id"]);
         $code = ReferralCode::from($data["code"]);
         $url = Url::from($data["url"]);
         $name = ReferralName::from($data["name"]);
@@ -46,7 +46,7 @@ readonly class Referral
 
         return new self(
             $referralId,
-            $ownerUserId,
+            $ownerId,
             $code,
             $url,
             $name,
@@ -59,7 +59,7 @@ readonly class Referral
     {
         return [
             "referral_id" => $this->referralId->asInt(),
-            "owner_user_id" => $this->ownerUserId->asInt(),
+            "owner_id" => $this->ownerId->asInt(),
             "code" => $this->code->asString(),
             "url" => $this->url->asString(),
             "name" => $this->name->asString(),
@@ -73,9 +73,9 @@ readonly class Referral
     {
         return $this->referralId;
     }
-    public function getOwnerUserId(): UserId
+    public function getOwnerId(): UserId
     {
-        return $this->ownerUserId;
+        return $this->ownerId;
     }
     public function getCode(): ReferralCode
     {
