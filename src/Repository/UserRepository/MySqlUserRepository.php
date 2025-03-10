@@ -29,7 +29,7 @@ readonly class MySqlUserRepository
         $this->pdo->beginTransaction();
         $newUser = $this->insertUser($user);
         $newAccount = $this->accountRepository->insertAccount($newUser->getUserId());
-        $preInvitationToken = $invitationToken->setInvitedAccountId($newAccount);
+        $preInvitationToken = $invitationToken->setInvitedId($newAccount);
         $this->accountRepository->updateInvitationToken($preInvitationToken);
         $this->pdo->commit();
         return $newUser;

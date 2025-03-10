@@ -23,13 +23,7 @@ class RegisterUserValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::BODY => S::object([
-                'invitation_token' => S::object([
-                    "field_1" => S::number()->integer()->gte(0)->lte(9999),
-                    "field_2" => S::number()->integer()->gte(0)->lte(9999),
-                    "field_3" => S::number()->integer()->gte(0)->lte(9999),
-                    "field_4" => S::number()->integer()->gte(0)->lte(9999),
-                    "checksum" => S::number()->integer()->gte(0)->lte(9999),
-                ]),
+                'invitation_token' => S::string()->regex(PureInvitationToken::REGEX),
                 'email' => S::string()->email(),
                 'username' => S::string(),
                 'password' => S::string(),
@@ -42,13 +36,7 @@ class RegisterUserValidator extends AbstractValidator
      */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->pureInvitationToken = PureInvitationToken::from(
-            InvitationTokenField::from($bodyData["invitation_token"]["field_1"]),
-            InvitationTokenField::from($bodyData["invitation_token"]["field_2"]),
-            InvitationTokenField::from($bodyData["invitation_token"]["field_3"]),
-            InvitationTokenField::from($bodyData["invitation_token"]["field_4"]),
-            InvitationTokenField::from($bodyData["invitation_token"]["checksum"])
-        );
+        $this->pureInvitationToken = PureInvitationToken::from($bodyData["invitation_token"]);
         $this->userEmail = UserEmail::from($bodyData["email"]);
         $this->username = UserName::from($bodyData["username"]);
         $this->userPassword = UserPassword::fromPlain($bodyData["password"]);
