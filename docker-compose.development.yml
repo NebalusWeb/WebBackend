@@ -54,16 +54,6 @@ services:
     networks:
       - storage-net
 
-  redis-exporter:
-    image: oliver006/redis_exporter:latest
-    container_name: nebalus-web-api-redis-exporter
-    environment:
-      REDIS_ADDR: "redis:6379"
-    depends_on:
-      - redis
-    networks:
-      - storage-net
-
 networks:
   backend-net:
     name: nebalus-web-backend-development-net

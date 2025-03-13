@@ -6,6 +6,8 @@ namespace Nebalus\Webapi\Api\User\Auth;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Exception\ApiException;
+use Prometheus\CollectorRegistry;
+use Prometheus\Exception\MetricsRegistrationException;
 use ReallySimpleJWT\Exception\BuildException;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
@@ -14,15 +16,18 @@ class AuthUserAction extends AbstractAction
 {
     public function __construct(
         private readonly AuthUserValidator $validator,
-        private readonly AuthUserService $service
+        private readonly AuthUserService $service,
+        private readonly CollectorRegistry $metricRegistry,
     ) {
     }
 
     /**
      * @throws ApiException|BuildException
+     * @throws MetricsRegistrationException
      */
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
+        $this->metricRegistry->getOrRegisterCounter('auth', 'test', 'TEST METRIC', [])->inc();
         $this->validator->validate($request, $pathArgs);
 
         $result = $this->service->execute($this->validator);
