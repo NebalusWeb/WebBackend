@@ -9,6 +9,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Routing\RouteContext;
+use Throwable;
 
 readonly class MetricsMiddleware implements MiddlewareInterface
 {
@@ -22,8 +24,20 @@ readonly class MetricsMiddleware implements MiddlewareInterface
         $response = $handler->handle($request);
 
         try {
-            $this->metricRegistry->getOrRegisterCounter("backend", "api_endpoint", "Total number of requests", ["scheme", "methode", "path", "code"])->inc([$request->getUri()->getScheme(), $request->getMethod(), $request->getUri()->getPath(), $response->getStatusCode()]);
-        } catch (MetricsRegistrationException) {
+            $routeContext = RouteContext::fromRequest($request);
+            $route = $routeContext->getRoute();
+            $this->metricRegistry->getOrRegisterCounter(
+                "backend",
+                "api_endpoint",
+                "Total number of requests handled by the API",
+                ["scheme", "methode", "path", "code"]
+            )->inc([
+                $request->getUri()->getScheme(),
+                $request->getMethod(),
+                $route->getPattern(),
+                $response->getStatusCode()
+            ]);
+        } catch (Throwable) {
         }
 
         return $response;
