@@ -22,6 +22,7 @@ use Nebalus\Webapi\Api\User\Register\RegisterUserAction;
 use Nebalus\Webapi\Option\GeneralEnv;
 use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
+use Nebalus\Webapi\Slim\Middleware\MetricsMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
