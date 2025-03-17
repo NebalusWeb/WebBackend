@@ -85,6 +85,6 @@ readonly class AuthMiddleware implements MiddlewareInterface
         $apiResponse = Result::createError($errorMessage, StatusCodeInterface::STATUS_UNAUTHORIZED);
         $response = $this->app->getResponseFactory()->createResponse();
         $response->getBody()->write($apiResponse->getPayloadAsJson());
-        return $response;
+        return $response->withStatus($apiResponse->getStatusCode());
     }
 }

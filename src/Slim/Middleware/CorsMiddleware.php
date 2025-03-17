@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Slim\Middleware;
 
 use Nebalus\Webapi\Option\GeneralEnv;
+use Override;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
@@ -19,7 +20,7 @@ readonly class CorsMiddleware implements MiddlewareInterface
     ) {
     }
 
-    public function process(Request $request, RequestHandler $handler): Response
+    #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
         if ($request->getMethod() === 'OPTIONS') {
             return $this->withCorsHeaders($this->app->getResponseFactory()->createResponse());
@@ -30,8 +31,11 @@ readonly class CorsMiddleware implements MiddlewareInterface
 
     private function withCorsHeaders(Response $response): Response
     {
+        if ($response->hasHeader('Content-Type') === false) {
+            $response = $response->withHeader('Content-Type', 'application/json');
+        }
+
         return $response
-            ->withHeader('Content-Type', 'application/json')
             ->withHeader('Access-Control-Allow-Origin', $this->env->getAccessControlAllowOrigin())
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
             ->withHeader('Access-Control-Allow-Headers', 'Authorization')
