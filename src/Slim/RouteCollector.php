@@ -36,6 +36,7 @@ readonly class RouteCollector
 
     public function init(): void
     {
+        $this->app->add(MetricsMiddleware::class);
         $this->app->addRoutingMiddleware();
         $this->app->addBodyParsingMiddleware();
         $this->app->add(CorsMiddleware::class);
