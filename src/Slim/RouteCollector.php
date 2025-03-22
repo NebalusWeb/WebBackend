@@ -19,7 +19,7 @@ use Nebalus\Webapi\Api\Module\Referral\GetAll\GetAllReferralAction;
 use Nebalus\Webapi\Api\User\Auth\AuthUserAction;
 use Nebalus\Webapi\Api\User\GetPrivileges\GetPrivilegesUserAction;
 use Nebalus\Webapi\Api\User\Register\RegisterUserAction;
-use Nebalus\Webapi\Option\GeneralEnv;
+use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
 use Nebalus\Webapi\Slim\Middleware\MetricsMiddleware;
@@ -30,7 +30,7 @@ readonly class RouteCollector
 {
     public function __construct(
         private App $app,
-        private GeneralEnv $env
+        private GeneralConfig $env
     ) {
     }
 

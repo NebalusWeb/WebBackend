@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Option;
+namespace Nebalus\Webapi\Config;
 
 use Monolog\Level;
 
-class GeneralEnv
+class GeneralConfig
 {
     private bool $isProduction;
     private bool $isDevelopment;
