@@ -1,8 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\Option;
+namespace Nebalus\Webapi\Config;
 
-class RedisEnv
+class RedisConfig
 {
     private string $redisHost;
     private string $redisPort;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\Option;
+namespace Nebalus\Webapi\Config;
 
-class MySqlEnv
+class MySqlConfig
 {
 
     private string $mysqlPasswd;

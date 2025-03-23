@@ -13,6 +13,7 @@ class MetricsAction extends AbstractAction
 {
     public function __construct(
         private RenderTextFormat $renderTextFormat,
+        private CollectorRegistry $registry,
     ) {
     }
 
@@ -21,10 +22,8 @@ class MetricsAction extends AbstractAction
      */
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
-        $registry = CollectorRegistry::getDefault();
-        $result = $this->renderTextFormat->render($registry->getMetricFamilySamples());
+        $result = $this->renderTextFormat->render($this->registry->getMetricFamilySamples());
         $response->getBody()->write($result);
-
-        return $response;
+        return $response->withHeader('Content-Type', RenderTextFormat::MIME_TYPE);
     }
 }
