@@ -23,11 +23,9 @@ class AuthUserAction extends AbstractAction
 
     /**
      * @throws ApiException|BuildException
-     * @throws MetricsRegistrationException
      */
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
-        $this->metricRegistry->getOrRegisterCounter('auth', 'test', 'TEST METRIC', [])->inc();
         $this->validator->validate($request, $pathArgs);
 
         $result = $this->service->execute($this->validator);
