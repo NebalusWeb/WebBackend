@@ -6,14 +6,14 @@ use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
-use Nebalus\Webapi\Value\Module\Referral\ReferralName;
+use Nebalus\Webapi\Value\Module\Referral\ReferralLabel;
 use Nebalus\Webapi\Value\Url;
 
 class EditReferralValidator extends AbstractValidator
 {
-    private ReferralCode $referralCode;
+    private ReferralCode $code;
     private Url $url;
-    private ReferralName $name;
+    private ReferralLabel $label;
     private bool $disabled;
 
     public function __construct()
@@ -24,7 +24,7 @@ class EditReferralValidator extends AbstractValidator
             ]),
             RequestParamTypes::BODY => S::object([
                 'url' => S::string()->url(),
-                'name' => S::string()->nullable(),
+                'label' => S::string()->nullable(),
                 'disabled' => S::boolean()->optional()->default(false),
             ])
         ]));
@@ -32,15 +32,15 @@ class EditReferralValidator extends AbstractValidator
 
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->referralCode = ReferralCode::from($pathArgsData['code']);
+        $this->code = ReferralCode::from($pathArgsData['code']);
         $this->url = Url::from($bodyData['url']);
-        $this->name = ReferralName::from($bodyData['name']);
+        $this->label = ReferralLabel::from($bodyData['label']);
         $this->disabled = $bodyData['disabled'];
     }
 
-    public function getReferralCode(): ReferralCode
+    public function getCode(): ReferralCode
     {
-        return $this->referralCode;
+        return $this->code;
     }
 
     public function getUrl(): Url
@@ -48,9 +48,9 @@ class EditReferralValidator extends AbstractValidator
         return $this->url;
     }
 
-    public function getName(): ReferralName
+    public function getLabel(): ReferralLabel
     {
-        return $this->name;
+        return $this->label;
     }
 
     public function isDisabled(): bool

@@ -16,7 +16,7 @@ class GetAllReferralView
             $fields[] = [
                 "code" => $referral->getCode()->asString(),
                 "url" => $referral->getUrl()->asString(),
-                "name" => $referral->getName()->asString(),
+                "label" => $referral->getLabel()->asString(),
                 "disabled" => $referral->isDisabled(),
                 "created_at" => $referral->getCreatedAtDate()->format(DATE_ATOM),
                 "updated_at" => $referral->getUpdatedAtDate()->format(DATE_ATOM),
