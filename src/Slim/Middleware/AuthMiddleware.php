@@ -6,7 +6,7 @@ namespace Nebalus\Webapi\Slim\Middleware;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Option\GeneralEnv;
+use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\User\UserId;
@@ -23,7 +23,7 @@ readonly class AuthMiddleware implements MiddlewareInterface
     public function __construct(
         private App $app,
         private MySqlUserRepository $userRepository,
-        private GeneralEnv $env
+        private GeneralConfig $env
     ) {
     }
 
@@ -85,6 +85,6 @@ readonly class AuthMiddleware implements MiddlewareInterface
         $apiResponse = Result::createError($errorMessage, StatusCodeInterface::STATUS_UNAUTHORIZED);
         $response = $this->app->getResponseFactory()->createResponse();
         $response->getBody()->write($apiResponse->getPayloadAsJson());
-        return $response;
+        return $response->withStatus($apiResponse->getStatusCode());
     }
 }

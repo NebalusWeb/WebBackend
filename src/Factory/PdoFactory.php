@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Factory;
 
-use Nebalus\Webapi\Option\GeneralEnv;
-use Nebalus\Webapi\Option\MySqlEnv;
+use Nebalus\Webapi\Config\GeneralConfig;
+use Nebalus\Webapi\Config\MySqlConfig;
 use PDO;
 
 readonly class PdoFactory
 {
     public function __construct(
-        private MySqlEnv $mySqlEnv
+        private MySqlConfig $mySqlEnv
     ) {
     }
 

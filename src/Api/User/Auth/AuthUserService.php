@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Api\User\Auth;
 
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Option\GeneralEnv;
+use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
@@ -16,7 +16,7 @@ readonly class AuthUserService
 {
     public function __construct(
         private MySqlUserRepository $mySqlUserRepository,
-        private GeneralEnv $envData
+        private GeneralConfig $envData
     ) {
     }
 

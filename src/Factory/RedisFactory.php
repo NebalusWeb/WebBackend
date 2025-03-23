@@ -2,14 +2,14 @@
 
 namespace Nebalus\Webapi\Factory;
 
-use Nebalus\Webapi\Option\GeneralEnv;
-use Nebalus\Webapi\Option\RedisEnv;
+use Nebalus\Webapi\Config\GeneralConfig;
+use Nebalus\Webapi\Config\RedisConfig;
 use Redis;
 
 readonly class RedisFactory
 {
     public function __construct(
-        private RedisEnv $redisEnv
+        private RedisConfig $redisEnv
     ) {
     }
 
