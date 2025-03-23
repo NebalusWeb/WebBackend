@@ -11,7 +11,7 @@ use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClicks;
 use Nebalus\Webapi\Value\Module\Referral\Referral;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Module\Referral\ReferralId;
-use Nebalus\Webapi\Value\Module\Referral\ReferralName;
+use Nebalus\Webapi\Value\Module\Referral\ReferralLabel;
 use Nebalus\Webapi\Value\Module\Referral\Referrals;
 use Nebalus\Webapi\Value\Url;
 use Nebalus\Webapi\Value\User\UserId;
@@ -25,20 +25,20 @@ readonly class MySqlReferralRepository
     ) {
     }
 
-    public function insertReferral(UserId $ownerId, ReferralCode $code, Url $url, ReferralName $name, bool $disabled = true): bool
+    public function insertReferral(UserId $ownerId, ReferralCode $code, Url $url, ReferralLabel $label, bool $disabled = true): bool
     {
         $sql = <<<SQL
             INSERT INTO referrals
-                (owner_id, code, url, name, disabled)
+                (owner_id, code, url, label, disabled)
             VALUES 
-                (:owner_id, :code, :url, :name, :disabled)
+                (:owner_id, :code, :url, :label, :disabled)
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':owner_id', $ownerId->asInt());
         $stmt->bindValue(':code', $code->asString());
         $stmt->bindValue(':url', $url->asString());
-        $stmt->bindValue(':name', $name->asString());
+        $stmt->bindValue(':label', $label->asString());
         $stmt->bindValue(':disabled', $disabled, PDO::PARAM_BOOL);
         return $stmt->execute();
     }
@@ -127,13 +127,13 @@ readonly class MySqlReferralRepository
     /**
      * @throws ApiException
      */
-    public function updateReferralFromOwner(UserId $ownerId, ReferralCode $code, Url $url, ReferralName $name, bool $disabled): ?Referral
+    public function updateReferralFromOwner(UserId $ownerId, ReferralCode $code, Url $url, ReferralLabel $label, bool $disabled): ?Referral
     {
         $sql = <<<SQL
             UPDATE referrals 
             SET 
                 url = :url, 
-                name = :name, 
+                label = :label, 
                 disabled = :disabled 
             WHERE 
                 owner_id = :owner_id 
@@ -142,7 +142,7 @@ readonly class MySqlReferralRepository
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':url', $url->asString());
-        $stmt->bindValue(':name', $name->asString());
+        $stmt->bindValue(':label', $label->asString());
         $stmt->bindValue(':disabled', $disabled, PDO::PARAM_BOOL);
         $stmt->bindValue(':owner_id', $ownerId->asInt(), PDO::PARAM_INT);
         $stmt->bindValue(':code', $code->asString());

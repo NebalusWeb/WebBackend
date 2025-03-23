@@ -22,7 +22,7 @@ readonly class EditReferralService
      */
     public function execute(EditReferralValidator $validator, User $user): ResultInterface
     {
-        $updatedReferral = $this->referralRepository->updateReferralFromOwner($user->getUserId(), $validator->getReferralCode(), $validator->getUrl(), $validator->getName(), $validator->isDisabled());
+        $updatedReferral = $this->referralRepository->updateReferralFromOwner($user->getUserId(), $validator->getCode(), $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
 
         if ($updatedReferral instanceof Referral) {
             return EditReferralView::render($updatedReferral);

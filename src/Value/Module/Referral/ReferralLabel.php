@@ -6,7 +6,7 @@ use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class ReferralName
+class ReferralLabel
 {
     public const int MAX_LENGTH = 32;
     public const string REGEX = '/^[a-zA-Z0-9 !@#$%^&*]*$/';

@@ -18,7 +18,7 @@ readonly class Referral
         private UserId $ownerId,
         private ReferralCode $code,
         private Url $url,
-        private ReferralName $name,
+        private ReferralLabel $label,
         private bool $disabled,
         private DateTimeImmutable $createdAtDate,
         private DateTimeImmutable $updatedAtDate,
@@ -41,7 +41,7 @@ readonly class Referral
         $ownerId = UserId::from($data["owner_id"]);
         $code = ReferralCode::from($data["code"]);
         $url = Url::from($data["url"]);
-        $name = ReferralName::from($data["name"]);
+        $label = ReferralLabel::from($data["label"]);
         $disabled = (bool) $data["disabled"];
 
         return new self(
@@ -49,7 +49,7 @@ readonly class Referral
             $ownerId,
             $code,
             $url,
-            $name,
+            $label,
             $disabled,
             $createdAtDate,
             $updatedAtDate
@@ -62,7 +62,7 @@ readonly class Referral
             "owner_id" => $this->ownerId->asInt(),
             "code" => $this->code->asString(),
             "url" => $this->url->asString(),
-            "name" => $this->name->asString(),
+            "label" => $this->label->asString(),
             "disabled" => $this->disabled,
             "created_at" => $this->createdAtDate->format(DATE_ATOM),
             "updated_at" => $this->updatedAtDate->format(DATE_ATOM),
@@ -85,9 +85,9 @@ readonly class Referral
     {
         return $this->url;
     }
-    public function getName(): ReferralName
+    public function getLabel(): ReferralLabel
     {
-        return $this->name;
+        return $this->label;
     }
     public function isDisabled(): bool
     {
