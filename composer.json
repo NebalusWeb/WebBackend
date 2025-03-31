@@ -1,6 +1,6 @@
 {
-    "name": "nebalus/webapi",
-    "description": "The web api for 'https://api.nebalus.dev'",
+    "name": "nebalus/webbackend",
+    "description": "The web backend for 'https://api.nebalus.dev'",
     "keywords": [
         "web",
         "api",
