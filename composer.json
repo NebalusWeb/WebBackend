@@ -1,6 +1,8 @@
 {
     "name": "nebalus/webbackend",
     "description": "The web backend for 'https://api.nebalus.dev'",
+    "license": "MIT",
+    "type": "project",
     "keywords": [
         "web",
         "api",
