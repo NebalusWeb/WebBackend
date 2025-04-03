@@ -8,7 +8,7 @@ use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 
 class GetLinktreeView
 {
-    public static function render(): ResultInterface
+    public function render(): ResultInterface
     {
         $fields = [];
 

@@ -8,7 +8,7 @@ use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 
 class DeleteReferralView
 {
-    public static function render(): ResultInterface
+    public function render(): ResultInterface
     {
         return Result::createSuccess("Referral deleted", StatusCodeInterface::STATUS_OK);
     }

@@ -9,7 +9,7 @@ use Nebalus\Webapi\Value\Module\Referral\Referrals;
 
 class GetAllReferralView
 {
-    public static function render(Referrals $referrals): ResultInterface
+    public function render(Referrals $referrals): ResultInterface
     {
         $fields = [];
         foreach ($referrals as $referral) {

@@ -12,7 +12,8 @@ use Nebalus\Webapi\Value\User\User;
 readonly class GetReferralService
 {
     public function __construct(
-        private MySQlReferralRepository $referralRepository
+        private MySQlReferralRepository $referralRepository,
+        private GetReferralView $view,
     ) {
     }
 
@@ -27,6 +28,6 @@ readonly class GetReferralService
             return Result::createError('Referral does not exist', StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        return GetReferralView::render($referral);
+        return $this->view->render($referral);
     }
 }

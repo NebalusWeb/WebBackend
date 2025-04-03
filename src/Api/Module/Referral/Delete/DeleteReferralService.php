@@ -11,14 +11,15 @@ use Nebalus\Webapi\Value\User\User;
 readonly class DeleteReferralService
 {
     public function __construct(
-        private MySQlReferralRepository $referralRepository
+        private MySQlReferralRepository $referralRepository,
+        private DeleteReferralView $view,
     ) {
     }
 
     public function execute(DeleteReferralValidator $validator, User $user): ResultInterface
     {
         if ($this->referralRepository->deleteReferralByCodeFromOwner($user->getUserId(), $validator->getReferralCode())) {
-            return DeleteReferralView::render();
+            return $this->view->render();
         }
 
         return Result::createError('Referral does not exist', StatusCodeInterface::STATUS_NOT_FOUND);

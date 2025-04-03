@@ -6,12 +6,14 @@ use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 
 readonly class CreateLinktreeService
 {
-    public function __construct()
+    public function __construct(
+        private CreateLinktreeView $view,
+    )
     {
     }
 
-    public function execute(array $params): ResultInterface
+    public function execute(CreateLinktreeValidator $validator): ResultInterface
     {
-        return CreateLinktreeView::render();
+        return $this->view->render();
     }
 }
