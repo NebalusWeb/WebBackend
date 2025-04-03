@@ -17,7 +17,6 @@ class AuthUserAction extends AbstractAction
     public function __construct(
         private readonly AuthUserValidator $validator,
         private readonly AuthUserService $service,
-        private readonly CollectorRegistry $metricRegistry,
     ) {
     }
 

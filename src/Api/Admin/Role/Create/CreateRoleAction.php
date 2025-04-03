@@ -2,7 +2,14 @@
 
 namespace Nebalus\Webapi\Api\Admin\Role\Create;
 
-class CreateRoleAction
-{
+use Nebalus\Webapi\Api\AbstractAction;
+use Slim\Http\Response;
+use Slim\Http\ServerRequest as Request;
 
+class CreateRoleAction extends AbstractAction
+{
+    protected function execute(Request $request, Response $response, array $pathArgs): Response
+    {
+        // TODO: Implement execute() method.
+    }
 }
