@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim;
 
+use Nebalus\Webapi\Api\Admin\Privilege\Get\GetPrivilegeAction;
+use Nebalus\Webapi\Api\Admin\Privilege\GetAll\GetAllPrivilegeAction;
+use Nebalus\Webapi\Api\Admin\Role\Create\CreateRoleAction;
+use Nebalus\Webapi\Api\Admin\Role\Delete\DeleteRoleAction;
+use Nebalus\Webapi\Api\Admin\Role\Edit\EditRoleAction;
+use Nebalus\Webapi\Api\Admin\Role\Get\GetRoleAction;
+use Nebalus\Webapi\Api\Admin\Role\GetAll\GetAllRoleService;
 use Nebalus\Webapi\Api\Metrics\MetricsAction;
 use Nebalus\Webapi\Api\Module\Linktree\Click\ClickLinktreeAction;
 use Nebalus\Webapi\Api\Module\Linktree\Delete\DeleteLinktreeAction;
@@ -55,7 +62,20 @@ readonly class RouteCollector
             $group->map(["POST"], "/auth", AuthUserAction::class);
             $group->map(["POST"], "/register", RegisterUserAction::class);
             $group->group("/admin", function (RouteCollectorProxy $group) {
-                $group->group("/role/{roleName}", function (RouteCollectorProxy $group) {
+                $group->group("/privilege", function (RouteCollectorProxy $group) {
+                    $group->map(["GET"], "/all", GetAllPrivilegeAction::class);
+                    $group->group("/{privilegeNode}", function (RouteCollectorProxy $group) {
+                        $group->map(["GET"], "", GetPrivilegeAction::class);
+                    });
+                });
+                $group->group("/role", function (RouteCollectorProxy $group) {
+                    $group->map(["POST"], "", CreateRoleAction::class);
+                    $group->map(["GET"], "/all", GetAllRoleService::class);
+                    $group->group("/{roleName}", function (RouteCollectorProxy $group) {
+                        $group->map(["GET"], "", GetRoleAction::class);
+                        $group->map(["PUT"], "", EditRoleAction::class);
+                        $group->map(["DELETE"], "", DeleteRoleAction::class);
+                    });
                 });
                 $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 });
