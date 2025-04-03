@@ -17,7 +17,7 @@ use Nebalus\Webapi\Api\Module\Referral\Edit\EditReferralAction;
 use Nebalus\Webapi\Api\Module\Referral\Get\GetReferralAction;
 use Nebalus\Webapi\Api\Module\Referral\GetAll\GetAllReferralAction;
 use Nebalus\Webapi\Api\User\Auth\AuthUserAction;
-use Nebalus\Webapi\Api\User\GetPrivileges\GetPrivilegesUserAction;
+use Nebalus\Webapi\Api\User\GetUserPrivileges\GetUserPrivilegesAction;
 use Nebalus\Webapi\Api\User\Register\RegisterUserAction;
 use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
@@ -61,7 +61,7 @@ readonly class RouteCollector
                 });
             })->add(AuthMiddleware::class);
             $group->group("/user", function (RouteCollectorProxy $group) {
-                $group->map(["GET"], "/privileges", GetPrivilegesUserAction::class);
+                $group->map(["GET"], "/privileges", GetUserPrivilegesAction::class);
                 $group->group("/services", function (RouteCollectorProxy $group) {
                     $group->group("/invitation_tokens", function (RouteCollectorProxy $group) {
                     });

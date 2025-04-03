@@ -9,7 +9,7 @@ use Nebalus\Webapi\Value\Module\Referral\Referral;
 
 class EditReferralView
 {
-    public static function render(Referral $referral): ResultInterface
+    public function render(Referral $referral): ResultInterface
     {
         $fields = [
             "code" => $referral->getCode()->asString(),

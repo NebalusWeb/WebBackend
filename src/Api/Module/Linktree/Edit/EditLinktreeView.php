@@ -8,7 +8,7 @@ use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 
 class EditLinktreeView
 {
-    public static function render(): ResultInterface
+    public function render(): ResultInterface
     {
         $fields = [];
 

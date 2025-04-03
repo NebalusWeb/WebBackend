@@ -35,7 +35,7 @@ readonly class AuthMiddleware implements MiddlewareInterface
         $authHeader = $request->getHeader('Authorization');
 
         if (empty($authHeader)) {
-            return $this->denyRequest('Missing "Authorization" header');
+            return $this->denyRequest("Missing 'Authorization' header");
         }
 
         return $this->processJwt($authHeader[0], $request, $handler);

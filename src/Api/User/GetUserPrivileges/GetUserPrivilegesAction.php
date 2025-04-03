@@ -1,13 +1,18 @@
 <?php
 
-namespace Nebalus\Webapi\Api\User\GetPrivileges;
+namespace Nebalus\Webapi\Api\User\GetUserPrivileges;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
 
-class GetPrivilegesUserAction extends AbstractAction
+class GetUserPrivilegesAction extends AbstractAction
 {
+    public function __construct(
+        private readonly GetUserPrivilegesService   $service,
+        private readonly GetUserPrivilegesValidator $validator
+    ) {
+    }
 
     /**
      * @inheritDoc

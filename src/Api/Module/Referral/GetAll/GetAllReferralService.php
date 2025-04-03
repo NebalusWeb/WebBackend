@@ -10,7 +10,8 @@ use Nebalus\Webapi\Value\User\User;
 readonly class GetAllReferralService
 {
     public function __construct(
-        private MySqlReferralRepository $referralRepository
+        private MySqlReferralRepository $referralRepository,
+        private GetAllReferralView $view,
     ) {
     }
 
@@ -20,6 +21,6 @@ readonly class GetAllReferralService
     public function execute(User $user): ResultInterface
     {
         $referrals = $this->referralRepository->getReferralsFromOwner($user->getUserId());
-        return GetAllReferralView::render($referrals);
+        return $this->view->render($referrals);
     }
 }
