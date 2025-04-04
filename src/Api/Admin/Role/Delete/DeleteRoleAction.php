@@ -8,6 +8,17 @@ use Slim\Http\ServerRequest as Request;
 
 class DeleteRoleAction extends AbstractAction
 {
+    public function __construct(
+        private readonly DeleteRoleService $service,
+        private readonly DeleteRoleValidator $validator
+    ) {
+    }
+
+    protected function privilegeCheck(): bool
+    {
+        // TODO: Implement privilegeCheck() method.
+    }
+
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         // TODO: Implement execute() method.

@@ -23,7 +23,7 @@ readonly class Role
         bool $deletable,
         DateTimeImmutable $createdAtDate,
         DateTimeImmutable $updatedAtDate
-    ) {
+    ): self {
         return new self(
             $roleId,
             $roleName,
@@ -32,5 +32,35 @@ readonly class Role
             $createdAtDate,
             $updatedAtDate
         );
+    }
+
+    public function getRoleId(): ?RoleId
+    {
+        return $this->roleId;
+    }
+
+    public function getName(): RoleName
+    {
+        return $this->roleName;
+    }
+
+    public function isApplyOnUserCreation(): bool
+    {
+        return $this->applyOnUserCreation;
+    }
+
+    public function isDeletable(): bool
+    {
+        return $this->deletable;
+    }
+
+    public function getCreatedAtDate(): DateTimeImmutable
+    {
+        return $this->createdAtDate;
+    }
+
+    public function getUpdatedAtDate(): DateTimeImmutable
+    {
+        return $this->updatedAtDate;
     }
 }
