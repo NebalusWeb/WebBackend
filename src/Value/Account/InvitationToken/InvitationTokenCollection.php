@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Value\Account\InvitationToken;
 use IteratorAggregate;
 use Traversable;
 
-class InvitationTokens implements IteratorAggregate
+class InvitationTokenCollection implements IteratorAggregate
 {
     private array $invitationsTokens;
 

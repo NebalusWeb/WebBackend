@@ -15,6 +15,11 @@ class RegisterUserAction extends AbstractAction
     ) {
     }
 
+    protected function privilegeCheck(User ): bool
+    {
+        // TODO: Implement privilegeCheck() method.
+    }
+
     /**
      * @throws ApiException
      */

@@ -5,11 +5,11 @@ namespace Nebalus\Webapi\Api\Module\Referral\GetAll;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
-use Nebalus\Webapi\Value\Module\Referral\Referrals;
+use Nebalus\Webapi\Value\Module\Referral\ReferralCollection;
 
 class GetAllReferralView
 {
-    public function render(Referrals $referrals): ResultInterface
+    public function render(ReferralCollection $referrals): ResultInterface
     {
         $fields = [];
         foreach ($referrals as $referral) {

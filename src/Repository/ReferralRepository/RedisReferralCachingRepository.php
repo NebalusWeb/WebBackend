@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Repository\ReferralRepository;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Module\Referral\Referral;
 use Nebalus\Webapi\Value\Module\Referral\ReferralId;
-use Nebalus\Webapi\Value\Module\Referral\Referrals;
+use Nebalus\Webapi\Value\Module\Referral\ReferralCollection;
 use Redis;
 use RedisException;
 
@@ -64,7 +64,7 @@ readonly class RedisReferralCachingRepository
         return null;
     }
 
-    public function getAllReferrals(): Referrals
+    public function getAllReferrals(): ReferralCollection
     {
         try {
             $items = $this->redis->hgetall(self::HASH_KEY);
@@ -79,7 +79,7 @@ readonly class RedisReferralCachingRepository
             }
         }
 
-        return Referrals::fromArray(...$referrals);
+        return ReferralCollection::fromArray(...$referrals);
     }
 
     public function deleteAllItems(): void

@@ -6,12 +6,12 @@ use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClick;
-use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClicks;
+use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClickCollection;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 
 class ClickHistoryReferralView
 {
-    public function render(ReferralCode $referralCode, ReferralClicks $referralClicks): ResultInterface
+    public function render(ReferralCode $referralCode, ReferralClickCollection $referralClicks): ResultInterface
     {
         $history = [];
         foreach ($referralClicks as $referralClick) {

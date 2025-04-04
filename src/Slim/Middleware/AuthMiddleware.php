@@ -75,6 +75,7 @@ readonly class AuthMiddleware implements MiddlewareInterface
         }
 
         $request = $request->withAttribute("user", $user);
+        $request = $request->withAttribute("userPrivileges", $user);
         $request = $request->withAttribute("authType", "jwt");
 
         return $handler->handle($request);

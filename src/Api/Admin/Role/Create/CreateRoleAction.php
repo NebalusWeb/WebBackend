@@ -8,6 +8,18 @@ use Slim\Http\ServerRequest as Request;
 
 class CreateRoleAction extends AbstractAction
 {
+
+    public function __construct(
+        private readonly CreateRoleService $service,
+        private readonly CreateRoleValidator $validator
+    ) {
+    }
+
+    protected function privilegeCheck(): bool
+    {
+        // TODO: Implement privilegeCheck() method.
+    }
+
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         // TODO: Implement execute() method.

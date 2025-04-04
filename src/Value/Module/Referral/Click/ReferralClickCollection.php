@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Value\Module\Referral\Click;
 use IteratorAggregate;
 use Traversable;
 
-class ReferralClicks implements IteratorAggregate
+class ReferralClickCollection implements IteratorAggregate
 {
     private array $referralClicks;
 
