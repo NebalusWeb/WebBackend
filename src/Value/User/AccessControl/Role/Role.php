@@ -9,7 +9,7 @@ readonly class Role
     public function __construct(
         private ?RoleId $roleId,
         private RoleName $roleName,
-        private bool $applyOnUserCreation,
+        private bool $appliesToEveryone,
         private bool $deletable,
         private DateTimeImmutable $createdAtDate,
         private DateTimeImmutable $updatedAtDate,
@@ -19,7 +19,7 @@ readonly class Role
     public static function from(
         RoleId $roleId,
         RoleName $roleName,
-        bool $applyOnUserCreation,
+        bool $appliesToEveryone,
         bool $deletable,
         DateTimeImmutable $createdAtDate,
         DateTimeImmutable $updatedAtDate
@@ -27,7 +27,7 @@ readonly class Role
         return new self(
             $roleId,
             $roleName,
-            $applyOnUserCreation,
+            $appliesToEveryone,
             $deletable,
             $createdAtDate,
             $updatedAtDate
@@ -44,9 +44,9 @@ readonly class Role
         return $this->roleName;
     }
 
-    public function isApplyOnUserCreation(): bool
+    public function appliesToEveryone(): bool
     {
-        return $this->applyOnUserCreation;
+        return $this->appliesToEveryone;
     }
 
     public function isDeletable(): bool
