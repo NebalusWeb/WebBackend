@@ -1,4 +1,7 @@
 admin.role.manage - Can Manage Roles
+admin.role.create - Can Create Roles
+admin.role.delete - Can Delete Roles
+admin.role.edit - Can Edit Roles
 
 admin.user.manage - Can Manage Users
 
