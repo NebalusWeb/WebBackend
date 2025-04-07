@@ -2,7 +2,6 @@
 
 namespace Nebalus\Webapi\Api\Module\Linktree\Edit;
 
-use Nebalus\Webapi\Api\Module\Referral\Edit\EditReferralView;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 
 readonly class EditLinktreeService

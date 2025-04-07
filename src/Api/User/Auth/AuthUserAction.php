@@ -6,9 +6,7 @@ namespace Nebalus\Webapi\Api\User\Auth;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\User\User;
-use Prometheus\CollectorRegistry;
-use Prometheus\Exception\MetricsRegistrationException;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use ReallySimpleJWT\Exception\BuildException;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
@@ -21,8 +19,13 @@ class AuthUserAction extends AbstractAction
     ) {
     }
 
+    protected function privilegeConfig(): PrivilegeNodeCollection
+    {
+        return PrivilegeNodeCollection::fromArray();
+    }
+
     /**
-     * @throws ApiException|BuildException
+     * @throws ApiException | BuildException
      */
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
@@ -31,10 +34,5 @@ class AuthUserAction extends AbstractAction
         $result = $this->service->execute($this->validator);
 
         return $response->withJson($result->getPayload(), $result->getStatusCode());
-    }
-
-    protected function privilegeCheck(User $user): bool
-    {
-        // TODO: Implement privilegeCheck() method.
     }
 }

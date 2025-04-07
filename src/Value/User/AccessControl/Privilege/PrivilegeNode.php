@@ -9,7 +9,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 class PrivilegeNode
 {
     public const MAX_LENGTH = 128;
-    private const string REGEX = '/^[a-z.]+$/';
+    private const string REGEX = '/^[a-z.*]+$/';
 
     private function __construct(
         private string $node

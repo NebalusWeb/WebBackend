@@ -19,6 +19,14 @@ class PrivilegeCollection implements IteratorAggregate
         return new self(...$privileges);
     }
 
+    public function getNodeCollection(): PrivilegeNodeCollection
+    {
+        return PrivilegeNodeCollection::fromArray(...array_map(
+            fn(Privilege $privilege) => $privilege->getNode(),
+            $this->privileges
+        ));
+    }
+
     public function getIterator(): Traversable
     {
         yield from $this->privileges;
