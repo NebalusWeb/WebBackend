@@ -23,7 +23,7 @@ abstract class AbstractAction
             if ($authType === 'jwt') {
                 $userPrivileges = $request->getAttribute('userPrivileges');
                 if ($userPrivileges instanceof PrivilegeCollection) {
-                    ;
+                    $endpointPrivileges = $this->privilegeConfig();
                 }
             }
 
