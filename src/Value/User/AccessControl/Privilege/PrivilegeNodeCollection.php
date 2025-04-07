@@ -28,6 +28,20 @@ class PrivilegeNodeCollection implements IteratorAggregate
         return false;
     }
 
+    public function containsSomeNodes(PrivilegeNodeCollection $nodeCollection): bool
+    {
+
+        $nodeCollection->privilegeNodes = array_filter($nodeCollection->privilegeNodes, function (PrivilegeNode $node) {;
+            return $this->contains($node);
+        });
+        foreach ($this->privilegeNodes as $privilegeNode) {
+            if (str_starts_with($privilegeNode->asString(), $node->asString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function getIterator(): \Traversable
     {
         yield from $this->privilegeNodes;
