@@ -25,7 +25,7 @@ trait ID
             throw new ApiInvalidArgumentException('Invalid id: ' . $validData->getErrorMessage());
         }
 
-        return new self($id);
+        return new self($validData->getValue());
     }
 
     public function asInt(): int

@@ -41,7 +41,7 @@ readonly class TOTPSecretKey
             throw new ApiInvalidArgumentException('Invalid totp secret: ' . $validData->getErrorMessage());
         }
 
-        return new self($secret);
+        return new self($validData->getValue());
     }
 
     public function asString(): string

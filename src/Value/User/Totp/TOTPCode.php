@@ -28,7 +28,7 @@ readonly class TOTPCode
             throw new ApiInvalidArgumentException('Invalid totp code: ' . $validData->getErrorMessage());
         }
 
-        return new self($code);
+        return new self($validData->getValue());
     }
 
     public function asString(): string

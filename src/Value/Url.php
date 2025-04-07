@@ -24,7 +24,7 @@ readonly class Url
             throw new ApiInvalidArgumentException("Invalid url: " . $validData->getErrorMessage());
         }
 
-        return new self($url);
+        return new self($validData->getValue());
     }
 
     public function asString(): string

@@ -25,7 +25,7 @@ readonly class UserEmail
             throw new ApiInvalidArgumentException($validData->getErrorMessage());
         }
 
-        return new self($email);
+        return new self($validData->getValue());
     }
 
     public function asString(): string

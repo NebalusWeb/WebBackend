@@ -34,7 +34,7 @@ class ReferralCode
             throw new ApiInvalidArgumentException('Invalid referral code: ' . $validData->getErrorMessage());
         }
 
-        return new self($code);
+        return new self($validData->getValue());
     }
 
     public function asString(): string

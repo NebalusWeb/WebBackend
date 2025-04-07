@@ -26,7 +26,7 @@ readonly class UserAgent
             throw new ApiInvalidArgumentException('Invalid useragent: ' . $validData->getErrorMessage());
         }
 
-        return new self($userAgent);
+        return new self($validData->getValue());
     }
 
     public function asString(): ?string

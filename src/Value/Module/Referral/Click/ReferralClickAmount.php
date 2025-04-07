@@ -24,7 +24,7 @@ readonly class ReferralClickAmount
             throw new ApiInvalidArgumentException('Invalid click amount: ' . $validData->getErrorMessage());
         }
 
-        return new self($clickAmount);
+        return new self($validData->getValue());
     }
 
     public function asInt(): int
