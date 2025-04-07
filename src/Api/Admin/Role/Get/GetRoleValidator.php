@@ -2,8 +2,8 @@
 
 namespace Nebalus\Webapi\Api\Admin\Role\Get;
 
-use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Sanitizr\Sanitizr as S;
+use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleName;
 

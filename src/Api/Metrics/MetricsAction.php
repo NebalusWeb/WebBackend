@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Api\Metrics;
 
 use Nebalus\Webapi\Api\AbstractAction;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Prometheus\CollectorRegistry;
 use Prometheus\RenderTextFormat;
 use Slim\Http\Response;
@@ -15,6 +16,11 @@ class MetricsAction extends AbstractAction
         private RenderTextFormat $renderTextFormat,
         private CollectorRegistry $registry,
     ) {
+    }
+
+    protected function privilegeConfig(): PrivilegeNodeCollection
+    {
+        return PrivilegeNodeCollection::fromArray();
     }
 
     /**

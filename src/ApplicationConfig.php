@@ -12,7 +12,6 @@ use Nebalus\Webapi\Factory\RedisFactory;
 use PDO;
 use Prometheus\CollectorRegistry;
 use Redis;
-
 use function DI\factory;
 
 class ApplicationConfig extends DefinitionArray

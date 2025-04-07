@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Api\Module\Linktree\Delete;
 
 use Nebalus\Webapi\Api\AbstractAction;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 
@@ -13,6 +14,11 @@ class DeleteLinktreeAction extends AbstractAction
     public function __construct(
         private readonly DeleteLinktreeService $service,
     ) {
+    }
+
+    protected function privilegeConfig(): PrivilegeNodeCollection
+    {
+        return PrivilegeNodeCollection::fromArray();
     }
 
     protected function execute(Request $request, Response $response, array $pathArgs): Response

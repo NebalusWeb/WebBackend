@@ -4,7 +4,8 @@ namespace Nebalus\Webapi\Api;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Internal\Result\Result;
-use Nebalus\Webapi\Value\User\User;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Psr\Http\Message\ResponseInterface as ResponseInterface;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
@@ -20,8 +21,10 @@ abstract class AbstractAction
         try {
             $authType = $request->getAttribute('authType');
             if ($authType === 'jwt') {
-                $user = $request->getAttribute('user');
-
+                $userPrivileges = $request->getAttribute('userPrivileges');
+                if ($userPrivileges instanceof PrivilegeCollection) {
+                    ;
+                }
             }
 
             $response = $this->execute($request, $response, $args);
@@ -42,9 +45,7 @@ abstract class AbstractAction
         return $response;
     }
 
-    abstract protected function privilegeCheck(
-        User $user
-    ): bool;
+    abstract protected function privilegeConfig(): PrivilegeNodeCollection;
 
     /**
      * @throws ApiException

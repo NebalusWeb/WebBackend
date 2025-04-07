@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Api\User\Auth;
 
-use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Config\GeneralConfig;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
