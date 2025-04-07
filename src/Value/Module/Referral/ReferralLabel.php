@@ -27,7 +27,7 @@ class ReferralLabel
             throw new ApiInvalidArgumentException("Invalid referral name: " . $validData->getErrorMessage());
         }
 
-        return new self($referralName);
+        return new self($validData->getValue());
     }
     public function asString(): ?string
     {

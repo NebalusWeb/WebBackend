@@ -27,7 +27,7 @@ class PrivilegeDescription
             throw new ApiInvalidArgumentException('Invalid description: ' . $validData->getErrorMessage());
         }
 
-        return new self($description);
+        return new self($validData->getValue());
     }
 
     public function asString(): string

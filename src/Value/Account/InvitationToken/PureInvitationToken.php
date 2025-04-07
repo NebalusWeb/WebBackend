@@ -52,7 +52,7 @@ readonly class PureInvitationToken
             throw new ApiInvalidArgumentException('Invalid Token: Checksum does not match');
         }
 
-        return new self($token);
+        return new self($validData->getValue());
     }
 
     public function asString(): string

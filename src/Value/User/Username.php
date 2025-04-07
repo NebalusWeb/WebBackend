@@ -29,7 +29,7 @@ readonly class Username
             throw new ApiInvalidArgumentException('Invalid username: ' . $validData->getErrorMessage());
         }
 
-        return new self($username);
+        return new self($validData->getValue());
     }
 
     public function asString(): string

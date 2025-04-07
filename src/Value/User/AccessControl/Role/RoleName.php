@@ -29,7 +29,7 @@ class RoleName
             throw new ApiInvalidArgumentException('Invalid role name: ' . $validData->getErrorMessage());
         }
 
-        return new self($roleName);
+        return new self($validData->getValue());
     }
 
     public function asString(): string
