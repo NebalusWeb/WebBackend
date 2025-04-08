@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Module\Referral\Get;
+namespace Nebalus\Webapi\Api\Module\Referral\Get\Get;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;

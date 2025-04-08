@@ -6,6 +6,7 @@ namespace Nebalus\Webapi\Api\User\Auth;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use ReallySimpleJWT\Exception\BuildException;
 use Slim\Http\Response as Response;
@@ -13,15 +14,18 @@ use Slim\Http\ServerRequest as Request;
 
 class AuthUserAction extends AbstractAction
 {
+    /**
+     * @throws ApiException
+     */
     public function __construct(
         private readonly AuthUserValidator $validator,
         private readonly AuthUserService $service,
     ) {
-    }
-
-    protected function privilegeConfig(): PrivilegeNodeCollection
-    {
-        return PrivilegeNodeCollection::fromArray();
+        parent::__construct(
+            PrivilegeNodeCollection::fromArray(
+                PrivilegeNode::from("admin.test.auth")
+            )
+        );
     }
 
     /**

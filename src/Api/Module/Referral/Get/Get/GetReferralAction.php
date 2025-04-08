@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Api\Module\Referral\Get;
+namespace Nebalus\Webapi\Api\Module\Referral\Get\Get;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;

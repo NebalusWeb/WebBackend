@@ -13,6 +13,11 @@ use Throwable;
 
 abstract class AbstractAction
 {
+    public function __construct(
+        private PrivilegeNodeCollection $neededEndpointPrivileges
+    ) {
+    }
+
     public function __invoke(
         Request $request,
         Response $response,
@@ -23,7 +28,8 @@ abstract class AbstractAction
             if ($authType === 'jwt') {
                 $userPrivileges = $request->getAttribute('userPrivileges');
                 if ($userPrivileges instanceof PrivilegeCollection) {
-                    $endpointPrivileges = $this->privilegeConfig();
+                    $endpointPrivileges = $this->neededEndpointPrivileges;
+                    $userPrivileges->getNodeCollection()
                 }
             }
 
@@ -44,8 +50,6 @@ abstract class AbstractAction
         }
         return $response;
     }
-
-    abstract protected function privilegeConfig(): PrivilegeNodeCollection;
 
     /**
      * @throws ApiException

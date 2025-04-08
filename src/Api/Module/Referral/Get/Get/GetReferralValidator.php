@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Module\Referral\Get;
+namespace Nebalus\Webapi\Api\Module\Referral\Get\Get;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
