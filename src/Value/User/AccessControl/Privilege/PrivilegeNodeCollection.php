@@ -30,7 +30,6 @@ class PrivilegeNodeCollection implements IteratorAggregate
 
     public function containsSomeNodes(PrivilegeNodeCollection $nodeCollection): bool
     {
-
         $nodeCollection->privilegeNodes = array_filter($nodeCollection->privilegeNodes, function (PrivilegeNode $node) {;
             return $this->contains($node);
         });

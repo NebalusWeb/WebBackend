@@ -14,11 +14,7 @@ class RegisterUserAction extends AbstractAction
         private readonly RegisterUserValidator $validator,
         private readonly RegisterUserService $service,
     ) {
-    }
-
-    protected function privilegeConfig(): PrivilegeNodeCollection
-    {
-        return PrivilegeNodeCollection::fromArray();
+        parent::__construct(PrivilegeNodeCollection::fromArray());
     }
 
     /**
