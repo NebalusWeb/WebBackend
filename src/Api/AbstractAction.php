@@ -29,7 +29,6 @@ abstract class AbstractAction
                 $userPrivileges = $request->getAttribute('userPrivileges');
                 if ($userPrivileges instanceof PrivilegeCollection) {
                     $endpointPrivileges = $this->neededEndpointPrivileges;
-                    $userPrivileges->getNodeCollection()
                 }
             }
 
