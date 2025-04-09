@@ -9,7 +9,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 class PrivilegeNode
 {
     public const MAX_LENGTH = 128;
-    private const string REGEX = '/^[a-z.*]+$/';
+    private const string REGEX = '/^([a-z]+?\.)*(\*?)$/';
 
     private function __construct(
         private string $node
@@ -34,5 +34,20 @@ class PrivilegeNode
     public function asString(): string
     {
         return $this->node;
+    }
+
+    public function areSubPrivilegesGranted(): bool
+    {
+        return str_ends_with($this->node, '*');
+    }
+
+    // TODO: NOT FINISHED
+    public function contains(PrivilegeNode $toCheckNode): bool
+    {
+        if ($this->areSubPrivilegesGranted()) {
+            return str_starts_with($toCheckNode->asString(), $this->node);
+        }
+
+        return false;
     }
 }
