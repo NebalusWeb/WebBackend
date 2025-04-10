@@ -38,7 +38,7 @@ jobs:
         run: |
           docker buildx build --platform linux/amd64,linux/arm64 \
             -t ghcr.io/nebalus/webbackend/php-fpm:dev \
-            -f docker/php/Dockerfile \
+            -f docker/php-fpm/Dockerfile \
             --cache-from=type=gha \
             --cache-to=type=gha,mode=max \
             --push \
