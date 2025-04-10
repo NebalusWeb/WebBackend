@@ -9,6 +9,7 @@ readonly class Role
     public function __construct(
         private ?RoleId $roleId,
         private RoleName $roleName,
+        private ?RoleDescription $roleDescription,
         private bool $appliesToEveryone,
         private bool $deletable,
         private DateTimeImmutable $createdAtDate,
@@ -19,6 +20,7 @@ readonly class Role
     public static function from(
         RoleId $roleId,
         RoleName $roleName,
+        ?RoleDescription $roleDescription,
         bool $appliesToEveryone,
         bool $deletable,
         DateTimeImmutable $createdAtDate,
@@ -27,6 +29,7 @@ readonly class Role
         return new self(
             $roleId,
             $roleName,
+            $roleDescription,
             $appliesToEveryone,
             $deletable,
             $createdAtDate,
@@ -42,6 +45,11 @@ readonly class Role
     public function getName(): RoleName
     {
         return $this->roleName;
+    }
+
+    public function getDescription(): ?RoleDescription
+    {
+        return $this->roleDescription;
     }
 
     public function appliesToEveryone(): bool

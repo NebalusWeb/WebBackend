@@ -8,11 +8,12 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 readonly class PrivilegeNode
 {
-    public const MAX_LENGTH = 128;
-    private const string REGEX = '/^(([a-z_])+(\.[a-z_.*]+)*|\*)(\s-?\d+)?$/';
+    public const int MAX_LENGTH = 128;
+    private const string REGEX = '/^(([a-z_])+(\.[a-z_.*]+)*|\*)$/';
 
     private function __construct(
         private string $node,
+        private bool $grantAllSubPrivileges,
         private ?int $value
     ) {
     }
@@ -22,24 +23,42 @@ readonly class PrivilegeNode
      */
     public static function fromString(string $node): self
     {
-        $schema = Sanitizr::string()->max(self::MAX_LENGTH)->regex(self::REGEX);
-        $validData = $schema->safeParse($node);
+        $destructuredNode = explode(' ', $node, 2);
+        $schema = Sanitizr::batch(
+            Sanitizr::string()->max(self::MAX_LENGTH)->regex(self::REGEX),
+            Sanitizr::number()->nullable()->integer()
+        );
+        $validData = $schema->safeParse($destructuredNode);
 
         if ($validData->isError()) {
             throw new ApiInvalidArgumentException('Invalid privilege node: ' . $validData->getErrorMessage());
         }
 
-        return new self($validData->getValue(), null);
+        $parsedNode = $validData->getValue()[0];
+        $parsedValue = $validData->getValue()[1];
+        $grantAllSubPrivileges = str_ends_with($parsedNode, '*');
+        $cleanedNode = str_replace(['.*', '*'], '', $parsedNode);
+
+        return new self($cleanedNode, $grantAllSubPrivileges, $parsedValue);
+    }
+    public function hasValue(): bool
+    {
+        return $this->value !== null;
     }
 
-    public function asString(): string
+    public function getValue(): ?int
     {
-        return $this->node;
+        return $this->value;
     }
 
     public function areSubPrivilegesGranted(): bool
     {
-        return str_ends_with($this->node, '*');
+        return $this->grantAllSubPrivileges;
+    }
+
+    public function asString(): string
+    {
+        return $this->node . ($this->areSubPrivilegesGranted() ? '.*' : '') . ($this->hasValue() ? ' ' . $this->value : '');
     }
 
     // TODO: NOT FINISHED
