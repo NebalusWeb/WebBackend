@@ -1,0 +1,45 @@
+name: Publish Docker Image to GHCR
+
+on:
+  push:
+    branches:
+      - master
+      - feature-NWS-4
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Build Docker image for nginx
+        run: |
+          docker buildx build --platform linux/amd64,linux/arm64 \
+            -t ghcr.io/Nebalus/WebBackend/nginx:dev \
+            -f docker/nginx/Dockerfile \
+            --cache-from=type=gha \
+            --cache-to=type=gha,mode=max \
+            --push \
+            .
+
+      - name: Build and push Docker image for php-fpm
+        run: |
+          docker buildx build --platform linux/amd64,linux/arm64 \
+            -t ghcr.io/Nebalus/WebBackend/php-fpm:dev \
+            -f docker/php/Dockerfile \
+            --cache-from=type=gha \
+            --cache-to=type=gha,mode=max \
+            --push \
+            .
