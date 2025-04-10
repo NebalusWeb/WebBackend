@@ -21,25 +21,16 @@ readonly class PrivilegeNode
     /**
      * @throws ApiException
      */
-    public static function fromString(string $node): self
+    public static function fromString(string $node, bool $grantAllSubPrivileges, ?int $value = null): self
     {
-        $destructuredNode = explode(' ', trim($node), 2);
-        $schema = Sanitizr::batch(
-            Sanitizr::string()->max(self::MAX_LENGTH)->regex(self::REGEX),
-            Sanitizr::number()->nullable()->integer()
-        );
-        $validData = $schema->safeParse($destructuredNode);
+        $schema = Sanitizr::string()->max(self::MAX_LENGTH)->regex(self::REGEX);
+        $validData = $schema->safeParse($node);
 
         if ($validData->isError()) {
             throw new ApiInvalidArgumentException('Invalid privilege node: ' . $validData->getErrorMessage());
         }
 
-        $parsedNode = $validData->getValue()[0];
-        $parsedValue = $validData->getValue()[1];
-        $grantAllSubPrivileges = str_ends_with($parsedNode, '*');
-        $cleanedNode = str_replace(['.*', '*'], '', $parsedNode);
-
-        return new self($cleanedNode, $grantAllSubPrivileges, $parsedValue);
+        return new self($validData->getValue(), $grantAllSubPrivileges, $value);
     }
     public function hasValue(): bool
     {
@@ -51,23 +42,18 @@ readonly class PrivilegeNode
         return $this->value;
     }
 
-    public function areSubPrivilegesGranted(): bool
+    public function isGrantingSubPrivileges(): bool
     {
         return $this->grantAllSubPrivileges;
     }
 
-    public function asString(): string
+    public function getNode(): string
     {
-        return $this->node . ($this->areSubPrivilegesGranted() ? '.*' : '') . ($this->hasValue() ? ' ' . $this->value : '');
+        return $this->node;
     }
 
-    // TODO: NOT FINISHED
-    public function contains(PrivilegeNode $toCheckNode): bool
+    public function isParentOf(PrivilegeNode $toCheckNode): bool
     {
-        if ($this->areSubPrivilegesGranted()) {
-            return str_starts_with($toCheckNode->asString(), $this->node);
-        }
-
-        return false;
+        return str_starts_with($this->node, $toCheckNode->node);
     }
 }
