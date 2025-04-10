@@ -37,23 +37,24 @@ readonly class RouteCollector
 {
     public function __construct(
         private App $app,
-        private GeneralConfig $env
+        private GeneralConfig $generalConfig
     ) {
     }
 
     public function init(): void
     {
-        $this->app->add(MetricsMiddleware::class);
         $this->app->addRoutingMiddleware();
+        $this->registerErrorHandler();
+        $this->app->add(MetricsMiddleware::class);
         $this->app->addBodyParsingMiddleware();
         $this->app->add(CorsMiddleware::class);
-        $this->registerErrorHandler();
         $this->initRoutes();
     }
 
     private function registerErrorHandler(): void
     {
-        $errorMiddleware = $this->app->addErrorMiddleware($this->env->isDevelopment(), true, true);
+        $errorMiddleware = $this->app->addErrorMiddleware($this->generalConfig->isDevelopment(), true, true);
+        $errorMiddleware->setDefaultErrorHandler(DefaultErrorHandler::class);
     }
 
     private function initRoutes(): void

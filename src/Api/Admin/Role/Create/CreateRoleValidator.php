@@ -14,7 +14,9 @@ class CreateRoleValidator extends AbstractValidator
         parent::__construct(S::object([
             RequestParamTypes::BODY => [
                 "name" => S::string()->min(RoleName::MIN_LENGTH)->max(RoleName::MAX_LENGTH),
+                "description" => S::string()->optional()->max(RoleDes),
                 "applies_to_everyone" => S::boolean(),
+                "access_level" => S::number()->nonNegative(),
             ]
         ]));
     }

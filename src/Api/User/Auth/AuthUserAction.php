@@ -23,7 +23,7 @@ class AuthUserAction extends AbstractAction
     ) {
         parent::__construct(
             PrivilegeNodeCollection::fromObjects(
-                PrivilegeNode::fromString("admin.test.auth")
+                PrivilegeNode::fromString("admin.test.auth 3cy")
             )
         );
     }

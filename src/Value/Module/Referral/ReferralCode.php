@@ -6,13 +6,13 @@ use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class ReferralCode
+readonly class ReferralCode
 {
     public const int LENGTH = 8;
     public const string REGEX = '/^[0-9A-Za-z]+$/';
 
     private function __construct(
-        private readonly string $code
+        private string $code
     ) {
     }
 

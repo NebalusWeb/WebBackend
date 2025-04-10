@@ -6,13 +6,13 @@ use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class ReferralLabel
+readonly class ReferralLabel
 {
     public const int MAX_LENGTH = 32;
     public const string REGEX = '/^[a-zA-Z0-9\s!@#$%^&*]*$/';
 
     private function __construct(
-        private readonly ?string $referralName,
+        private string $referralName,
     ) {
     }
     /**
@@ -20,7 +20,7 @@ class ReferralLabel
      */
     public static function from(?string $referralName): self
     {
-        $schema = Sanitizr::string()->nullable()->max(self::MAX_LENGTH)->regex(self::REGEX);
+        $schema = Sanitizr::string()->max(self::MAX_LENGTH)->regex(self::REGEX);
         $validData = $schema->safeParse($referralName);
 
         if ($validData->isError()) {
@@ -29,8 +29,8 @@ class ReferralLabel
 
         return new self($validData->getValue());
     }
-    public function asString(): ?string
+    public function asString(): string
     {
-        return $this?->referralName;
+        return $this->referralName;
     }
 }
