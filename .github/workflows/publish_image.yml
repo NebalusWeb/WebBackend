@@ -27,7 +27,7 @@ jobs:
       - name: Build Docker image for nginx
         run: |
           docker buildx build --platform linux/amd64,linux/arm64 \
-            -t ghcr.io/Nebalus/WebBackend/nginx:dev \
+            -t ghcr.io/nebalus/webbackend/nginx:dev \
             -f docker/nginx/Dockerfile \
             --cache-from=type=gha \
             --cache-to=type=gha,mode=max \
@@ -37,7 +37,7 @@ jobs:
       - name: Build and push Docker image for php-fpm
         run: |
           docker buildx build --platform linux/amd64,linux/arm64 \
-            -t ghcr.io/Nebalus/WebBackend/php-fpm:dev \
+            -t ghcr.io/nebalus/webbackend/php-fpm:dev \
             -f docker/php/Dockerfile \
             --cache-from=type=gha \
             --cache-to=type=gha,mode=max \
