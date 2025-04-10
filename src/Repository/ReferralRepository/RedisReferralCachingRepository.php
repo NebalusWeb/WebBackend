@@ -79,7 +79,7 @@ readonly class RedisReferralCachingRepository
             }
         }
 
-        return ReferralCollection::fromArray(...$referrals);
+        return ReferralCollection::fromObjects(...$referrals);
     }
 
     public function deleteAllItems(): void

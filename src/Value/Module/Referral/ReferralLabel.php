@@ -9,7 +9,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 class ReferralLabel
 {
     public const int MAX_LENGTH = 32;
-    public const string REGEX = '/^[a-zA-Z0-9 !@#$%^&*]*$/';
+    public const string REGEX = '/^[a-zA-Z0-9\s!@#$%^&*]*$/';
 
     private function __construct(
         private readonly ?string $referralName,

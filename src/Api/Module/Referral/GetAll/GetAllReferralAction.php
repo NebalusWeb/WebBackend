@@ -14,12 +14,12 @@ class GetAllReferralAction extends AbstractAction
     public function __construct(
         private readonly GetAllReferralService $service
     ) {
-        parent::__construct(PrivilegeNodeCollection::fromArray());
+        parent::__construct(PrivilegeNodeCollection::fromObjects());
     }
 
     protected function privilegeConfig(): PrivilegeNodeCollection
     {
-        return PrivilegeNodeCollection::fromArray();
+        return PrivilegeNodeCollection::fromObjects();
     }
 
     protected function execute(Request $request, Response $response, array $pathArgs): Response

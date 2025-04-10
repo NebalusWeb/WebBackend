@@ -17,7 +17,7 @@ class GetPrivilegeAction extends AbstractAction
 
     protected function privilegeConfig(): PrivilegeNodeCollection
     {
-        return PrivilegeNodeCollection::fromArray();
+        return PrivilegeNodeCollection::fromObjects();
     }
 
     protected function execute(Request $request, Response $response, array $pathArgs): Response

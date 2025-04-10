@@ -104,6 +104,6 @@ readonly class MySqlAccountRepository
         while ($row = $stmt->fetch()) {
             $data[] = InvitationToken::fromArray($row);
         }
-        return InvitationTokenCollection::fromArray(...$data);
+        return InvitationTokenCollection::fromObjects(...$data);
     }
 }

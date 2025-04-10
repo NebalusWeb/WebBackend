@@ -20,7 +20,7 @@ class MetricsAction extends AbstractAction
 
     protected function privilegeConfig(): PrivilegeNodeCollection
     {
-        return PrivilegeNodeCollection::fromArray();
+        return PrivilegeNodeCollection::fromObjects();
     }
 
     /**

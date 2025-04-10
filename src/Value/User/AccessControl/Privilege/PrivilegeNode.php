@@ -6,20 +6,21 @@ use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class PrivilegeNode
+readonly class PrivilegeNode
 {
     public const MAX_LENGTH = 128;
-    private const string REGEX = '/^([a-z]+?\.)*(\*?)$/';
+    private const string REGEX = '/^(([a-z_])+(\.[a-z_.*]+)*|\*)(\s-?\d+)?$/';
 
     private function __construct(
-        private string $node
+        private string $node,
+        private ?int $value
     ) {
     }
 
     /**
      * @throws ApiException
      */
-    public static function from(string $node): self
+    public static function fromString(string $node): self
     {
         $schema = Sanitizr::string()->max(self::MAX_LENGTH)->regex(self::REGEX);
         $validData = $schema->safeParse($node);
@@ -28,7 +29,7 @@ class PrivilegeNode
             throw new ApiInvalidArgumentException('Invalid privilege node: ' . $validData->getErrorMessage());
         }
 
-        return new self($validData->getValue());
+        return new self($validData->getValue(), null);
     }
 
     public function asString(): string

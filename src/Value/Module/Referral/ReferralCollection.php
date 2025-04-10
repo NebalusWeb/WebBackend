@@ -14,7 +14,7 @@ class ReferralCollection implements IteratorAggregate
         $this->referrals = $referrals;
     }
 
-    public static function fromArray(Referral ...$referrals): self
+    public static function fromObjects(Referral ...$referrals): self
     {
         return new self(...$referrals);
     }

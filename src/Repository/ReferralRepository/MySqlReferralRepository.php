@@ -104,7 +104,7 @@ readonly class MySqlReferralRepository
             $data[] = ReferralClick::fromArray($row);
         }
 
-        return ReferralClickCollection::fromArray(...$data);
+        return ReferralClickCollection::fromObjects(...$data);
     }
 
     public function deleteReferralByCodeFromOwner(UserId $ownerId, ReferralCode $code): bool
@@ -174,7 +174,7 @@ readonly class MySqlReferralRepository
             $data[] = Referral::fromArray($row);
         }
 
-        return ReferralCollection::fromArray(...$data);
+        return ReferralCollection::fromObjects(...$data);
     }
 
     /**

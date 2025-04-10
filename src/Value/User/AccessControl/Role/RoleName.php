@@ -6,14 +6,14 @@ use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class RoleName
+readonly class RoleName
 {
     public const int MIN_LENGTH = 4;
     public const int MAX_LENGTH = 32;
     public const string REGEX = '/^[a-zA-Z0-9_]+$/';
 
     public function __construct(
-        private readonly string $roleName
+        private string $roleName
     ) {
     }
 

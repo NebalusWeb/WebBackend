@@ -14,7 +14,7 @@ class InvitationTokenCollection implements IteratorAggregate
         $this->invitationsTokens = $invitationsTokens;
     }
 
-    public static function fromArray(InvitationToken ...$invitationsTokens): self
+    public static function fromObjects(InvitationToken ...$invitationsTokens): self
     {
         return new self(...$invitationsTokens);
     }
