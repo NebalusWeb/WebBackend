@@ -39,10 +39,11 @@ readonly class DefaultErrorHandler implements ErrorHandlerInterface
                 $statusCode = StatusCodeInterface::STATUS_NOT_FOUND;
                 $errorMessage = 'Not found';
                 break;
-            case ApiException::class:
-                $statusCode = $exception->getCode();
-                $errorMessage = $exception->getMessage();
-                break;
+        }
+
+        if ($exception instanceof ApiException) {
+            $statusCode = $exception->getCode();
+            $errorMessage = $exception->getMessage();
         }
 
         $result = null;

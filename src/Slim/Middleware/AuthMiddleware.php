@@ -78,7 +78,7 @@ readonly class AuthMiddleware implements MiddlewareInterface
 
         $request = $request->withAttribute("user", $user);
         $request = $request->withAttribute("userPrivileges", PrivilegeNodeCollection::fromObjects(
-            PrivilegeNode::fromString("test.test"),
+            PrivilegeNode::fromString("test.test -24"),
             PrivilegeNode::fromString("admin.test"),
             PrivilegeNode::fromString("test.*"),
         ));

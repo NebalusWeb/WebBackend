@@ -23,7 +23,7 @@ readonly class PrivilegeNode
      */
     public static function fromString(string $node): self
     {
-        $destructuredNode = explode(' ', $node, 2);
+        $destructuredNode = explode(' ', trim($node), 2);
         $schema = Sanitizr::batch(
             Sanitizr::string()->max(self::MAX_LENGTH)->regex(self::REGEX),
             Sanitizr::number()->nullable()->integer()
