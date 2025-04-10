@@ -1,10 +1,9 @@
-name: Publish Docker Image to GHCR
+name: Publish Docker Images to GHCR
 
 on:
   push:
     branches:
       - master
-      - feature-NWS-4
 
 jobs:
   build-and-push:
@@ -24,9 +23,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Build Docker image for nginx
+      - name: Build and push Docker image for nginx
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 \
+          docker buildx build --platform linux/amd64 \
             -t ghcr.io/nebalus/webbackend/nginx:dev \
             -f docker/nginx/Dockerfile \
             --cache-from=type=gha \
@@ -36,9 +35,19 @@ jobs:
 
       - name: Build and push Docker image for php-fpm
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 \
+          docker buildx build --platform linux/amd64 \
             -t ghcr.io/nebalus/webbackend/php-fpm:dev \
             -f docker/php-fpm/Dockerfile \
+            --cache-from=type=gha \
+            --cache-to=type=gha,mode=max \
+            --push \
+            .
+
+      - name: Build and push Docker image for redis
+        run: |
+          docker buildx build --platform linux/amd64 \
+            -t ghcr.io/nebalus/webbackend/redis:dev \
+            -f docker/redis/Dockerfile \
             --cache-from=type=gha \
             --cache-to=type=gha,mode=max \
             --push \
