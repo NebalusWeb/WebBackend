@@ -13,7 +13,7 @@ class GetUserPrivilegesAction extends AbstractAction
         private readonly GetUserPrivilegesService $service,
         private readonly GetUserPrivilegesValidator $validator
     ) {
-        parent::__construct(PrivilegeNodeCollection::fromArray());
+        parent::__construct(PrivilegeNodeCollection::fromObjects());
     }
 
     /**

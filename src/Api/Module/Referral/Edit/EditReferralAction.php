@@ -19,7 +19,7 @@ class EditReferralAction extends AbstractAction
 
     protected function privilegeConfig(): PrivilegeNodeCollection
     {
-        return PrivilegeNodeCollection::fromArray();
+        return PrivilegeNodeCollection::fromObjects();
     }
 
 

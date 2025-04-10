@@ -14,14 +14,14 @@ class PrivilegeCollection implements IteratorAggregate
         $this->privileges = $privileges;
     }
 
-    public static function fromArray(Privilege ...$privileges): self
+    public static function fromObjects(Privilege ...$privileges): self
     {
         return new self(...$privileges);
     }
 
     public function getNodeCollection(): PrivilegeNodeCollection
     {
-        return PrivilegeNodeCollection::fromArray(...array_map(
+        return PrivilegeNodeCollection::fromObjects(...array_map(
             fn(Privilege $privilege) => $privilege->getNode(),
             $this->privileges
         ));

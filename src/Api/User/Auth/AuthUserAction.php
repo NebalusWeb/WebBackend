@@ -22,8 +22,8 @@ class AuthUserAction extends AbstractAction
         private readonly AuthUserService $service,
     ) {
         parent::__construct(
-            PrivilegeNodeCollection::fromArray(
-                PrivilegeNode::from("admin.test.auth")
+            PrivilegeNodeCollection::fromObjects(
+                PrivilegeNode::fromString("admin.test.auth")
             )
         );
     }

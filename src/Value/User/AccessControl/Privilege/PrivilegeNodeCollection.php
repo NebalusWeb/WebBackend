@@ -13,7 +13,7 @@ class PrivilegeNodeCollection implements IteratorAggregate
         $this->privilegeNodes = $privilegeNodes;
     }
 
-    public static function fromArray(PrivilegeNode ...$privilegeNodes): self
+    public static function fromObjects(PrivilegeNode ...$privilegeNodes): self
     {
         return new self(...$privilegeNodes);
     }

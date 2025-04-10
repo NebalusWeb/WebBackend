@@ -5,13 +5,13 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class PrivilegeDescription
+readonly class PrivilegeDescription
 {
     public const int MAX_LENGTH = 255;
     public const string REGEX = '/^[\w\d_.-\s]+$/g';
 
     public function __construct(
-        private readonly string $description,
+        private string $description,
     ) {
     }
 
@@ -20,6 +20,8 @@ class PrivilegeDescription
      */
     public static function from(string $description): self
     {
+        $description = trim($description);
+
         $schema = Sanitizr::string()->max(self::MAX_LENGTH)->regex(self::REGEX);
         $validData = $schema->safeParse($description);
 
