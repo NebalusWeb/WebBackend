@@ -26,7 +26,7 @@ class MySqlPrivilegesRepository
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue("node", $node->asString());
+        $stmt->bindValue("node", $node->getNode());
         $stmt->execute();
 
         $data = $stmt->fetch();

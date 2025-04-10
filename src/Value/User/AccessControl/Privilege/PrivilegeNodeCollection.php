@@ -6,22 +6,31 @@ use IteratorAggregate;
 
 class PrivilegeNodeCollection implements IteratorAggregate
 {
+    private array $nodeIndex = [];
     private array $privilegeNodes = [];
 
-    private function __construct(PrivilegeNode ...$privilegeNodes)
+    private function __construct(array $nodeIndex, PrivilegeNode ...$privilegeNodes)
     {
+        $this->nodeIndex = $nodeIndex;
         $this->privilegeNodes = $privilegeNodes;
     }
 
     public static function fromObjects(PrivilegeNode ...$privilegeNodes): self
     {
-        return new self(...$privilegeNodes);
+        $cache = [];
+        foreach ($privilegeNodes as $privilegeNode) {
+            $cache[] = self::destructureNode($privilegeNode);
+        }
+
+        $nodeIndex = array_replace_recursive([], ...$cache);
+
+        return new self($nodeIndex, ...$privilegeNodes);
     }
 
     public function contains(PrivilegeNode $node): bool
     {
         foreach ($this->privilegeNodes as $privilegeNode) {
-            if (str_starts_with($privilegeNode->asString(), $node->asString())) {
+            if (str_starts_with($privilegeNode->getNode(), $node->getNode())) {
                 return true;
             }
         }
@@ -35,7 +44,7 @@ class PrivilegeNodeCollection implements IteratorAggregate
             return $this->contains($node);
         });
         foreach ($this->privilegeNodes as $privilegeNode) {
-            if (str_starts_with($privilegeNode->asString(), $node->asString())) {
+            if (str_starts_with($privilegeNode->getNode(), $node->asString())) {
                 return true;
             }
         }
@@ -45,5 +54,20 @@ class PrivilegeNodeCollection implements IteratorAggregate
     public function getIterator(): \Traversable
     {
         yield from $this->privilegeNodes;
+    }
+
+    private static function destructureNode(PrivilegeNode $node): array
+    {
+        $nodeAsString = $node->getNode();
+        $nodeAsArray = explode('.', $nodeAsString);
+
+        $finalArray = [];
+
+        $ref = &$finalArray;
+        foreach ($nodeAsArray as $key) {
+            $ref = &$ref[$key];
+        }
+        $ref = $node->getValue();
+        return $finalArray; // DO NOT REMOVE // THIS IS THE FINAL RETURN VALUE
     }
 }

@@ -39,7 +39,7 @@ readonly class Privilege
     public static function fromArray(array $value): self
     {
         $id = PrivilegeId::from($value['privilege_id']);
-        $node = PrivilegeNode::fromString($value['node']);
+        $node = PrivilegeNode::fromString($value['node'], false); // TODO Muss noch ein extra value object bauen, die nicht grantAllSubPrivileges beinhaltet
         $description = PrivilegeDescription::from($value['description']);
         $isPrestige = (bool) $value['is_prestige'];
         $defaultValue = $value['default_value'] ?? null;
@@ -51,7 +51,7 @@ readonly class Privilege
     {
         return [
             'privilege_id' => $this->privilegeId->asInt(),
-            'node' => $this->node->asString(),
+            'node' => $this->node->getNode(),
             'description' => $this->description->asString(),
             'is_prestige' => $this->isPrestige,
             'default_value' => $this->defaultValue,
