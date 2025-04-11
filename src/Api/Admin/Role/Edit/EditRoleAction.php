@@ -23,6 +23,8 @@ class EditRoleAction extends AbstractAction
 
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
+        $this->validator->validate($request, $pathArgs);
+        return $response;
         // TODO: Implement execute() method.
     }
 }
