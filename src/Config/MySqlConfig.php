@@ -35,7 +35,6 @@ class MySqlConfig
         return $this->mysqlPort;
     }
 
-
     public function getMySqlDatabase(): string
     {
         return $this->mysqlDatabase;
