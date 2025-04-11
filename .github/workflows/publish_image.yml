@@ -36,7 +36,7 @@ jobs:
       - name: Build and push Docker image for php-fpm
         run: |
           docker buildx build --platform linux/amd64 \
-            -t ghcr.io/nebalus/webbackend/php-fpm:dev \
+            -t ghcr.io/nebalus/webbackend/api:dev \
             -f docker/php-fpm/Dockerfile \
             --cache-from=type=gha \
             --cache-to=type=gha,mode=max \
