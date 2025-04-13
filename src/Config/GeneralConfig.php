@@ -56,7 +56,7 @@ class GeneralConfig
     {
         return $this->jwtExtendedExpirationTime;
     }
-    
+
     public function getAccessControlAllowOrigin(): string
     {
         return $this->accessControlAllowOrigin;
