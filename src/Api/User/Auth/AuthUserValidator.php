@@ -21,7 +21,7 @@ class AuthUserValidator extends AbstractValidator
             RequestParamTypes::BODY => S::object([
                 'username' => S::string(),
                 'password' => S::string(),
-                'remember_me' => S::boolean()->optional()->default(false),
+                'remember_me' => S::boolean()->optional()->default(true),
                 'totp' => S::string()->optional()->nullable(),
             ])
         ]));
