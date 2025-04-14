@@ -4,16 +4,16 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Role;
 
 use DateTimeImmutable;
 
-readonly class Role
+class Role
 {
     public function __construct(
-        private ?RoleId $roleId,
-        private RoleName $roleName,
-        private ?RoleDescription $roleDescription,
-        private bool $appliesToEveryone,
-        private bool $deletable,
-        private DateTimeImmutable $createdAtDate,
-        private DateTimeImmutable $updatedAtDate,
+        private readonly ?RoleId $roleId,
+        private readonly RoleName $roleName,
+        private readonly ?RoleDescription $roleDescription,
+        private readonly bool $appliesToEveryone,
+        private readonly bool $deletable,
+        private readonly DateTimeImmutable $createdAtDate,
+        private readonly DateTimeImmutable $updatedAtDate,
     ) {
     }
 

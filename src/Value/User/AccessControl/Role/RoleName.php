@@ -3,18 +3,27 @@
 namespace Nebalus\Webapi\Value\User\AccessControl\Role;
 
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
+use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class RoleName
+class RoleName
 {
+    use SanitizrValueObjectTrait;
+
     public const int MIN_LENGTH = 4;
     public const int MAX_LENGTH = 32;
     public const string REGEX = '/^[a-zA-Z0-9_]+$/';
 
     public function __construct(
-        private string $roleName
+        private readonly string $roleName
     ) {
+    }
+
+    protected static function defineSchema(): AbstractSanitizrSchema
+    {
+        return Sanitizr::string()->min(self::MIN_LENGTH)->max(self::MAX_LENGTH)->regex(self::REGEX);
     }
 
     /**
@@ -22,7 +31,7 @@ readonly class RoleName
      */
     public static function from(string $roleName): self
     {
-        $schema = Sanitizr::string()->min(self::MIN_LENGTH)->max(self::MAX_LENGTH)->regex(self::REGEX);
+        $schema = static::getSchema();
         $validData = $schema->safeParse($roleName);
 
         if ($validData->isError()) {

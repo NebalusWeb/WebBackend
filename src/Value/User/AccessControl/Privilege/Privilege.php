@@ -5,14 +5,14 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class Privilege
+class Privilege
 {
     public function __construct(
-        private PrivilegeId $privilegeId,
-        private PrivilegeNode $node,
-        private PrivilegeDescription $description,
-        private bool $isPrestige,
-        private ?int $defaultValue
+        private readonly PrivilegeId $privilegeId,
+        private readonly PrivilegeNode $node,
+        private readonly PrivilegeDescription $description,
+        private readonly bool $isPrestige,
+        private readonly ?int $defaultValue
     ) {
     }
 

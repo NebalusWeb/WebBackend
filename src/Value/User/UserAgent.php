@@ -3,15 +3,24 @@
 namespace Nebalus\Webapi\Value\User;
 
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
+use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class UserAgent
+class UserAgent
 {
+    use SanitizrValueObjectTrait;
+
     public const string REGEX = "/\((?<info>.*?)\)(\s|$)|(?<name>.*?)\/(?<version>.*?)(\s|$)/";
 
     private function __construct(
-        private string $userAgent
+        private readonly string $userAgent
     ) {
+    }
+
+    protected static function defineSchema(): AbstractSanitizrSchema
+    {
+        return Sanitizr::string()->regex(self::REGEX);
     }
 
     /**
@@ -19,7 +28,7 @@ readonly class UserAgent
      */
     public static function from(string $userAgent): self
     {
-        $schema = Sanitizr::string()->regex(self::REGEX);
+        $schema = static::getSchema();
         $validData = $schema->safeParse($userAgent);
 
         if ($validData->isError()) {

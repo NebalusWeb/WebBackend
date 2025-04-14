@@ -6,7 +6,6 @@ namespace Nebalus\Webapi\Api\User\Auth;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use ReallySimpleJWT\Exception\BuildException;
 use Slim\Http\Response as Response;

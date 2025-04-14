@@ -19,7 +19,7 @@ class PrivilegeNodeCollection implements IteratorAggregate
     {
         $cache = [];
         foreach ($privilegeNodes as $privilegeNode) {
-            $cache[] = self::destructureNode($privilegeNode);
+            $cache[] = $privilegeNode->asDestructured();
         }
 
         $nodeIndex = array_replace_recursive([], ...$cache);
@@ -54,20 +54,5 @@ class PrivilegeNodeCollection implements IteratorAggregate
     public function getIterator(): \Traversable
     {
         yield from $this->privilegeNodes;
-    }
-
-    private static function destructureNode(PrivilegeNode $node): array
-    {
-        $nodeAsString = $node->getNode();
-        $nodeAsArray = explode('.', $nodeAsString);
-
-        $finalArray = [];
-
-        $ref = &$finalArray;
-        foreach ($nodeAsArray as $key) {
-            $ref = &$ref[$key];
-        }
-        $ref = $node->getValue();
-        return $finalArray; // DO NOT REMOVE // THIS IS THE FINAL RETURN VALUE
     }
 }

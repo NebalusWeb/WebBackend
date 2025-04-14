@@ -3,18 +3,27 @@
 namespace Nebalus\Webapi\Value\User\Totp;
 
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
+use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Random\RandomException;
 
-readonly class TOTPSecretKey
+class TOTPSecretKey
 {
+    use SanitizrValueObjectTrait;
+
     public const string REGEX = '/^[\d\w]*$/';
     public const int LENGTH = 32; // Must be divisible by 2
 
     private function __construct(
-        private string $secret
+        private readonly string $secret
     ) {
+    }
+
+    protected static function defineSchema(): AbstractSanitizrSchema
+    {
+        return Sanitizr::string()->length(self::LENGTH)->regex(self::REGEX);
     }
 
     /**
@@ -34,7 +43,7 @@ readonly class TOTPSecretKey
      */
     public static function from(string $secret): self
     {
-        $schema = Sanitizr::string()->length(self::LENGTH)->regex(self::REGEX);
+        $schema = static::getSchema();
         $validData = $schema->safeParse($secret);
 
         if ($validData->isError()) {

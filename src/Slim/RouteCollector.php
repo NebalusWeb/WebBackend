@@ -72,7 +72,7 @@ readonly class RouteCollector
                 $group->group("/role", function (RouteCollectorProxy $group) {
                     $group->map(["POST"], "", CreateRoleAction::class);
                     $group->map(["GET"], "/all", GetAllRoleService::class);
-                    $group->group("/{roleName}", function (RouteCollectorProxy $group) {
+                    $group->group("/{roleId}", function (RouteCollectorProxy $group) {
                         $group->map(["GET"], "", GetRoleAction::class);
                         $group->map(["PUT"], "", EditRoleAction::class);
                         $group->map(["DELETE"], "", DeleteRoleAction::class);
