@@ -725,12 +725,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Nebalus/Sanitizr.git",
-                "reference": "efa9cadbedddf938b7ec28361599d408baefce69"
+                "reference": "210b2424f47eb355d14032ef3ffe4655d4832f9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Nebalus/Sanitizr/zipball/efa9cadbedddf938b7ec28361599d408baefce69",
-                "reference": "efa9cadbedddf938b7ec28361599d408baefce69",
+                "url": "https://api.github.com/repos/Nebalus/Sanitizr/zipball/210b2424f47eb355d14032ef3ffe4655d4832f9c",
+                "reference": "210b2424f47eb355d14032ef3ffe4655d4832f9c",
                 "shasum": ""
             },
             "require": {
@@ -761,7 +761,7 @@
                 "issues": "https://github.com/Nebalus/Sanitizr/issues",
                 "source": "https://github.com/Nebalus/Sanitizr/tree/dev"
             },
-            "time": "2025-04-13T22:32:42+00:00"
+            "time": "2025-04-14T21:45:47+00:00"
         },
         {
             "name": "nikic/fast-route",

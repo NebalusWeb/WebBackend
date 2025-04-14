@@ -3,14 +3,23 @@
 namespace Nebalus\Webapi\Value\User;
 
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
+use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class UserEmail
+class UserEmail
 {
+    use SanitizrValueObjectTrait;
+
     private function __construct(
-        private string $email,
+        private readonly string $email,
     ) {
+    }
+
+    protected static function defineSchema(): AbstractSanitizrSchema
+    {
+        return Sanitizr::string()->email();
     }
 
     /**
@@ -18,7 +27,7 @@ readonly class UserEmail
      */
     public static function from(string $email): self
     {
-        $schema = Sanitizr::string()->email();
+        $schema = static::getSchema();
         $validData = $schema->safeParse($email);
 
         if ($validData->isError()) {

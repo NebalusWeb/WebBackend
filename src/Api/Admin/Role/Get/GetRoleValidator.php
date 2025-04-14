@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\Admin\Role\Get;
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
-use Nebalus\Webapi\Value\User\AccessControl\Role\RoleName;
+use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 
 class GetRoleValidator extends AbstractValidator
 {
@@ -13,7 +13,7 @@ class GetRoleValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                "roleName" => S::string()->min(RoleName::MIN_LENGTH)->max(RoleName::MAX_LENGTH),
+                "roleId" => RoleId::getSchema(),
             ]),
         ]));
     }

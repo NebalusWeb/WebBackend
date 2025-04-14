@@ -18,8 +18,8 @@ class CreateReferralValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::BODY => S::object([
-                'label' => S::string(),
-                'url' => S::string()->url(),
+                'label' => ReferralLabel::getSchema(),
+                'url' => Url::getSchema(),
                 'disabled' => S::boolean()->optional()->default(false),
             ])
         ]));
