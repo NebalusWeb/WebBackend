@@ -28,7 +28,7 @@ readonly class DefaultErrorHandler implements ErrorHandlerInterface
         bool $logErrorDetails
     ): ResponseInterface {
         $statusCode = StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR;
-        $errorMessage = 'Internal server error';
+        $errorMessage = 'Internal server error... please contact an admin!';
 
         switch ($exception::class) {
             case HttpMethodNotAllowedException::class:
