@@ -56,6 +56,7 @@ class PrivilegeNodeCollection implements IteratorAggregate
         yield from $this->privilegeNodes;
     }
 
+    // TODO: Put this methode in the PrivilegeNode Class
     private static function destructureNode(PrivilegeNode $node): array
     {
         $nodeAsString = $node->getNode();
