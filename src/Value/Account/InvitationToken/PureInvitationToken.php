@@ -13,6 +13,7 @@ class PureInvitationToken
     use SanitizrValueObjectTrait;
 
     public const string REGEX = "/^(([0-9]{4})-){4}([0-9]{4})$/";
+    
     private function __construct(
         private readonly string $token
     ) {
