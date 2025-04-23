@@ -9,7 +9,7 @@ class Privilege
 {
     public function __construct(
         private readonly PrivilegeId $privilegeId,
-        private readonly PrivilegeNode $node,
+        private readonly PurePrivilegeNode $node,
         private readonly PrivilegeDescription $description,
         private readonly bool $isPrestige,
         private readonly ?int $defaultValue
@@ -18,7 +18,7 @@ class Privilege
 
     public static function from(
         PrivilegeId $id,
-        PrivilegeNode $node,
+        PurePrivilegeNode $node,
         PrivilegeDescription $description,
         bool $isPrestige,
         ?int $defaultValue = null
@@ -39,7 +39,7 @@ class Privilege
     public static function fromArray(array $value): self
     {
         $id = PrivilegeId::from($value['privilege_id']);
-        $node = PrivilegeNode::fromString($value['node'], false); // TODO Muss noch ein extra value object bauen, die nicht grantAllSubPrivileges beinhaltet
+        $node = PurePrivilegeNode::fromString($value['node']);
         $description = PrivilegeDescription::from($value['description']);
         $isPrestige = (bool) $value['is_prestige'];
         $defaultValue = $value['default_value'] ?? null;
@@ -51,7 +51,7 @@ class Privilege
     {
         return [
             'privilege_id' => $this->privilegeId->asInt(),
-            'node' => $this->node->getNode(),
+            'node' => $this->node->asString(),
             'description' => $this->description->asString(),
             'is_prestige' => $this->isPrestige,
             'default_value' => $this->defaultValue,
@@ -63,7 +63,7 @@ class Privilege
         return $this->privilegeId;
     }
 
-    public function getNode(): PrivilegeNode
+    public function getNode(): PurePrivilegeNode
     {
         return $this->node;
     }

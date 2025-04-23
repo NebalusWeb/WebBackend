@@ -19,7 +19,7 @@ class PrivilegeNodeCollection implements IteratorAggregate
     {
         $cache = [];
         foreach ($privilegeNodes as $privilegeNode) {
-            $cache[] = $privilegeNode->asDestructured();
+            $cache[] = $privilegeNode->getNode()->asDestructured();
         }
 
         $nodeIndex = array_replace_recursive([], ...$cache);
@@ -30,7 +30,7 @@ class PrivilegeNodeCollection implements IteratorAggregate
     public function contains(PrivilegeNode $node): bool
     {
         foreach ($this->privilegeNodes as $privilegeNode) {
-            if (str_starts_with($privilegeNode->getNode(), $node->getNode())) {
+            if ($node->getNode()->isParentOf($privilegeNode->getNode())) {
                 return true;
             }
         }
