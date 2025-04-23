@@ -2,29 +2,16 @@
 
 namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 
-use Nebalus\Sanitizr\Sanitizr;
-use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
-use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class PrivilegeNode
 {
-    use SanitizrValueObjectTrait;
-
-    public const int MAX_LENGTH = 128;
-    private const string REGEX = '/^(([a-z_])+(\.[a-z_.*]+)*|\*)$/';
-
+    // The diff between PurePrivilegeNode and PrivilegeNode is, that PrivilegeNode has extra metedata (grantAllSubPrivileges and an value)
     private function __construct(
-        private readonly string $node,
+        private readonly PurePrivilegeNode $node,
         private readonly bool $grantAllSubPrivileges,
         private readonly ?int $value
     ) {
-    }
-
-    protected static function defineSchema(): AbstractSanitizrSchema
-    {
-        return Sanitizr::string()->max(self::MAX_LENGTH)->regex(self::REGEX);
     }
 
     /**
@@ -32,15 +19,11 @@ class PrivilegeNode
      */
     public static function fromString(string $node, bool $grantAllSubPrivileges, ?int $value = null): self
     {
-        $schema = static::getSchema();
-        $validData = $schema->safeParse($node);
+        $pureNode = PurePrivilegeNode::fromString($node);
 
-        if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid privilege node: ' . $validData->getErrorMessage());
-        }
-
-        return new self($validData->getValue(), $grantAllSubPrivileges, $value);
+        return new self($pureNode, $grantAllSubPrivileges, $value);
     }
+
     public function hasValue(): bool
     {
         return $this->value !== null;
@@ -56,25 +39,8 @@ class PrivilegeNode
         return $this->grantAllSubPrivileges;
     }
 
-    public function getNode(): string
+    public function getNode(): PurePrivilegeNode
     {
         return $this->node;
-    }
-
-    public function isParentOf(PrivilegeNode $toCheckNode): bool
-    {
-        return str_starts_with($this->node, $toCheckNode->node);
-    }
-
-    public function asDestructured(): array
-    {
-        $finalArray = [];
-
-        $ref = &$finalArray;
-        foreach (explode('.', $this->node) as $key) {
-            $ref = &$ref[$key];
-        }
-        $ref = $this->getValue();
-        return $finalArray; // DO NOT REMOVE // THIS IS THE FINAL RETURN VALUE
     }
 }

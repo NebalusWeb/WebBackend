@@ -6,6 +6,7 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\Privilege;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
 use PDO;
 
 class MySqlPrivilegesRepository
@@ -19,14 +20,14 @@ class MySqlPrivilegesRepository
      * @throws ApiInvalidArgumentException
      * @throws ApiException
      */
-    public function findPrivilegeByNode(PrivilegeNode $node): ?Privilege
+    public function findPrivilegeByNode(PurePrivilegeNode $node): ?Privilege
     {
         $sql = <<<SQL
             SELECT * FROM privileges WHERE node = :node
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue("node", $node->getNode());
+        $stmt->bindValue("node", $node->asString());
         $stmt->execute();
 
         $data = $stmt->fetch();
