@@ -7,6 +7,7 @@ use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Value\User\Totp\TOTPCode;
 use Nebalus\Webapi\Value\User\Username;
+use Nebalus\Webapi\Value\User\UserPassword;
 
 class AuthUserValidator extends AbstractValidator
 {
@@ -19,10 +20,10 @@ class AuthUserValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::BODY => S::object([
-                'username' => S::string(),
-                'password' => S::string(),
-                'remember_me' => S::boolean()->optional()->default(false),
-                'totp' => S::string()->optional()->nullable(),
+                'username' => Username::getSchema(),
+                'password' => UserPassword::getSchema(),
+                'remember_me' => S::boolean()->optional()->default(true),
+                'totp' => TOTPCode::getSchema()->optional()->nullable(),
             ])
         ]));
     }

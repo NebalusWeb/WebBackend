@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Slim\Middleware;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Config\GeneralConfig;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Internal\Result\Result;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Nebalus\Webapi\Value\User\UserId;
 use Override;
-use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use ReallySimpleJWT\Token;
 use Slim\App;
 
@@ -35,7 +36,7 @@ readonly class AuthMiddleware implements MiddlewareInterface
         $authHeader = $request->getHeader('Authorization');
 
         if (empty($authHeader)) {
-            return $this->denyRequest('Missing "Authorization" header');
+            return $this->denyRequest("Missing 'Authorization' header");
         }
 
         return $this->processJwt($authHeader[0], $request, $handler);
@@ -75,6 +76,11 @@ readonly class AuthMiddleware implements MiddlewareInterface
         }
 
         $request = $request->withAttribute("user", $user);
+        $request = $request->withAttribute("userPrivileges", PrivilegeNodeCollection::fromObjects(
+//            PrivilegeNode::fromString("test.testii.testiii", false),
+//            PrivilegeNode::fromString("admin.test", false),
+//            PrivilegeNode::fromString("test.xvysvf", false),
+        ));
         $request = $request->withAttribute("authType", "jwt");
 
         return $handler->handle($request);

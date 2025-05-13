@@ -8,7 +8,7 @@ use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 
 class ClickLinktreeView
 {
-    public static function render(): ResultInterface
+    public function render(): ResultInterface
     {
         $fields = [
             "description" => "Test",

@@ -3,13 +3,22 @@
 namespace Nebalus\Webapi\Value\Module\Referral\Click;
 
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
+use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class ReferralClickAmount
+class ReferralClickAmount
 {
+    use SanitizrValueObjectTrait;
+
     private function __construct(
-        private int $clickAmount
+        private readonly int $clickAmount
     ) {
+    }
+
+    protected static function defineSchema(): AbstractSanitizrSchema
+    {
+        return Sanitizr::number()->integer()->nonNegative();
     }
 
     /**
@@ -17,14 +26,14 @@ readonly class ReferralClickAmount
      */
     public static function from(int $clickAmount): self
     {
-        $schema = Sanitizr::number()->integer()->nonNegative();
+        $schema = static::getSchema();
         $validData = $schema->safeParse($clickAmount);
 
         if ($validData->isError()) {
             throw new ApiInvalidArgumentException('Invalid click amount: ' . $validData->getErrorMessage());
         }
 
-        return new self($clickAmount);
+        return new self($validData->getValue());
     }
 
     public function asInt(): int

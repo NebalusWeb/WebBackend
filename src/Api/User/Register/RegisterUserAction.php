@@ -4,6 +4,7 @@ namespace Nebalus\Webapi\Api\User\Register;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 
@@ -13,6 +14,7 @@ class RegisterUserAction extends AbstractAction
         private readonly RegisterUserValidator $validator,
         private readonly RegisterUserService $service,
     ) {
+        parent::__construct(PrivilegeNodeCollection::fromObjects());
     }
 
     /**

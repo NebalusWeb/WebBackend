@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Api\User\Auth;
 
-use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Config\GeneralConfig;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
@@ -16,7 +16,8 @@ readonly class AuthUserService
 {
     public function __construct(
         private MySqlUserRepository $mySqlUserRepository,
-        private GeneralConfig $envData
+        private GeneralConfig $generalConfig,
+        private AuthUserView $view,
     ) {
     }
 
@@ -31,9 +32,9 @@ readonly class AuthUserService
             return Result::createError('Authentication failed: Wrong credentials', 401);
         }
 
-        $expirationTime = time() + $this->envData->getJwtNormalExpirationTime();
+        $expirationTime = time() + $this->generalConfig->getJwtNormalExpirationTime();
 
-        $token = Token::builder($this->envData->getJwtSecret())
+        $token = Token::builder($this->generalConfig->getJwtSecret())
             ->setIssuer("https://api.nebalus.dev")
             ->setPayloadClaim("email", $user->getEmail()->asString())
             ->setPayloadClaim("username", $user->getUsername()->asString())
@@ -42,6 +43,6 @@ readonly class AuthUserService
             ->setExpiration($expirationTime)
             ->build();
 
-        return AuthUserView::render($token, $user);
+        return $this->view->render($token, $user);
     }
 }

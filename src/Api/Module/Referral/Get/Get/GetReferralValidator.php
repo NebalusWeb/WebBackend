@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Module\Referral\Get;
+namespace Nebalus\Webapi\Api\Module\Referral\Get\Get;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
@@ -15,7 +15,7 @@ class GetReferralValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                'code' => S::string()->length(ReferralCode::LENGTH)->regex(ReferralCode::REGEX)
+                'code' => ReferralCode::getSchema()
             ])
         ]));
     }

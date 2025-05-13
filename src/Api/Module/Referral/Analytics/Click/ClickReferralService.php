@@ -11,7 +11,8 @@ use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 readonly class ClickReferralService
 {
     public function __construct(
-        private MySQlReferralRepository $referralRepository
+        private MySQlReferralRepository $referralRepository,
+        private ClickReferralView $view,
     ) {
     }
 
@@ -28,6 +29,6 @@ readonly class ClickReferralService
 
         $this->referralRepository->insertReferralClickEntry($referral->getReferralId());
 
-        return ClickReferralView::render($referral);
+        return $this->view->render($referral);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Module\Referral\Get;
+namespace Nebalus\Webapi\Api\Module\Referral\Get\Get;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
@@ -9,7 +9,7 @@ use Nebalus\Webapi\Value\Module\Referral\Referral;
 
 class GetReferralView
 {
-    public static function render(Referral $referral): ResultInterface
+    public function render(Referral $referral): ResultInterface
     {
         $fields = [
             "code" => $referral->getCode()->asString(),
