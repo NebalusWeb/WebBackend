@@ -4,33 +4,71 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Role;
 
 use DateTimeImmutable;
 
-readonly class Role
+class Role
 {
     public function __construct(
-        private ?RoleId $roleId,
-        private RoleName $roleName,
-        private bool $applyOnUserCreation,
-        private bool $deletable,
-        private DateTimeImmutable $createdAtDate,
-        private DateTimeImmutable $updatedAtDate,
+        private readonly ?RoleId $roleId,
+        private readonly RoleName $roleName,
+        private readonly ?RoleDescription $roleDescription,
+        private readonly bool $appliesToEveryone,
+        private readonly bool $deletable,
+        private readonly DateTimeImmutable $createdAtDate,
+        private readonly DateTimeImmutable $updatedAtDate,
     ) {
     }
 
     public static function from(
         RoleId $roleId,
         RoleName $roleName,
-        bool $applyOnUserCreation,
+        ?RoleDescription $roleDescription,
+        bool $appliesToEveryone,
         bool $deletable,
         DateTimeImmutable $createdAtDate,
         DateTimeImmutable $updatedAtDate
-    ) {
+    ): self {
         return new self(
             $roleId,
             $roleName,
-            $applyOnUserCreation,
+            $roleDescription,
+            $appliesToEveryone,
             $deletable,
             $createdAtDate,
             $updatedAtDate
         );
+    }
+
+    public function getRoleId(): ?RoleId
+    {
+        return $this->roleId;
+    }
+
+    public function getName(): RoleName
+    {
+        return $this->roleName;
+    }
+
+    public function getDescription(): ?RoleDescription
+    {
+        return $this->roleDescription;
+    }
+
+    public function appliesToEveryone(): bool
+    {
+        return $this->appliesToEveryone;
+    }
+
+    public function isDeletable(): bool
+    {
+        return $this->deletable;
+    }
+
+    public function getCreatedAtDate(): DateTimeImmutable
+    {
+        return $this->createdAtDate;
+    }
+
+    public function getUpdatedAtDate(): DateTimeImmutable
+    {
+        return $this->updatedAtDate;
     }
 }

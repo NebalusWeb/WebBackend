@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Value\Account\InvitationToken;
 use IteratorAggregate;
 use Traversable;
 
-class InvitationTokens implements IteratorAggregate
+class InvitationTokenCollection implements IteratorAggregate
 {
     private array $invitationsTokens;
 
@@ -14,7 +14,7 @@ class InvitationTokens implements IteratorAggregate
         $this->invitationsTokens = $invitationsTokens;
     }
 
-    public static function fromArray(InvitationToken ...$invitationsTokens): self
+    public static function fromObjects(InvitationToken ...$invitationsTokens): self
     {
         return new self(...$invitationsTokens);
     }

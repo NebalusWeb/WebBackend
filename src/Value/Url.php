@@ -3,13 +3,22 @@
 namespace Nebalus\Webapi\Value;
 
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
+use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class Url
+class Url
 {
+    use SanitizrValueObjectTrait;
+
     private function __construct(
-        private string $url
+        private readonly string $url
     ) {
+    }
+
+    protected static function defineSchema(): AbstractSanitizrSchema
+    {
+        return Sanitizr::string()->url();
     }
 
     /**
@@ -17,14 +26,14 @@ readonly class Url
      */
     public static function from(string $url): self
     {
-        $schema = Sanitizr::string()->url();
+        $schema = static::getSchema();
         $validData = $schema->safeParse($url);
 
         if ($validData->isError()) {
             throw new ApiInvalidArgumentException("Invalid url: " . $validData->getErrorMessage());
         }
 
-        return new self($url);
+        return new self($validData->getValue());
     }
 
     public function asString(): string

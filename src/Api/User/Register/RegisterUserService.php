@@ -14,6 +14,7 @@ readonly class RegisterUserService
     public function __construct(
         private MySqlUserRepository $mySqlUserRepository,
         private MySqlAccountRepository $mySqlAccountRepository,
+        private RegisterUserView $view,
     ) {
     }
 
@@ -48,6 +49,6 @@ readonly class RegisterUserService
 
         $this->mySqlUserRepository->registerUser($preUser, $invitationToken);
 
-        return RegisterUserView::render();
+        return $this->view->render();
     }
 }

@@ -20,11 +20,11 @@ class EditReferralValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                'code' => S::string()->length(ReferralCode::LENGTH)->regex(ReferralCode::REGEX)
+                'code' => ReferralCode::getSchema()
             ]),
             RequestParamTypes::BODY => S::object([
-                'url' => S::string()->url(),
-                'label' => S::string()->nullable(),
+                'url' => Url::getSchema(),
+                'label' => ReferralLabel::getSchema(),
                 'disabled' => S::boolean()->optional()->default(false),
             ])
         ]));

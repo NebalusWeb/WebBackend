@@ -6,7 +6,6 @@ use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\Account\InvitationToken\InvitationTokenField;
 use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\User\UserEmail;
 use Nebalus\Webapi\Value\User\Username;
@@ -23,10 +22,10 @@ class RegisterUserValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::BODY => S::object([
-                'invitation_token' => S::string()->regex(PureInvitationToken::REGEX),
-                'email' => S::string()->email(),
-                'username' => S::string(),
-                'password' => S::string(),
+                'invitation_token' => PureInvitationToken::getSchema(),
+                'email' => UserEmail::getSchema(),
+                'username' => UserName::getSchema(),
+                'password' => UserPassword::getSchema(),
             ])
         ]));
     }

@@ -5,17 +5,26 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Value\User;
 
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
+use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class UserPassword
+class UserPassword
 {
+    use SanitizrValueObjectTrait;
+
     public const int MIN_LENGTH = 8;
     public const int MAX_LENGTH = 64;
 
     private function __construct(
-        private string $passwordHash
+        private readonly string $passwordHash
     ) {
+    }
+
+    protected static function defineSchema(): AbstractSanitizrSchema
+    {
+        return Sanitizr::string()->min(self::MIN_LENGTH)->max(self::MAX_LENGTH);
     }
 
     /**
@@ -23,7 +32,7 @@ readonly class UserPassword
      */
     public static function fromPlain(string $plainPassword, int $cost = 10): self
     {
-        $schema = Sanitizr::string()->min(self::MIN_LENGTH)->max(self::MAX_LENGTH);
+        $schema = static::getSchema();
         $validData = $schema->safeParse($plainPassword);
 
         if ($validData->isError()) {

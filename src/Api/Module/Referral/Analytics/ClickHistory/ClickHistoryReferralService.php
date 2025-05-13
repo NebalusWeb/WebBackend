@@ -10,7 +10,8 @@ use Nebalus\Webapi\Value\User\User;
 readonly class ClickHistoryReferralService
 {
     public function __construct(
-        private MySQlReferralRepository $referralRepository
+        private MySQlReferralRepository $referralRepository,
+        private ClickHistoryReferralView $view,
     ) {
     }
 
@@ -21,6 +22,6 @@ readonly class ClickHistoryReferralService
     {
         $data = $this->referralRepository->getReferralClicksFromRange($user->getUserId(), $validator->getReferralCode(), $validator->getRange());
 
-        return ClickHistoryReferralView::render($validator->getReferralCode(), $data);
+        return $this->view->render($validator->getReferralCode(), $data);
     }
 }

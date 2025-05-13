@@ -11,17 +11,17 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Url;
 use Nebalus\Webapi\Value\User\UserId;
 
-readonly class Referral
+class Referral
 {
     private function __construct(
-        private ReferralId $referralId,
-        private UserId $ownerId,
-        private ReferralCode $code,
-        private Url $url,
-        private ReferralLabel $label,
-        private bool $disabled,
-        private DateTimeImmutable $createdAtDate,
-        private DateTimeImmutable $updatedAtDate,
+        private readonly ReferralId $referralId,
+        private readonly UserId $ownerId,
+        private readonly ReferralCode $code,
+        private readonly Url $url,
+        private readonly ?ReferralLabel $label,
+        private readonly bool $disabled,
+        private readonly DateTimeImmutable $createdAtDate,
+        private readonly DateTimeImmutable $updatedAtDate,
     ) {
     }
 
@@ -41,7 +41,7 @@ readonly class Referral
         $ownerId = UserId::from($data["owner_id"]);
         $code = ReferralCode::from($data["code"]);
         $url = Url::from($data["url"]);
-        $label = ReferralLabel::from($data["label"]);
+        $label = empty($data['label']) ? null : ReferralLabel::from($data["label"]);
         $disabled = (bool) $data["disabled"];
 
         return new self(
@@ -62,7 +62,7 @@ readonly class Referral
             "owner_id" => $this->ownerId->asInt(),
             "code" => $this->code->asString(),
             "url" => $this->url->asString(),
-            "label" => $this->label->asString(),
+            "label" => $this->label?->asString(),
             "disabled" => $this->disabled,
             "created_at" => $this->createdAtDate->format(DATE_ATOM),
             "updated_at" => $this->updatedAtDate->format(DATE_ATOM),
@@ -85,7 +85,7 @@ readonly class Referral
     {
         return $this->url;
     }
-    public function getLabel(): ReferralLabel
+    public function getLabel(): ?ReferralLabel
     {
         return $this->label;
     }

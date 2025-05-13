@@ -3,14 +3,23 @@
 namespace Nebalus\Webapi\Value;
 
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
+use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 trait ID
 {
+    use SanitizrValueObjectTrait;
+
     private function __construct(
         private readonly int $id
     ) {
+    }
+
+    public static function defineSchema(): AbstractSanitizrSchema
+    {
+        return Sanitizr::number()->integer()->positive();
     }
 
     /**
@@ -18,14 +27,14 @@ trait ID
      */
     public static function from(mixed $id): self
     {
-        $schema = Sanitizr::number()->integer()->positive();
+        $schema = static::getSchema();
         $validData = $schema->safeParse($id);
 
         if ($validData->isError()) {
             throw new ApiInvalidArgumentException('Invalid id: ' . $validData->getErrorMessage());
         }
 
-        return new self($id);
+        return new self($validData->getValue());
     }
 
     public function asInt(): int

@@ -8,7 +8,7 @@ use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 
 class RegisterUserView
 {
-    public static function render(): ResultInterface
+    public function render(): ResultInterface
     {
         return Result::createSuccess("User registered", StatusCodeInterface::STATUS_CREATED, []);
     }

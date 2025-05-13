@@ -3,15 +3,25 @@
 namespace Nebalus\Webapi\Value\Account\InvitationToken;
 
 use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
+use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-readonly class PureInvitationToken
+class PureInvitationToken
 {
+    use SanitizrValueObjectTrait;
+
     public const string REGEX = "/^(([0-9]{4})-){4}([0-9]{4})$/";
+    
     private function __construct(
-        private string $token
+        private readonly string $token
     ) {
+    }
+
+    protected static function defineSchema(): AbstractSanitizrSchema
+    {
+        return Sanitizr::string()->regex(PureInvitationToken::REGEX);
     }
 
     public static function create(): self
@@ -38,7 +48,7 @@ readonly class PureInvitationToken
      */
     public static function from(string $token): self
     {
-        $schema = Sanitizr::string()->regex(PureInvitationToken::REGEX);
+        $schema = static::getSchema();
         $validData = $schema->safeParse($token);
 
         if ($validData->isError()) {
@@ -52,7 +62,7 @@ readonly class PureInvitationToken
             throw new ApiInvalidArgumentException('Invalid Token: Checksum does not match');
         }
 
-        return new self($token);
+        return new self($validData->getValue());
     }
 
     public function asString(): string

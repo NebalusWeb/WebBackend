@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Value\Module\Referral;
 use IteratorAggregate;
 use Traversable;
 
-class Referrals implements IteratorAggregate
+class ReferralCollection implements IteratorAggregate
 {
     private array $referrals;
 
@@ -14,7 +14,7 @@ class Referrals implements IteratorAggregate
         $this->referrals = $referrals;
     }
 
-    public static function fromArray(Referral ...$referrals): self
+    public static function fromObjects(Referral ...$referrals): self
     {
         return new self(...$referrals);
     }

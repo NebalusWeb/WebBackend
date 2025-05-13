@@ -10,7 +10,7 @@ use ReallySimpleJWT\Jwt;
 
 class AuthUserView
 {
-    public static function render(Jwt $jwt, User $user): ResultInterface
+    public function render(Jwt $jwt, User $user): ResultInterface
     {
         $fields = [
             "jwt" => $jwt->getToken(),

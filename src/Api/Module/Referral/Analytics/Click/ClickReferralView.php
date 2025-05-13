@@ -9,7 +9,7 @@ use Nebalus\Webapi\Value\Module\Referral\Referral;
 
 class ClickReferralView
 {
-    public static function render(Referral $referral): ResultInterface
+    public function render(Referral $referral): ResultInterface
     {
         $fields = [
             "url" => $referral->getUrl()->asString()
