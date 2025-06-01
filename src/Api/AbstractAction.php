@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
@@ -25,7 +26,7 @@ abstract class AbstractAction
             if ($userPrivileges instanceof PrivilegeNodeCollection) {
                 $endpointPrivileges = $this->privilegeConfig();
                 if ($userPrivileges->containsSomeNodes($endpointPrivileges) === false) {
-                    $result = Result::createError("You are not allowed to access this endpoint", 403);
+                    $result = Result::createError("You are not allowed to access this endpoint", StatusCodeInterface::STATUS_FORBIDDEN);
                     return $response->withJson($result->getPayload(), $result->getStatusCode());
                 }
             }

@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Sanitizr\Schema\SanitizrObjectSchema;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
@@ -27,7 +28,7 @@ abstract class AbstractValidator
         ]);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException($validData->getErrorMessage(), 406);
+            throw new ApiInvalidArgumentException($validData->getErrorMessage(), StatusCodeInterface::STATUS_NOT_ACCEPTABLE);
         }
 
         $this->onValidate($validData->getValue()[RequestParamTypes::BODY] ?? [], $validData->getValue()[RequestParamTypes::QUERY_PARAMS] ?? [], $validData->getValue()[RequestParamTypes::PATH_ARGS] ?? []);
