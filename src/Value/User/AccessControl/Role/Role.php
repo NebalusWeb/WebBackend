@@ -17,8 +17,19 @@ class Role
     ) {
     }
 
+    public static function create(
+        RoleName $roleName,
+        ?RoleDescription $roleDescription,
+        bool $appliesToEveryone,
+        bool $deletable,
+    ): self {
+        $createdAtDate = new DateTimeImmutable();
+        $updatedAtDate = new DateTimeImmutable();
+        return self::from(null, $roleName, $roleDescription, $appliesToEveryone, $deletable, $createdAtDate, $updatedAtDate);
+    }
+
     public static function from(
-        RoleId $roleId,
+        ?RoleId $roleId,
         RoleName $roleName,
         ?RoleDescription $roleDescription,
         bool $appliesToEveryone,
@@ -35,6 +46,11 @@ class Role
             $createdAtDate,
             $updatedAtDate
         );
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self();
     }
 
     public function getRoleId(): ?RoleId
