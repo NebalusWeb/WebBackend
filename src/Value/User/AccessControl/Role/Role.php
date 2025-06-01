@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User\AccessControl\Role;
 
+use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 
@@ -73,11 +74,9 @@ class Role
                 $createdAtDate,
                 $updatedAtDate
             );
-        } catch (\DateMalformedStringException $exception) {
+        } catch (DateMalformedStringException $exception) {
             throw new ApiDateMalformedStringException($exception);
         }
-
-        return new self();
     }
 
     public function getRoleId(): ?RoleId
