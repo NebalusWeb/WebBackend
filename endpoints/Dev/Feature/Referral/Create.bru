@@ -1,0 +1,21 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://127.0.0.1:80/ui/user/services/referrals
+  body: none
+  auth: apikey
+}
+
+headers {
+  : 
+}
+
+auth:apikey {
+  key: Authorization
+  value: {{auth_jwt}}
+  placement: header
+}

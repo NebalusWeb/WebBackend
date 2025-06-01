@@ -9,7 +9,6 @@ use Slim\Http\ServerRequest as Request;
 
 class GetAllPrivilegeAction extends AbstractAction
 {
-
     public function __construct(
         private GetAllPrivilegeService $service,
         private GetAllPrivilegeValidator $validator

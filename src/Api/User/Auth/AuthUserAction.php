@@ -20,9 +20,11 @@ class AuthUserAction extends AbstractAction
         private readonly AuthUserValidator $validator,
         private readonly AuthUserService $service,
     ) {
-        parent::__construct(
-            PrivilegeNodeCollection::fromObjects()
-        );
+    }
+
+    protected function privilegeConfig(): PrivilegeNodeCollection
+    {
+        return PrivilegeNodeCollection::fromObjects();
     }
 
     /**

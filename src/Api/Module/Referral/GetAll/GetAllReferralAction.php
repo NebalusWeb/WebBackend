@@ -14,7 +14,6 @@ class GetAllReferralAction extends AbstractAction
     public function __construct(
         private readonly GetAllReferralService $service
     ) {
-        parent::__construct(PrivilegeNodeCollection::fromObjects());
     }
 
     protected function privilegeConfig(): PrivilegeNodeCollection

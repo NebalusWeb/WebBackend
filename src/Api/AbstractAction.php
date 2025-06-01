@@ -3,7 +3,7 @@
 namespace Nebalus\Webapi\Api;
 
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeCollection;
+use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Psr\Http\Message\ResponseInterface as ResponseInterface;
 use Slim\Http\Response as Response;
@@ -11,11 +11,6 @@ use Slim\Http\ServerRequest as Request;
 
 abstract class AbstractAction
 {
-    public function __construct(
-        private PrivilegeNodeCollection $neededEndpointPrivileges
-    ) {
-    }
-
     /**
      * @throws ApiException
      */
@@ -28,10 +23,12 @@ abstract class AbstractAction
         if ($authType === 'jwt') {
             $userPrivileges = $request->getAttribute('userPrivileges');
             if ($userPrivileges instanceof PrivilegeNodeCollection) {
-                $endpointPrivileges = $this->neededEndpointPrivileges;
-                $userPrivileges->containsSomeNodes($endpointPrivileges);
+                $endpointPrivileges = $this->privilegeConfig();
+                if ($userPrivileges->containsSomeNodes($endpointPrivileges) === false) {
+                    $result = Result::createError("You are not allowed to access this endpoint", 403);
+                    return $response->withJson($result->getPayload(), $result->getStatusCode());
+                }
             }
-
         }
 
         return $this->execute($request, $response, $args);
@@ -45,4 +42,6 @@ abstract class AbstractAction
         Response $response,
         array $pathArgs
     ): Response;
+
+    abstract protected function privilegeConfig(): PrivilegeNodeCollection;
 }

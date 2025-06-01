@@ -77,18 +77,7 @@ readonly class AuthMiddleware implements MiddlewareInterface
             return $this->denyRequest("The JWT has expired");
         }
 
-        $test = PrivilegeNodeCollection::fromObjects(
-            PrivilegeNode::fromString("feature", true),
-            PrivilegeNode::fromString("admin", true),
-        );
-
-        $testZwei = PrivilegeNode::fromString("feature.referral.create", false, 1);
-
-        var_dump($testZwei->getNode()->asDestructured());
-        var_dump($test->contains(PurePrivilegeNode::fromString("admin.test.testii.testiii.fdyfyf.aysfysayf")));
-
         $request = $request->withAttribute("user", $user);
-        $request = $request->withAttribute("userPrivileges", $test);
         $request = $request->withAttribute("authType", "jwt");
 
         return $handler->handle($request);

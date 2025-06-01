@@ -30,6 +30,7 @@ use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
 use Nebalus\Webapi\Slim\Middleware\MetricsMiddleware;
+use Nebalus\Webapi\Slim\Middleware\PrivilegeMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -80,7 +81,7 @@ readonly class RouteCollector
                 });
                 $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 });
-            })->add(AuthMiddleware::class);
+            })->add(PrivilegeMiddleware::class)->add(AuthMiddleware::class);
             $group->group("/user", function (RouteCollectorProxy $group) {
                 $group->map(["GET"], "/privileges", GetUserPrivilegesAction::class);
                 $group->group("/services", function (RouteCollectorProxy $group) {
@@ -104,7 +105,7 @@ readonly class RouteCollector
                         });
                     });
                 });
-            })->add(AuthMiddleware::class);
+            })->add(PrivilegeMiddleware::class)->add(AuthMiddleware::class);
         });
 
         $this->app->map(["GET"], "/metrics", MetricsAction::class);
