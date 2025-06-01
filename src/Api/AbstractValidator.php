@@ -27,7 +27,7 @@ abstract class AbstractValidator
         ]);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException($validData->getErrorMessage());
+            throw new ApiInvalidArgumentException($validData->getErrorMessage(), 406);
         }
 
         $this->onValidate($validData->getValue()[RequestParamTypes::BODY] ?? [], $validData->getValue()[RequestParamTypes::QUERY_PARAMS] ?? [], $validData->getValue()[RequestParamTypes::PATH_ARGS] ?? []);
