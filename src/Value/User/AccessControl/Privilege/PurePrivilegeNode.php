@@ -28,7 +28,7 @@ class PurePrivilegeNode
     /**
      * @throws ApiException
      */
-    public static function fromString(string $node): self
+    public static function from(string $node): self
     {
         $schema = static::getSchema();
         $validData = $schema->safeParse($node);

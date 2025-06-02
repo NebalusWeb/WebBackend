@@ -10,16 +10,16 @@ class PrivilegeNode
     private function __construct(
         private readonly PurePrivilegeNode $node,
         private readonly bool $grantAllSubPrivileges,
-        private readonly ?int $value
+        private readonly ?PrivilegeValue $value
     ) {
     }
 
     /**
      * @throws ApiException
      */
-    public static function fromString(string $node, bool $grantAllSubPrivileges, ?int $value = null): self
+    public static function fromString(string $node, bool $grantAllSubPrivileges, ?PrivilegeValue $value = null): self
     {
-        $pureNode = PurePrivilegeNode::fromString($node);
+        $pureNode = PurePrivilegeNode::from($node);
 
         return new self($pureNode, $grantAllSubPrivileges, $value);
     }
@@ -29,7 +29,7 @@ class PrivilegeNode
         return $this->value !== null;
     }
 
-    public function getValue(): ?int
+    public function getValue(): ?PrivilegeValue
     {
         return $this->value;
     }

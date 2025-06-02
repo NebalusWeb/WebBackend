@@ -12,7 +12,7 @@ class Privilege
         private readonly PurePrivilegeNode $node,
         private readonly PrivilegeDescription $description,
         private readonly bool $isPrestige,
-        private readonly ?int $defaultValue
+        private readonly ?PrivilegeValue $defaultValue
     ) {
     }
 
@@ -21,7 +21,7 @@ class Privilege
         PurePrivilegeNode $node,
         PrivilegeDescription $description,
         bool $isPrestige,
-        ?int $defaultValue = null
+        ?PrivilegeValue $defaultValue = null
     ): self {
         return new self(
             $id,
@@ -39,10 +39,10 @@ class Privilege
     public static function fromArray(array $value): self
     {
         $id = PrivilegeId::from($value['privilege_id']);
-        $node = PurePrivilegeNode::fromString($value['node']);
+        $node = PurePrivilegeNode::from($value['node']);
         $description = PrivilegeDescription::from($value['description']);
         $isPrestige = (bool) $value['is_prestige'];
-        $defaultValue = $value['default_value'] ?? null;
+        $defaultValue = empty($value['default_value']) ? null : PrivilegeValue::from($value['default_value']);
 
         return new self($id, $node, $description, $isPrestige, $defaultValue);
     }
@@ -54,7 +54,7 @@ class Privilege
             'node' => $this->node->asString(),
             'description' => $this->description->asString(),
             'is_prestige' => $this->isPrestige,
-            'default_value' => $this->defaultValue,
+            'default_value' => $this->defaultValue?->asInt(),
         ];
     }
 
@@ -78,7 +78,7 @@ class Privilege
         return $this->isPrestige;
     }
 
-    public function getDefaultValue(): ?int
+    public function getDefaultValue(): ?PrivilegeValue
     {
         return $this->defaultValue;
     }

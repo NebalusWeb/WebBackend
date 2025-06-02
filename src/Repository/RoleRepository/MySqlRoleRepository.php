@@ -19,6 +19,11 @@ class MySqlRoleRepository
     ) {
     }
 
+    public function insertPrivilegeIntoRole()
+    {
+
+    }
+
     /**
      * @throws ApiException
      */
@@ -51,7 +56,7 @@ class MySqlRoleRepository
     /**
      * @throws ApiException
      */
-    public function updateRoleFromRoleId(RoleId $roleId, RoleName $name, RoleDescription $roleDescription, bool $appliesToEveryone, bool $deletable, RoleAccessLevel $accessLevel): ?Role
+    public function updateRoleFromRoleId(RoleId $roleId, RoleName $name, RoleDescription $description, bool $appliesToEveryone, bool $deletable, RoleAccessLevel $accessLevel): ?Role
     {
         $sql = <<<SQL
             UPDATE roles
@@ -67,16 +72,33 @@ class MySqlRoleRepository
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':name', $url->asString());
-        $stmt->bindValue(':description', $label->asString());
-        $stmt->bindValue(':applies_to_everyone', $disabled, PDO::PARAM_BOOL);
-        $stmt->bindValue(':applies_to_everyone', $disabled, PDO::PARAM_BOOL);
-        $stmt->bindValue(':applies_to_everyone', $disabled, PDO::PARAM_BOOL);
+        $stmt->bindValue(':name', $name->asString());
+        $stmt->bindValue(':description', $description->asString());
+        $stmt->bindValue(':applies_to_everyone', $appliesToEveryone, PDO::PARAM_BOOL);
+        $stmt->bindValue(':deletable', $deletable, PDO::PARAM_BOOL);
+        $stmt->bindValue(':access_level', $accessLevel->asInt(), PDO::PARAM_INT);
         $stmt->bindValue(':role_id', $roleId->asInt(), PDO::PARAM_INT);
         $stmt->execute();
 
         return $this->findRoleById($roleId);
     }
+
+    public function deleteRoleFromRoleId(RoleId $roleId): bool
+    {
+        $sql = <<<SQL
+            DELETE FROM roles 
+            WHERE 
+                role_id = :role_id 
+                AND deletable = true
+        SQL;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':role_id', $roleId->asInt());
+        $stmt->execute();
+
+        return $stmt->rowCount() === 1;
+    }
+
 
     /**
      * @throws ApiInvalidArgumentException
