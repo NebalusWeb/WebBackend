@@ -5,6 +5,8 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Role;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
+use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class Role
 {
@@ -58,6 +60,11 @@ class Role
         );
     }
 
+    /**
+     * @throws ApiInvalidArgumentException
+     * @throws ApiDateMalformedStringException
+     * @throws ApiException
+     */
     public static function fromArray(array $data): self
     {
         try {
@@ -66,7 +73,7 @@ class Role
             return new self(
                 empty($data['role_id']) ? null : RoleId::from($data['role_id']),
                 RoleName::from($data['name']),
-                RoleDescription::from($data['description']),
+                empty($data['description']) ? null : RoleDescription::from($data['description']),
                 (bool) $data['applies_to_everyone'],
                 (bool) $data['deletable'],
                 (bool) $data['editable'],
@@ -77,6 +84,21 @@ class Role
         } catch (DateMalformedStringException $exception) {
             throw new ApiDateMalformedStringException($exception);
         }
+    }
+
+    public function asArray(): array
+    {
+        return [
+            'role_id' => $this->roleId?->asInt(),
+            'name' => $this->roleName->asString(),
+            'description' => $this->roleDescription?->asString(),
+            'applies_to_everyone' => $this->appliesToEveryone,
+            'deletable' => $this->deletable,
+            'editable' => $this->editable,
+            'access_level' => $this->accessLevel->asInt(),
+            'created_at' => $this->createdAtDate->format(DATE_ATOM),
+            'updated_at' => $this->updatedAtDate->format(DATE_ATOM),
+        ];
     }
 
     public function getRoleId(): ?RoleId

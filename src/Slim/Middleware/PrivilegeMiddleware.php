@@ -5,7 +5,6 @@ namespace Nebalus\Webapi\Slim\Middleware;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

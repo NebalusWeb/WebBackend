@@ -9,7 +9,6 @@ use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 
 class DeleteRoleValidator extends AbstractValidator
 {
-
     protected function __construct()
     {
         parent::__construct(S::object([

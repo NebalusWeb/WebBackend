@@ -5,7 +5,6 @@ namespace Nebalus\Webapi\Repository\PrivilegesRepository;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\Privilege;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
 use PDO;
 
