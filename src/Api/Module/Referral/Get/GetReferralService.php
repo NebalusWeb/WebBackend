@@ -25,7 +25,7 @@ readonly class GetReferralService
         $referral = $this->referralRepository->findReferralByCodeFromOwner($user->getUserId(), $validator->getReferralCode());
 
         if ($referral === null) {
-            return Result::createError('Referral does not exist', StatusCodeInterface::STATUS_NOT_FOUND);
+            return Result::createError('Referral not found', StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
         return $this->view->render($referral);

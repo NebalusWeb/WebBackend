@@ -22,6 +22,7 @@ abstract class AbstractAction
     ): ResponseInterface {
         $authType = $request->getAttribute('authType');
         if ($authType === 'jwt') {
+            /*
             $userPrivileges = $request->getAttribute('userPrivileges');
             if ($userPrivileges instanceof PrivilegeNodeCollection) {
                 $endpointPrivileges = $this->privilegeConfig();
@@ -30,6 +31,7 @@ abstract class AbstractAction
                     return $response->withJson($result->getPayload(), $result->getStatusCode());
                 }
             }
+            */
         }
 
         return $this->execute($request, $response, $args);
