@@ -11,7 +11,6 @@ class GetAllRoleAction extends AbstractAction
 {
     public function __construct(
         private readonly GetAllRoleService $service,
-        private readonly GetAllRoleValidator $validator
     ) {
     }
 
@@ -22,6 +21,8 @@ class GetAllRoleAction extends AbstractAction
 
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
-        // TODO: Implement execute() method.
+        $result = $this->service->execute();
+
+        return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

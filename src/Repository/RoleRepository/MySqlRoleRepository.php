@@ -7,6 +7,7 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleAccessLevel;
+use Nebalus\Webapi\Value\User\AccessControl\Role\RoleCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleDescription;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleName;
@@ -22,6 +23,26 @@ class MySqlRoleRepository
     public function insertPrivilegeIntoRole()
     {
 
+    }
+
+    public function getAllRoles(): RoleCollection
+    {
+        $sql = <<<SQL
+            SELECT 
+                * 
+            FROM privileges
+        SQL;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+
+        $data = [];
+
+        while ($row = $stmt->fetch()) {
+            $data[] = Role::fromArray($row);
+        }
+
+        return RoleCollection::fromObjects(...$data);
     }
 
     /**

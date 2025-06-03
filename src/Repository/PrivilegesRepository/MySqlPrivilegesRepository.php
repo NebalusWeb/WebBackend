@@ -19,7 +19,7 @@ class MySqlPrivilegesRepository
     /**
      * @throws ApiException
      */
-    public function getPrivileges(): PrivilegeCollection
+    public function getAllPrivileges(): PrivilegeCollection
     {
         $sql = <<<SQL
             SELECT 
