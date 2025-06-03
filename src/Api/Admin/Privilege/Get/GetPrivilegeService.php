@@ -23,7 +23,7 @@ class GetPrivilegeService
      */
     public function execute(GetPrivilegeValidator $validator): ResultInterface
     {
-        $privilege = $this->privilegesRepository->findPrivilegeByNode($validator->getPurePrivilegeNode());
+        $privilege = $this->privilegesRepository->findPrivilegeByPrivilegeId($validator->getPrivilegeId());
 
         if ($privilege === null) {
             return Result::createError("Privilege not found", StatusCodeInterface::STATUS_NOT_FOUND);

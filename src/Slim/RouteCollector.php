@@ -67,7 +67,7 @@ readonly class RouteCollector
             $group->group("/admin", function (RouteCollectorProxy $group) {
                 $group->group("/privilege", function (RouteCollectorProxy $group) {
                     $group->map(["GET"], "/all", GetAllPrivilegeAction::class);
-                    $group->group("/{privilegeNode}", function (RouteCollectorProxy $group) {
+                    $group->group("/{privilegeId}", function (RouteCollectorProxy $group) {
                         $group->map(["GET"], "", GetPrivilegeAction::class);
                     });
                 });

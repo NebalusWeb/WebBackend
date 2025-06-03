@@ -14,6 +14,7 @@ class GetAllRoleView
         $fields = [];
         foreach ($roleCollection as $role) {
             $fields[] = [
+                'id' => $role->getRoleId()->asInt(),
                 'name' => $role->getName()->asString(),
                 'description' => $role->getDescription()?->asString(),
                 'applies_to_everyone' => $role->appliesToEveryone(),
