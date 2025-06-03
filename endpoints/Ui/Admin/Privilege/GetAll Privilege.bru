@@ -5,7 +5,13 @@ meta {
 }
 
 get {
-  url: 
+  url: {{protocol}}://{{host}}/ui/admin/privilege/all
   body: none
-  auth: inherit
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: {{auth_jwt}}
+  placement: header
 }
