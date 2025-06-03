@@ -12,8 +12,9 @@ abstract class AbstractValidator
 {
     public const int MAX_RECURSION = 10;
 
-    protected function __construct(private readonly SanitizrObjectSchema $validationSchema)
-    {
+    protected function __construct(
+        private readonly SanitizrObjectSchema $validationSchema
+    ) {
     }
 
     /**

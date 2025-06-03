@@ -5,7 +5,17 @@ meta {
 }
 
 post {
-  url: 
-  body: none
-  auth: inherit
+  url: {{protocol}}://{{host}}/ui/admin/role
+  body: json
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: {{auth_jwt}}
+  placement: header
+}
+
+body:json {
+  {}
 }

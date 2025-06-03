@@ -5,7 +5,13 @@ meta {
 }
 
 delete {
-  url: 
+  url: {{protocol}}://{{host}}/ui/user/services/referrals/ABkoxLXe
   body: none
-  auth: inherit
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: {{auth_jwt}}
+  placement: header
 }
