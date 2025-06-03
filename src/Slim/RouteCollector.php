@@ -10,6 +10,7 @@ use Nebalus\Webapi\Api\Admin\Role\Create\CreateRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\Delete\DeleteRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\Edit\EditRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\Get\GetRoleAction;
+use Nebalus\Webapi\Api\Admin\Role\GetAll\GetAllRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\GetAll\GetAllRoleService;
 use Nebalus\Webapi\Api\Metrics\MetricsAction;
 use Nebalus\Webapi\Api\Module\Linktree\Click\ClickLinktreeAction;
@@ -72,7 +73,7 @@ readonly class RouteCollector
                 });
                 $group->group("/role", function (RouteCollectorProxy $group) {
                     $group->map(["POST"], "", CreateRoleAction::class);
-                    $group->map(["GET"], "/all", GetAllRoleService::class);
+                    $group->map(["GET"], "/all", GetAllRoleAction::class);
                     $group->group("/{roleId}", function (RouteCollectorProxy $group) {
                         $group->map(["GET"], "", GetRoleAction::class);
                         $group->map(["PUT"], "", EditRoleAction::class);

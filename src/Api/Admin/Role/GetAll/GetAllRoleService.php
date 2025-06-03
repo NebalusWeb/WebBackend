@@ -2,11 +2,15 @@
 
 namespace Nebalus\Webapi\Api\Admin\Role\GetAll;
 
+use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
+use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+
 class GetAllRoleService
 {
     public function __construct(
-        private GetAllPrivilegeView $view,
-        private MySqlPrivilegesRepository $privilegesRepository
+        private readonly GetAllRoleView $view,
+        private readonly MySqlRoleRepository $roleRepository
     ) {
     }
 
@@ -15,8 +19,8 @@ class GetAllRoleService
      */
     public function execute(): ResultInterface
     {
-        $roles = $this->privilegesRepository->getPrivileges();
+        $roles = $this->roleRepository->getAllRoles();
 
-        return $this->view->render($privileges);
+        return $this->view->render($roles);
     }
 }

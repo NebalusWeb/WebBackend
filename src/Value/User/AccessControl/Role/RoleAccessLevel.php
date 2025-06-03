@@ -36,7 +36,7 @@ class RoleAccessLevel
         return new self($validData->getValue());
     }
 
-    public function asInt(): string
+    public function asInt(): int
     {
         return $this->accessLevel;
     }

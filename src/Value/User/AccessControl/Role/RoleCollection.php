@@ -2,9 +2,12 @@
 
 namespace Nebalus\Webapi\Value\User\AccessControl\Role;
 
-class RoleCollection
+use IteratorAggregate;
+use Traversable;
+
+class RoleCollection implements IteratorAggregate
 {
-    private array $roles = [];
+    private array $roles;
 
     private function __construct(Role ...$roles)
     {
@@ -16,7 +19,7 @@ class RoleCollection
         return new self(...$roles);
     }
 
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         yield from $this->roles;
     }

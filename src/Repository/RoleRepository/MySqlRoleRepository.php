@@ -25,12 +25,17 @@ class MySqlRoleRepository
 
     }
 
+    /**
+     * @throws ApiInvalidArgumentException
+     * @throws ApiDateMalformedStringException
+     * @throws ApiException
+     */
     public function getAllRoles(): RoleCollection
     {
         $sql = <<<SQL
             SELECT 
                 * 
-            FROM privileges
+            FROM roles
         SQL;
 
         $stmt = $this->pdo->prepare($sql);

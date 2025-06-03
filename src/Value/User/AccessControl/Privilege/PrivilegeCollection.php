@@ -7,7 +7,7 @@ use Traversable;
 
 class PrivilegeCollection implements IteratorAggregate
 {
-    private array $privileges = [];
+    private array $privileges;
 
     private function __construct(Privilege ...$privileges)
     {
