@@ -5,7 +5,13 @@ meta {
 }
 
 delete {
-  url: 
+  url: {{protocol}}://{{host}}/ui/admin/role/1
   body: none
-  auth: inherit
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: {{auth_jwt}}
+  placement: header
 }

@@ -9,7 +9,8 @@ use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 
 class DeleteRoleValidator extends AbstractValidator
 {
-    protected function __construct()
+    private RoleId $roleId;
+    public function __construct()
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
@@ -20,6 +21,11 @@ class DeleteRoleValidator extends AbstractValidator
 
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        // TODO: Implement onValidate() method.
+        $this->roleId = RoleId::from($pathArgsData["roleId"]);
+    }
+
+    public function getRoleId(): RoleId
+    {
+        return $this->roleId;
     }
 }
