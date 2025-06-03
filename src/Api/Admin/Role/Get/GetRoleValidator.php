@@ -9,6 +9,7 @@ use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 
 class GetRoleValidator extends AbstractValidator
 {
+    private RoleId $roleId;
     public function __construct()
     {
         parent::__construct(S::object([
@@ -20,6 +21,11 @@ class GetRoleValidator extends AbstractValidator
 
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
+        $this->roleId = RoleId::from($pathArgsData["roleId"]);
+    }
 
+    public function getRoleId(): RoleId
+    {
+        return $this->roleId;
     }
 }

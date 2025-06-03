@@ -12,8 +12,8 @@ use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 class GetPrivilegeService
 {
     public function __construct(
-        private MySqlPrivilegesRepository $privilegesRepository,
-        private GetPrivilegeView $view
+        private readonly MySqlPrivilegesRepository $privilegesRepository,
+        private readonly GetPrivilegeView $view
     ) {
     }
 
