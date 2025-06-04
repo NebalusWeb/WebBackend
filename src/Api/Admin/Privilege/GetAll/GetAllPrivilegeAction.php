@@ -22,7 +22,6 @@ class GetAllPrivilegeAction extends AbstractAction
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $result = $this->service->execute();
-
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

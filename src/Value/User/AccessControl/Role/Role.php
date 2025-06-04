@@ -7,6 +7,7 @@ use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
+use Nebalus\Webapi\Value\HexColor;
 
 class Role
 {
@@ -14,10 +15,12 @@ class Role
         private readonly ?RoleId $roleId,
         private readonly RoleName $roleName,
         private readonly ?RoleDescription $roleDescription,
+        private readonly HexColor $roleColor,
+        private readonly RoleAccessLevel $accessLevel,
         private readonly bool $appliesToEveryone,
         private readonly bool $deletable,
         private readonly bool $editable,
-        private readonly RoleAccessLevel $accessLevel,
+        private readonly bool $disabled,
         private readonly DateTimeImmutable $createdAtDate,
         private readonly DateTimeImmutable $updatedAtDate,
     ) {
@@ -26,24 +29,28 @@ class Role
     public static function create(
         RoleName $roleName,
         ?RoleDescription $roleDescription,
-        bool $appliesToEveryone,
-        bool $deletable,
-        bool $editable,
+        HexColor $roleColor,
         RoleAccessLevel $accessLevel,
+        bool $appliesToEveryone,
+        bool $disabled,
     ): self {
+        $deletable = false;
+        $editable = false;
         $createdAtDate = new DateTimeImmutable();
         $updatedAtDate = new DateTimeImmutable();
-        return self::from(null, $roleName, $roleDescription, $appliesToEveryone, $deletable, $editable, $accessLevel, $createdAtDate, $updatedAtDate);
+        return self::from(null, $roleName, $roleDescription, $roleColor, $accessLevel, $appliesToEveryone, $deletable, $editable, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     public static function from(
         ?RoleId $roleId,
         RoleName $roleName,
         ?RoleDescription $roleDescription,
+        HexColor $roleColor,
+        RoleAccessLevel $accessLevel,
         bool $appliesToEveryone,
         bool $deletable,
         bool $editable,
-        RoleAccessLevel $accessLevel,
+        bool $disabled,
         DateTimeImmutable $createdAtDate,
         DateTimeImmutable $updatedAtDate
     ): self {
@@ -51,10 +58,12 @@ class Role
             $roleId,
             $roleName,
             $roleDescription,
+            $roleColor,
+            $accessLevel,
             $appliesToEveryone,
             $deletable,
             $editable,
-            $accessLevel,
+            $disabled,
             $createdAtDate,
             $updatedAtDate
         );
@@ -74,10 +83,12 @@ class Role
                 empty($data['role_id']) ? null : RoleId::from($data['role_id']),
                 RoleName::from($data['name']),
                 empty($data['description']) ? null : RoleDescription::from($data['description']),
+                HexColor::from($data['color']),
+                RoleAccessLevel::from($data['access_level']),
                 (bool) $data['applies_to_everyone'],
                 (bool) $data['deletable'],
                 (bool) $data['editable'],
-                RoleAccessLevel::from($data['access_level']),
+                (bool) $data['disabled'],
                 $createdAtDate,
                 $updatedAtDate
             );
@@ -92,10 +103,12 @@ class Role
             'role_id' => $this->roleId?->asInt(),
             'name' => $this->roleName->asString(),
             'description' => $this->roleDescription?->asString(),
+            'color' => $this->roleColor->asString(),
+            'access_level' => $this->accessLevel->asInt(),
             'applies_to_everyone' => $this->appliesToEveryone,
             'deletable' => $this->deletable,
             'editable' => $this->editable,
-            'access_level' => $this->accessLevel->asInt(),
+            'disabled' => $this->disabled,
             'created_at' => $this->createdAtDate->format(DATE_ATOM),
             'updated_at' => $this->updatedAtDate->format(DATE_ATOM),
         ];
@@ -116,6 +129,16 @@ class Role
         return $this->roleDescription;
     }
 
+    public function getColor(): HexColor
+    {
+        return $this->roleColor;
+    }
+
+    public function getAccessLevel(): RoleAccessLevel
+    {
+        return $this->accessLevel;
+    }
+
     public function appliesToEveryone(): bool
     {
         return $this->appliesToEveryone;
@@ -131,9 +154,9 @@ class Role
         return $this->editable;
     }
 
-    public function getAccessLevel(): RoleAccessLevel
+    public function isDisabled(): bool
     {
-        return $this->accessLevel;
+        return $this->disabled;
     }
 
     public function getCreatedAtDate(): DateTimeImmutable

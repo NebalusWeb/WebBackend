@@ -21,7 +21,7 @@ class CreateRoleService
      */
     public function execute(CreateRoleValidator $validator): ResultInterface
     {
-        $role = Role::create($validator->getRoleName(), $validator->getRoleDescription(), $validator->appliesToEveryone(), true, true, $validator->getAccessLevel());
+        $role = Role::create($validator->getRoleName(), $validator->getRoleDescription(), $validator->getRoleColor(), $validator->getAccessLevel(), $validator->appliesToEveryone(), $validator->isDisabled());
         $role = $this->roleRepository->insertRole($role);
         return $this->view->render($role);
     }

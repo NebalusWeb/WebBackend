@@ -1,12 +1,12 @@
 meta {
-  name: GetAll Role
+  name: GetAll Role With Privileges
   type: http
-  seq: 6
+  seq: 7
 }
 
 get {
   url: {{protocol}}://{{host}}/ui/admin/role/all
-  body: none
+  body: json
   auth: apikey
 }
 
@@ -14,4 +14,10 @@ auth:apikey {
   key: Authorization
   value: {{auth_jwt}}
   placement: header
+}
+
+body:json {
+  {
+    "with_privileges": true
+  }
 }

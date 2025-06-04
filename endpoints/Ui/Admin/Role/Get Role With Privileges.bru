@@ -1,0 +1,23 @@
+meta {
+  name: Get Role With Privileges
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{protocol}}://{{host}}/ui/admin/role/2
+  body: json
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: {{auth_jwt}}
+  placement: header
+}
+
+body:json {
+  {
+    "with_privileges": true
+  }
+}

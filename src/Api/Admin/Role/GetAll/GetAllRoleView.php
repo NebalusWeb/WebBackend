@@ -17,10 +17,12 @@ class GetAllRoleView
                 'id' => $role->getRoleId()->asInt(),
                 'name' => $role->getName()->asString(),
                 'description' => $role->getDescription()?->asString(),
+                'color' => $role->getColor()->asString(),
+                'access_level' => $role->getAccessLevel()->asInt(),
                 'applies_to_everyone' => $role->appliesToEveryone(),
                 'deletable' => $role->isDeletable(),
                 'editable' => $role->isEditable(),
-                'access_level' => $role->getAccessLevel()->asInt(),
+                'disabled' => $role->isDisabled(),
                 "created_at" => $role->getCreatedAtDate()->format(DATE_ATOM),
                 "updated_at" => $role->getUpdatedAtDate()->format(DATE_ATOM),
             ];
