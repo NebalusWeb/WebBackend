@@ -4,7 +4,6 @@ namespace Nebalus\Webapi\Api\Metrics;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 use Prometheus\CollectorRegistry;
 use Prometheus\RenderTextFormat;
 use Slim\Http\Response;

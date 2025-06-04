@@ -4,7 +4,6 @@ namespace Nebalus\Webapi\Api\Admin\Role\Edit;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
 
@@ -24,6 +23,7 @@ class EditRoleAction extends AbstractAction
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);
+        var_dump($this->validator->getPrivilegeRoleLinks());
         return $response;
     }
 }

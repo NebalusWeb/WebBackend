@@ -4,13 +4,11 @@ namespace Nebalus\Webapi\Api\Admin\Role\Get;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
 
 class GetRoleAction extends AbstractAction
 {
-
     public function __construct(
         private readonly GetRoleService $service,
         private readonly GetRoleValidator $validator

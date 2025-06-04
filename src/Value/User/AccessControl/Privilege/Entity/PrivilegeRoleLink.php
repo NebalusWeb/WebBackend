@@ -3,16 +3,16 @@
 namespace Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity;
 
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
 
 class PrivilegeRoleLink
 {
-    // The diff between PrivilegeNode and PrivilegeNode is, that PrivilegeNode has extra metedata (grantAllSubPrivileges and an value)
+    // The diff between PrivilegeNode and PrivilegeNode is, that PrivilegeNode has extra metadata (grantAllSubPrivileges and an value)
     private function __construct(
-        private readonly PrivilegeNode   $node,
-        private readonly bool            $affectsAllSubPrivileges,
-        private readonly bool            $isBlacklisted,
+        private readonly PrivilegeNode $node,
+        private readonly bool $affectsAllSubPrivileges,
+        private readonly bool $isBlacklisted,
         private readonly ?PrivilegeValue $value
     ) {
     }
@@ -20,11 +20,19 @@ class PrivilegeRoleLink
     /**
      * @throws ApiException
      */
-    public static function fromString(string $node, bool $affectsAllSubPrivileges, bool $isBlacklisted, ?PrivilegeValue $value = null): self
+    public static function from(PrivilegeNode $node, bool $affectsAllSubPrivileges, bool $isBlacklisted, ?PrivilegeValue $value = null): self
     {
-        $pureNode = PrivilegeNode::from($node);
+        return new self($node, $affectsAllSubPrivileges, $isBlacklisted, $value);
+    }
 
-        return new self($pureNode, $affectsAllSubPrivileges, $isBlacklisted, $value);
+    public function getNode(): PrivilegeNode
+    {
+        return $this->node;
+    }
+
+    public function affectsAllSubPrivileges(): bool
+    {
+        return $this->affectsAllSubPrivileges;
     }
 
     public function isBlacklisted(): bool
@@ -40,15 +48,5 @@ class PrivilegeRoleLink
     public function getValue(): ?PrivilegeValue
     {
         return $this->value;
-    }
-
-    public function affectsAllSubPrivileges(): bool
-    {
-        return $this->affectsAllSubPrivileges;
-    }
-
-    public function getNode(): PrivilegeNode
-    {
-        return $this->node;
     }
 }

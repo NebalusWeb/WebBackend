@@ -6,8 +6,8 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeDescription;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeId;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
 
 class Privilege
 {
