@@ -1,9 +1,10 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
+namespace Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity;
 
-use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
 
 class PrivilegeNode
 {

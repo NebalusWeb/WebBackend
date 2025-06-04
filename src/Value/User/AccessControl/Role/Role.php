@@ -34,11 +34,9 @@ class Role
         bool $appliesToEveryone,
         bool $disabled,
     ): self {
-        $deletable = false;
-        $editable = false;
         $createdAtDate = new DateTimeImmutable();
         $updatedAtDate = new DateTimeImmutable();
-        return self::from(null, $roleName, $roleDescription, $roleColor, $accessLevel, $appliesToEveryone, $deletable, $editable, $disabled, $createdAtDate, $updatedAtDate);
+        return self::from(null, $roleName, $roleDescription, $roleColor, $accessLevel, $appliesToEveryone, false, false, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     public static function from(

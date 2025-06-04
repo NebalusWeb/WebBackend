@@ -3,7 +3,7 @@
 namespace Nebalus\Webapi\Api\User\GetUserPrivileges;
 
 use Nebalus\Webapi\Api\AbstractAction;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeNodeCollection;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
 

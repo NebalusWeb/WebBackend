@@ -17,7 +17,7 @@ class TOTPSecretKey
     public const int LENGTH = 32; // Must be divisible by 2
 
     private function __construct(
-        private readonly string $secret
+        private readonly string $secretKey
     ) {
     }
 
@@ -41,10 +41,10 @@ class TOTPSecretKey
     /**
      * @throws ApiException
      */
-    public static function from(string $secret): self
+    public static function from(string $secretKey): self
     {
         $schema = static::getSchema();
-        $validData = $schema->safeParse($secret);
+        $validData = $schema->safeParse($secretKey);
 
         if ($validData->isError()) {
             throw new ApiInvalidArgumentException('Invalid totp secret: ' . $validData->getErrorMessage());
@@ -55,6 +55,6 @@ class TOTPSecretKey
 
     public function asString(): string
     {
-        return $this->secret;
+        return $this->secretKey;
     }
 }

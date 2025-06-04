@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\Admin\Role\Edit;
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeNodeCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleDescription;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
