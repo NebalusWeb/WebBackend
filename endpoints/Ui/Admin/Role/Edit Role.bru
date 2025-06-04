@@ -5,13 +5,30 @@ meta {
 }
 
 put {
-  url: {{protocol}}://{{host}}/ui/admin/role/2
-  body: none
+  url: {{protocol}}://{{host}}/ui/admin/role/5
+  body: json
   auth: apikey
 }
 
 auth:apikey {
-  key: 
+  key: Authorization
   value: {{auth_jwt}}
   placement: header
+}
+
+body:json {
+  {
+    "name": "TEST",
+    "description": "null",
+    "color": "ffffff",
+    "access_level": 24123,
+    "applies_to_everyone": true,
+    "privileges": [
+      {
+        "node": "admin.role.delete",
+        "affects_all_sub_privileges": true,
+        "is_blacklisted": false
+      }
+    ]
+  }
 }
