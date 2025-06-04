@@ -11,7 +11,7 @@ use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 use PDO;
 
-class MySqlPrivilegesRepository
+class MySqlPrivilegeRepository
 {
     public function __construct(
         private PDO $pdo,

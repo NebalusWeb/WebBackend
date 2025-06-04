@@ -9,11 +9,9 @@ class PrivilegeNode
 {
     // The diff between PurePrivilegeNode and PrivilegeNode is, that PrivilegeNode has extra metedata (grantAllSubPrivileges and an value)
     private function __construct(
-        private readonly PrivilegeId $privilegeId,
         private readonly PurePrivilegeNode $node,
         private readonly bool $grantAllSubPrivileges,
-        private readonly ?PrivilegeValue $value,
-        private readonly DateTimeImmutable $createdAt,
+        private readonly ?PrivilegeValue $value
     ) {
     }
 

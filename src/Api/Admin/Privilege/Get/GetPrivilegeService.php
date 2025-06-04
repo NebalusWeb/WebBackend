@@ -5,14 +5,14 @@ namespace Nebalus\Webapi\Api\Admin\Privilege\Get;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPrivilegesRepository;
+use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPrivilegeRepository;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
 
 class GetPrivilegeService
 {
     public function __construct(
-        private readonly MySqlPrivilegesRepository $privilegesRepository,
+        private readonly MySqlPrivilegeRepository $privilegeRepository,
         private readonly GetPrivilegeView $view
     ) {
     }
@@ -23,7 +23,7 @@ class GetPrivilegeService
      */
     public function execute(GetPrivilegeValidator $validator): ResultInterface
     {
-        $privilege = $this->privilegesRepository->findPrivilegeByPrivilegeId($validator->getPrivilegeId());
+        $privilege = $this->privilegeRepository->findPrivilegeByPrivilegeId($validator->getPrivilegeId());
 
         if ($privilege === null) {
             return Result::createError("Privilege not found", StatusCodeInterface::STATUS_NOT_FOUND);

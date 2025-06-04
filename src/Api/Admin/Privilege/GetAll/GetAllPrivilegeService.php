@@ -3,15 +3,14 @@
 namespace Nebalus\Webapi\Api\Admin\Privilege\GetAll;
 
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPrivilegesRepository;
+use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPrivilegeRepository;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeCollection;
 
 class GetAllPrivilegeService
 {
     public function __construct(
         private GetAllPrivilegeView $view,
-        private MySqlPrivilegesRepository $privilegesRepository
+        private MySqlPrivilegeRepository $privilegeRepository
     ) {
     }
 
@@ -20,7 +19,7 @@ class GetAllPrivilegeService
      */
     public function execute(): ResultInterface
     {
-        $privileges = $this->privilegesRepository->getAllPrivileges();
+        $privileges = $this->privilegeRepository->getAllPrivileges();
 
         return $this->view->render($privileges);
     }

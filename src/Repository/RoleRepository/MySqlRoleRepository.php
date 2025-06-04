@@ -29,7 +29,7 @@ class MySqlRoleRepository
 
     }
 
-    public function getPrivilegesFromRoleId(RoleId $roleId): PrivilegeNodeCollection
+    public function getAllPrivilegesFromRoleId(RoleId $roleId): PrivilegeNodeCollection
     {
         $sql = <<<SQL
             SELECT 

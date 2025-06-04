@@ -31,7 +31,7 @@ class GetRoleService
         }
 
         if ($validator->isWithPrivileges()) {
-            $privileges = $this->roleRepository->getPrivilegesFromRoleId($validator->getRoleId());
+            $privileges = $this->roleRepository->getAllPrivilegesFromRoleId($validator->getRoleId());
             return $this->view->render($role, $privileges, $validator->isWithPrivileges());
         }
 
