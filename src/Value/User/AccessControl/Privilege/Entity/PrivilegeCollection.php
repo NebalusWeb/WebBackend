@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity;
 
 use IteratorAggregate;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Traversable;
 
 class PrivilegeCollection implements IteratorAggregate
@@ -19,9 +20,9 @@ class PrivilegeCollection implements IteratorAggregate
         return new self(...$privileges);
     }
 
-    public function getNodeCollection(): PrivilegeRoleLinkCollection
+    public function getNodeCollection(): PrivilegeNodeCollection
     {
-        return PrivilegeRoleLinkCollection::fromObjects(...array_map(
+        return PrivilegeNodeCollection::fromObjects(...array_map(
             fn(Privilege $privilege) => $privilege->getNode(),
             $this->privileges
         ));
