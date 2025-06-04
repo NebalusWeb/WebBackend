@@ -12,20 +12,20 @@ use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
 class Privilege
 {
     public function __construct(
-        private readonly PrivilegeId          $privilegeId,
-        private readonly PrivilegeNode        $node,
+        private readonly PrivilegeId $privilegeId,
+        private readonly PrivilegeNode $node,
         private readonly PrivilegeDescription $description,
-        private readonly bool                 $isPrestige,
-        private readonly ?PrivilegeValue      $defaultValue
+        private readonly bool $isPrestige,
+        private readonly ?PrivilegeValue $defaultValue
     ) {
     }
 
     public static function from(
-        PrivilegeId          $id,
-        PrivilegeNode        $node,
+        PrivilegeId $id,
+        PrivilegeNode $node,
         PrivilegeDescription $description,
-        bool                 $isPrestige,
-        ?PrivilegeValue      $defaultValue = null
+        bool $isPrestige,
+        ?PrivilegeValue $defaultValue = null
     ): self {
         return new self(
             $id,
