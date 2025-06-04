@@ -8,7 +8,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeNodeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 
 class GetRoleService
 {
@@ -35,6 +35,6 @@ class GetRoleService
             return $this->view->render($role, $privileges, $validator->isWithPrivileges());
         }
 
-        return $this->view->render($role, PrivilegeNodeCollection::fromObjects(), $validator->isWithPrivileges());
+        return $this->view->render($role, PrivilegeRoleLinkCollection::fromObjects(), $validator->isWithPrivileges());
     }
 }

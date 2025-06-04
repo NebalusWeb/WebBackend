@@ -7,25 +7,25 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeDescription;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeId;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 
 class Privilege
 {
     public function __construct(
-        private readonly PrivilegeId $privilegeId,
-        private readonly PurePrivilegeNode $node,
+        private readonly PrivilegeId          $privilegeId,
+        private readonly PrivilegeNode        $node,
         private readonly PrivilegeDescription $description,
-        private readonly bool $isPrestige,
-        private readonly ?PrivilegeValue $defaultValue
+        private readonly bool                 $isPrestige,
+        private readonly ?PrivilegeValue      $defaultValue
     ) {
     }
 
     public static function from(
-        PrivilegeId $id,
-        PurePrivilegeNode $node,
+        PrivilegeId          $id,
+        PrivilegeNode        $node,
         PrivilegeDescription $description,
-        bool $isPrestige,
-        ?PrivilegeValue $defaultValue = null
+        bool                 $isPrestige,
+        ?PrivilegeValue      $defaultValue = null
     ): self {
         return new self(
             $id,
@@ -43,7 +43,7 @@ class Privilege
     public static function fromArray(array $value): self
     {
         $id = PrivilegeId::from($value['privilege_id']);
-        $node = PurePrivilegeNode::from($value['node']);
+        $node = PrivilegeNode::from($value['node']);
         $description = PrivilegeDescription::from($value['description']);
         $isPrestige = (bool) $value['is_prestige'];
         $defaultValue = empty($value['default_value']) ? null : PrivilegeValue::from($value['default_value']);
@@ -67,7 +67,7 @@ class Privilege
         return $this->privilegeId;
     }
 
-    public function getNode(): PurePrivilegeNode
+    public function getNode(): PrivilegeNode
     {
         return $this->node;
     }

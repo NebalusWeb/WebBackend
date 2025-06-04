@@ -5,12 +5,12 @@ namespace Nebalus\Webapi\Api\Admin\Role\Get;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeNodeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 
 class GetRoleView
 {
-    public function render(Role $role, PrivilegeNodeCollection $privilegeNodeCollection, bool $withPrivileges): ResultInterface
+    public function render(Role $role, PrivilegeRoleLinkCollection $privilegeNodeCollection, bool $withPrivileges): ResultInterface
     {
         $fields = [
             'id' => $role->getRoleId()->asInt(),

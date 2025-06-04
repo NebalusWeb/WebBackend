@@ -19,9 +19,9 @@ class PrivilegeCollection implements IteratorAggregate
         return new self(...$privileges);
     }
 
-    public function getNodeCollection(): PrivilegeNodeCollection
+    public function getNodeCollection(): PrivilegeRoleLinkCollection
     {
-        return PrivilegeNodeCollection::fromObjects(...array_map(
+        return PrivilegeRoleLinkCollection::fromObjects(...array_map(
             fn(Privilege $privilege) => $privilege->getNode(),
             $this->privileges
         ));

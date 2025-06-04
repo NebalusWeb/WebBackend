@@ -6,8 +6,8 @@ use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\HexColor;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeNode;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeNodeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLink;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleAccessLevel;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleCollection;
@@ -28,7 +28,7 @@ class MySqlRoleRepository
 
     }
 
-    public function getAllPrivilegesFromRoleId(RoleId $roleId): PrivilegeNodeCollection
+    public function getAllPrivilegesFromRoleId(RoleId $roleId): PrivilegeRoleLinkCollection
     {
         $sql = <<<SQL
             SELECT 
@@ -47,7 +47,7 @@ class MySqlRoleRepository
         $data = [];
 
         while ($row = $stmt->fetch()) {
-            $data[] = PrivilegeNode::fromString();
+            $data[] = PrivilegeRoleLink::fromString();
         }
 
     }

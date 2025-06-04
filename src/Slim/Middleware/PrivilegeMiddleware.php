@@ -5,8 +5,8 @@ namespace Nebalus\Webapi\Slim\Middleware;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPrivilegeRepository;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeNode;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeNodeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLink;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -27,15 +27,15 @@ class PrivilegeMiddleware implements MiddlewareInterface
     #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
 
-        $test = PrivilegeNodeCollection::fromObjects(
-            PrivilegeNode::fromString("feature", true),
-            PrivilegeNode::fromString("admin", true),
+        $test = PrivilegeRoleLinkCollection::fromObjects(
+            PrivilegeRoleLink::fromString("feature", true),
+            PrivilegeRoleLink::fromString("admin", true),
         );
 
 //        $testZwei = PrivilegeNode::fromString("feature.referral.create", false, 1);
 
 //        var_dump($testZwei->getNode()->asDestructured());
-//        var_dump($test->contains(PurePrivilegeNode::fromString("admin.test.testii.testiii.fdyfyf.aysfysayf")));
+//        var_dump($test->contains(PrivilegeNode::fromString("admin.test.testii.testiii.fdyfyf.aysfysayf")));
 
         $request = $request->withAttribute("userPrivileges", $test);
 

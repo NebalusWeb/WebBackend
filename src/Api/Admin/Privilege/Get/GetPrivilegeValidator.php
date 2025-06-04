@@ -6,7 +6,7 @@ use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeId;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 
 class GetPrivilegeValidator extends AbstractValidator
 {

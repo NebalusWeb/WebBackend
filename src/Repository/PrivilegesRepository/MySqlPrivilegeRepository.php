@@ -4,10 +4,10 @@ namespace Nebalus\Webapi\Repository\PrivilegesRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\Privilege;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\Privilege;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeId;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use PDO;
 
 class MySqlPrivilegeRepository
@@ -20,7 +20,7 @@ class MySqlPrivilegeRepository
     /**
      * @throws ApiException
      */
-    public function getAllPrivileges(): PrivilegeCollection
+    public function getAllPrivileges(): PrivilegeNodeCollection
     {
         $sql = <<<SQL
             SELECT 
@@ -37,14 +37,14 @@ class MySqlPrivilegeRepository
             $data[] = Privilege::fromArray($row);
         }
 
-        return PrivilegeCollection::fromObjects(...$data);
+        return PrivilegeNodeCollection::fromObjects(...$data);
     }
 
     /**
      * @throws ApiInvalidArgumentException
      * @throws ApiException
      */
-    public function findPrivilegeByNode(PurePrivilegeNode $node): ?Privilege
+    public function findPrivilegeByNode(PrivilegeNode $node): ?Privilege
     {
         $sql = <<<SQL
             SELECT

@@ -3,20 +3,20 @@
 namespace Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity;
 
 use IteratorAggregate;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 
-class PrivilegeNodeCollection implements IteratorAggregate
+class PrivilegeRoleLinkCollection implements IteratorAggregate
 {
     private array $privilegeNodeIndex = [];
     private array $privilegeNodes = [];
 
-    private function __construct(array $privilegeNodeIndex, PrivilegeNode ...$privilegeNodes)
+    private function __construct(array $privilegeNodeIndex, PrivilegeRoleLink ...$privilegeNodes)
     {
         $this->privilegeNodeIndex = $privilegeNodeIndex;
         $this->privilegeNodes = $privilegeNodes;
     }
 
-    public static function fromObjects(PrivilegeNode ...$privilegeNodes): self
+    public static function fromObjects(PrivilegeRoleLink ...$privilegeNodes): self
     {
         $cache = [];
         foreach ($privilegeNodes as $privilegeNode) {
@@ -28,7 +28,7 @@ class PrivilegeNodeCollection implements IteratorAggregate
         return new self($privilegeNodeIndex, ...$privilegeNodes);
     }
 
-    public function contains(PurePrivilegeNode $node): bool
+    public function contains(PrivilegeNode $node): bool
     {
         $fields = $node->asDestructured();
 
@@ -51,9 +51,9 @@ class PrivilegeNodeCollection implements IteratorAggregate
     }
 
     // TODO: NOT FINISHED
-    public function containsSomeNodes(PrivilegeNodeCollection $nodeCollection): bool
+    public function containsSomeNodes(PrivilegeRoleLinkCollection $nodeCollection): bool
     {
-        $privilegeNodes = array_filter($nodeCollection->privilegeNodes, function (PrivilegeNode $node) {
+        $privilegeNodes = array_filter($nodeCollection->privilegeNodes, function (PrivilegeRoleLink $node) {
             return $this->contains($node);
         });
         foreach ($this->privilegeNodes as $privilegeNode) {

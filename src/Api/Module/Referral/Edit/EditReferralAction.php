@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Api\Module\Referral\Edit;
 
 use Nebalus\Webapi\Api\AbstractAction;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeNodeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 
@@ -21,7 +22,6 @@ class EditReferralAction extends AbstractAction
     {
         return PrivilegeNodeCollection::fromObjects();
     }
-
 
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {

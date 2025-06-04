@@ -8,7 +8,7 @@ use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class PurePrivilegeNode
+class PrivilegeNode
 {
     use SanitizrValueObjectTrait;
 
@@ -40,7 +40,7 @@ class PurePrivilegeNode
         return new self($validData->getValue());
     }
 
-    public function isParentOf(PurePrivilegeNode $toCheckNode): bool
+    public function isParentOf(PrivilegeNode $toCheckNode): bool
     {
         return str_starts_with($this->node, $toCheckNode->node);
     }
