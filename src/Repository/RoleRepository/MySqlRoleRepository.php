@@ -6,6 +6,9 @@ use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\HexColor;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleAccessLevel;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleCollection;
@@ -23,6 +26,30 @@ class MySqlRoleRepository
 
     public function insertPrivilegeIntoRole()
     {
+
+    }
+
+    public function getPrivilegesFromRoleId(RoleId $roleId): PrivilegeNodeCollection
+    {
+        $sql = <<<SQL
+            SELECT 
+                role_privilege_map.*,
+                privileges.node
+            FROM `role_privilege_map` 
+                INNER JOIN privileges 
+                    ON privileges.privilege_id = role_privilege_map.privilege_id  
+            WHERE role_id = :roleId
+        SQL;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":roleId", $roleId->asInt(), PDO::PARAM_INT);
+        $stmt->execute();
+
+        $data = [];
+
+        while ($row = $stmt->fetch()) {
+            $data[] = PrivilegeNode::fromString();
+        }
 
     }
 

@@ -5,11 +5,12 @@ namespace Nebalus\Webapi\Api\Admin\Role\Get;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 
 class GetRoleView
 {
-    public function render(Role $role): ResultInterface
+    public function render(Role $role, PrivilegeNodeCollection $privilegeNodeCollection, bool $withPrivileges): ResultInterface
     {
         $fields = [
             'id' => $role->getRoleId()->asInt(),
@@ -24,6 +25,19 @@ class GetRoleView
             "created_at" => $role->getCreatedAtDate()->format(DATE_ATOM),
             "updated_at" => $role->getUpdatedAtDate()->format(DATE_ATOM),
         ];
+
+        if ($withPrivileges) {
+            $privileges = [];
+
+            foreach ($privilegeNodeCollection as $privilegeNode) {
+                $privileges[] = [
+                    'id' => $privilegeNode->getRoleId()->asInt(),
+
+                ];
+            }
+
+            $fields["privileges"] = $privileges;
+        }
 
         return Result::createSuccess("Role fetched", StatusCodeInterface::STATUS_OK, $fields);
     }

@@ -8,6 +8,7 @@ use Nebalus\Webapi\Value\User\AccessControl\Privilege\Privilege;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeId;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PurePrivilegeNode;
+use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 use PDO;
 
 class MySqlPrivilegesRepository
@@ -47,7 +48,11 @@ class MySqlPrivilegesRepository
     public function findPrivilegeByNode(PurePrivilegeNode $node): ?Privilege
     {
         $sql = <<<SQL
-            SELECT * FROM privileges WHERE node = :node
+            SELECT
+                *
+            FROM privileges 
+            WHERE 
+                node = :node
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
@@ -70,7 +75,11 @@ class MySqlPrivilegesRepository
     public function findPrivilegeByPrivilegeId(PrivilegeId $privilegeId): ?Privilege
     {
         $sql = <<<SQL
-            SELECT * FROM privileges WHERE privilege_id = :privilege_id
+            SELECT 
+                * 
+            FROM privileges
+            WHERE 
+                privilege_id = :privilege_id
         SQL;
 
         $stmt = $this->pdo->prepare($sql);

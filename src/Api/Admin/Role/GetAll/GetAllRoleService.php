@@ -17,7 +17,7 @@ class GetAllRoleService
     /**
      * @throws ApiException
      */
-    public function execute(): ResultInterface
+    public function execute(GetAllRoleValidator $validator): ResultInterface
     {
         $roles = $this->roleRepository->getAllRoles();
 

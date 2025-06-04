@@ -2,15 +2,18 @@
 
 namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 
+use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiException;
 
 class PrivilegeNode
 {
     // The diff between PurePrivilegeNode and PrivilegeNode is, that PrivilegeNode has extra metedata (grantAllSubPrivileges and an value)
     private function __construct(
+        private readonly PrivilegeId $privilegeId,
         private readonly PurePrivilegeNode $node,
         private readonly bool $grantAllSubPrivileges,
-        private readonly ?PrivilegeValue $value
+        private readonly ?PrivilegeValue $value,
+        private readonly DateTimeImmutable $createdAt,
     ) {
     }
 
@@ -22,6 +25,11 @@ class PrivilegeNode
         $pureNode = PurePrivilegeNode::from($node);
 
         return new self($pureNode, $grantAllSubPrivileges, $value);
+    }
+
+    public static function fromArray(array $data): self
+    {
+
     }
 
     public function hasValue(): bool
