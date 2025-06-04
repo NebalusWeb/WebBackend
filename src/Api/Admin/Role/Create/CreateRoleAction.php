@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Api\Admin\Role\Create;
 
 use Nebalus\Webapi\Api\AbstractAction;
+use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
@@ -10,8 +11,8 @@ use Slim\Http\ServerRequest as Request;
 class CreateRoleAction extends AbstractAction
 {
     public function __construct(
-        private readonly CreateRoleService $service,
-        private readonly CreateRoleValidator $validator
+        private readonly CreateRoleValidator $validator,
+        private readonly CreateRoleService $service
     ) {
     }
 

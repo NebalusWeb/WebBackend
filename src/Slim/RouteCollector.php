@@ -11,7 +11,6 @@ use Nebalus\Webapi\Api\Admin\Role\Delete\DeleteRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\Edit\EditRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\Get\GetRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\GetAll\GetAllRoleAction;
-use Nebalus\Webapi\Api\Admin\Role\GetAll\GetAllRoleService;
 use Nebalus\Webapi\Api\Metrics\MetricsAction;
 use Nebalus\Webapi\Api\Module\Linktree\Click\ClickLinktreeAction;
 use Nebalus\Webapi\Api\Module\Linktree\Delete\DeleteLinktreeAction;

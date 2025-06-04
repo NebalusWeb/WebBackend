@@ -56,10 +56,10 @@ class MySqlRoleRepository
     public function insertRole(Role $role): Role
     {
         $sql = <<<SQL
-            INSERT INTO role
-                (name, description, applies_to_everyone, deletable, editable, access_level)
+            INSERT INTO roles
+                (name, description, applies_to_everyone, deletable, editable, access_level, created_at, updated_at)
             VALUES 
-                (:name, :description, :applies_to_everyone, :deletable, :editable, :access_level)
+                (:name, :description, :applies_to_everyone, :deletable, :editable, :access_level, :created_at, :updated_at)
         SQL;
 
         $stmt = $this->pdo->prepare($sql);

@@ -6,12 +6,13 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 
 class CreateRoleService
 {
     public function __construct(
-        private MySqlRoleRepository $roleRepository,
-        private CreateRoleView $view,
+        private readonly MySqlRoleRepository $roleRepository,
+        private readonly CreateRoleView $view,
     ) {
     }
 
@@ -20,6 +21,8 @@ class CreateRoleService
      */
     public function execute(CreateRoleValidator $validator): ResultInterface
     {
-        return Result::createSuccess("");
+        $role = Role::create($validator->getRoleName(), $validator->getRoleDescription(), $validator->appliesToEveryone(), true, true, $validator->getAccessLevel());
+        $role = $this->roleRepository->insertRole($role);
+        return $this->view->render($role);
     }
 }
