@@ -21,7 +21,7 @@ class HexColor
 
     protected static function defineSchema(): AbstractSanitizrSchema
     {
-        return Sanitizr::string()->length(self::LENGTH)->regex(self::REGEX, "Is not a valid hex color code");
+        return Sanitizr::string()->length(self::LENGTH, "Is not a valid hex color code")->regex(self::REGEX, "Is not a valid hex color code");
     }
 
     /**
