@@ -7,7 +7,6 @@ use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Value\HexColor;
 
 class Role
 {
@@ -15,7 +14,7 @@ class Role
         private readonly ?RoleId $roleId,
         private readonly RoleName $roleName,
         private readonly ?RoleDescription $roleDescription,
-        private readonly HexColor $roleColor,
+        private readonly RoleHexColor $roleColor,
         private readonly RoleAccessLevel $accessLevel,
         private readonly bool $appliesToEveryone,
         private readonly bool $deletable,
@@ -29,21 +28,21 @@ class Role
     public static function create(
         RoleName $roleName,
         ?RoleDescription $roleDescription,
-        HexColor $roleColor,
+        RoleHexColor $roleColor,
         RoleAccessLevel $accessLevel,
         bool $appliesToEveryone,
         bool $disabled,
     ): self {
         $createdAtDate = new DateTimeImmutable();
         $updatedAtDate = new DateTimeImmutable();
-        return self::from(null, $roleName, $roleDescription, $roleColor, $accessLevel, $appliesToEveryone, false, false, $disabled, $createdAtDate, $updatedAtDate);
+        return self::from(null, $roleName, $roleDescription, $roleColor, $accessLevel, $appliesToEveryone, true, true, $disabled, $createdAtDate, $updatedAtDate);
     }
 
     public static function from(
         ?RoleId $roleId,
         RoleName $roleName,
         ?RoleDescription $roleDescription,
-        HexColor $roleColor,
+        RoleHexColor $roleColor,
         RoleAccessLevel $accessLevel,
         bool $appliesToEveryone,
         bool $deletable,
@@ -81,7 +80,7 @@ class Role
                 empty($data['role_id']) ? null : RoleId::from($data['role_id']),
                 RoleName::from($data['name']),
                 empty($data['description']) ? null : RoleDescription::from($data['description']),
-                HexColor::from($data['color']),
+                RoleHexColor::from($data['color']),
                 RoleAccessLevel::from($data['access_level']),
                 (bool) $data['applies_to_everyone'],
                 (bool) $data['deletable'],
@@ -127,7 +126,7 @@ class Role
         return $this->roleDescription;
     }
 
-    public function getColor(): HexColor
+    public function getColor(): RoleHexColor
     {
         return $this->roleColor;
     }

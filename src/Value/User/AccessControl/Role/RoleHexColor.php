@@ -1,13 +1,13 @@
 <?php
 
-namespace Nebalus\Webapi\Value;
+namespace Nebalus\Webapi\Value\User\AccessControl\Role;
 
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class HexColor
+class RoleHexColor
 {
     use SanitizrValueObjectTrait;
 

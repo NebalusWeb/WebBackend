@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\Admin\Role\Create;
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
-use Nebalus\Webapi\Value\HexColor;
+use Nebalus\Webapi\Value\User\AccessControl\Role\RoleHexColor;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleAccessLevel;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleDescription;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleName;
@@ -14,7 +14,7 @@ class CreateRoleValidator extends AbstractValidator
 {
     private RoleName $roleName;
     private ?RoleDescription $roleDescription;
-    private HexColor $roleColor;
+    private RoleHexColor $roleColor;
     private RoleAccessLevel $accessLevel;
     private bool $appliesToEveryone;
     private bool $disabled;
@@ -25,7 +25,7 @@ class CreateRoleValidator extends AbstractValidator
             RequestParamTypes::BODY => S::object([
                 "name" => RoleName::getSchema(),
                 "description" => RoleDescription::getSchema(),
-                "color" => HexColor::getSchema(),
+                "color" => RoleHexColor::getSchema(),
                 "access_level" => RoleAccessLevel::getSchema(),
                 "applies_to_everyone" => S::boolean(),
                 "disabled" => S::boolean(),
@@ -37,7 +37,7 @@ class CreateRoleValidator extends AbstractValidator
     {
         $this->roleName = RoleName::from($bodyData["name"]);
         $this->roleDescription = isset($bodyData["description"]) ? RoleDescription::from($bodyData["description"]) : null;
-        $this->roleColor = HexColor::from($bodyData["color"]);
+        $this->roleColor = RoleHexColor::from($bodyData["color"]);
         $this->accessLevel = RoleAccessLevel::from($bodyData["access_level"]);
         $this->appliesToEveryone = $bodyData["applies_to_everyone"];
         $this->disabled = $bodyData["disabled"];
@@ -47,7 +47,7 @@ class CreateRoleValidator extends AbstractValidator
     {
         return $this->roleName;
     }
-    public function getRoleColor(): HexColor
+    public function getRoleColor(): RoleHexColor
     {
         return $this->roleColor;
     }

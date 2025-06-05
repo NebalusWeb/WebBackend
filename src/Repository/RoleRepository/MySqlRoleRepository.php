@@ -5,9 +5,9 @@ namespace Nebalus\Webapi\Repository\RoleRepository;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Value\HexColor;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLink;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Role\RoleHexColor;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleAccessLevel;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleCollection;
@@ -121,7 +121,7 @@ class MySqlRoleRepository
     /**
      * @throws ApiException
      */
-    public function updateRoleFromRoleId(RoleId $roleId, RoleName $name, RoleDescription $description, HexColor $color, RoleAccessLevel $accessLevel, bool $appliesToEveryone, bool $disabled): ?Role
+    public function updateRoleFromRoleId(RoleId $roleId, RoleName $name, RoleDescription $description, RoleHexColor $color, RoleAccessLevel $accessLevel, bool $appliesToEveryone, bool $disabled): ?Role
     {
         $sql = <<<SQL
             UPDATE roles

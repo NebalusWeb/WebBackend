@@ -24,7 +24,7 @@ class RoleAccessLevel
     /**
      * @throws ApiInvalidArgumentException
      */
-    public static function from(string $accessLevel): self
+    public static function from(int $accessLevel): self
     {
         $schema = static::getSchema();
         $validData = $schema->safeParse($accessLevel);

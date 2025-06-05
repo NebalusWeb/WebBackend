@@ -5,11 +5,11 @@ namespace Nebalus\Webapi\Api\Admin\Role\Edit;
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
-use Nebalus\Webapi\Value\HexColor;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLink;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
+use Nebalus\Webapi\Value\User\AccessControl\Role\RoleHexColor;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleAccessLevel;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleDescription;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
@@ -20,7 +20,7 @@ class EditRoleValidator extends AbstractValidator
     private RoleId $roleId;
     private RoleName $roleName;
     private ?RoleDescription $roleDescription;
-    private HexColor $roleColor;
+    private RoleHexColor $roleColor;
     private RoleAccessLevel $accessLevel;
     private bool $appliesToEveryone;
     private PrivilegeRoleLinkCollection $privilegeRoleLinks;
@@ -34,7 +34,7 @@ class EditRoleValidator extends AbstractValidator
             RequestParamTypes::BODY => S::object([
                 "name" => RoleName::getSchema(),
                 "description" => RoleDescription::getSchema()->nullable()->optional(),
-                "color" => HexColor::getSchema(),
+                "color" => RoleHexColor::getSchema(),
                 "access_level" => RoleAccessLevel::getSchema(),
                 "applies_to_everyone" => S::boolean(),
                 "disabled" => S::boolean(),
@@ -53,7 +53,7 @@ class EditRoleValidator extends AbstractValidator
         $this->roleId = RoleId::from($pathArgsData["roleId"]);
         $this->roleName = RoleName::from($bodyData["name"]);
         $this->roleDescription = isset($bodyData["description"]) ? RoleDescription::from($bodyData["description"]) : null;
-        $this->roleColor = HexColor::from($bodyData["color"]);
+        $this->roleColor = RoleHexColor::from($bodyData["color"]);
         $this->accessLevel = RoleAccessLevel::from($bodyData["access_level"]);
         $this->appliesToEveryone = $bodyData["applies_to_everyone"];
         $this->privilegeRoleLinks = PrivilegeRoleLinkCollection::fromObjects(
@@ -84,7 +84,7 @@ class EditRoleValidator extends AbstractValidator
         return $this->roleDescription;
     }
 
-    public function getRoleColor(): HexColor
+    public function getRoleColor(): RoleHexColor
     {
         return $this->roleColor;
     }

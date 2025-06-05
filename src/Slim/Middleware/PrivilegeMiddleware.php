@@ -27,7 +27,6 @@ class PrivilegeMiddleware implements MiddlewareInterface
      */
     #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
-
 //        $test = PrivilegeRoleLinkCollection::fromObjects(
 //            PrivilegeRoleLink::fromString("feature", true),
 //            PrivilegeRoleLink::fromString("admin", true),

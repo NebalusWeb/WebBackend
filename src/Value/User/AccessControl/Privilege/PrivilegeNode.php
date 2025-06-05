@@ -13,7 +13,7 @@ class PrivilegeNode
     use SanitizrValueObjectTrait;
 
     public const int MAX_LENGTH = 128;
-    private const string REGEX = '/^(([a-z_])+(\.[a-z_.*]+)*)$/';
+    private const string REGEX = '/^(([a-z_])+(\.[a-z_.]+)*)$/';
 
     private function __construct(
         private readonly string $node
@@ -34,7 +34,7 @@ class PrivilegeNode
         $validData = $schema->safeParse($node);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid pure privilege node: ' . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException('Invalid privilege node: ' . $validData->getErrorMessage());
         }
 
         return new self($validData->getValue());
@@ -53,7 +53,7 @@ class PrivilegeNode
         foreach (explode('.', $this->node) as $key) {
             $ref = &$ref[$key];
         }
-        return $finalArray; // DO NOT REMOVE // THIS IS THE FINAL RETURN VALUE
+        return $finalArray;
     }
 
     public function asString(): string
