@@ -25,7 +25,6 @@ class GetAllReferralAction extends AbstractAction
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $result = $this->service->execute($request->getAttribute('user'));
-
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

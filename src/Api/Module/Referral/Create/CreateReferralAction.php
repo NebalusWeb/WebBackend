@@ -22,13 +22,11 @@ class CreateReferralAction extends AbstractAction
     {
         return PrivilegeNodeCollection::fromObjects();
     }
-    
+
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);
-
         $result = $this->service->execute($this->validator, $request->getAttribute('user'));
-
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

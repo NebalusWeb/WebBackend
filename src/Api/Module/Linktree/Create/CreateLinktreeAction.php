@@ -25,9 +25,7 @@ class CreateLinktreeAction extends AbstractAction
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $params = $request->getParams() ?? [];
-
         $result = $this->service->execute($params);
-
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }
