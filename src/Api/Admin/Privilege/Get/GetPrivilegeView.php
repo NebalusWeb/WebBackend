@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\Admin\Privilege\Get;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Value\Internal\Result\Result;
 use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Privilege;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\Privilege;
 
 class GetPrivilegeView
 {

@@ -8,7 +8,6 @@ use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
 
 class PrivilegeRoleLink
 {
-    // The diff between PrivilegeNode and PrivilegeNode is, that PrivilegeNode has extra metadata (grantAllSubPrivileges and an value)
     private function __construct(
         private readonly PrivilegeNode $node,
         private readonly bool $affectsAllSubPrivileges,

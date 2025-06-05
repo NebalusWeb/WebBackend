@@ -42,13 +42,13 @@ class Privilege
      */
     public static function fromArray(array $value): self
     {
-        $id = PrivilegeId::from($value['privilege_id']);
+        $privilegeId = PrivilegeId::from($value['privilege_id']);
         $node = PrivilegeNode::from($value['node']);
         $description = PrivilegeDescription::from($value['description']);
         $isPrestige = (bool) $value['is_prestige'];
         $defaultValue = empty($value['default_value']) ? null : PrivilegeValue::from($value['default_value']);
 
-        return new self($id, $node, $description, $isPrestige, $defaultValue);
+        return new self($privilegeId, $node, $description, $isPrestige, $defaultValue);
     }
 
     public function asArray(): array
