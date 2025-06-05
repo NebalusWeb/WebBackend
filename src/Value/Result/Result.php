@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Value\Internal;
+namespace Nebalus\Webapi\Value\Result;
 
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;

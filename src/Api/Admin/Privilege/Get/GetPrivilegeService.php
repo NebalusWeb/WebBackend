@@ -7,7 +7,7 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPrivilegeRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
-use Nebalus\Webapi\Value\Internal\Result;
+use Nebalus\Webapi\Value\Result\Result;
 
 class GetPrivilegeService
 {
