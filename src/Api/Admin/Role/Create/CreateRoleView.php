@@ -3,8 +3,8 @@
 namespace Nebalus\Webapi\Api\Admin\Role\Create;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Nebalus\Webapi\Value\Internal\Result\Result;
-use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Slim\ResultInterface;
+use Nebalus\Webapi\Value\Internal\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 
 class CreateRoleView

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Nebalus\Webapi\Value\Internal\Result;
+namespace Nebalus\Webapi\Value\Internal;
 
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
+use Nebalus\Webapi\Slim\ResultInterface;
 
 readonly class Result implements ResultInterface
 {

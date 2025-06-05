@@ -7,8 +7,8 @@ use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
-use Nebalus\Webapi\Value\Internal\Result\Result;
-use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Slim\ResultInterface;
+use Nebalus\Webapi\Value\Internal\Result;
 
 class DeleteRoleService
 {

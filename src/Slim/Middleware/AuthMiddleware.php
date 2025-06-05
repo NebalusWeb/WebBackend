@@ -8,7 +8,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
-use Nebalus\Webapi\Value\Internal\Result\Result;
+use Nebalus\Webapi\Value\Internal\Result;
 use Nebalus\Webapi\Value\User\UserId;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;

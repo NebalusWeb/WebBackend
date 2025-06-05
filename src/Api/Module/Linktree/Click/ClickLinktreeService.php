@@ -3,7 +3,7 @@
 namespace Nebalus\Webapi\Api\Module\Linktree\Click;
 
 use Nebalus\Webapi\Api\Module\Linktree\Create\CreateLinktreeValidator;
-use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Slim\ResultInterface;
 
 readonly class ClickLinktreeService
 {

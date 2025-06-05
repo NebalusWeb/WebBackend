@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Api\User\GetUserPrivileges;
 
-use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Slim\ResultInterface;
 
 class GetUserPrivilegesService
 {

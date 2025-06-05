@@ -5,8 +5,8 @@ namespace Nebalus\Webapi\Api\Module\Referral\Analytics\Click;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
-use Nebalus\Webapi\Value\Internal\Result\Result;
-use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Slim\ResultInterface;
+use Nebalus\Webapi\Value\Internal\Result;
 
 readonly class ClickReferralService
 {

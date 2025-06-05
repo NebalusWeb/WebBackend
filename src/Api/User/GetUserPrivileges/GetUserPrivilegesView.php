@@ -3,8 +3,8 @@
 namespace Nebalus\Webapi\Api\User\GetUserPrivileges;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Nebalus\Webapi\Value\Internal\Result\Result;
-use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Slim\ResultInterface;
+use Nebalus\Webapi\Value\Internal\Result;
 
 class GetUserPrivilegesView
 {

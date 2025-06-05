@@ -7,8 +7,8 @@ namespace Nebalus\Webapi\Api\User\Auth;
 use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
-use Nebalus\Webapi\Value\Internal\Result\Result;
-use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Slim\ResultInterface;
+use Nebalus\Webapi\Value\Internal\Result;
 use ReallySimpleJWT\Exception\BuildException;
 use ReallySimpleJWT\Token;
 

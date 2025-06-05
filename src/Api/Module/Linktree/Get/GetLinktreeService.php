@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Api\Module\Linktree\Get;
 
-use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Slim\ResultInterface;
 
 readonly class GetLinktreeService
 {

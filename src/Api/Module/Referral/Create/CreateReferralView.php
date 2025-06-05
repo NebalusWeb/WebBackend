@@ -3,8 +3,8 @@
 namespace Nebalus\Webapi\Api\Module\Referral\Create;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Nebalus\Webapi\Value\Internal\Result\Result;
-use Nebalus\Webapi\Value\Internal\Result\ResultInterface;
+use Nebalus\Webapi\Slim\ResultInterface;
+use Nebalus\Webapi\Value\Internal\Result;
 use Nebalus\Webapi\Value\Module\Referral\Referral;
 
 class CreateReferralView
