@@ -8,7 +8,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Internal\Result;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity\PrivilegeRoleLinkCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 
 class GetRoleService
 {

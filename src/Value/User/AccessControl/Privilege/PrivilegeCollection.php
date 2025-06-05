@@ -1,9 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity;
+namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 
 use IteratorAggregate;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Traversable;
 
 class PrivilegeCollection implements IteratorAggregate

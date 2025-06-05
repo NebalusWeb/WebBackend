@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity;
+namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 
 use IteratorAggregate;
 use Traversable;

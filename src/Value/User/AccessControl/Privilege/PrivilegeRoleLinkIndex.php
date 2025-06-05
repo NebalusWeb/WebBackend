@@ -1,12 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\AccessControl\Privilege\Entity;
-
-use IteratorAggregate;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
+namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 
 class PrivilegeRoleLinkIndex
-
 {
     private array $privilegeNodeIndex = [];
 
