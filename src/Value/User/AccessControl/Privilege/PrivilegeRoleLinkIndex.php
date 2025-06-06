@@ -11,11 +11,11 @@ class PrivilegeRoleLinkIndex
         $this->privilegeNodeIndex = $privilegeNodeIndex;
     }
 
-    public static function fromObjects(PrivilegeRoleLink ...$privilegeNodes): self
+    public static function fromObjects(PrivilegeRoleLink ...$privilegeRoleLinks): self
     {
         $cache = [];
-        foreach ($privilegeNodes as $privilegeNode) {
-            $cache[] = $privilegeNode->getNode()->asDestructured();
+        foreach ($privilegeRoleLinks as $privilegeRoleLink) {
+            $cache[] = $privilegeRoleLink->getNode()->asDestructured($privilegeRoleLink->getMetadata());
         }
 
         $privilegeNodeIndex = array_replace_recursive([], ...$cache);

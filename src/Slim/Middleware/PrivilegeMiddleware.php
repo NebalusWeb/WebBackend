@@ -14,11 +14,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-class PrivilegeMiddleware implements MiddlewareInterface
+readonly class PrivilegeMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private readonly MySqlRoleRepository $roleRepository,
-        private readonly MySqlPrivilegeRepository $privilegeRepository,
+        private MySqlRoleRepository $roleRepository,
+        private MySqlPrivilegeRepository $privilegeRepository,
     ) {
     }
 

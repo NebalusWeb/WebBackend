@@ -45,7 +45,7 @@ class PrivilegeNode
         return str_starts_with($this->node, $toCheckNode->node);
     }
 
-    public function asDestructured(): array
+    public function asDestructured(?PrivilegeRoleLinkMetadata $roleLinkMetadata = null): array
     {
         $finalArray = [];
 
@@ -53,7 +53,10 @@ class PrivilegeNode
         foreach (explode('.', $this->node) as $key) {
             $ref = &$ref[$key];
         }
-        return $finalArray;
+
+        $ref = $roleLinkMetadata;
+
+        return $finalArray; // DO NOT CHANGE THIS LINE
     }
 
     public function asString(): string

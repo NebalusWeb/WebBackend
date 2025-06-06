@@ -8,18 +8,14 @@ class PrivilegeRoleLink
 {
     private function __construct(
         private readonly PrivilegeNode $node,
-        private readonly bool $affectsAllSubPrivileges,
-        private readonly bool $isBlacklisted,
-        private readonly ?PrivilegeValue $value
+        private readonly PrivilegeRoleLinkMetadata $metadata
     ) {
     }
 
-    /**
-     * @throws ApiException
-     */
     public static function from(PrivilegeNode $node, bool $affectsAllSubPrivileges, bool $isBlacklisted, ?PrivilegeValue $value = null): self
     {
-        return new self($node, $affectsAllSubPrivileges, $isBlacklisted, $value);
+        $metadata = PrivilegeRoleLinkMetadata::from($affectsAllSubPrivileges, $isBlacklisted, $value);
+        return new self($node, $metadata);
     }
 
     public function getNode(): PrivilegeNode
@@ -27,23 +23,8 @@ class PrivilegeRoleLink
         return $this->node;
     }
 
-    public function affectsAllSubPrivileges(): bool
+    public function getMetadata(): PrivilegeRoleLinkMetadata
     {
-        return $this->affectsAllSubPrivileges;
-    }
-
-    public function isBlacklisted(): bool
-    {
-        return $this->isBlacklisted;
-    }
-
-    public function hasValue(): bool
-    {
-        return $this->value !== null;
-    }
-
-    public function getValue(): ?PrivilegeValue
-    {
-        return $this->value;
+        return $this->metadata;
     }
 }
