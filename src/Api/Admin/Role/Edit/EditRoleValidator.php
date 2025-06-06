@@ -38,7 +38,7 @@ class EditRoleValidator extends AbstractValidator
                 "access_level" => RoleAccessLevel::getSchema(),
                 "applies_to_everyone" => S::boolean(),
                 "disabled" => S::boolean(),
-                "privilege" => S::array(S::object([
+                "privileges" => S::array(S::object([
                     "node" => PrivilegeNode::getSchema(),
                     "value" => PrivilegeValue::getSchema()->optional()->nullable()->default(null),
                     "affects_all_sub_privileges" => S::boolean(),
@@ -64,7 +64,7 @@ class EditRoleValidator extends AbstractValidator
                     $privilege["is_blacklisted"],
                     isset($privilege["value"]) ? PrivilegeValue::from($privilege["value"]) : null
                 ),
-                $bodyData["privilege"]
+                $bodyData["privileges"]
             )
         );
     }
