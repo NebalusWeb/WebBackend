@@ -3,6 +3,8 @@
 namespace Nebalus\Webapi\Api\Admin\Privilege\GetAll;
 
 use Nebalus\Webapi\Api\AbstractAction;
+use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
@@ -14,9 +16,14 @@ class GetAllPrivilegeAction extends AbstractAction
     ) {
     }
 
+    /**
+     * @throws ApiException
+     */
     protected function privilegeConfig(): PrivilegeNodeCollection
     {
-        return PrivilegeNodeCollection::fromObjects();
+        return PrivilegeNodeCollection::fromObjects(
+            PrivilegeNode::from("admin.role")
+        );
     }
 
     protected function execute(Request $request, Response $response, array $pathArgs): Response

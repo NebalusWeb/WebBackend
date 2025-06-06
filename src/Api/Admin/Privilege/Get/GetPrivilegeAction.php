@@ -23,7 +23,7 @@ class GetPrivilegeAction extends AbstractAction
     protected function privilegeConfig(): PrivilegeNodeCollection
     {
         return PrivilegeNodeCollection::fromObjects(
-            PrivilegeNode::from("admin.role.*")
+            PrivilegeNode::from("admin.role")
         );
     }
 
