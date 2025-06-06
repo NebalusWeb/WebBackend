@@ -14,7 +14,7 @@ class RoleDescription
     public const int MAX_LENGTH = 255;
     public const string REGEX = '/^[\w\d_.\-\s]*$/';
 
-    public function __construct(
+    private function __construct(
         private readonly string $description,
     ) {
     }

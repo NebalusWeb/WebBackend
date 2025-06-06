@@ -14,7 +14,7 @@ class RoleHexColor
     public const int LENGTH = 6;
     public const string REGEX = '/^[a-fA-F0-9]+$/';
 
-    public function __construct(
+    private function __construct(
         private readonly string $color
     ) {
     }

@@ -11,7 +11,7 @@ class RoleAccessLevel
 {
     use SanitizrValueObjectTrait;
 
-    public function __construct(
+    private function __construct(
         private readonly int $accessLevel,
     ) {
     }

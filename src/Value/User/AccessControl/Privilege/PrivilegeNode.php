@@ -45,17 +45,23 @@ class PrivilegeNode
         return str_starts_with($this->node, $toCheckNode->node);
     }
 
+    /**
+     * Converts the privilege node into a nested associative array structure.
+     *
+     * Each segment of the node, separated by a dot, becomes a nested key.
+     * The final key is assigned the provided role link metadata or null.
+     *
+     * @param PrivilegeRoleLinkMetadata|null $roleLinkMetadata Optional metadata to assign to the final node.
+     * @return array Nested array representation of the privilege node.
+     */
     public function asDestructured(?PrivilegeRoleLinkMetadata $roleLinkMetadata = null): array
     {
         $finalArray = [];
-
         $ref = &$finalArray;
         foreach (explode('.', $this->node) as $key) {
             $ref = &$ref[$key];
         }
-
         $ref = $roleLinkMetadata;
-
         return $finalArray; // DO NOT CHANGE THIS LINE
     }
 

@@ -16,7 +16,7 @@ class RoleName
     public const int MAX_LENGTH = 32;
     public const string REGEX = '/^[a-zA-Z0-9_]+$/';
 
-    public function __construct(
+    private function __construct(
         private readonly string $roleName
     ) {
     }

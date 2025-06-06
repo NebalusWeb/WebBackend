@@ -18,6 +18,21 @@ class PrivilegeRoleLink
         return new self($node, $metadata);
     }
 
+    public static function fromMetadata(PrivilegeNode $node, PrivilegeRoleLinkMetadata $metadata): self
+    {
+        return new self($node, $metadata);
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public static function fromArray(array $data): self
+    {
+        $node = PrivilegeNode::from($data['node']);
+        $metadata = PrivilegeRoleLinkMetadata::fromArray($data);
+        return new self($node, $metadata);
+    }
+
     public function getNode(): PrivilegeNode
     {
         return $this->node;

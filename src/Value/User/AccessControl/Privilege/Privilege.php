@@ -7,7 +7,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class Privilege
 {
-    public function __construct(
+    private function __construct(
         private readonly PrivilegeId $privilegeId,
         private readonly PrivilegeNode $node,
         private readonly PrivilegeDescription $description,

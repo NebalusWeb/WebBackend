@@ -26,7 +26,7 @@ class EditRoleAction extends AbstractAction
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);
-        var_dump(PrivilegeNode::from("test.role.edit")->asDestructured(PrivilegeRoleLinkMetadata::from(true, true)));
+       // var_dump(PrivilegeNode::from("test.role.edit")->asDestructured(PrivilegeRoleLinkMetadata::from(true, true)));
         return $response;
     }
 }

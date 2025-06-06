@@ -2,6 +2,8 @@
 
 namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 
+use Nebalus\Webapi\Exception\ApiException;
+
 class PrivilegeRoleLinkMetadata
 {
     private function __construct(
@@ -14,6 +16,18 @@ class PrivilegeRoleLinkMetadata
     public static function from(bool $affectsAllSubPrivileges, bool $isBlacklisted, ?PrivilegeValue $value = null): self
     {
         return new self($affectsAllSubPrivileges, $isBlacklisted, $value);
+    }
+
+    /**
+     * @throws ApiException
+     */
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            (bool) $data['affects_all_sub_privileges'],
+            (bool) $data['is_blacklisted'],
+            isset($data['value']) ? PrivilegeValue::from($data['value']) : null
+        );
     }
 
     public function affectsAllSubPrivileges(): bool
