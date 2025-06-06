@@ -5,12 +5,13 @@ namespace Nebalus\Webapi\Api\Admin\Privilege\GetAll;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 
 class GetAllPrivilegeView
 {
 
-    public function render(PrivilegeNodeCollection $privilegeCollection): ResultInterface
+    public function render(PrivilegeCollection $privilegeCollection): ResultInterface
     {
         $fields = [];
         foreach ($privilegeCollection as $privilege) {
