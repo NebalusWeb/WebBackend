@@ -4,8 +4,8 @@ namespace Nebalus\Webapi\Api\Module\Referral\Get;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
-use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\Module\Referral\Referral;
+use Nebalus\Webapi\Value\Result\Result;
 
 class GetReferralView
 {

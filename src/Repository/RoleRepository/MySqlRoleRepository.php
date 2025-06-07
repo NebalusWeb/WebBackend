@@ -7,13 +7,10 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLink;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Role\RoleHexColor;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
-use Nebalus\Webapi\Value\User\AccessControl\Role\RoleAccessLevel;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Role\RoleDescription;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
-use Nebalus\Webapi\Value\User\AccessControl\Role\RoleName;
+use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
 class MySqlRoleRepository
@@ -28,12 +25,74 @@ class MySqlRoleRepository
 
     }
 
+    /**
+     * @throws ApiException
+     */
+    public function getAllRolesFromUserId(UserId $userId): RoleCollection
+    {
+        $sql = <<<SQL
+            (
+                SELECT
+                    roles.role_id,
+                    roles.name,
+                    roles.description,
+                    HEX(roles.color) AS color,
+                    roles.access_level,
+                    roles.applies_to_everyone,
+                    roles.deletable,
+                    roles.editable,
+                    roles.disabled,
+                    roles.created_at,
+                    roles.updated_at
+                FROM
+                    user_role_map
+                INNER JOIN roles ON roles.role_id = user_role_map.role_id
+                WHERE user_role_map.user_id = :userId
+            )
+            UNION
+            (
+                SELECT
+                    roles.role_id,
+                    roles.name,
+                    roles.description,
+                    HEX(roles.color) AS color,
+                    roles.access_level,
+                    roles.applies_to_everyone,
+                    roles.deletable,
+                    roles.editable,
+                    roles.disabled,
+                    roles.created_at,
+                    roles.updated_at
+                FROM
+                    roles
+                WHERE roles.applies_to_everyone = 1
+            )
+        SQL;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':userId', $userId->asInt(), PDO::PARAM_INT);
+        $stmt->execute();
+
+        $data = [];
+
+        while ($row = $stmt->fetch()) {
+            $data[] = Role::fromArray($row);
+        }
+
+        return RoleCollection::fromObjects(...$data);
+    }
+
+    /**
+     * @throws ApiException
+     */
     public function getAllPrivilegeLinksFromRoleId(RoleId $roleId): PrivilegeRoleLinkCollection
     {
         $sql = <<<SQL
             SELECT 
-                role_privilege_map.*,
-                privileges.node
+                privileges.node AS node,
+                role_privilege_map.affects_all_sub_privileges,
+                role_privilege_map.is_blacklisted,
+                role_privilege_map.value
             FROM `role_privilege_map` 
                 INNER JOIN privileges 
                     ON privileges.privilege_id = role_privilege_map.privilege_id  
@@ -47,9 +106,10 @@ class MySqlRoleRepository
         $data = [];
 
         while ($row = $stmt->fetch()) {
-            $data[] = PrivilegeRoleLink::fromString();
+            $data[] = PrivilegeRoleLink::fromArray($row);
         }
 
+        return PrivilegeRoleLinkCollection::fromObjects(...$data);
     }
 
     /**
@@ -121,34 +181,34 @@ class MySqlRoleRepository
     /**
      * @throws ApiException
      */
-    public function updateRoleFromRoleId(RoleId $roleId, RoleName $name, RoleDescription $description, RoleHexColor $color, RoleAccessLevel $accessLevel, bool $appliesToEveryone, bool $disabled): ?Role
-    {
-        $sql = <<<SQL
-            UPDATE roles
-            SET 
-                name = :name, 
-                description = :description,
-                color = UNHEX(:color),
-                access_level = :access_level,
-                applies_to_everyone = :applies_to_everyone,
-                disabled = :disabled,
-            WHERE 
-                role_id = :role_id 
-                AND editable = true
-        SQL;
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':name', $name->asString());
-        $stmt->bindValue(':description', $description->asString());
-        $stmt->bindValue(':color', $color->asString());
-        $stmt->bindValue(':access_level', $accessLevel->asInt(), PDO::PARAM_INT);
-        $stmt->bindValue(':applies_to_everyone', $appliesToEveryone, PDO::PARAM_BOOL);
-        $stmt->bindValue(':disabled', $disabled, PDO::PARAM_BOOL);
-        $stmt->bindValue(':role_id', $roleId->asInt(), PDO::PARAM_INT);
-        $stmt->execute();
-
-        return $this->findRoleById($roleId);
-    }
+//    public function updateRoleFromRoleId(RoleId $roleId, RoleName $name, RoleDescription $description, RoleHexColor $color, RoleAccessLevel $accessLevel, bool $appliesToEveryone, bool $disabled): ?Role
+//    {
+//        $sql = <<<SQL
+//            UPDATE roles
+//            SET
+//                name = :name,
+//                description = :description,
+//                color = UNHEX(:color),
+//                access_level = :access_level,
+//                applies_to_everyone = :applies_to_everyone,
+//                disabled = :disabled,
+//            WHERE
+//                role_id = :role_id
+//                AND editable = true
+//        SQL;
+//
+//        $stmt = $this->pdo->prepare($sql);
+//        $stmt->bindValue(':name', $name->asString());
+//        $stmt->bindValue(':description', $description->asString());
+//        $stmt->bindValue(':color', $color->asString());
+//        $stmt->bindValue(':access_level', $accessLevel->asInt(), PDO::PARAM_INT);
+//        $stmt->bindValue(':applies_to_everyone', $appliesToEveryone, PDO::PARAM_BOOL);
+//        $stmt->bindValue(':disabled', $disabled, PDO::PARAM_BOOL);
+//        $stmt->bindValue(':role_id', $roleId->asInt(), PDO::PARAM_INT);
+//        $stmt->execute();
+//
+//        return $this->findRoleById($roleId);
+//    }
 
     public function deleteRoleFromRoleId(RoleId $roleId): bool
     {

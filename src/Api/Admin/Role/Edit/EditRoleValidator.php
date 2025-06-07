@@ -9,9 +9,9 @@ use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLink;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
-use Nebalus\Webapi\Value\User\AccessControl\Role\RoleHexColor;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleAccessLevel;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleDescription;
+use Nebalus\Webapi\Value\User\AccessControl\Role\RoleHexColor;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleName;
 

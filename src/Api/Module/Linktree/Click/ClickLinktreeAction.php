@@ -6,7 +6,6 @@ namespace Nebalus\Webapi\Api\Module\Linktree\Click;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 

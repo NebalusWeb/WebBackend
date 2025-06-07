@@ -3,10 +3,7 @@
 namespace Nebalus\Webapi\Api\Admin\Role\Edit;
 
 use Nebalus\Webapi\Api\AbstractAction;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLink;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkMetadata;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
 

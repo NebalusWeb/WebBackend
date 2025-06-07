@@ -5,9 +5,8 @@ namespace Nebalus\Webapi\Slim\Middleware;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPrivilegeRepository;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLink;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkIndex;
+use Nebalus\Webapi\Value\User\User;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -27,18 +26,17 @@ readonly class PrivilegeMiddleware implements MiddlewareInterface
      */
     #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
-//        $test = PrivilegeRoleLinkCollection::fromObjects(
-//            PrivilegeRoleLink::fromString("feature", true),
-//            PrivilegeRoleLink::fromString("admin", true),
-//        );
-
-//        $testZwei = PrivilegeNode::fromString("feature.referral.create", false, 1);
-
-//        var_dump($testZwei->getNode()->asDestructured());
-//        var_dump($test->contains(PrivilegeNode::fromString("admin.test.testii.testiii.fdyfyf.aysfysayf")));
-
-        $request = $request->withAttribute("userPrivileges", PrivilegeNodeCollection::fromObjects());
-
+        /** @var User $user */
+        $user = $request->getAttribute('user');
+        $unsortedRoles = $this->roleRepository->getAllRolesFromUserId($user->getUserId());
+        $sortedRoles = $unsortedRoles->asSortedByAccessLevel();
+        $roleLinkCollections = [];
+        foreach ($sortedRoles as $role) {
+            $roleLinkCollections[] = $this->roleRepository->getAllPrivilegeLinksFromRoleId($role->getRoleId());
+        }
+        $privilegeIndex = PrivilegeRoleLinkIndex::fromPrivilegeRoleLinkCollections(...$roleLinkCollections);
+        $request = $request->withAttribute("userPrivilegeIndex", $privilegeIndex);
+        var_dump($privilegeIndex);
         return $handler->handle($request);
     }
 }

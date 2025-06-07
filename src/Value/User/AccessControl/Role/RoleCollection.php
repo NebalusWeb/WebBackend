@@ -23,4 +23,13 @@ class RoleCollection implements IteratorAggregate
     {
         yield from $this->roles;
     }
+
+    public function asSortedByAccessLevel(): self
+    {
+        $sorted = $this->roles;
+        usort($sorted, function (Role $a, Role $b) {
+            return $b->getAccessLevel() <=> $a->getAccessLevel();
+        });
+        return self::fromObjects(...$sorted);
+    }
 }

@@ -28,9 +28,10 @@ class PrivilegeRoleLink
      */
     public static function fromArray(array $data): self
     {
-        $node = PrivilegeNode::from($data['node']);
-        $metadata = PrivilegeRoleLinkMetadata::fromArray($data);
-        return new self($node, $metadata);
+        return new self(
+            PrivilegeNode::from($data['node']),
+            PrivilegeRoleLinkMetadata::fromArray($data)
+        );
     }
 
     public function getNode(): PrivilegeNode

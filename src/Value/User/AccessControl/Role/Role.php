@@ -10,7 +10,7 @@ use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class Role
 {
-    public function __construct(
+    private function __construct(
         private readonly ?RoleId $roleId,
         private readonly RoleName $roleName,
         private readonly ?RoleDescription $roleDescription,
