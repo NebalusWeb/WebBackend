@@ -90,6 +90,7 @@ class MySqlRoleRepository
         $sql = <<<SQL
             SELECT 
                 privileges.node AS node,
+                privileges.default_value AS default_value,
                 role_privilege_map.affects_all_sub_privileges,
                 role_privilege_map.is_blacklisted,
                 role_privilege_map.value
@@ -106,6 +107,10 @@ class MySqlRoleRepository
         $data = [];
 
         while ($row = $stmt->fetch()) {
+            if ($row['value'] === null) {
+                $row['value'] = $row['default_value'] ?? null;
+            }
+
             $data[] = PrivilegeRoleLink::fromArray($row);
         }
 
