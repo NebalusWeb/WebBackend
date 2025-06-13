@@ -2,9 +2,10 @@
 
 namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
 
+use JsonSerializable;
 use Nebalus\Webapi\Exception\ApiException;
 
-class PrivilegeRoleLinkMetadata
+class PrivilegeRoleLinkMetadata implements JsonSerializable
 {
     private function __construct(
         private readonly bool $affectsAllSubPrivileges,
@@ -35,8 +36,13 @@ class PrivilegeRoleLinkMetadata
         return [
             "affects_all_sub_privileges" => $this->affectsAllSubPrivileges,
             "is_blacklisted" => $this->isBlacklisted,
-            "value" => $this->value ?? null,
+            "value" => $this->value?->asInt(),
         ];
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->asArray();
     }
 
     public function affectsAllSubPrivileges(): bool

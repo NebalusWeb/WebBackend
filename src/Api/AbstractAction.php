@@ -33,7 +33,6 @@ abstract class AbstractAction
             }
 
         }
-
         return $this->execute($request, $response, $args);
     }
 
