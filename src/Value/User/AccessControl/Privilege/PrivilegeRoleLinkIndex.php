@@ -42,15 +42,32 @@ class PrivilegeRoleLinkIndex
         return new self($privilegeNodeIndex);
     }
 
-    public function contains(PrivilegeNode $node): bool
+    public function hasAccess(PrivilegeNode $node): bool
     {
-        return isset($this->privilegeNodeIndex[$node->asString()]);
+        $parts = explode('.', $node->asString());
+        $currentNode = '';
+
+        foreach ($parts as $index => $part) {
+            $currentNode = $index === 0 ? $part : "$currentNode.$part";
+            if (isset($this->privilegeNodeIndex[$currentNode])) {
+                $privilegeMetadata = $this->privilegeNodeIndex[$currentNode];
+
+                if ($privilegeMetadata instanceof PrivilegeRoleLinkMetadata) {
+                    if ($currentNode !== $node->asString() && $privilegeMetadata->affectsAllSubPrivileges()) {
+                        return !$privilegeMetadata->isBlacklisted();
+                    }
+                }
+            }
+        }
+
+        $finalMetadata = $this->privilegeNodeIndex[$node->asString()] ?? null;
+        return $finalMetadata instanceof PrivilegeRoleLinkMetadata && !$finalMetadata->isBlacklisted();
     }
 
-    public function containsSomeNodes(PrivilegeNodeCollection $privilegeNodeCollection): bool
+    public function hasAccessToSomeNodes(PrivilegeNodeCollection $privilegeNodeCollection): bool
     {
         foreach ($privilegeNodeCollection as $privilegeNode) {
-            if ($this->contains($privilegeNode)) {
+            if ($this->hasAccess($privilegeNode)) {
                 return true;
             }
         }
