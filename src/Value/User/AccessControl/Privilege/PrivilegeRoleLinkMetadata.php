@@ -30,6 +30,15 @@ class PrivilegeRoleLinkMetadata
         );
     }
 
+    public function asArray(): array
+    {
+        return [
+            "affects_all_sub_privileges" => $this->affectsAllSubPrivileges,
+            "is_blacklisted" => $this->isBlacklisted,
+            "value" => $this->value ?? null,
+        ];
+    }
+
     public function affectsAllSubPrivileges(): bool
     {
         return $this->affectsAllSubPrivileges;

@@ -16,3 +16,8 @@ body:json {
     "password": "{{password}}"
   }
 }
+
+script:post-response {
+  let body = res.getBody();
+  bru.setVar("auth_jwt",body.payload.jwt);
+}

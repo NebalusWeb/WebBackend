@@ -26,8 +26,10 @@ readonly class PrivilegeMiddleware implements MiddlewareInterface
      */
     #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
-        /** @var User $user */
         $user = $request->getAttribute('user');
+        if ($user instanceof User === false) {
+            return $handler->handle($request);
+        }
         $unsortedRoles = $this->roleRepository->getAllRolesFromUserId($user->getUserId());
         $sortedRoles = $unsortedRoles->asSortedByAccessLevel();
         $roleLinkCollections = [];
@@ -36,7 +38,6 @@ readonly class PrivilegeMiddleware implements MiddlewareInterface
         }
         $privilegeIndex = PrivilegeRoleLinkIndex::fromPrivilegeRoleLinkCollections(...$roleLinkCollections);
         $request = $request->withAttribute("userPrivilegeIndex", $privilegeIndex);
-        var_dump($privilegeIndex);
         return $handler->handle($request);
     }
 }
