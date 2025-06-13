@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Api\Admin\Privilege\Get;
 
 use Nebalus\Webapi\Api\AbstractAction;
+use Nebalus\Webapi\Api\PrivilegeNodeTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
@@ -23,7 +24,7 @@ class GetPrivilegeAction extends AbstractAction
     protected function privilegeConfig(): PrivilegeNodeCollection
     {
         return PrivilegeNodeCollection::fromObjects(
-            PrivilegeNode::from("admin.role")
+            PrivilegeNode::from(PrivilegeNodeTypes::ADMIN_ROLE)
         );
     }
 
