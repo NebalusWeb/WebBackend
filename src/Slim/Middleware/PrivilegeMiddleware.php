@@ -2,10 +2,12 @@
 
 namespace Nebalus\Webapi\Slim\Middleware;
 
+use Exception;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPrivilegeRepository;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkIndex;
+use Nebalus\Webapi\Value\User\AccessControl\Role\SortedRoleCollection;
 use Nebalus\Webapi\Value\User\User;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -23,6 +25,7 @@ readonly class PrivilegeMiddleware implements MiddlewareInterface
 
     /**
      * @throws ApiException
+     * @throws Exception
      */
     #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
@@ -31,7 +34,7 @@ readonly class PrivilegeMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
         $unsortedRoles = $this->roleRepository->getAllRolesFromUserId($user->getUserId());
-        $sortedRoles = $unsortedRoles->asSortedByAccessLevel();
+        $sortedRoles = SortedRoleCollection::fromRoleCollectionByAccessLevel($unsortedRoles);
         $roleLinkCollections = [];
         foreach ($sortedRoles as $role) {
             $roleLinkCollections[] = $this->roleRepository->getAllPrivilegeLinksFromRoleId($role->getRoleId());

@@ -3,6 +3,9 @@
 namespace Nebalus\Webapi\Api\Admin\Role\Delete;
 
 use Nebalus\Webapi\Api\AbstractAction;
+use Nebalus\Webapi\Api\PrivilegeNodeTypes;
+use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
@@ -15,9 +18,14 @@ class DeleteRoleAction extends AbstractAction
     ) {
     }
 
-    protected function privilegeConfig(): PrivilegeNodeCollection
+    /**
+     * @throws ApiException
+     */
+    protected function accessPrivilegeConfig(): PrivilegeNodeCollection
     {
-        return PrivilegeNodeCollection::fromObjects();
+        return PrivilegeNodeCollection::fromObjects(
+            PrivilegeNode::from(PrivilegeNodeTypes::ADMIN_ROLE_DELETE)
+        );
     }
 
     protected function execute(Request $request, Response $response, array $pathArgs): Response

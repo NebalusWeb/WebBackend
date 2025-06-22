@@ -20,7 +20,7 @@ class GetAllPrivilegeAction extends AbstractAction
     /**
      * @throws ApiException
      */
-    protected function privilegeConfig(): PrivilegeNodeCollection
+    protected function accessPrivilegeConfig(): PrivilegeNodeCollection
     {
         return PrivilegeNodeCollection::fromObjects(
             PrivilegeNode::from(PrivilegeNodeTypes::ADMIN_ROLE)

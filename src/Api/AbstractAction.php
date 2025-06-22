@@ -25,13 +25,12 @@ abstract class AbstractAction
         if ($authType === 'jwt') {
             $userPrivilegesIndex = $request->getAttribute('userPrivilegeIndex');
             if ($userPrivilegesIndex instanceof PrivilegeRoleLinkIndex) {
-                $endpointPrivileges = $this->privilegeConfig();
-                if ($userPrivilegesIndex->hasAccessToSomeNodes($endpointPrivileges) === false) {
+                $endpointAccessPrivileges = $this->accessPrivilegeConfig();
+                if (is_null($endpointAccessPrivileges) === false && $userPrivilegesIndex->hasAccessToSomeNodes($endpointAccessPrivileges) === false) {
                     $result = Result::createError("You are not allowed to access this endpoint", StatusCodeInterface::STATUS_FORBIDDEN);
                     return $response->withJson($result->getPayload(), $result->getStatusCode());
                 }
             }
-
         }
         return $this->execute($request, $response, $args);
     }
@@ -45,5 +44,5 @@ abstract class AbstractAction
         array $pathArgs
     ): Response;
 
-    abstract protected function privilegeConfig(): PrivilegeNodeCollection;
+    abstract protected function accessPrivilegeConfig(): ?PrivilegeNodeCollection;
 }

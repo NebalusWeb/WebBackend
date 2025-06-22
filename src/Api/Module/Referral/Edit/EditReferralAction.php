@@ -17,7 +17,7 @@ class EditReferralAction extends AbstractAction
     ) {
     }
 
-    protected function privilegeConfig(): PrivilegeNodeCollection
+    protected function accessPrivilegeConfig(): PrivilegeNodeCollection
     {
         return PrivilegeNodeCollection::fromObjects();
     }

@@ -1,11 +1,11 @@
 meta {
-  name: Delete Referral
+  name: Get User Privileges
   type: http
-  seq: 4
+  seq: 3
 }
 
-delete {
-  url: {{protocol}}://{{host}}/ui/user/services/referrals/nSW1Oep4
+get {
+  url: {{protocol}}://{{host}}/ui/user/privileges
   body: none
   auth: apikey
 }
