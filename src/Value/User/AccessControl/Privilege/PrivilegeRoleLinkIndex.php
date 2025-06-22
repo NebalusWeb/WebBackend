@@ -42,32 +42,42 @@ class PrivilegeRoleLinkIndex
         return new self($privilegeNodeIndex);
     }
 
-    public function hasAccess(PrivilegeNode $node): bool
+    // TODO
+    public function hasAccess(PrivilegeNode $node, bool $strict): bool
     {
         $parts = explode('.', $node->asString());
         $currentNode = '';
+        $foundMatchWithStrictModeTurnedOff = false;
 
         foreach ($parts as $index => $part) {
             $currentNode = $index === 0 ? $part : "$currentNode.$part";
+            var_dump($currentNode);
             if (isset($this->privilegeNodeIndex[$currentNode])) {
                 $privilegeMetadata = $this->privilegeNodeIndex[$currentNode];
-
                 if ($privilegeMetadata instanceof PrivilegeRoleLinkMetadata) {
                     if ($currentNode !== $node->asString() && $privilegeMetadata->affectsAllSubPrivileges()) {
                         return !$privilegeMetadata->isBlacklisted();
+                    }
+                    if ($strict === false && $privilegeMetadata->isBlacklisted() === false) {
+                        $foundMatchWithStrictModeTurnedOff = true;
                     }
                 }
             }
         }
 
         $finalMetadata = $this->privilegeNodeIndex[$node->asString()] ?? null;
+
+        if ($strict === false && $finalMetadata === null) {
+            return $foundMatchWithStrictModeTurnedOff;
+        }
+
         return $finalMetadata instanceof PrivilegeRoleLinkMetadata && !$finalMetadata->isBlacklisted();
     }
 
-    public function hasAccessToSomeNodes(PrivilegeNodeCollection $privilegeNodeCollection): bool
+    public function hasAccessToSomeNodes(PrivilegeNodeCollection $privilegeNodeCollection, bool $strict): bool
     {
         foreach ($privilegeNodeCollection as $privilegeNode) {
-            if ($this->hasAccess($privilegeNode)) {
+            if ($this->hasAccess($privilegeNode, $strict)) {
                 return true;
             }
         }

@@ -26,7 +26,7 @@ abstract class AbstractAction
             $userPrivilegesIndex = $request->getAttribute('userPrivilegeIndex');
             if ($userPrivilegesIndex instanceof PrivilegeRoleLinkIndex) {
                 $endpointAccessPrivileges = $this->accessPrivilegeConfig();
-                if (is_null($endpointAccessPrivileges) === false && $userPrivilegesIndex->hasAccessToSomeNodes($endpointAccessPrivileges) === false) {
+                if (is_null($endpointAccessPrivileges) === false && $userPrivilegesIndex->hasAccessToSomeNodes($endpointAccessPrivileges, false) === false) {
                     $result = Result::createError("You are not allowed to access this endpoint", StatusCodeInterface::STATUS_FORBIDDEN);
                     return $response->withJson($result->getPayload(), $result->getStatusCode());
                 }
