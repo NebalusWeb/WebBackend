@@ -5,12 +5,12 @@ namespace Nebalus\Webapi\Api\Admin\Role\Get;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLinkCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 
 class GetRoleView
 {
-    public function render(Role $role, PrivilegeRoleLinkCollection $privilegeRoleLinkCollection, bool $withPrivileges): ResultInterface
+    public function render(Role $role, ?PermissionRoleLinkCollection $permissionRoleLinkCollection = null): ResultInterface
     {
         $fields = [
             'role_id' => $role->getRoleId()->asInt(),
@@ -26,17 +26,16 @@ class GetRoleView
             "updated_at" => $role->getUpdatedAtDate()->format(DATE_ATOM),
         ];
 
-        if ($withPrivileges) {
-            $privileges = [];
+        if ($permissionRoleLinkCollection !== null) {
+            $permissions = [];
 
-            foreach ($privilegeRoleLinkCollection as $privilegeNode) {
-                $privileges[] = [
-                    'id' => $privilegeNode->getRoleId()->asInt(),
+            foreach ($permissionRoleLinkCollection as $permissionRoleLink) {
+                $permissions[] = [
 
                 ];
             }
 
-            $fields["privilege"] = $privileges;
+            $fields["permissions"] = $permissions;
         }
 
         return Result::createSuccess("Role fetched", StatusCodeInterface::STATUS_OK, $fields);

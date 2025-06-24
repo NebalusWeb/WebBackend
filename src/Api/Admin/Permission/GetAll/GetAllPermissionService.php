@@ -3,7 +3,7 @@
 namespace Nebalus\Webapi\Api\Admin\Permission\GetAll;
 
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPermissionRepository;
+use Nebalus\Webapi\Repository\PermissionsRepository\MySqlPermissionRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
 
 readonly class GetAllPermissionService

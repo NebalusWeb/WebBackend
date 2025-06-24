@@ -5,10 +5,10 @@ namespace Nebalus\Webapi\Api\Admin\Role\Edit;
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLink;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeValue;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNode;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLink;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLinkCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionValue;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleAccessLevel;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleDescription;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleHexColor;
@@ -23,7 +23,7 @@ class EditRoleValidator extends AbstractValidator
     private RoleHexColor $roleColor;
     private RoleAccessLevel $accessLevel;
     private bool $appliesToEveryone;
-    private PrivilegeRoleLinkCollection $privilegeRoleLinks;
+    private PermissionRoleLinkCollection $permissionRoleLinks;
 
     public function __construct()
     {
@@ -38,10 +38,10 @@ class EditRoleValidator extends AbstractValidator
                 "access_level" => RoleAccessLevel::getSchema(),
                 "applies_to_everyone" => S::boolean(),
                 "disabled" => S::boolean(),
-                "privileges" => S::array(S::object([
-                    "node" => PrivilegeNode::getSchema(),
-                    "value" => PrivilegeValue::getSchema()->optional()->nullable()->default(null),
-                    "affects_all_sub_privileges" => S::boolean(),
+                "permissions" => S::array(S::object([
+                    "node" => PermissionNode::getSchema(),
+                    "value" => PermissionNode::getSchema()->optional()->nullable()->default(null),
+                    "affects_all_sub_permissions" => S::boolean(),
                     "is_blacklisted" => S::boolean(),
                 ])),
             ])
@@ -56,15 +56,15 @@ class EditRoleValidator extends AbstractValidator
         $this->roleColor = RoleHexColor::from($bodyData["color"]);
         $this->accessLevel = RoleAccessLevel::from($bodyData["access_level"]);
         $this->appliesToEveryone = $bodyData["applies_to_everyone"];
-        $this->privilegeRoleLinks = PrivilegeRoleLinkCollection::fromObjects(
+        $this->permissionRoleLinks = PermissionRoleLinkCollection::fromObjects(
             ...array_map(
-                fn(array $privilege) => PrivilegeRoleLink::from(
-                    PrivilegeNode::from($privilege["node"]),
-                    $privilege["affects_all_sub_privileges"],
-                    $privilege["is_blacklisted"],
-                    isset($privilege["value"]) ? PrivilegeValue::from($privilege["value"]) : null
+                fn(array $permission) => PermissionRoleLink::from(
+                    PermissionNode::from($permission["node"]),
+                    $permission["affects_all_sub_permissions"],
+                    $permission["is_blacklisted"],
+                    isset($permission["value"]) ? PermissionValue::from($permission["value"]) : null
                 ),
-                $bodyData["privileges"]
+                $bodyData["permissions"]
             )
         );
     }
@@ -99,8 +99,8 @@ class EditRoleValidator extends AbstractValidator
         return $this->appliesToEveryone;
     }
 
-    public function getPrivilegeRoleLinks(): PrivilegeRoleLinkCollection
+    public function getPermissionRoleLinks(): PermissionRoleLinkCollection
     {
-        return $this->privilegeRoleLinks;
+        return $this->permissionRoleLinks;
     }
 }

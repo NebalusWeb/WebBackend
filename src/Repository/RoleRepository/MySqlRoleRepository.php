@@ -5,15 +5,15 @@ namespace Nebalus\Webapi\Repository\RoleRepository;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLink;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLink;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLinkCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
-class MySqlRoleRepository
+readonly class MySqlRoleRepository
 {
     public function __construct(
         private PDO $pdo
@@ -22,7 +22,6 @@ class MySqlRoleRepository
 
     public function insertPrivilegeIntoRole()
     {
-
     }
 
     /**
@@ -85,18 +84,18 @@ class MySqlRoleRepository
     /**
      * @throws ApiException
      */
-    public function getAllPermissionLinksFromRoleId(RoleId $roleId): PrivilegeRoleLinkCollection
+    public function getAllPermissionLinksFromRoleId(RoleId $roleId): PermissionRoleLinkCollection
     {
         $sql = <<<SQL
             SELECT 
-                privileges.node AS node,
-                privileges.default_value AS default_value,
-                role_privilege_map.affects_all_sub_privileges,
-                role_privilege_map.is_blacklisted,
-                role_privilege_map.value
-            FROM `role_privilege_map` 
-                INNER JOIN privileges 
-                    ON privileges.privilege_id = role_privilege_map.privilege_id  
+                permissions.node AS node,
+                permissions.default_value AS default_value,
+                role_permission_map.affects_all_sub_permissions,
+                role_permission_map.is_blacklisted,
+                role_permission_map.value
+            FROM `role_permission_map` 
+                INNER JOIN permissions 
+                    ON permissions.permission_id = role_permission_map.permission_id  
             WHERE role_id = :roleId
         SQL;
 
@@ -111,10 +110,10 @@ class MySqlRoleRepository
                 $row['value'] = $row['default_value'] ?? null;
             }
 
-            $data[] = PrivilegeRoleLink::fromArray($row);
+            $data[] = PermissionRoleLink::fromArray($row);
         }
 
-        return PrivilegeRoleLinkCollection::fromObjects(...$data);
+        return PermissionRoleLinkCollection::fromObjects(...$data);
     }
 
     /**

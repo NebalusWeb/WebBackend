@@ -2,7 +2,6 @@
 
 namespace Nebalus\Webapi\Repository\RoleRepository;
 
-class RedisRoleCachingRepository
+readonly class RedisRoleCachingRepository
 {
-
 }

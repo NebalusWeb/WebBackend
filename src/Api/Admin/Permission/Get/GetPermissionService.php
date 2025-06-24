@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\Admin\Permission\Get;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPermissionRepository;
+use Nebalus\Webapi\Repository\PermissionsRepository\MySqlPermissionRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 

@@ -30,11 +30,11 @@ readonly class GetRoleService
             return Result::createError("Role not found", StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        if ($validator->isWithPrivileges()) {
+        if ($validator->isWithPermissions()) {
             $privileges = $this->roleRepository->getAllPermissionLinksFromRoleId($validator->getRoleId());
-            return $this->view->render($role, $privileges, $validator->isWithPrivileges());
+            return $this->view->render($role, $privileges, $validator->isWithPermissions());
         }
 
-        return $this->view->render($role, PrivilegeRoleLinkCollection::fromObjects(), $validator->isWithPrivileges());
+        return $this->view->render($role, PrivilegeRoleLinkCollection::fromObjects(), $validator->isWithPermissions());
     }
 }

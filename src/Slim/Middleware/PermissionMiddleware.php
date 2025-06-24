@@ -37,7 +37,7 @@ readonly class PermissionMiddleware implements MiddlewareInterface
         foreach ($sortedRoles as $role) {
             $sortedRoleLinkCollections[] = $this->roleRepository->getAllPermissionLinksFromRoleId($role->getRoleId());
         }
-        $userPermissionIndex = PermissionRoleLinkIndex::fromPrivilegeRoleLinkCollections(...$sortedRoleLinkCollections);
+        $userPermissionIndex = PermissionRoleLinkIndex::fromPermissionRoleLinkCollections(...$sortedRoleLinkCollections);
         $request = $request->withAttribute("userPermissionIndex", $userPermissionIndex);
         return $handler->handle($request);
     }

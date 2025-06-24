@@ -10,7 +10,7 @@ use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 class GetRoleValidator extends AbstractValidator
 {
     private RoleId $roleId;
-    private bool $withPrivileges;
+    private bool $withPermissions;
     public function __construct()
     {
         parent::__construct(S::object([
@@ -18,7 +18,7 @@ class GetRoleValidator extends AbstractValidator
                 "roleId" => RoleId::getSchema(),
             ]),
             RequestParamTypes::BODY => S::object([
-                "with_privileges" => S::boolean()->optional()->default(false),
+                "with_permissions" => S::boolean()->optional()->default(false),
             ])
         ]));
     }
@@ -26,7 +26,7 @@ class GetRoleValidator extends AbstractValidator
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->roleId = RoleId::from($pathArgsData["roleId"]);
-        $this->withPrivileges = $bodyData["with_privileges"];
+        $this->withPermissions = $bodyData["with_permissions"];
     }
 
     public function getRoleId(): RoleId
@@ -34,8 +34,8 @@ class GetRoleValidator extends AbstractValidator
         return $this->roleId;
     }
 
-    public function isWithPrivileges(): bool
+    public function isWithPermissions(): bool
     {
-        return $this->withPrivileges;
+        return $this->withPermissions;
     }
 }

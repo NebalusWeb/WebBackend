@@ -9,8 +9,8 @@ use Nebalus\Webapi\Slim\ResultInterface;
 readonly class GetAllRoleService
 {
     public function __construct(
-        private readonly GetAllRoleView $view,
-        private readonly MySqlRoleRepository $roleRepository
+        private GetAllRoleView $view,
+        private MySqlRoleRepository $roleRepository
     ) {
     }
 

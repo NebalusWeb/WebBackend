@@ -16,7 +16,7 @@ class PermissionRoleLinkIndex
     /**
      * @throws ApiException
      */
-    public static function fromPrivilegeRoleLinkCollections(PermissionRoleLinkCollection ...$privilegeRoleLinkCollections): self
+    public static function fromPermissionRoleLinkCollections(PermissionRoleLinkCollection ...$privilegeRoleLinkCollections): self
     {
         $cache = [];
         foreach ($privilegeRoleLinkCollections as $privilegeRoleLinkCollection) {

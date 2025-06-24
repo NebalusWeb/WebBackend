@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Repository\PrivilegesRepository;
+namespace Nebalus\Webapi\Repository\PermissionsRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
@@ -10,7 +10,7 @@ use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionId;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNode;
 use PDO;
 
-class MySqlPermissionRepository
+readonly class MySqlPermissionRepository
 {
     public function __construct(
         private PDO $pdo,
@@ -49,7 +49,7 @@ class MySqlPermissionRepository
         $sql = <<<SQL
             SELECT
                 *
-            FROM privileges 
+            FROM permissions 
             WHERE 
                 node = :node
         SQL;
@@ -76,13 +76,13 @@ class MySqlPermissionRepository
         $sql = <<<SQL
             SELECT 
                 * 
-            FROM privileges
+            FROM permissions
             WHERE 
-                privilege_id = :privilege_id
+                permission_id = :permission_id
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(":privilege_id", $permissionId->asInt());
+        $stmt->bindValue(":permission_id", $permissionId->asInt());
         $stmt->execute();
 
         $data = $stmt->fetch();

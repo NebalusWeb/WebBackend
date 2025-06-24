@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim;
 
-use Nebalus\Webapi\Api\Admin\Privilege\Get\GetPermissionAction;
-use Nebalus\Webapi\Api\Admin\Privilege\GetAll\GetAllPermissionAction;
+use Nebalus\Webapi\Api\Admin\Permission\Get\GetPermissionAction;
+use Nebalus\Webapi\Api\Admin\Permission\GetAll\GetAllPermissionAction;
 use Nebalus\Webapi\Api\Admin\Role\Create\CreateRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\Delete\DeleteRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\Edit\EditRoleAction;
@@ -24,7 +24,7 @@ use Nebalus\Webapi\Api\Module\Referral\Edit\EditReferralAction;
 use Nebalus\Webapi\Api\Module\Referral\Get\GetReferralAction;
 use Nebalus\Webapi\Api\Module\Referral\GetAll\GetAllReferralAction;
 use Nebalus\Webapi\Api\User\Auth\AuthUserAction;
-use Nebalus\Webapi\Api\User\GetUserPrivileges\GetUserPrivilegesAction;
+use Nebalus\Webapi\Api\User\GetUserPrivileges\GetUserPermissionsAction;
 use Nebalus\Webapi\Api\User\Register\RegisterUserAction;
 use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
@@ -79,11 +79,9 @@ readonly class RouteCollector
                         $group->map(["DELETE"], "", DeleteRoleAction::class);
                     });
                 });
-                $group->group("/user/{username}", function (RouteCollectorProxy $group) {
-                });
             })->add(PermissionMiddleware::class)->add(AuthMiddleware::class);
-            $group->group("/user", function (RouteCollectorProxy $group) {
-                $group->map(["GET"], "/permissions", GetUserPrivilegesAction::class);
+            $group->group("/user/{userId}", function (RouteCollectorProxy $group) {
+                $group->map(["GET"], "/permissions", GetUserPermissionsAction::class);
                 $group->group("/services", function (RouteCollectorProxy $group) {
                     $group->group("/invitation_tokens", function (RouteCollectorProxy $group) {
                     });
