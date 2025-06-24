@@ -27,7 +27,7 @@ abstract class AbstractAction
             if ($userPermissionIndex instanceof PermissionRoleLinkIndex) {
                 $endpointAccessPrivileges = $this->accessPermissionConfig();
                 if (is_null($endpointAccessPrivileges) === false && $userPermissionIndex->hasAccessToAtLeastOneNode($endpointAccessPrivileges, false) === false) {
-                    $result = Result::createError("You are not allowed to access this endpoint", StatusCodeInterface::STATUS_FORBIDDEN);
+                    $result = Result::createError("You do not have enough permissions to access this endpoint", StatusCodeInterface::STATUS_FORBIDDEN);
                     return $response->withJson($result->getPayload(), $result->getStatusCode());
                 }
             }
