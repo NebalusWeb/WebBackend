@@ -15,7 +15,7 @@ class GetAllPrivilegeView
         $fields = [];
         foreach ($privilegeCollection as $privilege) {
             $fields[] = [
-                "id" => $privilege->getPrivilegeId()->asInt(),
+                "privilege_id" => $privilege->getPrivilegeId()->asInt(),
                 "node" => $privilege->getNode()->asString(),
                 "description" => $privilege->getDescription()->asString(),
                 "is_prestige" => $privilege->isPrestige(),

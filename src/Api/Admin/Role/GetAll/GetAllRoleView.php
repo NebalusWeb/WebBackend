@@ -14,7 +14,7 @@ class GetAllRoleView
         $fields = [];
         foreach ($roleCollection as $role) {
             $fields[] = [
-                'id' => $role->getRoleId()->asInt(),
+                'role_id' => $role->getRoleId()->asInt(),
                 'name' => $role->getName()->asString(),
                 'description' => $role->getDescription()?->asString(),
                 'color' => $role->getColor()->asString(),

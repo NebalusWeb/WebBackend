@@ -12,7 +12,7 @@ class GetPrivilegeView
     public function render(Privilege $privilege): ResultInterface
     {
         $fields = [
-            "id" => $privilege->getPrivilegeId()->asInt(),
+            "privilege_id" => $privilege->getPrivilegeId()->asInt(),
             "node" => $privilege->getNode()->asString(),
             "description" => $privilege->getDescription()->asString(),
             "is_prestige" => $privilege->isPrestige(),

@@ -6,7 +6,6 @@ use Nebalus\Webapi\Slim\ResultInterface;
 
 class GetUserPrivilegesService
 {
-
     public function __construct(
         private GetUserPrivilegesView $view,
     ) {
