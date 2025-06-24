@@ -1,24 +1,24 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Admin\Privilege\Get;
+namespace Nebalus\Webapi\Api\Admin\Permission\Get;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Privilege;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\Permission;
 
-class GetPrivilegeView
+class GetPermissionView
 {
-    public function render(Privilege $privilege): ResultInterface
+    public function render(Permission $privilege): ResultInterface
     {
         $fields = [
-            "privilege_id" => $privilege->getPrivilegeId()->asInt(),
+            "permission_id" => $privilege->getPermissionId()->asInt(),
             "node" => $privilege->getNode()->asString(),
             "description" => $privilege->getDescription()->asString(),
             "is_prestige" => $privilege->isPrestige(),
             "default_value" => $privilege->getDefaultValue()?->asInt(),
         ];
 
-        return Result::createSuccess("Privilege fetched", StatusCodeInterface::STATUS_OK, $fields);
+        return Result::createSuccess("Permission fetched", StatusCodeInterface::STATUS_OK, $fields);
     }
 }

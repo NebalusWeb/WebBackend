@@ -10,7 +10,7 @@ use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkCollection;
 
-class GetRoleService
+readonly class GetRoleService
 {
     public function __construct(
         private readonly MySqlRoleRepository $roleRepository,
@@ -31,7 +31,7 @@ class GetRoleService
         }
 
         if ($validator->isWithPrivileges()) {
-            $privileges = $this->roleRepository->getAllPrivilegeLinksFromRoleId($validator->getRoleId());
+            $privileges = $this->roleRepository->getAllPermissionLinksFromRoleId($validator->getRoleId());
             return $this->view->render($role, $privileges, $validator->isWithPrivileges());
         }
 

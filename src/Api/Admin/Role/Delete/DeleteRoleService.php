@@ -10,7 +10,7 @@ use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 
-class DeleteRoleService
+readonly class DeleteRoleService
 {
     public function __construct(
         private readonly MySQlRoleRepository $roleRepository,

@@ -33,7 +33,7 @@ class RoleHexColor
         $validData = $schema->safeParse($color);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException("Invalid color: " . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException("Invalid role hex color: " . $validData->getErrorMessage());
         }
 
         return new self($validData->getValue());

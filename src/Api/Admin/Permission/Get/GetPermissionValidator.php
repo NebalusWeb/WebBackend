@@ -1,30 +1,30 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Admin\Privilege\Get;
+namespace Nebalus\Webapi\Api\Admin\Permission\Get;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Api\RequestParamTypes;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeId;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionId;
 
-class GetPrivilegeValidator extends AbstractValidator
+class GetPermissionValidator extends AbstractValidator
 {
-    private PrivilegeId $privilegeId;
+    private PermissionId $privilegeId;
     public function __construct()
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                "privilegeId" => PrivilegeId::getSchema(),
+                "permissionId" => PermissionId::getSchema(),
             ]),
         ]));
     }
 
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->privilegeId = PrivilegeId::from($pathArgsData["privilegeId"]);
+        $this->privilegeId = PermissionId::from($pathArgsData["permissionId"]);
     }
 
-    public function getPrivilegeId(): PrivilegeId
+    public function getPermissionId(): PermissionId
     {
         return $this->privilegeId;
     }

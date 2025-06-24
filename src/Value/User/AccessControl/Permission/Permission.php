@@ -1,30 +1,30 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
+namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class Privilege
+class Permission
 {
     private function __construct(
-        private readonly PrivilegeId $privilegeId,
-        private readonly PrivilegeNode $node,
-        private readonly PrivilegeDescription $description,
+        private readonly PermissionId $permissionId,
+        private readonly PermissionNode $node,
+        private readonly PermissionDescription $description,
         private readonly bool $isPrestige,
-        private readonly ?PrivilegeValue $defaultValue
+        private readonly ?PermissionValue $defaultValue
     ) {
     }
 
     public static function from(
-        PrivilegeId $id,
-        PrivilegeNode $node,
-        PrivilegeDescription $description,
+        PermissionId $permissionId,
+        PermissionNode $node,
+        PermissionDescription $description,
         bool $isPrestige,
-        ?PrivilegeValue $defaultValue = null
+        ?PermissionValue $defaultValue = null
     ): self {
         return new self(
-            $id,
+            $permissionId,
             $node,
             $description,
             $isPrestige,
@@ -38,11 +38,11 @@ class Privilege
      */
     public static function fromArray(array $value): self
     {
-        $privilegeId = PrivilegeId::from($value['privilege_id']);
-        $node = PrivilegeNode::from($value['node']);
-        $description = PrivilegeDescription::from($value['description']);
+        $privilegeId = PermissionId::from($value['privilege_id']);
+        $node = PermissionNode::from($value['node']);
+        $description = PermissionDescription::from($value['description']);
         $isPrestige = (bool) $value['is_prestige'];
-        $defaultValue = empty($value['default_value']) ? null : PrivilegeValue::from($value['default_value']);
+        $defaultValue = empty($value['default_value']) ? null : PermissionValue::from($value['default_value']);
 
         return new self($privilegeId, $node, $description, $isPrestige, $defaultValue);
     }
@@ -50,7 +50,7 @@ class Privilege
     public function asArray(): array
     {
         return [
-            'privilege_id' => $this->privilegeId->asInt(),
+            'privilege_id' => $this->permissionId->asInt(),
             'node' => $this->node->asString(),
             'description' => $this->description->asString(),
             'is_prestige' => $this->isPrestige,
@@ -58,17 +58,17 @@ class Privilege
         ];
     }
 
-    public function getPrivilegeId(): PrivilegeId
+    public function getPermissionId(): PermissionId
     {
-        return $this->privilegeId;
+        return $this->permissionId;
     }
 
-    public function getNode(): PrivilegeNode
+    public function getNode(): PermissionNode
     {
         return $this->node;
     }
 
-    public function getDescription(): PrivilegeDescription
+    public function getDescription(): PermissionDescription
     {
         return $this->description;
     }
@@ -78,7 +78,7 @@ class Privilege
         return $this->isPrestige;
     }
 
-    public function getDefaultValue(): ?PrivilegeValue
+    public function getDefaultValue(): ?PermissionValue
     {
         return $this->defaultValue;
     }

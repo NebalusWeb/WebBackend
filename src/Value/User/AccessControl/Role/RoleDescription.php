@@ -35,7 +35,7 @@ class RoleDescription
         $validData = $schema->safeParse($description);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid description: ' . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException('Invalid Role Description: ' . $validData->getErrorMessage());
         }
 
         return new self($validData->getValue());

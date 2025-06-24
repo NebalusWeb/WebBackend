@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Api\User\GetUserPrivileges;
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 
-class GetUserPrivilegesValidator extends AbstractValidator
+class GetUserPermissionsValidator extends AbstractValidator
 {
     public function __construct()
     {

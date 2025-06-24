@@ -1,22 +1,22 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
+namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 
 use Nebalus\Webapi\Exception\ApiException;
 
-class PrivilegeRoleLinkIndex
+class PermissionRoleLinkIndex
 {
-    private array $privilegeNodeIndexList = [];
+    private array $permissionNodeIndexList = [];
 
-    private function __construct(array $privilegeNodeIndex)
+    private function __construct(array $permissionNodeIndex)
     {
-        $this->privilegeNodeIndexList = $privilegeNodeIndex;
+        $this->permissionNodeIndexList = $permissionNodeIndex;
     }
 
     /**
      * @throws ApiException
      */
-    public static function fromPrivilegeRoleLinkCollections(PrivilegeRoleLinkCollection ...$privilegeRoleLinkCollections): self
+    public static function fromPrivilegeRoleLinkCollections(PermissionRoleLinkCollection ...$privilegeRoleLinkCollections): self
     {
         $cache = [];
         foreach ($privilegeRoleLinkCollections as $privilegeRoleLinkCollection) {
@@ -28,7 +28,7 @@ class PrivilegeRoleLinkIndex
         return new self($cache);
     }
 
-    public static function fromObjects(PrivilegeRoleLink ...$privilegeRoleLinks): self
+    public static function fromObjects(PermissionRoleLink ...$privilegeRoleLinks): self
     {
         $cache = [];
         foreach ($privilegeRoleLinks as $privilegeRoleLink) {
@@ -43,37 +43,37 @@ class PrivilegeRoleLinkIndex
     /**
      * Checks if the user has access to a specific privilege node.
      * This method traverses the privilege node hierarchy to determine access.
-     * @param PrivilegeNode $node The privilege node to check access for.
+     * @param PermissionNode $node The privilege node to check access for.
      * @param bool $strict If true, the method will only return true if the exact node is found.
      * @throws ApiException
      */
-    public function hasAccessTo(PrivilegeNode $node, bool $strict): bool
+    public function hasAccessTo(PermissionNode $node, bool $strict): bool
     {
         $parts = explode('.', $node->asString());
         $currentNode = '';
 
         foreach ($parts as $index => $part) {
             $currentNode = $index === 0 ? $part : "$currentNode.$part";
-            if (isset($this->privilegeNodeIndexList[$currentNode])) {
-                $privilegeMetadata = $this->privilegeNodeIndexList[$currentNode];
-                if ($privilegeMetadata instanceof PrivilegeRoleLinkMetadata) {
-                    if ($currentNode !== $node->asString() && $privilegeMetadata->affectsAllSubPrivileges()) {
+            if (isset($this->permissionNodeIndexList[$currentNode])) {
+                $privilegeMetadata = $this->permissionNodeIndexList[$currentNode];
+                if ($privilegeMetadata instanceof PermissionRoleLinkMetadata) {
+                    if ($currentNode !== $node->asString() && $privilegeMetadata->affectsAllSubPermissions()) {
                         return !$privilegeMetadata->isBlacklisted();
                     }
                 }
             }
         }
 
-        $finalMetadata = $this->privilegeNodeIndexList[$node->asString()] ?? null;
+        $finalMetadata = $this->permissionNodeIndexList[$node->asString()] ?? null;
 
         if ($strict === false && $finalMetadata === null) {
             return $foundMatchWithStrictModeTurnedOff;
         }
 
-        return $finalMetadata instanceof PrivilegeRoleLinkMetadata && !$finalMetadata->isBlacklisted();
+        return $finalMetadata instanceof PermissionRoleLinkMetadata && !$finalMetadata->isBlacklisted();
     }
 
-    public function hasAccessToAtLeastOneNode(PrivilegeNodeCollection $privilegeNodeCollection, bool $strict): bool
+    public function hasAccessToAtLeastOneNode(PermissionNodeCollection $privilegeNodeCollection, bool $strict): bool
     {
         foreach ($privilegeNodeCollection as $privilegeNode) {
             if ($this->hasAccessTo($privilegeNode, $strict)) {
@@ -85,6 +85,6 @@ class PrivilegeRoleLinkIndex
 
     public function asArray(): array
     {
-        return $this->privilegeNodeIndexList;
+        return $this->permissionNodeIndexList;
     }
 }

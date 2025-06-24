@@ -4,14 +4,14 @@ namespace Nebalus\Webapi\Api\User\GetUserPrivileges;
 
 use Nebalus\Webapi\Slim\ResultInterface;
 
-class GetUserPrivilegesService
+class GetUserPermissionsService
 {
     public function __construct(
-        private GetUserPrivilegesView $view,
+        private GetUserPermissionsView $view,
     ) {
     }
 
-    public function execute(GetUserPrivilegesValidator $validator): ResultInterface
+    public function execute(GetUserPermissionsValidator $validator): ResultInterface
     {
         return $this->view->render();
     }

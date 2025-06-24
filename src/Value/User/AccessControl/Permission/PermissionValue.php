@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
+namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
@@ -8,7 +8,7 @@ use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class PrivilegeValue
+class PermissionValue
 {
     use SanitizrValueObjectTrait;
 
@@ -31,7 +31,7 @@ class PrivilegeValue
         $validData = $schema->safeParse($value);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid Privilege Value: ' . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException('Invalid Permission Value: ' . $validData->getErrorMessage());
         }
 
         return new self($validData->getValue());

@@ -30,7 +30,7 @@ class RoleAccessLevel
         $validData = $schema->safeParse($accessLevel);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid accessLevel: ' . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException('Invalid role accessLevel: ' . $validData->getErrorMessage());
         }
 
         return new self($validData->getValue());

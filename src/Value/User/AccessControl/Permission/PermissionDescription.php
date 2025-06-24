@@ -1,13 +1,13 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
+namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class PrivilegeDescription
+class PermissionDescription
 {
     use SanitizrValueObjectTrait;
 
@@ -35,7 +35,7 @@ class PrivilegeDescription
         $validData = $schema->safeParse($description);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid description: ' . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException('Invalid permission description: ' . $validData->getErrorMessage());
         }
 
         return new self($validData->getValue());

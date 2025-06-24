@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Value\User\AccessControl\Privilege;
+namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 
 use Nebalus\Sanitizr\Sanitizr;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
@@ -8,7 +8,7 @@ use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class PrivilegeNode
+class PermissionNode
 {
     use SanitizrValueObjectTrait;
 
@@ -34,21 +34,21 @@ class PrivilegeNode
         $validData = $schema->safeParse($node);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid privilege node: ' . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException('Invalid permission node: ' . $validData->getErrorMessage());
         }
 
         return new self($validData->getValue());
-    }
-
-    public function isParentOf(PrivilegeNode $toCheckNode): bool
-    {
-        return str_starts_with($this->node, $toCheckNode->node);
     }
 
     public function asString(): string
     {
         return $this->node;
     }
+
+//    public function isParentOf(PermissionNode $toCheckNode): bool
+//    {
+//        return str_starts_with($this->node, $toCheckNode->node);
+//    }
 
 //    public function asDestructured(): array
 //    {

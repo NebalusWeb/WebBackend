@@ -3,19 +3,19 @@
 namespace Nebalus\Webapi\Api\User\GetUserPrivileges;
 
 use Nebalus\Webapi\Api\AbstractAction;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNodeCollection;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
 
-class GetUserPrivilegesAction extends AbstractAction
+class GetUserPermissionsAction extends AbstractAction
 {
     public function __construct(
-        private readonly GetUserPrivilegesService $service,
-        private readonly GetUserPrivilegesValidator $validator
+        private readonly GetUserPermissionsService $service,
+        private readonly GetUserPermissionsValidator $validator
     ) {
     }
 
-    protected function accessPrivilegeConfig(): ?PrivilegeNodeCollection
+    protected function accessPermissionConfig(): ?PermissionNodeCollection
     {
         return null;
     }

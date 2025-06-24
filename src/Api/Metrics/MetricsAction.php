@@ -3,7 +3,6 @@
 namespace Nebalus\Webapi\Api\Metrics;
 
 use Nebalus\Webapi\Api\AbstractAction;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
 use Prometheus\CollectorRegistry;
 use Prometheus\RenderTextFormat;
 use Slim\Http\Response;
@@ -18,9 +17,9 @@ class MetricsAction extends AbstractAction
     ) {
     }
 
-    protected function accessPrivilegeConfig(): PrivilegeNodeCollection
+    protected function accessPermissionConfig(): null
     {
-        return PrivilegeNodeCollection::fromObjects();
+        return null;
     }
 
     /**

@@ -35,7 +35,7 @@ class RoleName
         $validData = $schema->safeParse($roleName);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid role name: ' . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException('Invalid Role Name: ' . $validData->getErrorMessage());
         }
 
         return new self($validData->getValue());

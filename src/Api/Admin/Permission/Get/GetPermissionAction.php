@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Admin\Role\Create;
+namespace Nebalus\Webapi\Api\Admin\Permission\Get;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Api\PermissionNodesTypes;
@@ -10,11 +10,11 @@ use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNodeCollection;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
 
-class CreateRoleAction extends AbstractAction
+class GetPermissionAction extends AbstractAction
 {
     public function __construct(
-        private readonly CreateRoleValidator $validator,
-        private readonly CreateRoleService $service
+        private readonly GetPermissionService $service,
+        private readonly GetPermissionValidator $validator
     ) {
     }
 
@@ -24,7 +24,7 @@ class CreateRoleAction extends AbstractAction
     protected function accessPermissionConfig(): PermissionNodeCollection
     {
         return PermissionNodeCollection::fromObjects(
-            PermissionNode::from(PermissionNodesTypes::ADMIN_ROLE_CREATE)
+            PermissionNode::from(PermissionNodesTypes::ADMIN_ROLE)
         );
     }
 

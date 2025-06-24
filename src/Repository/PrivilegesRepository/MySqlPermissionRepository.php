@@ -4,13 +4,13 @@ namespace Nebalus\Webapi\Repository\PrivilegesRepository;
 
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\Privilege;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeId;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNode;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\Permission;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionId;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNode;
 use PDO;
 
-class MySqlPrivilegeRepository
+class MySqlPermissionRepository
 {
     public function __construct(
         private PDO $pdo,
@@ -20,7 +20,7 @@ class MySqlPrivilegeRepository
     /**
      * @throws ApiException
      */
-    public function getAllPrivileges(): PrivilegeCollection
+    public function getAllPermissions(): PermissionCollection
     {
         $sql = <<<SQL
             SELECT 
@@ -34,17 +34,17 @@ class MySqlPrivilegeRepository
         $data = [];
 
         while ($row = $stmt->fetch()) {
-            $data[] = Privilege::fromArray($row);
+            $data[] = Permission::fromArray($row);
         }
 
-        return PrivilegeCollection::fromObjects(...$data);
+        return PermissionCollection::fromObjects(...$data);
     }
 
     /**
      * @throws ApiInvalidArgumentException
      * @throws ApiException
      */
-    public function findPrivilegeByNode(PrivilegeNode $node): ?Privilege
+    public function findPrivilegeByNode(PermissionNode $node): ?Permission
     {
         $sql = <<<SQL
             SELECT
@@ -64,14 +64,14 @@ class MySqlPrivilegeRepository
             return null;
         }
 
-        return Privilege::fromArray($data);
+        return Permission::fromArray($data);
     }
 
     /**
      * @throws ApiInvalidArgumentException
      * @throws ApiException
      */
-    public function findPrivilegeByPrivilegeId(PrivilegeId $privilegeId): ?Privilege
+    public function findPermissionByPermissionId(PermissionId $permissionId): ?Permission
     {
         $sql = <<<SQL
             SELECT 
@@ -82,7 +82,7 @@ class MySqlPrivilegeRepository
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(":privilege_id", $privilegeId->asInt());
+        $stmt->bindValue(":privilege_id", $permissionId->asInt());
         $stmt->execute();
 
         $data = $stmt->fetch();
@@ -91,6 +91,6 @@ class MySqlPrivilegeRepository
             return null;
         }
 
-        return Privilege::fromArray($data);
+        return Permission::fromArray($data);
     }
 }

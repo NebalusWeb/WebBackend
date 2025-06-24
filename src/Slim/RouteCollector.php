@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Slim;
 
-use Nebalus\Webapi\Api\Admin\Privilege\Get\GetPrivilegeAction;
-use Nebalus\Webapi\Api\Admin\Privilege\GetAll\GetAllPrivilegeAction;
+use Nebalus\Webapi\Api\Admin\Privilege\Get\GetPermissionAction;
+use Nebalus\Webapi\Api\Admin\Privilege\GetAll\GetAllPermissionAction;
 use Nebalus\Webapi\Api\Admin\Role\Create\CreateRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\Delete\DeleteRoleAction;
 use Nebalus\Webapi\Api\Admin\Role\Edit\EditRoleAction;
@@ -30,7 +30,7 @@ use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
 use Nebalus\Webapi\Slim\Middleware\MetricsMiddleware;
-use Nebalus\Webapi\Slim\Middleware\PrivilegeMiddleware;
+use Nebalus\Webapi\Slim\Middleware\PermissionMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -64,10 +64,10 @@ readonly class RouteCollector
             $group->map(["POST"], "/auth", AuthUserAction::class);
             $group->map(["POST"], "/register", RegisterUserAction::class);
             $group->group("/admin", function (RouteCollectorProxy $group) {
-                $group->group("/privilege", function (RouteCollectorProxy $group) {
-                    $group->map(["GET"], "/all", GetAllPrivilegeAction::class);
-                    $group->group("/{privilegeId}", function (RouteCollectorProxy $group) {
-                        $group->map(["GET"], "", GetPrivilegeAction::class);
+                $group->group("/permission", function (RouteCollectorProxy $group) {
+                    $group->map(["GET"], "/all", GetAllPermissionAction::class);
+                    $group->group("/{permissionId}", function (RouteCollectorProxy $group) {
+                        $group->map(["GET"], "", GetPermissionAction::class);
                     });
                 });
                 $group->group("/role", function (RouteCollectorProxy $group) {
@@ -81,9 +81,9 @@ readonly class RouteCollector
                 });
                 $group->group("/user/{username}", function (RouteCollectorProxy $group) {
                 });
-            })->add(PrivilegeMiddleware::class)->add(AuthMiddleware::class);
+            })->add(PermissionMiddleware::class)->add(AuthMiddleware::class);
             $group->group("/user", function (RouteCollectorProxy $group) {
-                $group->map(["GET"], "/privileges", GetUserPrivilegesAction::class);
+                $group->map(["GET"], "/permissions", GetUserPrivilegesAction::class);
                 $group->group("/services", function (RouteCollectorProxy $group) {
                     $group->group("/invitation_tokens", function (RouteCollectorProxy $group) {
                     });
@@ -105,7 +105,7 @@ readonly class RouteCollector
                         });
                     });
                 });
-            })->add(PrivilegeMiddleware::class)->add(AuthMiddleware::class);
+            })->add(PermissionMiddleware::class)->add(AuthMiddleware::class);
         });
 
         $this->app->map(["GET"], "/metrics", MetricsAction::class);

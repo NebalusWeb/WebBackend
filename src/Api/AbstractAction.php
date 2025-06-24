@@ -5,8 +5,8 @@ namespace Nebalus\Webapi\Api;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Result\Result;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeNodeCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkIndex;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNodeCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLinkIndex;
 use Psr\Http\Message\ResponseInterface as ResponseInterface;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
@@ -23,10 +23,10 @@ abstract class AbstractAction
     ): ResponseInterface {
         $authType = $request->getAttribute('authType');
         if ($authType === 'jwt') {
-            $userPrivilegesIndex = $request->getAttribute('userPrivilegeIndex');
-            if ($userPrivilegesIndex instanceof PrivilegeRoleLinkIndex) {
-                $endpointAccessPrivileges = $this->accessPrivilegeConfig();
-                if (is_null($endpointAccessPrivileges) === false && $userPrivilegesIndex->hasAccessToAtLeastOneNode($endpointAccessPrivileges, false) === false) {
+            $userPermissionIndex = $request->getAttribute('userPermissionIndex');
+            if ($userPermissionIndex instanceof PermissionRoleLinkIndex) {
+                $endpointAccessPrivileges = $this->accessPermissionConfig();
+                if (is_null($endpointAccessPrivileges) === false && $userPermissionIndex->hasAccessToAtLeastOneNode($endpointAccessPrivileges, false) === false) {
                     $result = Result::createError("You are not allowed to access this endpoint", StatusCodeInterface::STATUS_FORBIDDEN);
                     return $response->withJson($result->getPayload(), $result->getStatusCode());
                 }
@@ -44,5 +44,5 @@ abstract class AbstractAction
         array $pathArgs
     ): Response;
 
-    abstract protected function accessPrivilegeConfig(): ?PrivilegeNodeCollection;
+    abstract protected function accessPermissionConfig(): ?PermissionNodeCollection;
 }

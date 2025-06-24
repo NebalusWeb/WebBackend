@@ -85,7 +85,7 @@ class MySqlRoleRepository
     /**
      * @throws ApiException
      */
-    public function getAllPrivilegeLinksFromRoleId(RoleId $roleId): PrivilegeRoleLinkCollection
+    public function getAllPermissionLinksFromRoleId(RoleId $roleId): PrivilegeRoleLinkCollection
     {
         $sql = <<<SQL
             SELECT 

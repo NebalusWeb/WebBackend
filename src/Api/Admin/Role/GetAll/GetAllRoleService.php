@@ -6,7 +6,7 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
 
-class GetAllRoleService
+readonly class GetAllRoleService
 {
     public function __construct(
         private readonly GetAllRoleView $view,
