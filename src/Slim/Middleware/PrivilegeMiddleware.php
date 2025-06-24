@@ -7,7 +7,7 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\PrivilegesRepository\MySqlPrivilegeRepository;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
 use Nebalus\Webapi\Value\User\AccessControl\Privilege\PrivilegeRoleLinkIndex;
-use Nebalus\Webapi\Value\User\AccessControl\Role\SortedRoleCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Role\RoleSortedCollection;
 use Nebalus\Webapi\Value\User\User;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -18,8 +18,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 readonly class PrivilegeMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private MySqlRoleRepository $roleRepository,
-        private MySqlPrivilegeRepository $privilegeRepository,
+        private MySqlRoleRepository $roleRepository
     ) {
     }
 
@@ -34,13 +33,13 @@ readonly class PrivilegeMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
         $unsortedRoles = $this->roleRepository->getAllRolesFromUserId($user->getUserId());
-        $sortedRoles = SortedRoleCollection::fromRoleCollectionByAccessLevel($unsortedRoles);
-        $roleLinkCollections = [];
+        $sortedRoles = RoleSortedCollection::fromRoleCollectionByAccessLevel($unsortedRoles);
+        $sortedRoleLinkCollections = [];
         foreach ($sortedRoles as $role) {
-            $roleLinkCollections[] = $this->roleRepository->getAllPrivilegeLinksFromRoleId($role->getRoleId());
+            $sortedRoleLinkCollections[] = $this->roleRepository->getAllPrivilegeLinksFromRoleId($role->getRoleId());
         }
-        $privilegeIndex = PrivilegeRoleLinkIndex::fromPrivilegeRoleLinkCollections(...$roleLinkCollections);
-        $request = $request->withAttribute("userPrivilegeIndex", $privilegeIndex);
+        $userPrivilegeIndex = PrivilegeRoleLinkIndex::fromPrivilegeRoleLinkCollections(...$sortedRoleLinkCollections);
+        $request = $request->withAttribute("userPrivilegeIndex", $userPrivilegeIndex);
         return $handler->handle($request);
     }
 }

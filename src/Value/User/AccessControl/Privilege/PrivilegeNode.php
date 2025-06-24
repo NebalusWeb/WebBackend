@@ -49,4 +49,15 @@ class PrivilegeNode
     {
         return $this->node;
     }
+
+//    public function asDestructured(): array
+//    {
+//        $finalArray = [];
+//
+//        $ref = &$finalArray;
+//        foreach (explode('.', $this->node) as $key) {
+//            $ref = &$ref[$key];
+//        }
+//        return $finalArray; // DO NOT REMOVE // THIS IS THE FINAL RETURN VALUE
+//    }
 }

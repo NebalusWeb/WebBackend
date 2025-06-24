@@ -6,7 +6,7 @@ use Exception;
 use IteratorAggregate;
 use Traversable;
 
-class SortedRoleCollection implements IteratorAggregate
+class RoleSortedCollection implements IteratorAggregate
 {
     private array $roles;
 

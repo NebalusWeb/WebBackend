@@ -6,11 +6,11 @@ use Nebalus\Webapi\Exception\ApiException;
 
 class PrivilegeRoleLinkIndex
 {
-    private array $privilegeNodeIndex = [];
+    private array $privilegeNodeIndexList = [];
 
     private function __construct(array $privilegeNodeIndex)
     {
-        $this->privilegeNodeIndex = $privilegeNodeIndex;
+        $this->privilegeNodeIndexList = $privilegeNodeIndex;
     }
 
     /**
@@ -25,9 +25,7 @@ class PrivilegeRoleLinkIndex
             }
         }
 
-        $privilegeNodeIndex = $cache;
-
-        return new self($privilegeNodeIndex);
+        return new self($cache);
     }
 
     public static function fromObjects(PrivilegeRoleLink ...$privilegeRoleLinks): self
@@ -47,25 +45,20 @@ class PrivilegeRoleLinkIndex
     {
         $parts = explode('.', $node->asString());
         $currentNode = '';
-        $foundMatchWithStrictModeTurnedOff = false;
 
         foreach ($parts as $index => $part) {
             $currentNode = $index === 0 ? $part : "$currentNode.$part";
-            var_dump($currentNode);
-            if (isset($this->privilegeNodeIndex[$currentNode])) {
-                $privilegeMetadata = $this->privilegeNodeIndex[$currentNode];
+            if (isset($this->privilegeNodeIndexList[$currentNode])) {
+                $privilegeMetadata = $this->privilegeNodeIndexList[$currentNode];
                 if ($privilegeMetadata instanceof PrivilegeRoleLinkMetadata) {
                     if ($currentNode !== $node->asString() && $privilegeMetadata->affectsAllSubPrivileges()) {
                         return !$privilegeMetadata->isBlacklisted();
-                    }
-                    if ($strict === false && $privilegeMetadata->isBlacklisted() === false) {
-                        $foundMatchWithStrictModeTurnedOff = true;
                     }
                 }
             }
         }
 
-        $finalMetadata = $this->privilegeNodeIndex[$node->asString()] ?? null;
+        $finalMetadata = $this->privilegeNodeIndexList[$node->asString()] ?? null;
 
         if ($strict === false && $finalMetadata === null) {
             return $foundMatchWithStrictModeTurnedOff;
@@ -86,6 +79,6 @@ class PrivilegeRoleLinkIndex
 
     public function asArray(): array
     {
-        return $this->privilegeNodeIndex;
+        return $this->privilegeNodeIndexList;
     }
 }
