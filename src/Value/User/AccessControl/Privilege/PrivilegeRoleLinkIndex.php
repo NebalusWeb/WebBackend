@@ -40,8 +40,14 @@ class PrivilegeRoleLinkIndex
         return new self($privilegeNodeIndex);
     }
 
-    // TODO
-    public function hasAccess(PrivilegeNode $node, bool $strict): bool
+    /**
+     * Checks if the user has access to a specific privilege node.
+     * This method traverses the privilege node hierarchy to determine access.
+     * @param PrivilegeNode $node The privilege node to check access for.
+     * @param bool $strict If true, the method will only return true if the exact node is found.
+     * @throws ApiException
+     */
+    public function hasAccessTo(PrivilegeNode $node, bool $strict): bool
     {
         $parts = explode('.', $node->asString());
         $currentNode = '';
@@ -67,10 +73,10 @@ class PrivilegeRoleLinkIndex
         return $finalMetadata instanceof PrivilegeRoleLinkMetadata && !$finalMetadata->isBlacklisted();
     }
 
-    public function hasAccessToSomeNodes(PrivilegeNodeCollection $privilegeNodeCollection, bool $strict): bool
+    public function hasAccessToAtLeastOneNode(PrivilegeNodeCollection $privilegeNodeCollection, bool $strict): bool
     {
         foreach ($privilegeNodeCollection as $privilegeNode) {
-            if ($this->hasAccess($privilegeNode, $strict)) {
+            if ($this->hasAccessTo($privilegeNode, $strict)) {
                 return true;
             }
         }
