@@ -44,34 +44,48 @@ class UserPermissionIndex
      * Checks if the user has access to a specific privilege node.
      * This method traverses the privilege node hierarchy to determine access.
      * @param PermissionNode $node The privilege node to check access for.
-     * @param bool $strict If true, the method will only return true if the exact node is found.
      * @throws ApiException
      */
     public function hasAccessTo(PermissionAccess $permissionAccess): bool
     {
         $node = $permissionAccess->getNode()->asString();
         $parts = explode('.', $node);
-        $currentNode = '';
 
+        $triggerAccess = false;
+
+        $currentNode = '';
         foreach ($parts as $index => $part) {
             $currentNode = $index === 0 ? $part : "$currentNode.$part";
+
             if (isset($this->permissionNodeIndexList[$currentNode])) {
-                $privilegeMetadata = $this->permissionNodeIndexList[$currentNode];
-                if ($privilegeMetadata instanceof PermissionRoleLinkMetadata) {
-                    if ($currentNode !== $node && $privilegeMetadata->affectsAllSubPermissions()) {
-                        return !$privilegeMetadata->isBlacklisted();
+                $permissionMetadata = $this->permissionNodeIndexList[$currentNode];
+                if ($permissionMetadata instanceof PermissionRoleLinkMetadata) {
+                    if ($permissionMetadata->affectsAllSubPermissions() && $permissionMetadata->isBlacklisted() && $permissionAccess->isAllowAnywayIfBlacklisted() === false) {
+                        return false;
+                    }
+                    if ($permissionAccess->isAllowAccessWithSubPermission() && str_starts_with($currentNode, $permissionAccess->getNode()->asString())) {
+                        if ($permissionMetadata->hasValue() && $permissionAccess->hasValueRange()) {
+                            if ($permissionAccess->getValueRange()->isInRange($permissionMetadata->getValue()->asInt())) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    }
+                    if ($permissionMetadata->affectsAllSubPermissions() && $permissionMetadata->isBlacklisted() === false) {
+                        $triggerAccess = true;
                     }
                 }
             }
         }
-
         $finalMetadata = $this->permissionNodeIndexList[$node] ?? null;
+        if ($finalMetadata instanceof PermissionRoleLinkMetadata) {
 
-        if ($strict === false && $finalMetadata === null) {
-            return $foundMatchWithStrictModeTurnedOff;
         }
 
-        return $finalMetadata instanceof PermissionRoleLinkMetadata && !$finalMetadata->isBlacklisted();
+
+
+
+        return $finalMetadata instanceof PermissionRoleLinkMetadata && (($finalMetadata->isBlacklisted() === false || $permissionAccess->isAllowAnywayIfBlacklisted()) || ($triggerAccess && ($finalMetadata->isBlacklisted() || $permissionAccess->isAllowAnywayIfBlacklisted())));
     }
 
     /**

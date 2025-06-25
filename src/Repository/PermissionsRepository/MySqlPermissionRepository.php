@@ -25,7 +25,7 @@ readonly class MySqlPermissionRepository
         $sql = <<<SQL
             SELECT 
                 * 
-            FROM privileges
+            FROM permissions
         SQL;
 
         $stmt = $this->pdo->prepare($sql);
