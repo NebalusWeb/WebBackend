@@ -26,7 +26,7 @@ class CreateRoleAction extends AbstractAction
     protected function endpointAccessGuard(): PermissionAccessCollection
     {
         return PermissionAccessCollection::fromObjects(
-            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE_CREATE)
+            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE_CREATE, true)
         );
     }
 

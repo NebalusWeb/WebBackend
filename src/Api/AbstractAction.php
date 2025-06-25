@@ -27,7 +27,7 @@ abstract class AbstractAction
             $userPermissionIndex = $request->getAttribute('userPermissionIndex');
             if ($userPermissionIndex instanceof UserPermissionIndex) {
                 $endpointAccessGuard = $this->endpointAccessGuard();
-                if (is_null($endpointAccessGuard) === false && $userPermissionIndex->hasAccessToAtLeastOneNode($endpointAccessGuard, false) === false) {
+                if (is_null($endpointAccessGuard) === false && $userPermissionIndex->hasAccessToAtLeastOneNode($endpointAccessGuard) === false) {
                     $result = Result::createError("You do not have enough permissions to access this endpoint", StatusCodeInterface::STATUS_FORBIDDEN);
                     return $response->withJson($result->getPayload(), $result->getStatusCode());
                 }

@@ -25,7 +25,7 @@ class GetAllPermissionAction extends AbstractAction
     protected function endpointAccessGuard(): PermissionAccessCollection
     {
         return PermissionAccessCollection::fromObjects(
-            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE)
+            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE, true)
         );
     }
 

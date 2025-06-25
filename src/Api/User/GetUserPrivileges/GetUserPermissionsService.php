@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\User\GetUserPrivileges;
 
 use Nebalus\Webapi\Slim\ResultInterface;
 
-class GetUserPermissionsService
+readonly class GetUserPermissionsService
 {
     public function __construct(
         private GetUserPermissionsView $view,

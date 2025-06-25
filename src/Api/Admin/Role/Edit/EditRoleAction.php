@@ -26,7 +26,7 @@ class EditRoleAction extends AbstractAction
     protected function endpointAccessGuard(): PermissionAccessCollection
     {
         return PermissionAccessCollection::fromObjects(
-            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE_EDIT)
+            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE_EDIT, true)
         );
     }
 

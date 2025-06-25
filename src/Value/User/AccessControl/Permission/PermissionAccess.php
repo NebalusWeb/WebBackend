@@ -19,7 +19,7 @@ class PermissionAccess
      */
     public static function from(
         string $node,
-        bool $allowAccessWithSubPermission = true,
+        bool $allowAccessWithSubPermission = false,
         ?Range $valueRange = null
     ): self {
         return new self(PermissionNode::from($node), $allowAccessWithSubPermission, $valueRange);

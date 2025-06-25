@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nebalus\Webapi\Api\Module\Referral\Analytics\Click;
 
 use Nebalus\Webapi\Api\AbstractAction;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccessCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNodeCollection;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
@@ -17,9 +18,9 @@ class ClickReferralAction extends AbstractAction
     ) {
     }
 
-    protected function endpointAccessGuard(): PermissionNodeCollection
+    protected function endpointAccessGuard(): PermissionAccessCollection
     {
-        return PermissionNodeCollection::fromObjects();
+        return PermissionAccessCollection::fromObjects();
     }
 
     protected function execute(Request $request, Response $response, array $pathArgs): Response
