@@ -10,7 +10,6 @@ class PermissionAccess
     private function __construct(
         private readonly PermissionNode $node,
         private readonly bool $allowAccessWithSubPermission,
-        private readonly bool $allowAnywayIfBlacklisted,
         private readonly ?Range $valueRange
     ) {
     }
@@ -21,10 +20,9 @@ class PermissionAccess
     public static function from(
         string $node,
         bool $allowAccessWithSubPermission = true,
-        bool $allowAnywayIfBlacklisted = false,
         ?Range $valueRange = null
     ): self {
-        return new self(PermissionNode::from($node), $allowAccessWithSubPermission, $allowAnywayIfBlacklisted, $valueRange);
+        return new self(PermissionNode::from($node), $allowAccessWithSubPermission, $valueRange);
     }
 
     public function getNode(): PermissionNode
@@ -35,11 +33,6 @@ class PermissionAccess
     public function isAllowAccessWithSubPermission(): bool
     {
         return $this->allowAccessWithSubPermission;
-    }
-
-    public function isAllowAnywayIfBlacklisted(): bool
-    {
-        return $this->allowAnywayIfBlacklisted;
     }
 
     public function getValueRange(): ?Range

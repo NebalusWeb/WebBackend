@@ -40,12 +40,6 @@ class UserPermissionIndex
         return new self($privilegeNodeIndex);
     }
 
-    /**
-     * Checks if the user has access to a specific privilege node.
-     * This method traverses the privilege node hierarchy to determine access.
-     * @param PermissionNode $node The privilege node to check access for.
-     * @throws ApiException
-     */
     public function hasAccessTo(PermissionAccess $permissionAccess): bool
     {
         $node = $permissionAccess->getNode()->asString();

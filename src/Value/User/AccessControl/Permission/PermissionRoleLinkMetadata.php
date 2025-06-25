@@ -9,14 +9,13 @@ class PermissionRoleLinkMetadata implements JsonSerializable
 {
     private function __construct(
         private readonly bool $affectsAllSubPermissions,
-        private readonly bool $isBlacklisted,
         private readonly ?PermissionValue $value
     ) {
     }
 
-    public static function from(bool $affectsAllSubPermissions, bool $isBlacklisted, ?PermissionValue $value = null): self
+    public static function from(bool $affectsAllSubPermissions, ?PermissionValue $value = null): self
     {
-        return new self($affectsAllSubPermissions, $isBlacklisted, $value);
+        return new self($affectsAllSubPermissions, $value);
     }
 
     /**
@@ -26,7 +25,6 @@ class PermissionRoleLinkMetadata implements JsonSerializable
     {
         return new self(
             (bool) $data['affects_all_sub_permissions'],
-            (bool) $data['is_blacklisted'],
             isset($data['value']) ? PermissionValue::from($data['value']) : null
         );
     }
@@ -35,7 +33,6 @@ class PermissionRoleLinkMetadata implements JsonSerializable
     {
         return [
             "affects_all_sub_permissions" => $this->affectsAllSubPermissions,
-            "is_blacklisted" => $this->isBlacklisted,
             "value" => $this->value?->asInt(),
         ];
     }
@@ -48,11 +45,6 @@ class PermissionRoleLinkMetadata implements JsonSerializable
     public function affectsAllSubPermissions(): bool
     {
         return $this->affectsAllSubPermissions;
-    }
-
-    public function isBlacklisted(): bool
-    {
-        return $this->isBlacklisted;
     }
 
     public function hasValue(): bool
