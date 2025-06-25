@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 
 use Nebalus\Webapi\Exception\ApiException;
 
-class PermissionRoleLinkIndex
+class UserPermissionIndex
 {
     private array $permissionNodeIndexList = [];
 
@@ -47,9 +47,10 @@ class PermissionRoleLinkIndex
      * @param bool $strict If true, the method will only return true if the exact node is found.
      * @throws ApiException
      */
-    public function hasAccessTo(PermissionNode $node, bool $strict): bool
+    public function hasAccessTo(PermissionAccess $permissionAccess): bool
     {
-        $parts = explode('.', $node->asString());
+        $node = $permissionAccess->getNode()->asString();
+        $parts = explode('.', $node);
         $currentNode = '';
 
         foreach ($parts as $index => $part) {
@@ -57,14 +58,14 @@ class PermissionRoleLinkIndex
             if (isset($this->permissionNodeIndexList[$currentNode])) {
                 $privilegeMetadata = $this->permissionNodeIndexList[$currentNode];
                 if ($privilegeMetadata instanceof PermissionRoleLinkMetadata) {
-                    if ($currentNode !== $node->asString() && $privilegeMetadata->affectsAllSubPermissions()) {
+                    if ($currentNode !== $node && $privilegeMetadata->affectsAllSubPermissions()) {
                         return !$privilegeMetadata->isBlacklisted();
                     }
                 }
             }
         }
 
-        $finalMetadata = $this->permissionNodeIndexList[$node->asString()] ?? null;
+        $finalMetadata = $this->permissionNodeIndexList[$node] ?? null;
 
         if ($strict === false && $finalMetadata === null) {
             return $foundMatchWithStrictModeTurnedOff;
@@ -73,10 +74,13 @@ class PermissionRoleLinkIndex
         return $finalMetadata instanceof PermissionRoleLinkMetadata && !$finalMetadata->isBlacklisted();
     }
 
-    public function hasAccessToAtLeastOneNode(PermissionNodeCollection $privilegeNodeCollection, bool $strict): bool
+    /**
+     * @throws ApiException
+     */
+    public function hasAccessToAtLeastOneNode(PermissionAccessCollection $permissionAccessCollection): bool
     {
-        foreach ($privilegeNodeCollection as $privilegeNode) {
-            if ($this->hasAccessTo($privilegeNode, $strict)) {
+        foreach ($permissionAccessCollection as $permissionAccess) {
+            if ($this->hasAccessTo($permissionAccess)) {
                 return true;
             }
         }

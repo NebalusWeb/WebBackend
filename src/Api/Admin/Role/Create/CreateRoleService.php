@@ -10,8 +10,8 @@ use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 readonly class CreateRoleService
 {
     public function __construct(
-        private readonly MySqlRoleRepository $roleRepository,
-        private readonly CreateRoleView $view,
+        private MySqlRoleRepository $roleRepository,
+        private CreateRoleView $view,
     ) {
     }
 

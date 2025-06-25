@@ -10,6 +10,6 @@ class DeleteReferralView
 {
     public function render(): ResultInterface
     {
-        return Result::createSuccess("Referral deleted", StatusCodeInterface::STATUS_OK);
+        return Result::createSuccess("Referral Deleted", StatusCodeInterface::STATUS_OK);
     }
 }

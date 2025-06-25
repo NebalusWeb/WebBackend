@@ -17,7 +17,7 @@ class DeleteReferralAction extends AbstractAction
     ) {
     }
 
-    protected function accessPermissionConfig(): PermissionNodeCollection
+    protected function endpointAccessGuard(): PermissionNodeCollection
     {
         return PermissionNodeCollection::fromObjects();
     }

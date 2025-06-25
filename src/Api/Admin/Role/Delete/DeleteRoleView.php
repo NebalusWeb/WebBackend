@@ -10,6 +10,6 @@ class DeleteRoleView
 {
     public function render(): ResultInterface
     {
-        return Result::createSuccess("Role deleted", StatusCodeInterface::STATUS_OK);
+        return Result::createSuccess("Role Deleted", StatusCodeInterface::STATUS_OK);
     }
 }

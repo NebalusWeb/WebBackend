@@ -38,19 +38,19 @@ class Permission
      */
     public static function fromArray(array $value): self
     {
-        $privilegeId = PermissionId::from($value['privilege_id']);
+        $permissionId = PermissionId::from($value['permission_id']);
         $node = PermissionNode::from($value['node']);
         $description = PermissionDescription::from($value['description']);
         $isPrestige = (bool) $value['is_prestige'];
         $defaultValue = empty($value['default_value']) ? null : PermissionValue::from($value['default_value']);
 
-        return new self($privilegeId, $node, $description, $isPrestige, $defaultValue);
+        return new self($permissionId, $node, $description, $isPrestige, $defaultValue);
     }
 
     public function asArray(): array
     {
         return [
-            'privilege_id' => $this->permissionId->asInt(),
+            'permission_id' => $this->permissionId->asInt(),
             'node' => $this->node->asString(),
             'description' => $this->description->asString(),
             'is_prestige' => $this->isPrestige,

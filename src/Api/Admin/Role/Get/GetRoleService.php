@@ -12,8 +12,8 @@ use Nebalus\Webapi\Value\Result\Result;
 readonly class GetRoleService
 {
     public function __construct(
-        private readonly MySqlRoleRepository $roleRepository,
-        private readonly GetRoleView $view
+        private MySqlRoleRepository $roleRepository,
+        private GetRoleView $view
     ) {
     }
 

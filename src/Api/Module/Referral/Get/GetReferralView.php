@@ -20,6 +20,6 @@ class GetReferralView
             "updated_at" => $referral->getUpdatedAtDate()->format(DATE_ATOM),
         ];
 
-        return Result::createSuccess("Referral fetched", StatusCodeInterface::STATUS_OK, $fields);
+        return Result::createSuccess("Referral Fetched", StatusCodeInterface::STATUS_OK, $fields);
     }
 }

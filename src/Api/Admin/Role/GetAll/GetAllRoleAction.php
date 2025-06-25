@@ -5,6 +5,8 @@ namespace Nebalus\Webapi\Api\Admin\Role\GetAll;
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Api\PermissionNodesTypes;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccess;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccessCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNode;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNodeCollection;
 use Slim\Http\Response;
@@ -21,10 +23,10 @@ class GetAllRoleAction extends AbstractAction
     /**
      * @throws ApiException
      */
-    protected function accessPermissionConfig(): PermissionNodeCollection
+    protected function endpointAccessGuard(): PermissionAccessCollection
     {
-        return PermissionNodeCollection::fromObjects(
-            PermissionNode::from(PermissionNodesTypes::ADMIN_ROLE)
+        return PermissionAccessCollection::fromObjects(
+            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE)
         );
     }
 

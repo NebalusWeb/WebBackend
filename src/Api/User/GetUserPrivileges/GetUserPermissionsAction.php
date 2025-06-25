@@ -15,11 +15,6 @@ class GetUserPermissionsAction extends AbstractAction
     ) {
     }
 
-    protected function accessPermissionConfig(): ?PermissionNodeCollection
-    {
-        return null;
-    }
-
     /**
      * @inheritDoc
      */

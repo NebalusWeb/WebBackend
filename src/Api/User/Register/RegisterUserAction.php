@@ -16,11 +16,6 @@ class RegisterUserAction extends AbstractAction
     ) {
     }
 
-    protected function accessPermissionConfig(): ?PermissionNodeCollection
-    {
-        return null;
-    }
-
     /**
      * @throws ApiException
      */

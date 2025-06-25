@@ -17,11 +17,6 @@ class MetricsAction extends AbstractAction
     ) {
     }
 
-    protected function accessPermissionConfig(): null
-    {
-        return null;
-    }
-
     /**
      * @throws Throwable
      */

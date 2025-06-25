@@ -38,6 +38,6 @@ class GetRoleView
             $fields["permissions"] = $permissions;
         }
 
-        return Result::createSuccess("Role fetched", StatusCodeInterface::STATUS_OK, $fields);
+        return Result::createSuccess("Role Fetched", StatusCodeInterface::STATUS_OK, $fields);
     }
 }

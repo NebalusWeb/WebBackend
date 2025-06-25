@@ -20,6 +20,6 @@ class CreateReferralView
             "updated_at" => $referral->getUpdatedAtDate()->format(DATE_ATOM),
         ];
 
-        return Result::createSuccess("Referral created", StatusCodeInterface::STATUS_CREATED, $fields);
+        return Result::createSuccess("Referral Created", StatusCodeInterface::STATUS_CREATED, $fields);
     }
 }

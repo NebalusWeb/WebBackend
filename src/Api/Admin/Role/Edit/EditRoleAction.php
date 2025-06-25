@@ -5,6 +5,8 @@ namespace Nebalus\Webapi\Api\Admin\Role\Edit;
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Api\PermissionNodesTypes;
 use Nebalus\Webapi\Exception\ApiException;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccess;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccessCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNode;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNodeCollection;
 use Slim\Http\Response;
@@ -21,12 +23,13 @@ class EditRoleAction extends AbstractAction
     /**
      * @throws ApiException
      */
-    protected function accessPermissionConfig(): PermissionNodeCollection
+    protected function endpointAccessGuard(): PermissionAccessCollection
     {
-        return PermissionNodeCollection::fromObjects(
-            PermissionNode::from(PermissionNodesTypes::ADMIN_ROLE_EDIT)
+        return PermissionAccessCollection::fromObjects(
+            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE_EDIT)
         );
     }
+
 
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {

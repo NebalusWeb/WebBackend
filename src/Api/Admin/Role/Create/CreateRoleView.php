@@ -25,6 +25,6 @@ class CreateRoleView
             "updated_at" => $role->getUpdatedAtDate()->format(DATE_ATOM),
         ];
 
-        return Result::createSuccess("Role created", StatusCodeInterface::STATUS_CREATED, $fields);
+        return Result::createSuccess("Role Created", StatusCodeInterface::STATUS_CREATED, $fields);
     }
 }

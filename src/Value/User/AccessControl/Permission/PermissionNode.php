@@ -34,7 +34,7 @@ class PermissionNode
         $validData = $schema->safeParse($node);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid permission node: ' . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException('Invalid Permission Node: ' . $validData->getErrorMessage());
         }
 
         return new self($validData->getValue());

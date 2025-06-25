@@ -5,7 +5,7 @@ namespace Nebalus\Webapi\Slim\Middleware;
 use Exception;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
-use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLinkIndex;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleSortedCollection;
 use Nebalus\Webapi\Value\User\User;
 use Override;
@@ -37,7 +37,7 @@ readonly class PermissionMiddleware implements MiddlewareInterface
         foreach ($sortedRoles as $role) {
             $sortedRoleLinkCollections[] = $this->roleRepository->getAllPermissionLinksFromRoleId($role->getRoleId());
         }
-        $userPermissionIndex = PermissionRoleLinkIndex::fromPermissionRoleLinkCollections(...$sortedRoleLinkCollections);
+        $userPermissionIndex = UserPermissionIndex::fromPermissionRoleLinkCollections(...$sortedRoleLinkCollections);
         $request = $request->withAttribute("userPermissionIndex", $userPermissionIndex);
         return $handler->handle($request);
     }

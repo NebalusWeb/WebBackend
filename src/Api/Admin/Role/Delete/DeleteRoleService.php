@@ -13,8 +13,8 @@ use Nebalus\Webapi\Value\Result\Result;
 readonly class DeleteRoleService
 {
     public function __construct(
-        private readonly MySQlRoleRepository $roleRepository,
-        private readonly DeleteRoleView $view,
+        private MySQlRoleRepository $roleRepository,
+        private DeleteRoleView $view,
     ) {
     }
 

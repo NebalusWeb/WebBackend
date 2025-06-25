@@ -35,7 +35,7 @@ class PermissionDescription
         $validData = $schema->safeParse($description);
 
         if ($validData->isError()) {
-            throw new ApiInvalidArgumentException('Invalid permission description: ' . $validData->getErrorMessage());
+            throw new ApiInvalidArgumentException('Invalid Permission Description: ' . $validData->getErrorMessage());
         }
 
         return new self($validData->getValue());

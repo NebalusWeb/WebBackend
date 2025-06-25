@@ -13,18 +13,10 @@ use Slim\Http\ServerRequest as Request;
 
 class AuthUserAction extends AbstractAction
 {
-    /**
-     * @throws ApiException
-     */
     public function __construct(
         private readonly AuthUserValidator $validator,
         private readonly AuthUserService $service,
     ) {
-    }
-
-    protected function accessPermissionConfig(): null
-    {
-        return null;
     }
 
     /**
