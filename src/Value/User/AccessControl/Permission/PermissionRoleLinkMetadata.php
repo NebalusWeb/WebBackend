@@ -8,14 +8,14 @@ use Nebalus\Webapi\Exception\ApiException;
 class PermissionRoleLinkMetadata implements JsonSerializable
 {
     private function __construct(
-        private readonly bool $affectsAllSubPermissions,
+        private readonly bool $allowAllSubPermissions,
         private readonly ?PermissionValue $value
     ) {
     }
 
-    public static function from(bool $affectsAllSubPermissions, ?PermissionValue $value = null): self
+    public static function from(bool $allowAllSubPermissions, ?PermissionValue $value = null): self
     {
-        return new self($affectsAllSubPermissions, $value);
+        return new self($allowAllSubPermissions, $value);
     }
 
     /**
@@ -24,7 +24,7 @@ class PermissionRoleLinkMetadata implements JsonSerializable
     public static function fromArray(array $data): self
     {
         return new self(
-            (bool) $data['affects_all_sub_permissions'],
+            (bool) $data['allow_all_sub_permissions'],
             isset($data['value']) ? PermissionValue::from($data['value']) : null
         );
     }
@@ -32,7 +32,7 @@ class PermissionRoleLinkMetadata implements JsonSerializable
     public function asArray(): array
     {
         return [
-            "affects_all_sub_permissions" => $this->affectsAllSubPermissions,
+            "allow_all_sub_permissions" => $this->allowAllSubPermissions,
             "value" => $this->value?->asInt(),
         ];
     }
@@ -42,9 +42,9 @@ class PermissionRoleLinkMetadata implements JsonSerializable
         return $this->asArray();
     }
 
-    public function affectsAllSubPermissions(): bool
+    public function allowAllSubPermissions(): bool
     {
-        return $this->affectsAllSubPermissions;
+        return $this->allowAllSubPermissions;
     }
 
     public function hasValue(): bool

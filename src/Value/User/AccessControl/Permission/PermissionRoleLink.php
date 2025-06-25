@@ -12,9 +12,9 @@ class PermissionRoleLink
     ) {
     }
 
-    public static function from(PermissionNode $node, bool $affectsAllSubPermissions, bool $isBlacklisted, ?PermissionValue $value = null): self
+    public static function from(PermissionNode $node, bool $affectsAllSubPermissions, ?PermissionValue $value = null): self
     {
-        $metadata = PermissionRoleLinkMetadata::from($affectsAllSubPermissions, $isBlacklisted, $value);
+        $metadata = PermissionRoleLinkMetadata::from($affectsAllSubPermissions, $value);
         return new self($node, $metadata);
     }
 

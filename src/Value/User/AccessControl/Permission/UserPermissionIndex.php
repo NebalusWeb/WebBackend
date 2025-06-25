@@ -28,35 +28,16 @@ class UserPermissionIndex
         return new self($cache);
     }
 
-    public static function fromObjects(PermissionRoleLink ...$privilegeRoleLinks): self
-    {
-        $cache = [];
-        foreach ($privilegeRoleLinks as $privilegeRoleLink) {
-            $cache[$privilegeRoleLink->getNode()->asString()] = $privilegeRoleLink->getMetadata();
-        }
-
-        $privilegeNodeIndex = array_replace_recursive([], ...$cache);
-
-        return new self($privilegeNodeIndex);
-    }
-
     public function hasAccessTo(PermissionAccess $permissionAccess): bool
     {
         $node = $permissionAccess->getNode()->asString();
         $parts = explode('.', $node);
-
-        $triggerAccess = false;
-
         $currentNode = '';
         foreach ($parts as $index => $part) {
             $currentNode = $index === 0 ? $part : "$currentNode.$part";
-
-            if (isset($this->permissionNodeIndexList[$currentNode])) {
+            if (array_key_exists($currentNode, $this->permissionNodeIndexList)) {
                 $permissionMetadata = $this->permissionNodeIndexList[$currentNode];
                 if ($permissionMetadata instanceof PermissionRoleLinkMetadata) {
-                    if ($permissionMetadata->affectsAllSubPermissions() && $permissionMetadata->isBlacklisted() && $permissionAccess->isAllowAnywayIfBlacklisted() === false) {
-                        return false;
-                    }
                     if ($permissionAccess->isAllowAccessWithSubPermission() && str_starts_with($currentNode, $permissionAccess->getNode()->asString())) {
                         if ($permissionMetadata->hasValue() && $permissionAccess->hasValueRange()) {
                             if ($permissionAccess->getValueRange()->isInRange($permissionMetadata->getValue()->asInt())) {
@@ -64,27 +45,22 @@ class UserPermissionIndex
                             }
                             return false;
                         }
+                        return true;
                     }
-                    if ($permissionMetadata->affectsAllSubPermissions() && $permissionMetadata->isBlacklisted() === false) {
-                        $triggerAccess = true;
+                    if ($permissionMetadata->allowAllSubPermissions()) {
+                        return true;
                     }
                 }
             }
         }
-        $finalMetadata = $this->permissionNodeIndexList[$node] ?? null;
-        if ($finalMetadata instanceof PermissionRoleLinkMetadata) {
-
+        if ($permissionAccess->isAllowAccessWithSubPermission()) {
+            $keys = array_keys($this->permissionNodeIndexList);
+            $pattern = '/' . preg_quote($permissionAccess->getNode()->asString(), '/') . '/';
+            return count(preg_grep($pattern, $keys)) > 0;
         }
-
-
-
-
-        return $finalMetadata instanceof PermissionRoleLinkMetadata && (($finalMetadata->isBlacklisted() === false || $permissionAccess->isAllowAnywayIfBlacklisted()) || ($triggerAccess && ($finalMetadata->isBlacklisted() || $permissionAccess->isAllowAnywayIfBlacklisted())));
+        return false;
     }
 
-    /**
-     * @throws ApiException
-     */
     public function hasAccessToAtLeastOneNode(PermissionAccessCollection $permissionAccessCollection): bool
     {
         foreach ($permissionAccessCollection as $permissionAccess) {

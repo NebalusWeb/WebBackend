@@ -23,6 +23,7 @@ class EditRoleValidator extends AbstractValidator
     private RoleHexColor $roleColor;
     private RoleAccessLevel $accessLevel;
     private bool $appliesToEveryone;
+    private bool $disabled;
     private PermissionRoleLinkCollection $permissionRoleLinks;
 
     public function __construct()
@@ -42,7 +43,6 @@ class EditRoleValidator extends AbstractValidator
                     "node" => PermissionNode::getSchema(),
                     "value" => PermissionNode::getSchema()->optional()->nullable()->default(null),
                     "affects_all_sub_permissions" => S::boolean(),
-                    "is_blacklisted" => S::boolean(),
                 ])),
             ])
         ]));
@@ -56,12 +56,12 @@ class EditRoleValidator extends AbstractValidator
         $this->roleColor = RoleHexColor::from($bodyData["color"]);
         $this->accessLevel = RoleAccessLevel::from($bodyData["access_level"]);
         $this->appliesToEveryone = $bodyData["applies_to_everyone"];
+        $this->disabled = $bodyData["disabled"];
         $this->permissionRoleLinks = PermissionRoleLinkCollection::fromObjects(
             ...array_map(
                 fn(array $permission) => PermissionRoleLink::from(
                     PermissionNode::from($permission["node"]),
                     $permission["affects_all_sub_permissions"],
-                    $permission["is_blacklisted"],
                     isset($permission["value"]) ? PermissionValue::from($permission["value"]) : null
                 ),
                 $bodyData["permissions"]
@@ -97,6 +97,11 @@ class EditRoleValidator extends AbstractValidator
     public function appliesToEveryone(): bool
     {
         return $this->appliesToEveryone;
+    }
+
+    public function isDisabled(): bool
+    {
+        return $this->disabled;
     }
 
     public function getPermissionRoleLinks(): PermissionRoleLinkCollection

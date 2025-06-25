@@ -90,8 +90,7 @@ readonly class MySqlRoleRepository
             SELECT 
                 permissions.node AS node,
                 permissions.default_value AS default_value,
-                role_permission_map.affects_all_sub_permissions,
-                role_permission_map.is_blacklisted,
+                role_permission_map.allow_all_sub_permissions,
                 role_permission_map.value
             FROM `role_permission_map` 
                 INNER JOIN permissions 
