@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\Module\Referral\Analytics\Click;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Api\RequestParamTypes;
+use Nebalus\Webapi\Config\Types\RequestParamTypes;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 
 class ClickReferralValidator extends AbstractValidator

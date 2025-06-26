@@ -24,7 +24,7 @@ use Nebalus\Webapi\Api\Module\Referral\Edit\EditReferralAction;
 use Nebalus\Webapi\Api\Module\Referral\Get\GetReferralAction;
 use Nebalus\Webapi\Api\Module\Referral\GetAll\GetAllReferralAction;
 use Nebalus\Webapi\Api\User\Auth\AuthUserAction;
-use Nebalus\Webapi\Api\User\GetUserPrivileges\GetUserPermissionsAction;
+use Nebalus\Webapi\Api\User\GetUserPermissions\GetUserPermissionsAction;
 use Nebalus\Webapi\Api\User\Register\RegisterUserAction;
 use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;

@@ -4,7 +4,6 @@ namespace Nebalus\Webapi\Api\User\Register;
 
 use Nebalus\Webapi\Api\AbstractAction;
 use Nebalus\Webapi\Exception\ApiException;
-use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNodeCollection;
 use Slim\Http\Response as Response;
 use Slim\Http\ServerRequest as Request;
 

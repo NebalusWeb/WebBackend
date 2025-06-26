@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\Admin\Role\Create;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Api\RequestParamTypes;
+use Nebalus\Webapi\Config\Types\RequestParamTypes;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleAccessLevel;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleDescription;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleHexColor;

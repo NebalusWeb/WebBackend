@@ -24,7 +24,6 @@ class UserPermissionIndex
                 $cache[$privilegeRoleLink->getNode()->asString()] = $privilegeRoleLink->getMetadata();
             }
         }
-
         return new self($cache);
     }
 

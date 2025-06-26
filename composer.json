@@ -39,9 +39,9 @@
         "rbdwllr/reallysimplejwt": "^5.0",
         "spomky-labs/otphp": "^11.3.0",
         "promphp/prometheus_client_php": "^2.12",
-        "nebalus/sanitizr": "dev-dev",
         "elasticsearch/elasticsearch": "^9.0",
-        "latitude/latitude": "^4.2"
+        "latitude/latitude": "^4.2",
+        "nebalus/sanitizr": "dev-dev"
     },
     
     "autoload-dev": {

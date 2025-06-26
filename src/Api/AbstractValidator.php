@@ -4,6 +4,7 @@ namespace Nebalus\Webapi\Api;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Sanitizr\Schema\SanitizrObjectSchema;
+use Nebalus\Webapi\Config\Types\RequestParamTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Psr\Http\Message\ServerRequestInterface;

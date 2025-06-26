@@ -27,11 +27,11 @@ readonly class PermissionMiddleware implements MiddlewareInterface
      */
     #[Override] public function process(Request $request, RequestHandler $handler): Response
     {
-        $user = $request->getAttribute('user');
-        if ($user instanceof User === false) {
+        $requestingUser = $request->getAttribute('requestingUser');
+        if ($requestingUser instanceof User === false) {
             return $handler->handle($request);
         }
-        $unsortedRoles = $this->roleRepository->getAllRolesFromUserId($user->getUserId());
+        $unsortedRoles = $this->roleRepository->getAllRolesFromUserId($requestingUser->getUserId());
         $sortedRoles = RoleSortedCollection::fromRoleCollectionByAccessLevel($unsortedRoles);
         $sortedRoleLinkCollections = [];
         foreach ($sortedRoles as $role) {

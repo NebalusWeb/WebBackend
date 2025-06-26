@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\User\Register;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Api\RequestParamTypes;
+use Nebalus\Webapi\Config\Types\RequestParamTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Account\InvitationToken\PureInvitationToken;
 use Nebalus\Webapi\Value\User\UserEmail;

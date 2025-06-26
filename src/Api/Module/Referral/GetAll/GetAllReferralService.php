@@ -18,9 +18,9 @@ readonly class GetAllReferralService
     /**
      * @throws ApiException
      */
-    public function execute(User $user): ResultInterface
+    public function execute(User $requestingUser): ResultInterface
     {
-        $referrals = $this->referralRepository->getReferralsFromOwner($user->getUserId());
+        $referrals = $this->referralRepository->getReferralsFromOwner($requestingUser->getUserId());
         return $this->view->render($referrals);
     }
 }

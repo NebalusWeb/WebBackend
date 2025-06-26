@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\Admin\Role\Delete;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Api\RequestParamTypes;
+use Nebalus\Webapi\Config\Types\RequestParamTypes;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 
 class DeleteRoleValidator extends AbstractValidator

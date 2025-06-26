@@ -6,7 +6,6 @@ use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccessCollection;
-use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNodeCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 use Psr\Http\Message\ResponseInterface as ResponseInterface;
 use Slim\Http\Response as Response;

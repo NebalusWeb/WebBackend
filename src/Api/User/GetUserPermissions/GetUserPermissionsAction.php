@@ -1,9 +1,8 @@
 <?php
 
-namespace Nebalus\Webapi\Api\User\GetUserPrivileges;
+namespace Nebalus\Webapi\Api\User\GetUserPermissions;
 
 use Nebalus\Webapi\Api\AbstractAction;
-use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNodeCollection;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
 
@@ -21,7 +20,7 @@ class GetUserPermissionsAction extends AbstractAction
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);
-        $result = $this->service->execute($this->validator);
+        $result = $this->service->execute($this->validator, $request->getAttribute('requestingUser'), $request->getAttribute('userPermissionIndex'));
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

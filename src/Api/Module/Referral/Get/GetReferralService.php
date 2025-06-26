@@ -20,9 +20,9 @@ readonly class GetReferralService
     /**
      * @throws ApiException
      */
-    public function execute(GetReferralValidator $validator, User $user): ResultInterface
+    public function execute(GetReferralValidator $validator, User $requestingUser): ResultInterface
     {
-        $referral = $this->referralRepository->findReferralByCodeFromOwner($user->getUserId(), $validator->getReferralCode());
+        $referral = $this->referralRepository->findReferralByCodeFromOwner($requestingUser->getUserId(), $validator->getReferralCode());
 
         if ($referral === null) {
             return Result::createError('Referral not found', StatusCodeInterface::STATUS_NOT_FOUND);

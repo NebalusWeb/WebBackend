@@ -21,9 +21,9 @@ readonly class EditReferralService
     /**
      * @throws ApiException
      */
-    public function execute(EditReferralValidator $validator, User $user): ResultInterface
+    public function execute(EditReferralValidator $validator, User $requestingUser): ResultInterface
     {
-        $updatedReferral = $this->referralRepository->updateReferralFromOwner($user->getUserId(), $validator->getCode(), $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
+        $updatedReferral = $this->referralRepository->updateReferralFromOwner($requestingUser->getUserId(), $validator->getCode(), $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
 
         if ($updatedReferral instanceof Referral) {
             return $this->view->render($updatedReferral);

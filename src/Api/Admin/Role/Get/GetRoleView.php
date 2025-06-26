@@ -31,7 +31,9 @@ class GetRoleView
 
             foreach ($permissionRoleLinkCollection as $permissionRoleLink) {
                 $permissions[] = [
-
+                    "node" => $permissionRoleLink->getNode()->asString(),
+                    "allow_all_sub_permissions" => $permissionRoleLink->getMetadata()->allowAllSubPermissions(),
+                    "value" => $permissionRoleLink->getMetadata()->getValue()?->asInt(),
                 ];
             }
 

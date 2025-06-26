@@ -7,5 +7,11 @@ meta {
 put {
   url: {{protocol}}://{{host}}/ui/user/self/services/referrals/nSW1Oep4
   body: none
-  auth: inherit
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: {{auth_jwt}}
+  placement: header
 }

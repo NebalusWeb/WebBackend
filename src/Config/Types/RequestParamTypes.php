@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api;
+namespace Nebalus\Webapi\Config\Types;
 
 class RequestParamTypes
 {

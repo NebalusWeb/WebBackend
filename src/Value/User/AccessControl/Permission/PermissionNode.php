@@ -44,20 +44,4 @@ class PermissionNode
     {
         return $this->node;
     }
-
-//    public function isParentOf(PermissionNode $toCheckNode): bool
-//    {
-//        return str_starts_with($this->node, $toCheckNode->node);
-//    }
-
-//    public function asDestructured(): array
-//    {
-//        $finalArray = [];
-//
-//        $ref = &$finalArray;
-//        foreach (explode('.', $this->node) as $key) {
-//            $ref = &$ref[$key];
-//        }
-//        return $finalArray; // DO NOT REMOVE // THIS IS THE FINAL RETURN VALUE
-//    }
 }

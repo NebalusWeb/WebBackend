@@ -2,8 +2,6 @@
 
 namespace Nebalus\Webapi\Value;
 
-use Nebalus\Webapi\Exception\ApiException;
-
 class Range
 {
     private function __construct(

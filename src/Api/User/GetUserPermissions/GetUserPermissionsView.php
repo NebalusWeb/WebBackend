@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Api\User\GetUserPrivileges;
+namespace Nebalus\Webapi\Api\User\GetUserPermissions;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;

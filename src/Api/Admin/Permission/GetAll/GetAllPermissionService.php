@@ -20,7 +20,6 @@ readonly class GetAllPermissionService
     public function execute(): ResultInterface
     {
         $permissions = $this->permissionRepository->getAllPermissions();
-
         return $this->view->render($permissions);
     }
 }

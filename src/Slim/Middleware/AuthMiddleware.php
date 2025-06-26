@@ -74,7 +74,7 @@ readonly class AuthMiddleware implements MiddlewareInterface
             return $this->denyRequest("The JWT has expired");
         }
 
-        $request = $request->withAttribute("user", $user);
+        $request = $request->withAttribute("requestingUser", $user);
         $request = $request->withAttribute("authType", "jwt");
 
         return $handler->handle($request);

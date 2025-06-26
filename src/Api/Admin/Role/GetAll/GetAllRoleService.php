@@ -17,10 +17,9 @@ readonly class GetAllRoleService
     /**
      * @throws ApiException
      */
-    public function execute(GetAllRoleValidator $validator): ResultInterface
+    public function execute(): ResultInterface
     {
         $roles = $this->roleRepository->getAllRoles();
-
         return $this->view->render($roles);
     }
 }

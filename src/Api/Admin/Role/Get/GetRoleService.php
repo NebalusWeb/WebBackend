@@ -31,9 +31,9 @@ readonly class GetRoleService
 
         if ($validator->isWithPermissions()) {
             $privileges = $this->roleRepository->getAllPermissionLinksFromRoleId($validator->getRoleId());
-            return $this->view->render($role, $privileges, $validator->isWithPermissions());
+            return $this->view->render($role, $privileges);
         }
 
-        return $this->view->render($role, PrivilegeRoleLinkCollection::fromObjects(), $validator->isWithPermissions());
+        return $this->view->render($role);
     }
 }

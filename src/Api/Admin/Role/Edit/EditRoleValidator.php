@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Api\Admin\Role\Edit;
 
 use Nebalus\Sanitizr\Sanitizr as S;
 use Nebalus\Webapi\Api\AbstractValidator;
-use Nebalus\Webapi\Api\RequestParamTypes;
+use Nebalus\Webapi\Config\Types\RequestParamTypes;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNode;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLink;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLinkCollection;

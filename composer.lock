@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "49786a2150e10dae76f13b9241c85440",
+    "content-hash": "88fd4864d93a6957539899a1f1a27d12",
     "packages": [
         {
             "name": "elastic/transport",
@@ -725,12 +725,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Nebalus/Sanitizr.git",
-                "reference": "210b2424f47eb355d14032ef3ffe4655d4832f9c"
+                "reference": "3826457777290e580fd78dc1e57fc70aede08964"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Nebalus/Sanitizr/zipball/210b2424f47eb355d14032ef3ffe4655d4832f9c",
-                "reference": "210b2424f47eb355d14032ef3ffe4655d4832f9c",
+                "url": "https://api.github.com/repos/Nebalus/Sanitizr/zipball/3826457777290e580fd78dc1e57fc70aede08964",
+                "reference": "3826457777290e580fd78dc1e57fc70aede08964",
                 "shasum": ""
             },
             "require": {
@@ -761,7 +761,7 @@
                 "issues": "https://github.com/Nebalus/Sanitizr/issues",
                 "source": "https://github.com/Nebalus/Sanitizr/tree/dev"
             },
-            "time": "2025-04-14T21:45:47+00:00"
+            "time": "2025-06-25T18:03:48+00:00"
         },
         {
             "name": "nikic/fast-route",
