@@ -34,6 +34,15 @@ class PermissionRoleLink
         );
     }
 
+    public function asArray(): array
+    {
+        $cache = [
+            'node' => $this->node,
+        ];
+
+        return array_merge($cache, $this->metadata->asArray());
+    }
+
     public function getNode(): PermissionNode
     {
         return $this->node;

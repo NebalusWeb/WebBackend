@@ -5,17 +5,23 @@ namespace Nebalus\Webapi\Api\User\GetUserPermissions;
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
+use Nebalus\Webapi\Value\User\UserId;
 
 class GetUserPermissionsView
 {
-    public function render(): ResultInterface
+    public function render(UserId $userId, UserPermissionIndex $userPermissionIndex): ResultInterface
     {
-        return Result::createSuccess("Here the permissions for the requested user", StatusCodeInterface::STATUS_OK, [
-            "user_id" => 1,
-            "permissions" => [
-                "feature.referral.show_interface",
-                "feature.referral.create",
-            ]
-        ]);
+        $fields = [
+            "user_id" => $userId->asInt(),
+        ];
+
+        $permissions = array_map(function ($permission) {
+            return $permission->asArray();
+        }, $userPermissionIndex->asArray());
+
+        $fields["permissions"] = $permissions;
+
+        return Result::createSuccess("List of all permissions for the requested user", StatusCodeInterface::STATUS_OK, $fields);
     }
 }

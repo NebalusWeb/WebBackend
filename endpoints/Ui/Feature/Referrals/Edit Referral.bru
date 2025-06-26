@@ -5,8 +5,8 @@ meta {
 }
 
 put {
-  url: {{protocol}}://{{host}}/ui/user/self/services/referrals/nSW1Oep4
-  body: none
+  url: {{protocol}}://{{host}}/ui/user/self/services/referrals/UovRQ3H1
+  body: json
   auth: apikey
 }
 
@@ -14,4 +14,11 @@ auth:apikey {
   key: Authorization
   value: {{auth_jwt}}
   placement: header
+}
+
+body:json {
+  {
+    "url": "https://test.de",
+    "label": "test"
+  }
 }

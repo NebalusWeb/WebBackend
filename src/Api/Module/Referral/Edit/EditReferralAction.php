@@ -34,7 +34,9 @@ class EditReferralAction extends AbstractAction
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);
-        $result = $this->service->execute($this->validator, $request->getAttribute('requestingUser'));
+        $requestingUser = $request->getAttribute('requestingUser');
+        $userPermissionIndex = $request->getAttribute('userPermissionIndex');
+        $result = $this->service->execute($this->validator, $requestingUser, $userPermissionIndex);
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

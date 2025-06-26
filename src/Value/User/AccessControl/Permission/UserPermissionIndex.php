@@ -2,9 +2,11 @@
 
 namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 
+use IteratorAggregate;
 use Nebalus\Webapi\Exception\ApiException;
+use Traversable;
 
-class UserPermissionIndex
+class UserPermissionIndex implements IteratorAggregate
 {
     private array $permissionNodeIndexList = [];
 
@@ -73,5 +75,10 @@ class UserPermissionIndex
     public function asArray(): array
     {
         return $this->permissionNodeIndexList;
+    }
+
+    public function getIterator(): Traversable
+    {
+        yield from $this->permissionNodeIndexList;
     }
 }

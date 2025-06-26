@@ -2,14 +2,17 @@
 
 namespace Nebalus\Webapi\Repository\RoleRepository;
 
+use Exception;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLink;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLinkCollection;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
+use Nebalus\Webapi\Value\User\AccessControl\Role\RoleSortedCollection;
 use Nebalus\Webapi\Value\User\UserId;
 use PDO;
 
@@ -79,6 +82,21 @@ readonly class MySqlRoleRepository
         }
 
         return RoleCollection::fromObjects(...$data);
+    }
+
+    /**
+     * @throws ApiException
+     * @throws Exception
+     */
+    public function getPermissionIndexFromUserId(UserId $userId): UserPermissionIndex
+    {
+        $unsortedRoles = $this->getAllRolesFromUserId($userId);
+        $sortedRoles = RoleSortedCollection::fromRoleCollectionByAccessLevel($unsortedRoles);
+        $sortedRoleLinkCollections = [];
+        foreach ($sortedRoles as $role) {
+            $sortedRoleLinkCollections[] = $this->getAllPermissionLinksFromRoleId($role->getRoleId());
+        }
+        return UserPermissionIndex::fromPermissionRoleLinkCollections(...$sortedRoleLinkCollections);
     }
 
     /**

@@ -3,11 +3,14 @@
 namespace Nebalus\Webapi\Api\Module\Referral\Edit;
 
 use Fig\Http\Message\StatusCodeInterface;
+use Nebalus\Webapi\Config\Types\PermissionNodesTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Module\Referral\Referral;
 use Nebalus\Webapi\Value\Result\Result;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccess;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 use Nebalus\Webapi\Value\User\User;
 
 readonly class EditReferralService
@@ -21,8 +24,17 @@ readonly class EditReferralService
     /**
      * @throws ApiException
      */
-    public function execute(EditReferralValidator $validator, User $requestingUser): ResultInterface
+    public function execute(EditReferralValidator $validator, User $requestingUser, UserPermissionIndex $userPermissionIndex): ResultInterface
     {
+        if ($userPermissionIndex->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OTHER_EDIT))) {
+
+        }
+
+        $userId = $validator->getUserId();
+        if ($userId === null) {
+        }
+
+
         $updatedReferral = $this->referralRepository->updateReferralFromOwner($requestingUser->getUserId(), $validator->getCode(), $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
 
         if ($updatedReferral instanceof Referral) {

@@ -15,7 +15,7 @@ class GetUserPermissionsValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                "userId" => S::string()->equals("self")->or(S::number()->positive()),
+                "userId" => S::string()->equals("self")->or(UserId::getSchema()),
             ]),
         ]));
     }
@@ -28,10 +28,5 @@ class GetUserPermissionsValidator extends AbstractValidator
     public function getUserId(): ?UserId
     {
         return $this->userId;
-    }
-
-    public function isForSelfUser(): bool
-    {
-        return $this->userId === null;
     }
 }
