@@ -39,7 +39,6 @@ class PermissionRoleLink
         $cache = [
             'node' => $this->node,
         ];
-
         return array_merge($cache, $this->metadata->asArray());
     }
 

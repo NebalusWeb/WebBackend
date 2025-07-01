@@ -23,6 +23,13 @@ class UserPermissionIndex implements IteratorAggregate
         $cache = [];
         foreach ($privilegeRoleLinkCollections as $privilegeRoleLinkCollection) {
             foreach ($privilegeRoleLinkCollection as $privilegeRoleLink) {
+//                var_dump($privilegeRoleLink->getMetadata()->getValue()->asInt());
+//                if (key_exists($privilegeRoleLink->getNode()->asString(), $cache)) {
+//                    $currentMetadata = $cache[$privilegeRoleLink->getNode()->asString()];
+//                    if ($currentMetadata->hasValue() && !$privilegeRoleLink->getMetadata()->hasValue()) {
+//                        continue;
+//                    }
+//                }
                 $cache[$privilegeRoleLink->getNode()->asString()] = $privilegeRoleLink->getMetadata();
             }
         }
