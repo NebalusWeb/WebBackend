@@ -33,7 +33,8 @@ class DeleteReferralAction extends AbstractAction
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);
-        $result = $this->service->execute($this->validator, $request->getAttribute('requestingUser'));
+        $requestingUser = $request->getAttribute('requestingUser');
+        $result = $this->service->execute($this->validator, $requestingUser);
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }
