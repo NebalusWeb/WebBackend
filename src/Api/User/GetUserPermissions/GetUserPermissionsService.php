@@ -2,11 +2,9 @@
 
 namespace Nebalus\Webapi\Api\User\GetUserPermissions;
 
-use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
-use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 use Nebalus\Webapi\Value\User\User;
 
@@ -25,7 +23,7 @@ readonly class GetUserPermissionsService
     {
         $userId = $validator->getUserId();
 
-        if ($userId === null) {
+        if ($userId === null || $userId === $requestingUser->getUserId()) {
             return $this->view->render($requestingUser->getUserId(), $userPermissionIndex);
         }
 

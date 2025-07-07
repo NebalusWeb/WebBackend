@@ -9,7 +9,6 @@ use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionCollection;
 
 class GetAllPermissionView
 {
-
     public function render(PermissionCollection $permissionCollection): ResultInterface
     {
         $fields = [];

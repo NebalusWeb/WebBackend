@@ -16,6 +16,9 @@ class ClickReferralAction extends AbstractAction
     ) {
     }
 
+    /*
+     * NOTE: This Endpoint does not need an permission to execute, because everybody should should be able to execute this
+     */
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);

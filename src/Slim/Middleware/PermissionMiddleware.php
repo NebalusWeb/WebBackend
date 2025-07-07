@@ -5,8 +5,6 @@ namespace Nebalus\Webapi\Slim\Middleware;
 use Exception;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
-use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
-use Nebalus\Webapi\Value\User\AccessControl\Role\RoleSortedCollection;
 use Nebalus\Webapi\Value\User\User;
 use Override;
 use Psr\Http\Message\ResponseInterface as Response;

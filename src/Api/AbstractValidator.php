@@ -21,12 +21,12 @@ abstract class AbstractValidator
     /**
      * @throws ApiException
      */
-    public function validate(ServerRequestInterface $request, array $rawPathArgs = []): void
+    public function validate(ServerRequestInterface $request, array $pathArgs = []): void
     {
         $validData = $this->validationSchema->safeParse([
             RequestParamTypes::BODY => json_decode($request->getBody()->getContents(), true, self::MAX_RECURSION) ?? [],
             RequestParamTypes::QUERY_PARAMS => $request->getQueryParams() ?? [],
-            RequestParamTypes::PATH_ARGS => $rawPathArgs,
+            RequestParamTypes::PATH_ARGS => $pathArgs,
         ]);
 
         if ($validData->isError()) {
