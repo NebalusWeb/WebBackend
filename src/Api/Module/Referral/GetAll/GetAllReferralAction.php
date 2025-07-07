@@ -26,7 +26,7 @@ class GetAllReferralAction extends AbstractAction
     {
         return PermissionAccessCollection::fromObjects(
             PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OWN, true),
-            PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OTHER_SEE, true),
+            PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OTHER, true),
         );
     }
 

@@ -72,8 +72,6 @@ readonly class MySqlUserRepository
             SELECT 
                 * 
             FROM users
-            INNER JOIN 
-                accounts ON accounts.user_id = users.user_id 
             WHERE 
                 users.user_id = :user_id
         SQL;
@@ -99,8 +97,6 @@ readonly class MySqlUserRepository
             SELECT 
                 * 
             FROM users 
-            INNER JOIN 
-                accounts ON accounts.user_id = users.user_id
             WHERE
                 users.email = :email
         SQL;
@@ -126,8 +122,6 @@ readonly class MySqlUserRepository
             SELECT
                 * 
             FROM users
-            INNER JOIN 
-                accounts ON accounts.user_id = users.user_id 
             WHERE 
                 users.username = :username
         SQL;

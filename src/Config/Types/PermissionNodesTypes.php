@@ -21,5 +21,4 @@ class PermissionNodesTypes
     public const string FEATURE_REFERRAL_OTHER = 'feature.referral.other';
     public const string FEATURE_REFERRAL_OTHER_DELETE = 'feature.referral.other.delete';
     public const string FEATURE_REFERRAL_OTHER_EDIT = 'feature.referral.other.edit';
-    public const string FEATURE_REFERRAL_OTHER_SEE = 'feature.referral.other.see';
 }
