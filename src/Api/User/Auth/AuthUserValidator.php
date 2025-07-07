@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Api\User\Auth;
 
-use Nebalus\Sanitizr\Sanitizr as S;
+use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Config\Types\RequestParamTypes;
 use Nebalus\Webapi\Value\User\Totp\TOTPCode;
