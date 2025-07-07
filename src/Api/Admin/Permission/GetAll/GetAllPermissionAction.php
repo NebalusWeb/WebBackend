@@ -17,16 +17,6 @@ class GetAllPermissionAction extends AbstractAction
     ) {
     }
 
-    /**
-     * @throws ApiException
-     */
-    protected function endpointAccessGuard(): PermissionAccessCollection
-    {
-        return PermissionAccessCollection::fromObjects(
-            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE, true)
-        );
-    }
-
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $userPerms = $request->getAttribute('userPermissionIndex');
