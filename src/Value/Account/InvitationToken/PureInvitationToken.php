@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\Account\InvitationToken;
 
-use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
@@ -21,7 +21,7 @@ class PureInvitationToken
 
     protected static function defineSchema(): AbstractSanitizrSchema
     {
-        return Sanitizr::string()->regex(PureInvitationToken::REGEX);
+        return S::string()->regex(PureInvitationToken::REGEX);
     }
 
     public static function create(): self

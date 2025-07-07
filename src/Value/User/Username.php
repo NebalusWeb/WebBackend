@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User;
 
-use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
@@ -23,7 +23,7 @@ class Username
 
     protected static function defineSchema(): AbstractSanitizrSchema
     {
-        return Sanitizr::string()->min(self::MIN_LENGTH)->max(self::MAX_LENGTH)->regex(self::REGEX);
+        return S::string()->min(self::MIN_LENGTH)->max(self::MAX_LENGTH)->regex(self::REGEX);
     }
 
     /**

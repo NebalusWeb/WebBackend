@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\Module\Referral;
 
-use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
@@ -22,7 +22,7 @@ class ReferralCode
 
     protected static function defineSchema(): AbstractSanitizrSchema
     {
-        return Sanitizr::string()->length(self::LENGTH)->regex(self::REGEX);
+        return S::string()->length(self::LENGTH)->regex(self::REGEX);
     }
 
     public static function create(): self

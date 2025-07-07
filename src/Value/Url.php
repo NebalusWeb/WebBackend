@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value;
 
-use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
@@ -18,7 +18,7 @@ class Url
 
     protected static function defineSchema(): AbstractSanitizrSchema
     {
-        return Sanitizr::string()->url();
+        return S::string()->url();
     }
 
     /**

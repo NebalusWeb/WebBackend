@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User;
 
-use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
@@ -20,7 +20,7 @@ class UserAgent
 
     protected static function defineSchema(): AbstractSanitizrSchema
     {
-        return Sanitizr::string()->regex(self::REGEX);
+        return S::string()->regex(self::REGEX);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 
-use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
@@ -19,7 +19,7 @@ class PermissionValue
 
     public static function defineSchema(): AbstractSanitizrSchema
     {
-        return Sanitizr::number()->integer();
+        return S::number()->integer();
     }
 
     /**

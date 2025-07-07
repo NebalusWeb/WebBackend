@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value\User\AccessControl\Role;
 
-use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
@@ -21,7 +21,7 @@ class RoleHexColor
 
     protected static function defineSchema(): AbstractSanitizrSchema
     {
-        return Sanitizr::string()->length(self::LENGTH, "Is not a valid hex color code")->regex(self::REGEX, "Is not a valid hex color code");
+        return S::string()->length(self::LENGTH, "Is not a valid hex color code")->regex(self::REGEX, "Is not a valid hex color code");
     }
 
     /**

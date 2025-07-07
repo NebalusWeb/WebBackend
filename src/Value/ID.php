@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Value;
 
-use Nebalus\Sanitizr\Sanitizr;
+use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
 use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
@@ -19,7 +19,7 @@ trait ID
 
     public static function defineSchema(): AbstractSanitizrSchema
     {
-        return Sanitizr::number()->integer()->positive();
+        return S::number()->integer()->positive();
     }
 
     /**
