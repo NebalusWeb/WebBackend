@@ -8,7 +8,7 @@ use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class PureInvitationToken
+class InvitationTokenValue
 {
     use SanitizrValueObjectTrait;
 
@@ -21,7 +21,7 @@ class PureInvitationToken
 
     protected static function defineSchema(): AbstractSanitizrSchema
     {
-        return S::string()->regex(PureInvitationToken::REGEX);
+        return S::string()->regex(InvitationTokenValue::REGEX);
     }
 
     public static function create(): self

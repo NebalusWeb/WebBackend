@@ -17,8 +17,10 @@ class GetPermissionAction extends AbstractAction
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);
-        $userPermissionIndex = $request->getAttribute('userPermissionIndex');
-        $result = $this->service->execute($this->validator, $userPermissionIndex);
+
+        $userPerms = $request->getAttribute('userPermissionIndex');
+        $result = $this->service->execute($this->validator, $userPerms);
+
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

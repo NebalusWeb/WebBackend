@@ -27,12 +27,11 @@ class GetAllPermissionAction extends AbstractAction
         );
     }
 
-    /**
-     *
-     */
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
-        $result = $this->service->execute();
+        $userPerms = $request->getAttribute('userPermissionIndex');
+        $result = $this->service->execute($userPerms);
+
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

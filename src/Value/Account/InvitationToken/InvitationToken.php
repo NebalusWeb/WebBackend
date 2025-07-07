@@ -15,7 +15,7 @@ class InvitationToken
     private function __construct(
         private readonly AccountId $ownerId,
         private readonly ?AccountId $invitedId,
-        private readonly PureInvitationToken $pureInvitationToken,
+        private readonly InvitationTokenValue $invitationTokenValue,
         private readonly DateTimeImmutable $createdAtDate,
         private readonly ?DateTimeImmutable $usedAtDate
     ) {
@@ -24,7 +24,7 @@ class InvitationToken
     public static function from(
         AccountId $ownerId,
         ?AccountId $invitedId,
-        PureInvitationToken $pureInvitationToken,
+        InvitationTokenValue $pureInvitationToken,
         DateTimeImmutable $creationTimestamp,
         ?DateTimeImmutable $usedTimestamp
     ): self {
@@ -51,7 +51,7 @@ class InvitationToken
 
         $ownerId = AccountId::from($data['owner_id']);
         $invitedId = empty($data['invited_id']) ? null : AccountId::from($data['invited_id']);
-        $pureInvitationToken = PureInvitationToken::from($data['token']);
+        $pureInvitationToken = InvitationTokenValue::from($data['token']);
 
         return new self($ownerId, $invitedId, $pureInvitationToken, $createdAtDate, $usedAtDate);
     }
@@ -70,7 +70,7 @@ class InvitationToken
 
         $ownerId = AccountId::from($data['owner_id']);
         $invitedId = empty($data['invited_id']) ? null : AccountId::from($data['invited_id']);
-        $pureInvitationToken = PureInvitationToken::from($data['pure_invitation_token']);
+        $pureInvitationToken = InvitationTokenValue::from($data['pure_invitation_token']);
 
         return new self($ownerId, $invitedId, $pureInvitationToken, $createdAtDate, $usedAtDate);
     }
@@ -80,7 +80,7 @@ class InvitationToken
         return [
             'owner_id' => $this->ownerId->asInt(),
             'invited_id' => $this->invitedId->asInt(),
-            'pure_invitation_token' => $this->pureInvitationToken->asString(),
+            'pure_invitation_token' => $this->invitationTokenValue->asString(),
             "created_at" => $this->createdAtDate->format(DATE_ATOM),
             "used_at" => $this->usedAtDate->format(DATE_ATOM),
         ];
@@ -96,9 +96,9 @@ class InvitationToken
         return $this->invitedId;
     }
 
-    public function getPureInvitationToken(): PureInvitationToken
+    public function getInvitationTokenValue(): InvitationTokenValue
     {
-        return $this->pureInvitationToken;
+        return $this->invitationTokenValue;
     }
 
     public function getCreatedAtDate(): DateTimeImmutable
@@ -113,7 +113,7 @@ class InvitationToken
 
     public function setInvitedId(AccountId $newInvitedAccountId): self
     {
-        return new self($this->ownerId, $newInvitedAccountId, $this->pureInvitationToken, $this->createdAtDate, new DateTimeImmutable());
+        return new self($this->ownerId, $newInvitedAccountId, $this->invitationTokenValue, $this->createdAtDate, new DateTimeImmutable());
     }
 
     public function isExpired(): bool

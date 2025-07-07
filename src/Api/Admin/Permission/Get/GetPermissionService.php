@@ -24,18 +24,18 @@ readonly class GetPermissionService
      * @throws ApiInvalidArgumentException
      * @throws ApiException
      */
-    public function execute(GetPermissionValidator $validator, UserPermissionIndex $userPermissionIndex): ResultInterface
+    public function execute(GetPermissionValidator $validator, UserPermissionIndex $userPerms): ResultInterface
     {
-        if ($userPermissionIndex->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE, true)) === false) {
+        if ($userPerms->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE, true)) === false) {
             return Result::createError("You do not have enough permissions to access this resource", StatusCodeInterface::STATUS_FORBIDDEN);
         }
 
-        $permission = $this->permissionRepository->findPermissionByPermissionId($validator->getPermissionId());
+        $requestedPermission = $this->permissionRepository->findPermissionByPermissionId($validator->getPermissionId());
 
-        if ($permission === null) {
+        if ($requestedPermission === null) {
             return Result::createError("Permission not found", StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        return $this->view->render($permission);
+        return $this->view->render($requestedPermission);
     }
 }
