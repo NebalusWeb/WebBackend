@@ -11,8 +11,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractValidator
 {
-    public const int MAX_RECURSION = 10;
-
     protected function __construct(
         private readonly SanitizrObjectSchema $validationSchema
     ) {

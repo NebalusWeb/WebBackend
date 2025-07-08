@@ -5,9 +5,14 @@ meta {
 }
 
 delete {
-  url: {{protocol}}://{{host}}/ui/user/self/services/referrals/nSW1Oep4
+  url: {{protocol}}://{{host}}/ui/user/:userId/services/referrals/:code
   body: none
   auth: apikey
+}
+
+params:path {
+  code: nSW1Oep4
+  userId: self
 }
 
 auth:apikey {

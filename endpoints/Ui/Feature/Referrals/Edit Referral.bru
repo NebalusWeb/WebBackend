@@ -5,9 +5,14 @@ meta {
 }
 
 put {
-  url: {{protocol}}://{{host}}/ui/user/self/services/referrals/UovRQ3H1
+  url: {{protocol}}://{{host}}/ui/user/:userId/services/referrals/:code
   body: json
   auth: apikey
+}
+
+params:path {
+  code: UovRQ3H1
+  userId: self
 }
 
 auth:apikey {

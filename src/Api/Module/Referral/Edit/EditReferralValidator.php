@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Api\Module\Referral\Edit;
 use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Config\Types\RequestParamTypes;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Module\Referral\ReferralLabel;
 use Nebalus\Webapi\Value\Url;
@@ -33,6 +34,10 @@ class EditReferralValidator extends AbstractValidator
         ]));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
+     */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->userId = isset($pathArgsData["userId"]) && $pathArgsData["userId"] === "self" ? null : UserId::from($pathArgsData["userId"]);

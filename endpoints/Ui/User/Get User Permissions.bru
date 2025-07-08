@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: {{protocol}}://{{host}}/ui/user/self/permissions
+  url: {{protocol}}://{{host}}/ui/user/:userId/permissions
   body: none
   auth: apikey
+}
+
+params:path {
+  userId: self
 }
 
 auth:apikey {

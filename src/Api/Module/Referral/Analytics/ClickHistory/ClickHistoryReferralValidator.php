@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Api\Module\Referral\Analytics\ClickHistory;
 use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Config\Types\RequestParamTypes;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 use Nebalus\Webapi\Value\User\UserId;
 
@@ -27,6 +28,10 @@ class ClickHistoryReferralValidator extends AbstractValidator
         ]));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
+     */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->referralCode = ReferralCode::from($pathArgsData['code']);

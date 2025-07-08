@@ -5,9 +5,13 @@ meta {
 }
 
 delete {
-  url: {{protocol}}://{{host}}/ui/admin/role/1
+  url: {{protocol}}://{{host}}/ui/admin/role/:roleId
   body: none
   auth: apikey
+}
+
+params:path {
+  roleId: 1
 }
 
 auth:apikey {

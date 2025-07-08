@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Api\Module\Referral\Delete;
 use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Config\Types\RequestParamTypes;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 
 class DeleteReferralValidator extends AbstractValidator
@@ -20,6 +21,10 @@ class DeleteReferralValidator extends AbstractValidator
         ]));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
+     */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->referralCode = ReferralCode::from($pathArgsData['code']);

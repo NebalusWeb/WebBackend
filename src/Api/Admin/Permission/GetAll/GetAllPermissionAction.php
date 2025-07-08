@@ -13,10 +13,14 @@ use Slim\Http\ServerRequest as Request;
 class GetAllPermissionAction extends AbstractAction
 {
     public function __construct(
-        private GetAllPermissionService $service,
+        private readonly GetAllPermissionService $service,
     ) {
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
+     */
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $userPerms = $request->getAttribute('userPermissionIndex');

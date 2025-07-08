@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Api\User\GetUserPermissions;
 use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Config\Types\RequestParamTypes;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\User\UserId;
 
 class GetUserPermissionsValidator extends AbstractValidator
@@ -20,6 +21,10 @@ class GetUserPermissionsValidator extends AbstractValidator
         ]));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
+     */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->userId = isset($pathArgsData["userId"]) && $pathArgsData["userId"] === "self" ? null : UserId::from($pathArgsData["userId"]);

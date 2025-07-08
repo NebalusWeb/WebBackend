@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Api\Admin\Permission\Get;
 
 use Nebalus\Webapi\Api\AbstractAction;
+use Nebalus\Webapi\Exception\ApiException;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
 
@@ -13,9 +14,10 @@ class GetPermissionAction extends AbstractAction
         private readonly GetPermissionValidator $validator
     ) {
     }
-    
-     /**
+
+    /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
      */
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {

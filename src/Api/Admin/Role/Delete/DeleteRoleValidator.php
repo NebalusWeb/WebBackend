@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Api\Admin\Role\Delete;
 use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Config\Types\RequestParamTypes;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 
 class DeleteRoleValidator extends AbstractValidator
@@ -19,6 +20,10 @@ class DeleteRoleValidator extends AbstractValidator
         ]));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
+     */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->roleId = RoleId::from($pathArgsData["roleId"]);

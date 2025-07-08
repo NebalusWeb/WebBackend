@@ -5,9 +5,13 @@ meta {
 }
 
 put {
-  url: {{protocol}}://{{host}}/ui/admin/role/5
+  url: {{protocol}}://{{host}}/ui/admin/role/:roleId
   body: json
   auth: apikey
+}
+
+params:path {
+  roleId: 5
 }
 
 auth:apikey {

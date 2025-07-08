@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: {{protocol}}://{{host}}/ui/admin/permission/4
+  url: {{protocol}}://{{host}}/ui/admin/permission/:permissionId
   body: none
   auth: apikey
+}
+
+params:path {
+  permissionId: 4
 }
 
 auth:apikey {

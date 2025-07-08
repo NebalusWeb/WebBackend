@@ -4,7 +4,7 @@ namespace Nebalus\Webapi\Value\User;
 
 use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Sanitizr\Schema\AbstractSanitizrSchema;
-use Nebalus\Sanitizr\Value\SanitizrValueObjectTrait;
+use Nebalus\Sanitizr\Trait\SanitizrValueObjectTrait;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
 class UserAgent

@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Api\Admin\Role\Get;
 use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Config\Types\RequestParamTypes;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleId;
 
 class GetRoleValidator extends AbstractValidator
@@ -18,11 +19,15 @@ class GetRoleValidator extends AbstractValidator
                 "roleId" => RoleId::getSchema(),
             ]),
             RequestParamTypes::BODY => S::object([
-                "with_permissions" => S::boolean()->optional()->default(false),
+                "with_permissions" => S::boolean()->default(false),
             ])
         ]));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
+     */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->roleId = RoleId::from($pathArgsData["roleId"]);

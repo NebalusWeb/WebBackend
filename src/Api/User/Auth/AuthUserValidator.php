@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Api\User\Auth;
 use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Config\Types\RequestParamTypes;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\User\Totp\TOTPCode;
 use Nebalus\Webapi\Value\User\Username;
 use Nebalus\Webapi\Value\User\UserPassword;
@@ -22,18 +23,22 @@ class AuthUserValidator extends AbstractValidator
             RequestParamTypes::BODY => S::object([
                 'username' => Username::getSchema(),
                 'password' => UserPassword::getSchema(),
-                'remember_me' => S::boolean()->optional()->default(true),
-                'totp' => TOTPCode::getSchema()->optional()->nullable(),
+                'remember_me' => S::boolean()->default(false),
+                'totp' => TOTPCode::getSchema()->optional(),
             ])
         ]));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
+     */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->username = Username::from($bodyData['username']);
         $this->password = $bodyData['password'];
         $this->rememberMe = $bodyData['remember_me'];
-        $this->TOTPCode = is_null($bodyData['totp']) ? null : TOTPCode::from($bodyData['totp']);
+        $this->TOTPCode = array_key_exists("totp", $bodyData) ? TOTPCode::from($bodyData['totp']) : null;
     }
 
     public function getUsername(): Username

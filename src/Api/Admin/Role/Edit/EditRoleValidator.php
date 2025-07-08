@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Api\Admin\Role\Edit;
 use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Config\Types\RequestParamTypes;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionNode;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLink;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLinkCollection;
@@ -34,25 +35,29 @@ class EditRoleValidator extends AbstractValidator
             ]),
             RequestParamTypes::BODY => S::object([
                 "name" => RoleName::getSchema(),
-                "description" => RoleDescription::getSchema()->nullable()->optional(),
+                "description" => RoleDescription::getSchema()->nullable(),
                 "color" => RoleHexColor::getSchema(),
                 "access_level" => RoleAccessLevel::getSchema(),
                 "applies_to_everyone" => S::boolean(),
                 "disabled" => S::boolean(),
                 "permissions" => S::array(S::object([
                     "node" => PermissionNode::getSchema(),
-                    "value" => PermissionNode::getSchema()->optional()->nullable()->default(null),
+                    "value" => PermissionNode::getSchema()->nullable()->default(null),
                     "affects_all_sub_permissions" => S::boolean(),
                 ])),
             ])
         ]));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
+     */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->roleId = RoleId::from($pathArgsData["roleId"]);
         $this->roleName = RoleName::from($bodyData["name"]);
-        $this->roleDescription = isset($bodyData["description"]) ? RoleDescription::from($bodyData["description"]) : null;
+        $this->roleDescription = array_key_exists("description", $bodyData) ? RoleDescription::from($bodyData["description"]) : null;
         $this->roleColor = RoleHexColor::from($bodyData["color"]);
         $this->accessLevel = RoleAccessLevel::from($bodyData["access_level"]);
         $this->appliesToEveryone = $bodyData["applies_to_everyone"];
@@ -62,7 +67,7 @@ class EditRoleValidator extends AbstractValidator
                 fn(array $permission) => PermissionRoleLink::from(
                     PermissionNode::from($permission["node"]),
                     $permission["affects_all_sub_permissions"],
-                    isset($permission["value"]) ? PermissionValue::from($permission["value"]) : null
+                    array_key_exists("value", $bodyData) ? PermissionValue::from($permission["value"]) : null
                 ),
                 $bodyData["permissions"]
             )

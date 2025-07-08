@@ -5,6 +5,7 @@ namespace Nebalus\Webapi\Api\Admin\Permission\Get;
 use Nebalus\Sanitizr\SanitizrStatic as S;
 use Nebalus\Webapi\Api\AbstractValidator;
 use Nebalus\Webapi\Config\Types\RequestParamTypes;
+use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionId;
 
 class GetPermissionValidator extends AbstractValidator
@@ -21,6 +22,7 @@ class GetPermissionValidator extends AbstractValidator
 
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
      */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {

@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: {{protocol}}://{{host}}/services/referral/djssKeaN
+  url: {{protocol}}://{{host}}/services/referral/:code
   body: none
   auth: inherit
+}
+
+params:path {
+  code: djssKeaN
 }

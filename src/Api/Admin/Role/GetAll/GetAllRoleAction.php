@@ -27,6 +27,10 @@ class GetAllRoleAction extends AbstractAction
         );
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ApiException
+     */
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $result = $this->service->execute();

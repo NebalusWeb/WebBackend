@@ -31,6 +31,7 @@ class RegisterUserValidator extends AbstractValidator
     }
 
     /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @throws ApiException
      */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
