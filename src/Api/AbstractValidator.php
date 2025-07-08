@@ -24,7 +24,7 @@ abstract class AbstractValidator
     public function validate(ServerRequestInterface $request, array $pathArgs = []): void
     {
         $validData = $this->validationSchema->safeParse([
-            RequestParamTypes::BODY => json_decode($request->getBody()->getContents(), true, self::MAX_RECURSION) ?? [],
+            RequestParamTypes::BODY => $request->getParsedBody() ?? [],
             RequestParamTypes::QUERY_PARAMS => $request->getQueryParams() ?? [],
             RequestParamTypes::PATH_ARGS => $pathArgs,
         ]);
