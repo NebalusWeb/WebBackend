@@ -13,7 +13,10 @@ class GetPermissionAction extends AbstractAction
         private readonly GetPermissionValidator $validator
     ) {
     }
-
+    
+     /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);
