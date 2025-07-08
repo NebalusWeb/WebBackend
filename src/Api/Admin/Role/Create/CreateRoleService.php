@@ -11,7 +11,6 @@ use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccess;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
-use Nebalus\Webapi\Value\User\User;
 
 readonly class CreateRoleService
 {
