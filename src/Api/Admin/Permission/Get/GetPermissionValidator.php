@@ -19,6 +19,9 @@ class GetPermissionValidator extends AbstractValidator
         ]));
     }
 
+     /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->privilegeId = PermissionId::from($pathArgsData["permissionId"]);
