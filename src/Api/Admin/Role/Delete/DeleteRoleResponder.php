@@ -1,15 +1,15 @@
 <?php
 
-namespace Nebalus\Webapi\Api\User\Register;
+namespace Nebalus\Webapi\Api\Admin\Role\Delete;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 
-class RegisterUserView
+class DeleteRoleResponder
 {
     public function render(): ResultInterface
     {
-        return Result::createSuccess("User registered", StatusCodeInterface::STATUS_CREATED, []);
+        return Result::createSuccess("Role Deleted", StatusCodeInterface::STATUS_OK);
     }
 }

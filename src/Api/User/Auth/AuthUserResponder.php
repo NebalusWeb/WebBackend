@@ -8,7 +8,7 @@ use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\User;
 use ReallySimpleJWT\Jwt;
 
-class AuthUserView
+class AuthUserResponder
 {
     public function render(Jwt $jwt, User $user): ResultInterface
     {

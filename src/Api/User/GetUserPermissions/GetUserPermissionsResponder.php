@@ -8,7 +8,7 @@ use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 use Nebalus\Webapi\Value\User\UserId;
 
-class GetUserPermissionsView
+class GetUserPermissionsResponder
 {
     public function render(UserId $userId, UserPermissionIndex $userPermissionIndex): ResultInterface
     {

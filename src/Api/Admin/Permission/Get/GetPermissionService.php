@@ -17,7 +17,7 @@ class GetPermissionService extends AbstractService
 {
     public function __construct(
         private MySqlPermissionRepository $permissionRepository,
-        private GetPermissionView $view
+        private GetPermissionResponder $view
     ) {
     }
 

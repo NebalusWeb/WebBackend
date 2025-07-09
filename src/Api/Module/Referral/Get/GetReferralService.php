@@ -13,7 +13,7 @@ readonly class GetReferralService
 {
     public function __construct(
         private MySQlReferralRepository $referralRepository,
-        private GetReferralView $view,
+        private GetReferralResponder    $view,
     ) {
     }
 

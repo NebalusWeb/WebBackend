@@ -9,7 +9,7 @@ use Nebalus\Webapi\Value\Module\Referral\Click\ReferralClickCollection;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 use Nebalus\Webapi\Value\Result\Result;
 
-class ClickHistoryReferralView
+class ClickHistoryReferralResponder
 {
     public function render(ReferralCode $referralCode, ReferralClickCollection $referralClicks): ResultInterface
     {

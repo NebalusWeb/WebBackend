@@ -11,7 +11,7 @@ readonly class GetAllReferralService
 {
     public function __construct(
         private MySqlReferralRepository $referralRepository,
-        private GetAllReferralView $view,
+        private GetAllReferralResponder $view,
     ) {
     }
 

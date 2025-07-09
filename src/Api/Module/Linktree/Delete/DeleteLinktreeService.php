@@ -7,7 +7,7 @@ use Nebalus\Webapi\Slim\ResultInterface;
 readonly class DeleteLinktreeService
 {
     public function __construct(
-        private DeleteLinktreeView $view,
+        private DeleteLinktreeResponder $view,
     ) {
     }
 

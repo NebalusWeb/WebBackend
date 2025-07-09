@@ -7,7 +7,7 @@ use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionCollection;
 
-class GetAllPermissionView
+class GetAllPermissionResponder
 {
     public function render(PermissionCollection $permissionCollection): ResultInterface
     {

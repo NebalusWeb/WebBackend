@@ -6,7 +6,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 
-class ClickLinktreeView
+class ClickLinktreeResponder
 {
     public function render(): ResultInterface
     {

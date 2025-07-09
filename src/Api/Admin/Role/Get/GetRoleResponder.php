@@ -8,7 +8,7 @@ use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLinkCollection;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 
-class GetRoleView
+class GetRoleResponder
 {
     public function render(Role $role, ?PermissionRoleLinkCollection $permissionRoleLinkCollection = null): ResultInterface
     {

@@ -17,7 +17,7 @@ readonly class AuthUserService
     public function __construct(
         private MySqlUserRepository $mySqlUserRepository,
         private GeneralConfig $generalConfig,
-        private AuthUserView $view,
+        private AuthUserResponder $view,
     ) {
     }
 

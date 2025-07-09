@@ -27,6 +27,7 @@ use Nebalus\Webapi\Api\User\Auth\AuthUserAction;
 use Nebalus\Webapi\Api\User\GetUserPermissions\GetUserPermissionsAction;
 use Nebalus\Webapi\Api\User\Register\RegisterUserAction;
 use Nebalus\Webapi\Config\GeneralConfig;
+use Nebalus\Webapi\Slim\Handler\DefaultErrorHandler;
 use Nebalus\Webapi\Slim\Middleware\AuthMiddleware;
 use Nebalus\Webapi\Slim\Middleware\CorsMiddleware;
 use Nebalus\Webapi\Slim\Middleware\MetricsMiddleware;

@@ -2,7 +2,7 @@
 
 namespace Nebalus\Webapi\Api\Admin\Role\Edit;
 
-class EditRoleView
+class EditRoleResponder
 {
 
 }

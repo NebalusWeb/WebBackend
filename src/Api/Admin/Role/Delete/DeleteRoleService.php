@@ -17,7 +17,7 @@ readonly class DeleteRoleService
 {
     public function __construct(
         private MySQlRoleRepository $roleRepository,
-        private DeleteRoleView $view,
+        private DeleteRoleResponder $view,
     ) {
     }
 

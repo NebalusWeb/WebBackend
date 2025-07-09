@@ -1,15 +1,15 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Admin\Role\Delete;
+namespace Nebalus\Webapi\Api\Module\Referral\Delete;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 
-class DeleteRoleView
+class DeleteReferralResponder
 {
     public function render(): ResultInterface
     {
-        return Result::createSuccess("Role Deleted", StatusCodeInterface::STATUS_OK);
+        return Result::createSuccess("Referral Deleted", StatusCodeInterface::STATUS_OK);
     }
 }

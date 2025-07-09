@@ -7,7 +7,7 @@ use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Module\Referral\Referral;
 use Nebalus\Webapi\Value\Result\Result;
 
-class CreateReferralView
+class CreateReferralResponder
 {
     public function render(Referral $referral): ResultInterface
     {

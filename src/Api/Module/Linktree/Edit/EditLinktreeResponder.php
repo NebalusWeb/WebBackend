@@ -1,12 +1,12 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Module\Linktree\Delete;
+namespace Nebalus\Webapi\Api\Module\Linktree\Edit;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 
-class DeleteLinktreeView
+class EditLinktreeResponder
 {
     public function render(): ResultInterface
     {

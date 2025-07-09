@@ -17,7 +17,7 @@ readonly class EditReferralService
 {
     public function __construct(
         private MySQlReferralRepository $referralRepository,
-        private EditReferralView $view,
+        private EditReferralResponder   $view,
     ) {
     }
 

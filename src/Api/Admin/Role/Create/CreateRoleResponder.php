@@ -7,7 +7,7 @@ use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Role\Role;
 
-class CreateRoleView
+class CreateRoleResponder
 {
     public function render(Role $role): ResultInterface
     {

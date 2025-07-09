@@ -12,7 +12,7 @@ readonly class DeleteReferralService
 {
     public function __construct(
         private MySQlReferralRepository $referralRepository,
-        private DeleteReferralView $view,
+        private DeleteReferralResponder $view,
     ) {
     }
 

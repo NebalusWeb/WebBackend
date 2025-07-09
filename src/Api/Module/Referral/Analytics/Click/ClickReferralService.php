@@ -12,7 +12,7 @@ readonly class ClickReferralService
 {
     public function __construct(
         private MySQlReferralRepository $referralRepository,
-        private ClickReferralView $view,
+        private ClickReferralResponder $view,
     ) {
     }
 

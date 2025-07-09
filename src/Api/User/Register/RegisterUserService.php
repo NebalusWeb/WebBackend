@@ -12,9 +12,9 @@ use Nebalus\Webapi\Value\User\User;
 readonly class RegisterUserService
 {
     public function __construct(
-        private MySqlUserRepository $mySqlUserRepository,
+        private MySqlUserRepository    $mySqlUserRepository,
         private MySqlAccountRepository $mySqlAccountRepository,
-        private RegisterUserView $view,
+        private RegisterUserResponder  $view,
     ) {
     }
 

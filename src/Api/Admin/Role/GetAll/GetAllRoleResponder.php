@@ -7,7 +7,7 @@ use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Role\RoleCollection;
 
-class GetAllRoleView
+class GetAllRoleResponder
 {
     public function render(RoleCollection $roleCollection): ResultInterface
     {

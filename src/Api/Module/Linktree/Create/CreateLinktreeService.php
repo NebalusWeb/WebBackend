@@ -7,7 +7,7 @@ use Nebalus\Webapi\Slim\ResultInterface;
 readonly class CreateLinktreeService
 {
     public function __construct(
-        private CreateLinktreeView $view,
+        private CreateLinktreeResponder $view,
     )
     {
     }

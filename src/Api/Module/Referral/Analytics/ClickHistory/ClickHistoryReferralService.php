@@ -15,8 +15,8 @@ use Nebalus\Webapi\Value\User\User;
 readonly class ClickHistoryReferralService
 {
     public function __construct(
-        private MySQlReferralRepository $referralRepository,
-        private ClickHistoryReferralView $view,
+        private MySQlReferralRepository       $referralRepository,
+        private ClickHistoryReferralResponder $view,
     ) {
     }
 

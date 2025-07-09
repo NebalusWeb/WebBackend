@@ -1,13 +1,13 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Module\Referral\Get;
+namespace Nebalus\Webapi\Api\Module\Referral\Edit;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Module\Referral\Referral;
 use Nebalus\Webapi\Value\Result\Result;
 
-class GetReferralView
+class EditReferralResponder
 {
     public function render(Referral $referral): ResultInterface
     {
@@ -20,6 +20,6 @@ class GetReferralView
             "updated_at" => $referral->getUpdatedAtDate()->format(DATE_ATOM),
         ];
 
-        return Result::createSuccess("Referral Fetched", StatusCodeInterface::STATUS_OK, $fields);
+        return Result::createSuccess("Referral edited", StatusCodeInterface::STATUS_OK, $fields);
     }
 }

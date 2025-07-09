@@ -4,7 +4,6 @@ namespace Nebalus\Webapi\Config;
 
 class MySqlConfig
 {
-
     private string $mysqlPasswd;
     private string $mysqlHost;
     private string $mysqlPort;

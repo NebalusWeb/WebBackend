@@ -16,7 +16,7 @@ readonly class GetRoleService
 {
     public function __construct(
         private MySqlRoleRepository $roleRepository,
-        private GetRoleView $view
+        private GetRoleResponder $view
     ) {
     }
 

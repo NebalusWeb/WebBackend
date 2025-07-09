@@ -1,6 +1,6 @@
 <?php
 
-namespace Nebalus\Webapi\Slim;
+namespace Nebalus\Webapi\Slim\Handler;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Exception\ApiException;

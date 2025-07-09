@@ -11,8 +11,8 @@ use Nebalus\Webapi\Value\User\User;
 readonly class GetUserPermissionsService
 {
     public function __construct(
-        private GetUserPermissionsView $view,
-        private MySqlRoleRepository $roleRepository
+        private GetUserPermissionsResponder $view,
+        private MySqlRoleRepository         $roleRepository
     ) {
     }
 

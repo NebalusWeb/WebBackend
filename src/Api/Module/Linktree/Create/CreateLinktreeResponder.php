@@ -1,12 +1,12 @@
 <?php
 
-namespace Nebalus\Webapi\Api\Module\Linktree\Get;
+namespace Nebalus\Webapi\Api\Module\Linktree\Create;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
 
-class GetLinktreeView
+class CreateLinktreeResponder
 {
     public function render(): ResultInterface
     {
