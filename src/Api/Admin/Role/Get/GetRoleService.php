@@ -16,7 +16,7 @@ readonly class GetRoleService
 {
     public function __construct(
         private MySqlRoleRepository $roleRepository,
-        private GetRoleResponder $view
+        private GetRoleResponder $responder
     ) {
     }
 
@@ -38,9 +38,9 @@ readonly class GetRoleService
 
         if ($validator->isWithPermissions()) {
             $privileges = $this->roleRepository->getAllPermissionLinksFromRoleId($validator->getRoleId());
-            return $this->view->render($role, $privileges);
+            return $this->responder->render($role, $privileges);
         }
 
-        return $this->view->render($role);
+        return $this->responder->render($role);
     }
 }

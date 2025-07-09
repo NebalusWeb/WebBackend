@@ -11,7 +11,7 @@ readonly class GetAllReferralService
 {
     public function __construct(
         private MySqlReferralRepository $referralRepository,
-        private GetAllReferralResponder $view,
+        private GetAllReferralResponder $responder,
     ) {
     }
 
@@ -21,6 +21,6 @@ readonly class GetAllReferralService
     public function execute(User $requestingUser): ResultInterface
     {
         $referrals = $this->referralRepository->getReferralsFromOwner($requestingUser->getUserId());
-        return $this->view->render($referrals);
+        return $this->responder->render($referrals);
     }
 }

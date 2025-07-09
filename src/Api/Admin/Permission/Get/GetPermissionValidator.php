@@ -15,7 +15,7 @@ class GetPermissionValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                "permissionId" => PermissionId::getSchema(),
+                "permission_id" => PermissionId::getSchema(),
             ]),
         ]));
     }
@@ -26,7 +26,7 @@ class GetPermissionValidator extends AbstractValidator
      */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->privilegeId = PermissionId::from($pathArgsData["permissionId"]);
+        $this->privilegeId = PermissionId::from($pathArgsData["permission_id"]);
     }
 
     public function getPermissionId(): PermissionId

@@ -31,7 +31,7 @@ class EditRoleValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                "roleId" => RoleId::getSchema(),
+                "role_id" => RoleId::getSchema(),
             ]),
             RequestParamTypes::BODY => S::object([
                 "name" => RoleName::getSchema(),
@@ -55,7 +55,7 @@ class EditRoleValidator extends AbstractValidator
      */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->roleId = RoleId::from($pathArgsData["roleId"]);
+        $this->roleId = RoleId::from($pathArgsData["role_id"]);
         $this->roleName = RoleName::from($bodyData["name"]);
         $this->roleDescription = array_key_exists("description", $bodyData) ? RoleDescription::from($bodyData["description"]) : null;
         $this->roleColor = RoleHexColor::from($bodyData["color"]);

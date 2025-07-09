@@ -23,7 +23,7 @@ class EditReferralValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                "userId" => S::string()->equals("self")->or(UserId::getSchema()),
+                "user_id" => S::string()->equals("self")->or(UserId::getSchema()),
                 'code' => ReferralCode::getSchema()
             ]),
             RequestParamTypes::BODY => S::object([
@@ -40,7 +40,7 @@ class EditReferralValidator extends AbstractValidator
      */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->userId = isset($pathArgsData["userId"]) && $pathArgsData["userId"] === "self" ? null : UserId::from($pathArgsData["userId"]);
+        $this->userId = isset($pathArgsData["user_id"]) && $pathArgsData["user_id"] === "self" ? null : UserId::from($pathArgsData["user_id"]);
         $this->code = ReferralCode::from($pathArgsData['code']);
         $this->url = Url::from($bodyData['url']);
         $this->label = ReferralLabel::from($bodyData['label']);

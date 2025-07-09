@@ -7,6 +7,7 @@ use Traversable;
 
 class ReferralCollection implements IteratorAggregate
 {
+
     private array $referrals;
 
     private function __construct(Referral ...$referrals)

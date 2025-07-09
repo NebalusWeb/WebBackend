@@ -15,8 +15,8 @@ use Nebalus\Webapi\Value\User\User;
 readonly class ClickHistoryReferralService
 {
     public function __construct(
-        private MySQlReferralRepository       $referralRepository,
-        private ClickHistoryReferralResponder $view,
+        private MySQlReferralRepository $referralRepository,
+        private ClickHistoryReferralResponder $responder,
     ) {
     }
 
@@ -31,7 +31,7 @@ readonly class ClickHistoryReferralService
                 return Result::createError("Referral not found");
             }
             $data = $this->referralRepository->getReferralClicksFromRange($requestingUser->getUserId(), $validator->getReferralCode(), $validator->getRange());
-            return $this->view->render($validator->getReferralCode(), $data);
+            return $this->responder->render($validator->getReferralCode(), $data);
         }
 
         if ($userPermissionIndex->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OTHER, true))) {
@@ -40,7 +40,7 @@ readonly class ClickHistoryReferralService
                 return Result::createError("Referral not found");
             }
             $data = $this->referralRepository->getReferralClicksFromRange($validator->getUserId(), $validator->getReferralCode(), $validator->getRange());
-            return $this->view->render($validator->getReferralCode(), $data);
+            return $this->responder->render($validator->getReferralCode(), $data);
         }
 
         return Result::createError("Not enough permissions", StatusCodeInterface::STATUS_NOT_ACCEPTABLE);

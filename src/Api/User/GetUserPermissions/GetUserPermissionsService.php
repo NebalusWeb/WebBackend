@@ -11,8 +11,8 @@ use Nebalus\Webapi\Value\User\User;
 readonly class GetUserPermissionsService
 {
     public function __construct(
-        private GetUserPermissionsResponder $view,
-        private MySqlRoleRepository         $roleRepository
+        private GetUserPermissionsResponder $responder,
+        private MySqlRoleRepository $roleRepository
     ) {
     }
 
@@ -24,10 +24,10 @@ readonly class GetUserPermissionsService
         $userId = $validator->getUserId();
 
         if ($userId === null || $userId === $requestingUser->getUserId()) {
-            return $this->view->render($requestingUser->getUserId(), $userPermissionIndex);
+            return $this->responder->render($requestingUser->getUserId(), $userPermissionIndex);
         }
 
         $otherUserPermissionIndex = $this->roleRepository->getPermissionIndexFromUserId($userId);
-        return $this->view->render($userId, $otherUserPermissionIndex);
+        return $this->responder->render($userId, $otherUserPermissionIndex);
     }
 }

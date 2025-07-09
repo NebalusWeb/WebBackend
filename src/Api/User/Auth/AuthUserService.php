@@ -17,7 +17,7 @@ readonly class AuthUserService
     public function __construct(
         private MySqlUserRepository $mySqlUserRepository,
         private GeneralConfig $generalConfig,
-        private AuthUserResponder $view,
+        private AuthUserResponder $responder,
     ) {
     }
 
@@ -43,6 +43,6 @@ readonly class AuthUserService
             ->setExpiration($expirationTime)
             ->build();
 
-        return $this->view->render($token, $user);
+        return $this->responder->render($token, $user);
     }
 }

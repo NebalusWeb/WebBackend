@@ -12,7 +12,7 @@ readonly class ClickReferralService
 {
     public function __construct(
         private MySQlReferralRepository $referralRepository,
-        private ClickReferralResponder $view,
+        private ClickReferralResponder  $responder,
     ) {
     }
 
@@ -29,6 +29,6 @@ readonly class ClickReferralService
 
         $this->referralRepository->insertReferralClickEntry($referral->getReferralId());
 
-        return $this->view->render($referral);
+        return $this->responder->render($referral);
     }
 }

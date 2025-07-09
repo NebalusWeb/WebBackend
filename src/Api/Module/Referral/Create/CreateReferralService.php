@@ -12,7 +12,7 @@ readonly class CreateReferralService
 {
     public function __construct(
         private MySQlReferralRepository $referralRepository,
-        private CreateReferralResponder $view,
+        private CreateReferralResponder $responder,
     ) {
     }
 
@@ -24,6 +24,6 @@ readonly class CreateReferralService
         $referralCode = ReferralCode::create();
         $this->referralRepository->insertReferral($user->getUserId(), $referralCode, $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
         $referral = $this->referralRepository->findReferralByCodeFromOwner($user->getUserId(), $referralCode);
-        return $this->view->render($referral);
+        return $this->responder->render($referral);
     }
 }

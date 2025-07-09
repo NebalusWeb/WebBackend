@@ -12,14 +12,14 @@ readonly class DeleteReferralService
 {
     public function __construct(
         private MySQlReferralRepository $referralRepository,
-        private DeleteReferralResponder $view,
+        private DeleteReferralResponder $responder,
     ) {
     }
 
     public function execute(DeleteReferralValidator $validator, User $requestingUser): ResultInterface
     {
         if ($this->referralRepository->deleteReferralByCodeFromOwner($requestingUser->getUserId(), $validator->getReferralCode())) {
-            return $this->view->render();
+            return $this->responder->render();
         }
 
         return Result::createError('Referral does not exist', StatusCodeInterface::STATUS_NOT_FOUND);

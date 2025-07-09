@@ -17,7 +17,7 @@ readonly class DeleteRoleService
 {
     public function __construct(
         private MySQlRoleRepository $roleRepository,
-        private DeleteRoleResponder $view,
+        private DeleteRoleResponder $responder,
     ) {
     }
 
@@ -43,7 +43,7 @@ readonly class DeleteRoleService
         }
 
         if ($this->roleRepository->deleteRoleFromRoleId($validator->getRoleId())) {
-            return $this->view->render();
+            return $this->responder->render();
         }
 
         return Result::createError('Role does not exist', StatusCodeInterface::STATUS_NOT_FOUND);

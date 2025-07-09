@@ -8,7 +8,7 @@ use Nebalus\Webapi\Config\Types\RequestParamTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
 
-class  ClickReferralValidator extends AbstractValidator
+class ClickReferralValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
 

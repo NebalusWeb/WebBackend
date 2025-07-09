@@ -13,7 +13,7 @@ readonly class GetReferralService
 {
     public function __construct(
         private MySQlReferralRepository $referralRepository,
-        private GetReferralResponder    $view,
+        private GetReferralResponder $responder,
     ) {
     }
 
@@ -28,6 +28,6 @@ readonly class GetReferralService
             return Result::createError('Referral not found', StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        return $this->view->render($referral);
+        return $this->responder->render($referral);
     }
 }

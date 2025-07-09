@@ -16,7 +16,7 @@ readonly class CreateRoleService
 {
     public function __construct(
         private MySqlRoleRepository $roleRepository,
-        private CreateRoleResponder $view,
+        private CreateRoleResponder $responder,
     ) {
     }
 
@@ -32,6 +32,6 @@ readonly class CreateRoleService
         $role = Role::create($validator->getRoleName(), $validator->getRoleDescription(), $validator->getRoleColor(), $validator->getAccessLevel(), $validator->appliesToEveryone(), $validator->isDisabled());
         $role = $this->roleRepository->insertRole($role);
 
-        return $this->view->render($role);
+        return $this->responder->render($role);
     }
 }

@@ -15,7 +15,7 @@ class DeleteRoleValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                "roleId" => RoleId::getSchema(),
+                "role_id" => RoleId::getSchema(),
             ])
         ]));
     }
@@ -26,7 +26,7 @@ class DeleteRoleValidator extends AbstractValidator
      */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->roleId = RoleId::from($pathArgsData["roleId"]);
+        $this->roleId = RoleId::from($pathArgsData["role_id"]);
     }
 
     public function getRoleId(): RoleId

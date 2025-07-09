@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Api\Admin\Permission\Get;
 
 use Nebalus\Webapi\Api\AbstractAction;
+use Nebalus\Webapi\Config\Types\AttributeTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest as Request;
@@ -23,7 +24,7 @@ class GetPermissionAction extends AbstractAction
     {
         $this->validator->validate($request, $pathArgs);
 
-        $userPerms = $request->getAttribute('userPermissionIndex');
+        $userPerms = $request->getAttribute(AttributeTypes::USER_PERMISSION_INDEX);
         $result = $this->service->execute($this->validator, $userPerms);
 
         return $response->withJson($result->getPayload(), $result->getStatusCode());

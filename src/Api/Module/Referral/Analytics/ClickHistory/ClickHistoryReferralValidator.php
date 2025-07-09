@@ -20,7 +20,7 @@ class ClickHistoryReferralValidator extends AbstractValidator
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
                 'code' => ReferralCode::getSchema(),
-                "userId" => S::string()->equals("self")->or(UserId::getSchema()),
+                "user_id" => S::string()->equals("self")->or(UserId::getSchema()),
             ]),
             RequestParamTypes::QUERY_PARAMS => S::object([
                 'range' => S::number()->integer()->positive()
@@ -35,7 +35,7 @@ class ClickHistoryReferralValidator extends AbstractValidator
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->referralCode = ReferralCode::from($pathArgsData['code']);
-        $this->userId = isset($pathArgsData["userId"]) && $pathArgsData["userId"] === "self" ? null : UserId::from($pathArgsData["userId"]);
+        $this->userId = isset($pathArgsData["user_id"]) && $pathArgsData["user_id"] === "self" ? null : UserId::from($pathArgsData["user_id"]);
         $this->range = $queryParamsData['range'];
     }
 

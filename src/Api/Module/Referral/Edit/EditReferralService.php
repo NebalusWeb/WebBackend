@@ -17,7 +17,7 @@ readonly class EditReferralService
 {
     public function __construct(
         private MySQlReferralRepository $referralRepository,
-        private EditReferralResponder   $view,
+        private EditReferralResponder   $responder,
     ) {
     }
 
@@ -38,7 +38,7 @@ readonly class EditReferralService
         $updatedReferral = $this->referralRepository->updateReferralFromOwner($requestingUser->getUserId(), $validator->getCode(), $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
 
         if ($updatedReferral instanceof Referral) {
-            return $this->view->render($updatedReferral);
+            return $this->responder->render($updatedReferral);
         }
 
         return Result::createError('Referral does not exist', StatusCodeInterface::STATUS_NOT_FOUND);

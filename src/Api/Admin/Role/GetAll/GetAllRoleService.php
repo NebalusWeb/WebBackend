@@ -14,7 +14,7 @@ use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 readonly class GetAllRoleService
 {
     public function __construct(
-        private GetAllRoleResponder $view,
+        private GetAllRoleResponder $responder,
         private MySqlRoleRepository $roleRepository
     ) {
     }
@@ -30,6 +30,6 @@ readonly class GetAllRoleService
 
         $roles = $this->roleRepository->getAllRoles();
 
-        return $this->view->render($roles);
+        return $this->responder->render($roles);
     }
 }

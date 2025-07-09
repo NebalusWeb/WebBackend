@@ -17,7 +17,7 @@ class GetPermissionService extends AbstractService
 {
     public function __construct(
         private MySqlPermissionRepository $permissionRepository,
-        private GetPermissionResponder $view
+        private GetPermissionResponder $responder
     ) {
     }
 
@@ -37,6 +37,6 @@ class GetPermissionService extends AbstractService
             return Result::createError("Permission not found", StatusCodeInterface::STATUS_NOT_FOUND);
         }
 
-        return $this->view->render($requestedPermission);
+        return $this->responder->render($requestedPermission);
     }
 }

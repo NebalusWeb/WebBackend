@@ -67,21 +67,21 @@ readonly class RouteCollector
             $group->group("/admin", function (RouteCollectorProxy $group) {
                 $group->group("/permission", function (RouteCollectorProxy $group) {
                     $group->map(["GET"], "/all", GetAllPermissionAction::class);
-                    $group->group("/{permissionId}", function (RouteCollectorProxy $group) {
+                    $group->group("/{permission_id}", function (RouteCollectorProxy $group) {
                         $group->map(["GET"], "", GetPermissionAction::class);
                     });
                 });
                 $group->group("/role", function (RouteCollectorProxy $group) {
                     $group->map(["POST"], "", CreateRoleAction::class);
                     $group->map(["GET"], "/all", GetAllRoleAction::class);
-                    $group->group("/{roleId}", function (RouteCollectorProxy $group) {
+                    $group->group("/{role_id}", function (RouteCollectorProxy $group) {
                         $group->map(["GET"], "", GetRoleAction::class);
                         $group->map(["PUT"], "", EditRoleAction::class);
                         $group->map(["DELETE"], "", DeleteRoleAction::class);
                     });
                 });
             })->add(PermissionMiddleware::class)->add(AuthMiddleware::class);
-            $group->group("/user/{userId}", function (RouteCollectorProxy $group) {
+            $group->group("/user/{user_id}", function (RouteCollectorProxy $group) {
                 $group->map(["GET"], "/permissions", GetUserPermissionsAction::class);
                 $group->group("/services", function (RouteCollectorProxy $group) {
                     $group->group("/invitation_tokens", function (RouteCollectorProxy $group) {
