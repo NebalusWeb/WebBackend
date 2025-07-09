@@ -1,0 +1,17 @@
+meta {
+  name: GetAll Own Referrals
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{protocol}}://{{host}}/ui/user/1/services/referrals/all
+  body: none
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: {{auth_jwt}}
+  placement: header
+}

@@ -1,0 +1,22 @@
+meta {
+  name: Delete Referral
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{protocol}}://{{host}}/ui/user/:userId/services/referrals/:code
+  body: none
+  auth: apikey
+}
+
+params:path {
+  code: nSW1Oep4
+  userId: self
+}
+
+auth:apikey {
+  key: Authorization
+  value: {{auth_jwt}}
+  placement: header
+}

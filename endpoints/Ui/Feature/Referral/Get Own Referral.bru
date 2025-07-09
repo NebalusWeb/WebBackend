@@ -1,0 +1,17 @@
+meta {
+  name: Get Own Referral
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{protocol}}://{{host}}/ui/user/self/services/referrals/djssKeaN
+  body: none
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: {{auth_jwt}}
+  placement: header
+}
