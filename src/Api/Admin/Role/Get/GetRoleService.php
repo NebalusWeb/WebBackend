@@ -3,11 +3,14 @@
 namespace Nebalus\Webapi\Api\Admin\Role\Get;
 
 use Fig\Http\Message\StatusCodeInterface;
+use Nebalus\Webapi\Config\Types\PermissionNodesTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 use Nebalus\Webapi\Repository\RoleRepository\MySqlRoleRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccess;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 
 readonly class GetRoleService
 {
@@ -21,8 +24,12 @@ readonly class GetRoleService
      * @throws ApiInvalidArgumentException
      * @throws ApiException
      */
-    public function execute(GetRoleValidator $validator): ResultInterface
+    public function execute(GetRoleValidator $validator, UserPermissionIndex $userPerms): ResultInterface
     {
+        if ($userPerms->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE, true)) === false) {
+            return Result::createError("You do not have enough permissions to access this resource", StatusCodeInterface::STATUS_FORBIDDEN);
+        }
+
         $role = $this->roleRepository->findRoleById($validator->getRoleId());
 
         if ($role === null) {

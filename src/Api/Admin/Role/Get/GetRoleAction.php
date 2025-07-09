@@ -18,21 +18,13 @@ class GetRoleAction extends AbstractAction
     ) {
     }
 
-    /**
-     * @throws ApiException
-     */
-    protected function endpointAccessGuard(): PermissionAccessCollection
-    {
-        return PermissionAccessCollection::fromObjects(
-            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE, true)
-        );
-    }
-
-
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);
-        $result = $this->service->execute($this->validator);
+
+        $userPerms = $request->getAttribute('userPermissionIndex');
+        $result = $this->service->execute($this->validator, $userPerms);
+
         return $response->withJson($result->getPayload(), $result->getStatusCode());
     }
 }

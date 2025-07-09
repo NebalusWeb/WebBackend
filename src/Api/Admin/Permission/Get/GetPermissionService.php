@@ -3,6 +3,7 @@
 namespace Nebalus\Webapi\Api\Admin\Permission\Get;
 
 use Fig\Http\Message\StatusCodeInterface;
+use Nebalus\Webapi\Api\AbstractService;
 use Nebalus\Webapi\Config\Types\PermissionNodesTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
@@ -12,7 +13,7 @@ use Nebalus\Webapi\Value\Result\Result;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccess;
 use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 
-readonly class GetPermissionService
+class GetPermissionService extends AbstractService
 {
     public function __construct(
         private MySqlPermissionRepository $permissionRepository,

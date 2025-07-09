@@ -18,17 +18,6 @@ class CreateRoleAction extends AbstractAction
     ) {
     }
 
-    /**
-     * @throws ApiException
-     */
-    protected function endpointAccessGuard(): PermissionAccessCollection
-    {
-        return PermissionAccessCollection::fromObjects(
-            PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE_CREATE, true)
-        );
-    }
-
-
     protected function execute(Request $request, Response $response, array $pathArgs): Response
     {
         $this->validator->validate($request, $pathArgs);
