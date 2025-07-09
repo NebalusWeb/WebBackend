@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: {{protocol}}://{{host}}/ui/admin/role/2
-  body: none
+  url: {{protocol}}://{{host}}/ui/admin/role/:roleId
+  body: json
   auth: apikey
+}
+
+params:path {
+  roleId: 2
 }
 
 auth:apikey {
