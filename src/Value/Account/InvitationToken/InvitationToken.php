@@ -70,7 +70,7 @@ class InvitationToken
 
         $ownerId = AccountId::from($data['owner_id']);
         $invitedId = empty($data['invited_id']) ? null : AccountId::from($data['invited_id']);
-        $pureInvitationToken = InvitationTokenValue::from($data['pure_invitation_token']);
+        $pureInvitationToken = InvitationTokenValue::from($data['token']);
 
         return new self($ownerId, $invitedId, $pureInvitationToken, $createdAtDate, $usedAtDate);
     }
@@ -80,7 +80,7 @@ class InvitationToken
         return [
             'owner_id' => $this->ownerId->asInt(),
             'invited_id' => $this->invitedId->asInt(),
-            'pure_invitation_token' => $this->invitationTokenValue->asString(),
+            'token' => $this->invitationTokenValue->asString(),
             "created_at" => $this->createdAtDate->format(DATE_ATOM),
             "used_at" => $this->usedAtDate->format(DATE_ATOM),
         ];
