@@ -22,8 +22,10 @@ readonly class CreateReferralService
     public function execute(CreateReferralValidator $validator, User $user): ResultInterface
     {
         $referralCode = ReferralCode::create();
+
         $this->referralRepository->insertReferral($user->getUserId(), $referralCode, $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
         $referral = $this->referralRepository->findReferralByCodeFromOwner($user->getUserId(), $referralCode);
+
         return $this->responder->render($referral);
     }
 }

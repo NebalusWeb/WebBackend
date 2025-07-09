@@ -17,7 +17,7 @@ readonly class EditReferralService
 {
     public function __construct(
         private MySQlReferralRepository $referralRepository,
-        private EditReferralResponder   $responder,
+        private EditReferralResponder $responder,
     ) {
     }
 
@@ -26,16 +26,13 @@ readonly class EditReferralService
      */
     public function execute(EditReferralValidator $validator, User $requestingUser, UserPermissionIndex $userPermissionIndex): ResultInterface
     {
-        if ($userPermissionIndex->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OTHER_EDIT))) {
-
+        if ($requestingUser->getUserId() === null && $userPermissionIndex->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OWN_EDIT, true))) {
+            $updatedReferral = $this->referralRepository->updateReferralFromOwner($requestingUser->getUserId(), $validator->getCode(), $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
         }
 
-        $userId = $validator->getUserId();
-        if ($userId === null) {
+        if ($userPermissionIndex->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OTHER_EDIT, true))) {
+
         }
-
-
-        $updatedReferral = $this->referralRepository->updateReferralFromOwner($requestingUser->getUserId(), $validator->getCode(), $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
 
         if ($updatedReferral instanceof Referral) {
             return $this->responder->render($updatedReferral);
