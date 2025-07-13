@@ -13,7 +13,7 @@ use Nebalus\Webapi\Value\User\UserId;
 
 class EditReferralValidator extends AbstractValidator
 {
-    private ?UserId $userId = null;
+    private UserId $userId;
     private ReferralCode $code;
     private Url $url;
     private ReferralLabel $label;
@@ -23,7 +23,7 @@ class EditReferralValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                "user_id" => S::string()->equals("self")->or(UserId::getSchema()),
+                "user_id" => UserId::getSchema(),
                 'code' => ReferralCode::getSchema()
             ]),
             RequestParamTypes::BODY => S::object([
@@ -40,14 +40,14 @@ class EditReferralValidator extends AbstractValidator
      */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->userId = isset($pathArgsData["user_id"]) && $pathArgsData["user_id"] === "self" ? null : UserId::from($pathArgsData["user_id"]);
+        $this->userId = UserId::from($pathArgsData["user_id"]);
         $this->code = ReferralCode::from($pathArgsData['code']);
         $this->url = Url::from($bodyData['url']);
         $this->label = ReferralLabel::from($bodyData['label']);
         $this->disabled = $bodyData['disabled'];
     }
 
-    public function getUserId(): ?UserId
+    public function getUserId(): UserId
     {
         return $this->userId;
     }

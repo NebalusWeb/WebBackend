@@ -26,7 +26,7 @@ readonly class EditReferralService
      */
     public function execute(EditReferralValidator $validator, User $requestingUser, UserPermissionIndex $userPermissionIndex): ResultInterface
     {
-        if ($requestingUser->getUserId() === null && $userPermissionIndex->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OWN_EDIT, true))) {
+        if ($validator->getUserId() === $requestingUser->getUserId() && $userPermissionIndex->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OWN_EDIT, true))) {
             $updatedReferral = $this->referralRepository->updateReferralFromOwner($requestingUser->getUserId(), $validator->getCode(), $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
         }
 

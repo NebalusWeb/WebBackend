@@ -12,7 +12,7 @@ use Nebalus\Webapi\Value\User\UserId;
 class ClickHistoryReferralValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
-    private ?UserId $userId;
+    private UserId $userId;
     private int $range;
 
     public function __construct()
@@ -20,7 +20,7 @@ class ClickHistoryReferralValidator extends AbstractValidator
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
                 'code' => ReferralCode::getSchema(),
-                "user_id" => S::string()->equals("self")->or(UserId::getSchema()),
+                "user_id" => UserId::getSchema(),
             ]),
             RequestParamTypes::QUERY_PARAMS => S::object([
                 'range' => S::number()->integer()->positive()
@@ -35,7 +35,7 @@ class ClickHistoryReferralValidator extends AbstractValidator
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
         $this->referralCode = ReferralCode::from($pathArgsData['code']);
-        $this->userId = isset($pathArgsData["user_id"]) && $pathArgsData["user_id"] === "self" ? null : UserId::from($pathArgsData["user_id"]);
+        $this->userId = UserId::from($pathArgsData["user_id"]);
         $this->range = $queryParamsData['range'];
     }
 
@@ -44,7 +44,7 @@ class ClickHistoryReferralValidator extends AbstractValidator
         return $this->referralCode;
     }
 
-    public function getUserId(): ?UserId
+    public function getUserId(): UserId
     {
         return $this->userId;
     }

@@ -2,6 +2,7 @@
 
 namespace Nebalus\Webapi\Api;
 
+use Nebalus\Webapi\Config\Types\AttributeTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Slim\Http\Interfaces\ResponseInterface;
 use Slim\Http\Response as Response;
@@ -17,6 +18,11 @@ abstract class AbstractAction
         Response $response,
         array $args
     ): ResponseInterface {
+        if (isset($args['user_id']) && $args['user_id'] === "self" && $request->getAttribute(AttributeTypes::REQUESTING_USER, null) !== null) {
+            $requestingUser = $request->getAttribute(AttributeTypes::REQUESTING_USER);
+            $args['user_id'] = $requestingUser->getUserId()->asInt();
+        }
+
         return $this->execute($request, $response, $args);
     }
 

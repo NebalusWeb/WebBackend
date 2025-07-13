@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nebalus\Webapi\Api\User\Auth;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Config\GeneralConfig;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
@@ -29,7 +30,7 @@ readonly class AuthUserService
         $user = $this->mySqlUserRepository->findUserFromUsername($validator->getUsername());
 
         if ($user === null || $user->isDisabled() || $user->getPassword()->verify($validator->getPassword()) === false) {
-            return Result::createError('Authentication failed: Wrong credentials', 401);
+            return Result::createError('Authentication failed: Wrong credentials', StatusCodeInterface::STATUS_UNAUTHORIZED);
         }
 
         $expirationTime = time() + $this->generalConfig->getJwtNormalExpirationTime();

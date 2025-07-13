@@ -6,6 +6,7 @@ namespace Nebalus\Webapi\Slim\Middleware;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Nebalus\Webapi\Config\GeneralConfig;
+use Nebalus\Webapi\Config\Types\AttributeTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\UserRepository\MySqlUserRepository;
 use Nebalus\Webapi\Value\Result\Result;
@@ -74,8 +75,8 @@ readonly class AuthMiddleware implements MiddlewareInterface
             return $this->denyRequest("The JWT has expired");
         }
 
-        $request = $request->withAttribute("requestingUser", $user);
-        $request = $request->withAttribute("authType", "jwt");
+        $request = $request->withAttribute(AttributeTypes::REQUESTING_USER, $user);
+        $request = $request->withAttribute(AttributeTypes::AUTH_TYPE, "jwt");
 
         return $handler->handle($request);
     }
