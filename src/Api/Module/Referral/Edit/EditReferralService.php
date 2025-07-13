@@ -31,7 +31,6 @@ readonly class EditReferralService
         }
 
         if ($userPermissionIndex->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OTHER_EDIT, true))) {
-
         }
 
         if ($updatedReferral instanceof Referral) {
