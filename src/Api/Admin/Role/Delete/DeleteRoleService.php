@@ -28,7 +28,7 @@ readonly class DeleteRoleService
      */
     public function execute(DeleteRoleValidator $validator, UserPermissionIndex $userPerms): ResultInterface
     {
-        if ($userPerms->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE_DELETE, true)) === false) {
+        if (!$userPerms->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE_DELETE, true))) {
             return Result::createError("You do not have enough permissions to access this resource", StatusCodeInterface::STATUS_FORBIDDEN);
         }
 

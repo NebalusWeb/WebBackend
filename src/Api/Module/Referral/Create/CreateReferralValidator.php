@@ -8,9 +8,12 @@ use Nebalus\Webapi\Config\Types\RequestParamTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Module\Referral\ReferralLabel;
 use Nebalus\Webapi\Value\Url;
+use Nebalus\Webapi\Value\User\UserId;
 
 class CreateReferralValidator extends AbstractValidator
 {
+    private UserId $userId;
+
     private ReferralLabel $label;
     private Url $url;
     private bool $disabled;
@@ -18,11 +21,14 @@ class CreateReferralValidator extends AbstractValidator
     public function __construct()
     {
         parent::__construct(S::object([
+            RequestParamTypes::PATH_ARGS => S::object([
+                "user_id" => UserId::getSchema(),
+            ]),
             RequestParamTypes::BODY => S::object([
                 'label' => ReferralLabel::getSchema(),
                 'url' => Url::getSchema(),
                 'disabled' => S::boolean()->optional()->default(false),
-            ])
+            ]),
         ]));
     }
 
@@ -32,9 +38,16 @@ class CreateReferralValidator extends AbstractValidator
      */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
+        $this->userId = UserId::from($pathArgsData['user_id']);
+
         $this->label = ReferralLabel::from($bodyData['label']);
         $this->url = Url::from($bodyData['url']);
         $this->disabled = $bodyData['disabled'];
+    }
+
+    public function getUserId(): UserId
+    {
+        return $this->userId;
     }
 
     public function getLabel(): ReferralLabel

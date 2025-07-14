@@ -24,7 +24,7 @@ readonly class GetAllRoleService
      */
     public function execute(UserPermissionIndex $userPerms): ResultInterface
     {
-        if ($userPerms->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE, true)) === false) {
+        if (!$userPerms->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::ADMIN_ROLE, true))) {
             return Result::createError("You do not have enough permissions to access this resource", StatusCodeInterface::STATUS_FORBIDDEN);
         }
 

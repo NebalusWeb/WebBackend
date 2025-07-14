@@ -13,6 +13,7 @@ class ClickHistoryReferralValidator extends AbstractValidator
 {
     private ReferralCode $referralCode;
     private UserId $userId;
+
     private int $range;
 
     public function __construct()

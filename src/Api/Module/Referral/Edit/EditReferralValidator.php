@@ -13,8 +13,9 @@ use Nebalus\Webapi\Value\User\UserId;
 
 class EditReferralValidator extends AbstractValidator
 {
-    private UserId $userId;
     private ReferralCode $code;
+    private UserId $userId;
+
     private Url $url;
     private ReferralLabel $label;
     private bool $disabled;
@@ -23,8 +24,8 @@ class EditReferralValidator extends AbstractValidator
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
+                'code' => ReferralCode::getSchema(),
                 "user_id" => UserId::getSchema(),
-                'code' => ReferralCode::getSchema()
             ]),
             RequestParamTypes::BODY => S::object([
                 'url' => Url::getSchema(),

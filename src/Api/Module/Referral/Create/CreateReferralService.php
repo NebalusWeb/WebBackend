@@ -2,11 +2,17 @@
 
 namespace Nebalus\Webapi\Api\Module\Referral\Create;
 
+use Fig\Http\Message\StatusCodeInterface;
+use Nebalus\Webapi\Config\Types\PermissionNodesTypes;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Module\Referral\ReferralCode;
+use Nebalus\Webapi\Value\Result\Result;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionAccess;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 use Nebalus\Webapi\Value\User\User;
+use Nebalus\Webapi\Value\User\UserId;
 
 readonly class CreateReferralService
 {
@@ -19,13 +25,17 @@ readonly class CreateReferralService
     /**
      * @throws ApiException
      */
-    public function execute(CreateReferralValidator $validator, User $user): ResultInterface
+    public function execute(CreateReferralValidator $validator, User $requestingUser, UserPermissionIndex $userPerms): ResultInterface
     {
-        $referralCode = ReferralCode::create();
+        if ($userPerms->hasAccessTo(PermissionAccess::from(PermissionNodesTypes::FEATURE_REFERRAL_OWN_CREATE, true))) {
+            $referralCode = ReferralCode::create();
 
-        $this->referralRepository->insertReferral($user->getUserId(), $referralCode, $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
-        $referral = $this->referralRepository->findReferralByCodeFromOwner($user->getUserId(), $referralCode);
+            $this->referralRepository->insertReferral($requestingUser->getUserId(), $referralCode, $validator->getUrl(), $validator->getLabel(), $validator->isDisabled());
+            $referral = $this->referralRepository->findReferralByCodeFromOwner($requestingUser->getUserId(), $referralCode);
 
-        return $this->responder->render($referral);
+            return $this->responder->render($referral);
+        }
+
+        return Result::createError("Not enough permissions", StatusCodeInterface::STATUS_NOT_ACCEPTABLE);
     }
 }
