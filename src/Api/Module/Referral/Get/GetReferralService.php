@@ -7,6 +7,7 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Repository\ReferralRepository\MySqlReferralRepository;
 use Nebalus\Webapi\Slim\ResultInterface;
 use Nebalus\Webapi\Value\Result\Result;
+use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 use Nebalus\Webapi\Value\User\User;
 
 readonly class GetReferralService
@@ -20,7 +21,7 @@ readonly class GetReferralService
     /**
      * @throws ApiException
      */
-    public function execute(GetReferralValidator $validator, User $requestingUser): ResultInterface
+    public function execute(GetReferralValidator $validator, User $requestingUser, UserPermissionIndex $userPermissionIndex): ResultInterface
     {
         $referral = $this->referralRepository->findReferralByCodeFromOwner($requestingUser->getUserId(), $validator->getReferralCode());
 
