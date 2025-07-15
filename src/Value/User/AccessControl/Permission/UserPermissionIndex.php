@@ -43,22 +43,27 @@ class UserPermissionIndex implements IteratorAggregate
         $currentNode = '';
         foreach ($parts as $index => $part) {
             $currentNode = $index === 0 ? $part : "$currentNode.$part";
-            if (array_key_exists($currentNode, $this->permissionNodeIndexList)) {
-                $permissionMetadata = $this->permissionNodeIndexList[$currentNode];
-                if ($permissionMetadata instanceof PermissionRoleLinkMetadata) {
-                    if ($permissionAccess->isAllowAccessWithSubPermission() && str_starts_with($currentNode, $permissionAccess->getNode()->asString())) {
-                        if ($permissionMetadata->hasValue() && $permissionAccess->hasValueRange()) {
-                            if ($permissionAccess->getValueRange()->isInRange($permissionMetadata->getValue()->asInt())) {
-                                return true;
-                            }
-                            return false;
-                        }
+            if (!array_key_exists($currentNode, $this->permissionNodeIndexList)) {
+               continue;
+            }
+
+            $permissionMetadata = $this->permissionNodeIndexList[$currentNode];
+            if (!$permissionMetadata instanceof PermissionRoleLinkMetadata) {
+               continue;
+            }
+
+            if ($permissionAccess->isAllowAccessWithSubPermission() && str_starts_with($currentNode, $permissionAccess->getNode()->asString())) {
+                if ($permissionMetadata->hasValue() && $permissionAccess->hasValueRange()) {
+                    if ($permissionAccess->getValueRange()->isInRange($permissionMetadata->getValue()->asInt())) {
                         return true;
                     }
-                    if ($permissionMetadata->allowAllSubPermissions()) {
-                        return true;
-                    }
+                    return false;
                 }
+                return true;
+            }
+            
+            if ($permissionMetadata->allowAllSubPermissions()) {
+                return true;
             }
         }
         if ($permissionAccess->isAllowAccessWithSubPermission()) {
