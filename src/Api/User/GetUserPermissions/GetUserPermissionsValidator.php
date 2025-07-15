@@ -10,13 +10,13 @@ use Nebalus\Webapi\Value\User\UserId;
 
 class GetUserPermissionsValidator extends AbstractValidator
 {
-    private ?UserId $userId;
+    private UserId $userId;
 
     public function __construct()
     {
         parent::__construct(S::object([
             RequestParamTypes::PATH_ARGS => S::object([
-                "user_id" => S::string()->equals("self")->or(UserId::getSchema()),
+                "user_id" => UserId::getSchema(),
             ]),
         ]));
     }
@@ -27,10 +27,10 @@ class GetUserPermissionsValidator extends AbstractValidator
      */
     protected function onValidate(array $bodyData, array $queryParamsData, array $pathArgsData): void
     {
-        $this->userId = isset($pathArgsData["user_id"]) && $pathArgsData["user_id"] === "self" ? null : UserId::from($pathArgsData["user_id"]);
+        $this->userId = UserId::from($pathArgsData["user_id"]);
     }
 
-    public function getUserId(): ?UserId
+    public function getUserId(): UserId
     {
         return $this->userId;
     }

@@ -23,7 +23,7 @@ readonly class GetUserPermissionsService
     {
         $userId = $validator->getUserId();
 
-        if ($userId === null || $userId === $requestingUser->getUserId()) {
+        if ($userId === $requestingUser->getUserId()) {
             return $this->responder->render($requestingUser->getUserId(), $userPermissionIndex);
         }
 
