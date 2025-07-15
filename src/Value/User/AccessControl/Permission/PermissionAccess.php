@@ -5,12 +5,12 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Range;
 
-class PermissionAccess
+readonly class PermissionAccess
 {
     private function __construct(
-        private readonly PermissionNode $node,
-        private readonly bool $allowAccessWithSubPermission,
-        private readonly ?Range $valueRange
+        private PermissionNode $node,
+        private bool $allowAccessWithSubPermission,
+        private ?Range $valueRange
     ) {
     }
 

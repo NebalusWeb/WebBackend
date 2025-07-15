@@ -5,14 +5,14 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class Permission
+readonly class Permission
 {
     private function __construct(
-        private readonly PermissionId $permissionId,
-        private readonly PermissionNode $node,
-        private readonly PermissionDescription $description,
-        private readonly bool $isPrestige,
-        private readonly ?PermissionValue $defaultValue
+        private PermissionId $permissionId,
+        private PermissionNode $node,
+        private PermissionDescription $description,
+        private bool $isPrestige,
+        private ?PermissionValue $defaultValue
     ) {
     }
 

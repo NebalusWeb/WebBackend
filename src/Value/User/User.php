@@ -10,17 +10,17 @@ use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\User\Totp\TOTPSecretKey;
 
-class User
+readonly class User
 {
     private function __construct(
-        private readonly ?UserId $userId,
-        private readonly Username $username,
-        private readonly UserEmail $email,
-        private readonly UserPassword $password,
-        private readonly TOTPSecretKey $totpSecretKey,
-        private readonly bool $disabled,
-        private readonly DateTimeImmutable $createdAtDate,
-        private readonly DateTimeImmutable $updatedAtDate,
+        private ?UserId $userId,
+        private Username $username,
+        private UserEmail $email,
+        private UserPassword $password,
+        private TOTPSecretKey $totpSecretKey,
+        private bool $disabled,
+        private DateTimeImmutable $createdAtDate,
+        private DateTimeImmutable $updatedAtDate,
     ) {
     }
 

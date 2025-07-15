@@ -11,17 +11,17 @@ use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Value\Url;
 use Nebalus\Webapi\Value\User\UserId;
 
-class Referral
+readonly class Referral
 {
     private function __construct(
-        private readonly ReferralId $referralId,
-        private readonly UserId $ownerId,
-        private readonly ReferralCode $code,
-        private readonly Url $url,
-        private readonly ?ReferralLabel $label,
-        private readonly bool $disabled,
-        private readonly DateTimeImmutable $createdAtDate,
-        private readonly DateTimeImmutable $updatedAtDate,
+        private ReferralId $referralId,
+        private UserId $ownerId,
+        private ReferralCode $code,
+        private Url $url,
+        private ?ReferralLabel $label,
+        private bool $disabled,
+        private DateTimeImmutable $createdAtDate,
+        private DateTimeImmutable $updatedAtDate,
     ) {
     }
 

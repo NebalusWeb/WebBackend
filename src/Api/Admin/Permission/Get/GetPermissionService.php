@@ -16,8 +16,8 @@ use Nebalus\Webapi\Value\User\AccessControl\Permission\UserPermissionIndex;
 class GetPermissionService extends AbstractService
 {
     public function __construct(
-        private MySqlPermissionRepository $permissionRepository,
-        private GetPermissionResponder $responder
+        private readonly MySqlPermissionRepository $permissionRepository,
+        private readonly GetPermissionResponder $responder
     ) {
     }
 

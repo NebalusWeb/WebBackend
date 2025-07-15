@@ -2,11 +2,11 @@
 
 namespace Nebalus\Webapi\Value;
 
-class Range
+readonly class Range
 {
     private function __construct(
-        private readonly int $min,
-        private readonly int $max
+        private int $min,
+        private int $max
     ) {
     }
 

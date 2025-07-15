@@ -5,11 +5,11 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 use JsonSerializable;
 use Nebalus\Webapi\Exception\ApiException;
 
-class PermissionRoleLinkMetadata implements JsonSerializable
+readonly class PermissionRoleLinkMetadata implements JsonSerializable
 {
     private function __construct(
-        private readonly bool $allowAllSubPermissions,
-        private readonly ?PermissionValue $value
+        private bool $allowAllSubPermissions,
+        private ?PermissionValue $value
     ) {
     }
 

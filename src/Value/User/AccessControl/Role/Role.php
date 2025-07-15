@@ -8,20 +8,20 @@ use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 use Nebalus\Webapi\Exception\ApiInvalidArgumentException;
 
-class Role
+readonly class Role
 {
     private function __construct(
-        private readonly ?RoleId $roleId,
-        private readonly RoleName $roleName,
-        private readonly ?RoleDescription $roleDescription,
-        private readonly RoleHexColor $roleColor,
-        private readonly RoleAccessLevel $accessLevel,
-        private readonly bool $appliesToEveryone,
-        private readonly bool $deletable,
-        private readonly bool $editable,
-        private readonly bool $disabled,
-        private readonly DateTimeImmutable $createdAtDate,
-        private readonly DateTimeImmutable $updatedAtDate,
+        private ?RoleId $roleId,
+        private RoleName $roleName,
+        private ?RoleDescription $roleDescription,
+        private RoleHexColor $roleColor,
+        private RoleAccessLevel $accessLevel,
+        private bool $appliesToEveryone,
+        private bool $deletable,
+        private bool $editable,
+        private bool $disabled,
+        private DateTimeImmutable $createdAtDate,
+        private DateTimeImmutable $updatedAtDate,
     ) {
     }
 

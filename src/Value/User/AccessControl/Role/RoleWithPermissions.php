@@ -4,11 +4,11 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Role;
 
 use Nebalus\Webapi\Value\User\AccessControl\Permission\PermissionRoleLinkCollection;
 
-class RoleWithPermissions
+readonly class RoleWithPermissions
 {
     private function __construct(
-        private readonly Role $role,
-        private readonly PermissionRoleLinkCollection $permissionLinks,
+        private Role $role,
+        private PermissionRoleLinkCollection $permissionLinks,
     ) {
     }
 

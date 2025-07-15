@@ -7,12 +7,12 @@ use DateTimeImmutable;
 use Nebalus\Webapi\Exception\ApiDateMalformedStringException;
 use Nebalus\Webapi\Exception\ApiException;
 
-class ReferralClick
+readonly class ReferralClick
 {
     private function __construct(
-        private readonly DateTimeImmutable $clickedAtDate,
-        private readonly ReferralClickAmount $clickCount,
-        private readonly ReferralClickAmount $uniqueVisitorsCount,
+        private DateTimeImmutable $clickedAtDate,
+        private ReferralClickAmount $clickCount,
+        private ReferralClickAmount $uniqueVisitorsCount,
     ) {
     }
 

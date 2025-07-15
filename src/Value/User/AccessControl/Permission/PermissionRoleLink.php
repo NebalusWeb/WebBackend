@@ -4,11 +4,11 @@ namespace Nebalus\Webapi\Value\User\AccessControl\Permission;
 
 use Nebalus\Webapi\Exception\ApiException;
 
-class PermissionRoleLink
+readonly class PermissionRoleLink
 {
     private function __construct(
-        private readonly PermissionNode $node,
-        private readonly PermissionRoleLinkMetadata $metadata
+        private PermissionNode $node,
+        private PermissionRoleLinkMetadata $metadata
     ) {
     }
 
